@@ -5,9 +5,9 @@ local imageOffset = modApi:getPaletteImageOffset(mod.id)
 
 -- this line just gets the file path for your mod, so you can find all your files easily.
 local path = mod_loader.mods[modApi.currentMod].resourcePath
-	modApi:appendAsset("img/portraits/pilot_Nico_artillerybot_mech.png", path .."img/portraits/pilot_Nico_artillerybot_mech.png")
-	modApi:appendAsset("img/portraits/pilot_Nico_laserbot_mech.png", path .."img/portraits/pilot_Nico_laserbot_mech.png")
-	modApi:appendAsset("img/portraits/pilot_Nico_cannonbot_mech.png", path .."img/portraits/pilot_Nico_cannonbot_mech.png")
+	modApi:appendAsset("img/portraits/pilots/Pilot_Nico_artillerybot_mech.png", path .."img/portraits/Pilot_Nico_artillerybot_mech.png")
+	modApi:appendAsset("img/portraits/pilots/Pilot_Nico_laserbot_mech.png", path .."img/portraits/Pilot_Nico_laserbot_mech.png")
+	modApi:appendAsset("img/portraits/pilots/Pilot_Nico_cannonbot_mech.png", path .."img/portraits/Pilot_Nico_cannonbot_mech.png")
 -- locate our mech assets.
 local artmechPath = path .."img/units/player/"
 -- make a list of our files.
@@ -92,7 +92,7 @@ CreatePilot{
  	Id = "Pilot_Nico_laserbot_mech",
     Personality = "Vek",
 	Sex = SEX_VEK,
-    Name = "LAS-891",
+    Name = "Laser-Bot",
     GetSkill = function() IsRobot = true; return "Survive_Death" end,
 	Rarity = 0,
     Blacklist = {"Invulnerable", "Popular","Grid"},
@@ -101,7 +101,7 @@ CreatePilot{
     Id = "Pilot_Nico_cannonbot_mech",
     Personality = "Vek",
     Sex = SEX_VEK,
-    Name = "C4NN0N-GRU",
+    Name = "Cannon-Bot",
     GetSkill = function() IsRobot = true; return "Survive_Death" end,
     Rarity = 0,
     Blacklist = {"Invulnerable", "Popular","Grid"},
@@ -110,7 +110,7 @@ CreatePilot{
     Id = "Pilot_Nico_artillerybot_mech",
   	Personality = "Vek",
 	Sex = SEX_VEK,
-  	Name = "B4RRAG-UNI7",
+    Name = "Artillery-Bot",
     GetSkill = function() IsRobot = true; return "Survive_Death" end,
 	Rarity = 0,
     Blacklist = {"Invulnerable", "Popular","Grid"},
@@ -136,7 +136,7 @@ Nico_laserbot_mech = Pawn:new{
 	ImageOffset = imageOffset,
     
     -- Any weapons this mech should start with goes in this table.
-    SkillList = {"Prime_Lasermech"},
+    SkillList = {"Nico_laserbot"},
     
     -- movement sounds.
 	SoundLocation = "/enemy/snowlaser_1/",
@@ -150,7 +150,7 @@ Nico_laserbot_mech = Pawn:new{
     AddPawn("Nico_laserbot_mech")
 }
 Nico_artillerybot_mech = Pawn:new{
-    Name = "Artyllery-Bot",
+    Name = "Artillery-Bot",
     
     -- FlameMech is also Prime, so this is redundant, but if you had no base, you would need a class.
     Class = "TechnoVek",
@@ -169,7 +169,7 @@ Nico_artillerybot_mech = Pawn:new{
 	ImageOffset = imageOffset,
     
     -- Any weapons this mech should start with goes in this table.
-    SkillList = {"Prime_Lasermech"},
+    SkillList = {"Nico_artillerybot"},
     
     -- movement sounds.
     SoundLocation = "/enemy/snowart_1/",
@@ -202,7 +202,7 @@ Nico_cannonbot_mech = Pawn:new{
 	ImageOffset = imageOffset,
     
     -- Any weapons this mech should start with goes in this table.
-    SkillList = {"Prime_Lasermech"},
+    SkillList = {"Nico_cannonbot"},
     
     -- movement sounds.
 	SoundLocation = "/enemy/snowtank_1/",

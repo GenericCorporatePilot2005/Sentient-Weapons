@@ -15,7 +15,7 @@ local mod = {
 
 function mod:init()
 	-- look in template/mech to see how to code mechs.
---	require(self.scriptPath .."weapons")
+	require(self.scriptPath .."weapons")
 	require(self.scriptPath .."pawns")
     require(self.scriptPath .."palette")
 end
