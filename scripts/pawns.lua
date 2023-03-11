@@ -40,8 +40,8 @@ local files = {
 	"Nico_laserbot_mech_w.png",
 	"Nico_laserbot_mech_w_broken.png",
 	"Nico_laserbot_mech_broken.png",
-	"Nico_laser_mech_ns.png",
-	"Nico_laser_mech_h.png",
+	"Nico_laserbot_mech_ns.png",
+	"Nico_laserbot_mech_h.png",
 }
 for _, file in ipairs(files) do
 	modApi:appendAsset("img/units/player/".. file, lasermechPath .. file)
@@ -77,24 +77,12 @@ local a=ANIMS
 	a.Nico_cannonbot_mechw_broken = a.MechUnit:new{Image="units/player/Nico_cannonbot_mech_w_broken.png", PosX = -20, PosY = 10 }
 	a.Nico_cannonbot_mech_ns = a.MechIcon:new{Image="units/player/Nico_cannonbot_mech_ns.png"}
 
-
-local oldGetSkillInfo = GetSkillInfo
-	function GetSkillInfo(skill)
-	if IsRobot then
-		IsRobot = nil
-		if skill == "Survive_Death"    then
-			return PilotSkill("Robot", "Normal Pilots cannot be equipped. Loses 25 XP when the unit is disabled.")
-		end
-	end
-	return oldGetSkillInfo(skill)
-end
-
 CreatePilot{
  	Id = "pilot_Nico_laserbot_mech",
     Personality = "Vek",
 	Sex = SEX_VEK,
     Name = "LAS-891",
-    GetSkill = function() IsRobot = true; return "Survive_Death" end,
+	Skill = "Survive_Death",
 	Rarity = 0,
     Blacklist = {"Invulnerable", "Popular","Grid"},
 }
@@ -103,7 +91,7 @@ CreatePilot{
     Personality = "Vek",
     Sex = SEX_VEK,
     Name = "C4NN0N-GRU",
-    GetSkill = function() IsRobot = true; return "Survive_Death" end,
+	Skill = "Survive_Death",
     Rarity = 0,
     Blacklist = {"Invulnerable", "Popular","Grid"},
 }
@@ -112,7 +100,7 @@ CreatePilot{
   	Personality = "Vek",
 	Sex = SEX_VEK,
   	Name = "B4RRAG-UNI7",
-  	GetSkill = function() IsRobot = true; return "Survive_Death" end,
+      Skill = "Survive_Death",
 	Rarity = 0,
 }
 
