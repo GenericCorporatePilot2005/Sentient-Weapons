@@ -24,11 +24,11 @@ for _, file in ipairs(files) do
 	modApi:appendAsset("img/units/player/".. file, artmechPath .. file)
 end
 local a=ANIMS
-	a.Nico_artillerybot_mech =a.MechUnit:new{Image="units/player/Nico_artillerybot_mech.png", PosX = -22, PosY = 4}
-	a.Nico_artillerybot_mecha = a.MechUnit:new{Image="units/player/Nico_artillerybot_mech_a.png",  PosX = -20, PosY = 4, NumFrames = 4 }
-	a.Nico_artillerybot_mechw = a.MechUnit:new{Image="units/player/Nico_artillerybot_mech_w.png", -22, PosY = 10}
-	a.Nico_artillerybot_mech_broken = a.MechUnit:new{Image="units/player/Nico_artillerybot_mech_broken.png", PosX = -22, PosY = 4 }
-	a.Nico_artillerybot_mechw_broken = a.MechUnit:new{Image="units/player/Nico_artillerybot_mech_w_broken.png", PosX = -20, PosY = 10 }
+	a.Nico_artillerybot_mech =a.MechUnit:new{Image="units/player/Nico_artillerybot_mech.png", PosX = -18, PosY = -9}
+	a.Nico_artillerybot_mecha = a.MechUnit:new{Image="units/player/Nico_artillerybot_mech_a.png",  PosX = -18, PosY = -9, NumFrames = 4 }
+	a.Nico_artillerybot_mechw = a.MechUnit:new{Image="units/player/Nico_artillerybot_mech_w.png", -18, PosY = -2}
+	a.Nico_artillerybot_mech_broken = a.MechUnit:new{Image="units/player/Nico_artillerybot_mech_broken.png", PosX = -18, PosY = -9 }
+	a.Nico_artillerybot_mechw_broken = a.MechUnit:new{Image="units/player/Nico_artillerybot_mech_w_broken.png", PosX = -18, PosY = -2 }
 	a.Nico_artillerybot_mech_ns = a.MechIcon:new{Image="units/player/Nico_artillerybot_mech_ns.png"}
 
     -- locate our mech assets.
@@ -47,11 +47,11 @@ for _, file in ipairs(files) do
 	modApi:appendAsset("img/units/player/".. file, lasermechPath .. file)
 end
 local a=ANIMS
-	a.Nico_laserbot_mech =a.MechUnit:new{Image="units/player/Nico_laserbot_mech.png", PosX = -22, PosY = 4}
-	a.Nico_laserbot_mecha = a.MechUnit:new{Image="units/player/Nico_laserbot_mech_a.png",  PosX = -20, PosY = 4, NumFrames = 3 }
-	a.Nico_laserbot_mechw = a.MechUnit:new{Image="units/player/Nico_laserbot_mech_w.png", -22, PosY = 10}
-	a.Nico_laserbot_mech_broken = a.MechUnit:new{Image="units/player/Nico_laserbot_mech_broken.png", PosX = -22, PosY = 4 }
-	a.Nico_laserbot_mechw_broken = a.MechUnit:new{Image="units/player/Nico_laserbot_mech_w_broken.png", PosX = -20, PosY = 10 }
+	a.Nico_laserbot_mech =a.MechUnit:new{Image="units/player/Nico_laserbot_mech.png", PosX = -15, PosY = -2}
+	a.Nico_laserbot_mecha = a.MechUnit:new{Image="units/player/Nico_laserbot_mech_a.png",  PosX = -15, PosY = -2, NumFrames = 4 }
+	a.Nico_laserbot_mechw = a.MechUnit:new{Image="units/player/Nico_laserbot_mech_w.png", -15, PosY = 4}
+	a.Nico_laserbot_mech_broken = a.MechUnit:new{Image="units/player/Nico_laserbot_mech_broken.png", PosX = -15, PosY = -2 }
+	a.Nico_laserbot_mechw_broken = a.MechUnit:new{Image="units/player/Nico_laserbot_mech_w_broken.png", PosX = -15, PosY = 4 }
 	a.Nico_laserbot_mech_ns = a.MechIcon:new{Image="units/player/Nico_laserbot_mech_ns.png"}
 
     -- locate our mech assets.
@@ -70,38 +70,50 @@ for _, file in ipairs(files) do
 	modApi:appendAsset("img/units/player/".. file, cannonmechPath .. file)
 end
 local a=ANIMS
-	a.Nico_cannonbot_mech =a.MechUnit:new{Image="units/player/Nico_cannonbot_mech.png", PosX = -22, PosY = 4}
-	a.Nico_cannonbot_mecha = a.MechUnit:new{Image="units/player/Nico_cannonbot_mech_a.png",  PosX = -20, PosY = 4, NumFrames = 4 }
-	a.Nico_cannonbot_mechw = a.MechUnit:new{Image="units/player/Nico_cannonbot_mech_w.png", -22, PosY = 10}
-	a.Nico_cannonbot_mech_broken = a.MechUnit:new{Image="units/player/Nico_cannonbot_mech_broken.png", PosX = -22, PosY = 4 }
-	a.Nico_cannonbot_mechw_broken = a.MechUnit:new{Image="units/player/Nico_cannonbot_mech_w_broken.png", PosX = -20, PosY = 10 }
+	a.Nico_cannonbot_mech =a.MechUnit:new{Image="units/player/Nico_cannonbot_mech.png", PosX = -20, PosY = 4}
+	a.Nico_cannonbot_mecha = a.MechUnit:new{Image="units/player/Nico_cannonbot_mech_a.png",  PosX = -20, PosY = -4, NumFrames = 3 }
+	a.Nico_cannonbot_mechw = a.MechUnit:new{Image="units/player/Nico_cannonbot_mech_w.png", -17, PosY = 2}
+	a.Nico_cannonbot_mech_broken = a.MechUnit:new{Image="units/player/Nico_cannonbot_mech_broken.png", PosX = -20, PosY = -4 }
+	a.Nico_cannonbot_mechw_broken = a.MechUnit:new{Image="units/player/Nico_cannonbot_mech_w_broken.png", PosX = -20, PosY = 2 }
 	a.Nico_cannonbot_mech_ns = a.MechIcon:new{Image="units/player/Nico_cannonbot_mech_ns.png"}
 
+	local oldGetSkillInfo = GetSkillInfo
+		function GetSkillInfo(skill)
+		if IsRobot then
+			IsRobot = nil
+			if skill == "Survive_Death"    then
+				return PilotSkill("Robot", "Normal Pilots cannot be equipped. Loses 25 XP when the unit is disabled.")
+			end
+		end
+		return oldGetSkillInfo(skill)
+	end
+
 CreatePilot{
- 	Id = "pilot_Nico_laserbot_mech",
+ 	Id = "Pilot_Nico_laserbot_mech",
     Personality = "Vek",
 	Sex = SEX_VEK,
     Name = "LAS-891",
-	Skill = "Survive_Death",
+    GetSkill = function() IsRobot = true; return "Survive_Death" end,
 	Rarity = 0,
     Blacklist = {"Invulnerable", "Popular","Grid"},
 }
 CreatePilot{
-    Id = "pilot_Nico_cannonbot_mech",
+    Id = "Pilot_Nico_cannonbot_mech",
     Personality = "Vek",
     Sex = SEX_VEK,
     Name = "C4NN0N-GRU",
-	Skill = "Survive_Death",
+    GetSkill = function() IsRobot = true; return "Survive_Death" end,
     Rarity = 0,
     Blacklist = {"Invulnerable", "Popular","Grid"},
 }
 CreatePilot{
-    Id = "pilot_Nico_artillerybot_mech",
+    Id = "Pilot_Nico_artillerybot_mech",
   	Personality = "Vek",
 	Sex = SEX_VEK,
   	Name = "B4RRAG-UNI7",
-      Skill = "Survive_Death",
+    GetSkill = function() IsRobot = true; return "Survive_Death" end,
 	Rarity = 0,
+    Blacklist = {"Invulnerable", "Popular","Grid"},
 }
 
 Nico_laserbot_mech = Pawn:new{
@@ -112,7 +124,7 @@ Nico_laserbot_mech = Pawn:new{
     
     -- various stats.
     Health = 3,
-    MoveSpeed = 4,
+    MoveSpeed = 3,
     Massive = true,
     Corpse = true,
     
@@ -133,7 +145,7 @@ Nico_laserbot_mech = Pawn:new{
     DefaultTeam = TEAM_PLAYER,
     
     -- impact sounds.
-    ImpactMaterial = IMPACT_INSECT,
+	ImpactMaterial = IMPACT_METAL,
     
     AddPawn("Nico_laserbot_mech")
 }
@@ -144,8 +156,8 @@ Nico_artillerybot_mech = Pawn:new{
     Class = "TechnoVek",
     
     -- various stats.
-    Health = 3,
-    MoveSpeed = 4,
+    Health = 2,
+    MoveSpeed = 3,
     Massive = true,
     Corpse = true,
     
@@ -166,7 +178,7 @@ Nico_artillerybot_mech = Pawn:new{
     DefaultTeam = TEAM_PLAYER,
     
     -- impact sounds.
-    ImpactMaterial = IMPACT_INSECT,
+	ImpactMaterial = IMPACT_METAL,
     
     AddPawn("Nico_artillerybot_mech")
 }
@@ -178,7 +190,7 @@ Nico_cannonbot_mech = Pawn:new{
     
     -- various stats.
     Health = 3,
-    MoveSpeed = 4,
+    MoveSpeed = 3,
     Massive = true,
     Corpse = true,
     
@@ -199,7 +211,7 @@ Nico_cannonbot_mech = Pawn:new{
     DefaultTeam = TEAM_PLAYER,
     
     -- impact sounds.
-    ImpactMaterial = IMPACT_INSECT,
+	ImpactMaterial = IMPACT_METAL,
     
     AddPawn("Nico_cannonbot_mech")
 }
