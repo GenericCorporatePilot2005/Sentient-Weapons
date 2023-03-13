@@ -79,12 +79,14 @@ local a=ANIMS
 
 	local oldGetSkillInfo = GetSkillInfo
 		function GetSkillInfo(skill)
+       
 		if IsRobot then
 			IsRobot = nil
 			if skill == "Survive_Death"    then
 				return PilotSkill("Robot", "Normal Pilots cannot be equipped. Loses 25 XP when the unit is disabled.")
 			end
 		end
+        LOG("GetSkillInfo called for ", skill)
 		return oldGetSkillInfo(skill)
 	end
 

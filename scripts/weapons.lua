@@ -23,7 +23,7 @@ Nico_laserbot = LaserDefault:new{
         CustomPawn="Nico_laserbot_mech",
 	}
 }
-Nico_laserbot_A = Prime_Lasermech:new{
+Nico_laserbot_A = Nico_laserbot:new{
     Freeze=1,
     FriendlyDamage = false,
     LaserArt = "effects/laser_freeze",
@@ -37,7 +37,7 @@ Nico_laserbot_A = Prime_Lasermech:new{
         CustomPawn="Nico_laserbot_mech",
 	},
 }
-Nico_laserbot_B = Prime_Lasermech:new{
+Nico_laserbot_B = Nico_laserbot:new{
 	Damage = 4,
     FriendlyDamage = false,
     UpgradeDescription = "+2 more damage",
@@ -50,7 +50,7 @@ Nico_laserbot_B = Prime_Lasermech:new{
         CustomPawn="Nico_laserbot_mech",
 	},
 }
-Nico_laserbot_AB = Prime_Lasermech:new{
+Nico_laserbot_AB = Nico_laserbot:new{
 	Damage = 4,
     LaserArt = "effects/laser_freeze",
     Freeze = 1,
