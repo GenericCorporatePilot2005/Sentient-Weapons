@@ -30,10 +30,11 @@ Nico_laserbot_A = Nico_laserbot:new{
     UpgradeDescription = "If the target would die, freeze it instead. Freezes buildings.",
 	TipImage = {
 		Unit = Point(2,4),
-		Enemy = Point(2,2),
-		Friendly = Point(2,1),
+		Enemy1 = Point(2,2),
+		Enemy2 = Point(2,1),
 		Target = Point(2,2),
 		Building = Point(2,0),
+		CustomEnemy = "Digger1",
         CustomPawn="Nico_laserbot_mech",
 	},
 }
