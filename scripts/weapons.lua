@@ -1,3 +1,4 @@
+------Laser Bot------
 Nico_laserbot = LaserDefault:new{
     Name="BKR Beam Mark II",
 	Class="TechnoVek",
@@ -12,7 +13,7 @@ Nico_laserbot = LaserDefault:new{
 	FriendlyDamage = false,
 	ZoneTargeting = ZONE_DIR,
 	Upgrades = 2,
-	UpgradeList = { "Freeze", "+2 Damage" },
+	UpgradeList = { "Fatal Freeze", "+2 Damage" },
 	UpgradeCost = { 2,3 },
 	TipImage = {
 		Unit = Point(2,4),
@@ -23,48 +24,30 @@ Nico_laserbot = LaserDefault:new{
         CustomPawn="Nico_laserbot_mech",
 	}
 }
+
 Nico_laserbot_A = Nico_laserbot:new{
-    Freeze=1,
-    FriendlyDamage = false,
     LaserArt = "effects/laser_freeze",
-    UpgradeDescription = "damages and freezes targets",
+    UpgradeDescription = "If the target would die, freeze it instead. Freezes buildings.",
 	TipImage = {
 		Unit = Point(2,4),
 		Enemy = Point(2,2),
 		Friendly = Point(2,1),
 		Target = Point(2,2),
-		Mountain = Point(2,0),
-        CustomPawn="Nico_laserbot_mech",
-	},
-}
-Nico_laserbot_B = Nico_laserbot:new{
-	Damage = 4,
-    FriendlyDamage = false,
-    UpgradeDescription = "+2 more damage",
-	TipImage = {
-		Unit = Point(2,4),
-		Enemy = Point(2,2),
-		Friendly = Point(2,1),
-		Target = Point(2,2),
-		Mountain = Point(2,0),
-        CustomPawn="Nico_laserbot_mech",
-	},
-}
-Nico_laserbot_AB = Nico_laserbot:new{
-	Damage = 4,
-    LaserArt = "effects/laser_freeze",
-    Freeze = 1,
-    UpgradeDescription = "damages and freezes targets",
-	TipImage = {
-		Unit = Point(2,4),
-		Enemy = Point(2,2),
-		Friendly = Point(2,1),
-		Target = Point(2,2),
-		Mountain = Point(2,0),
+		Building = Point(2,0),
         CustomPawn="Nico_laserbot_mech",
 	},
 }
 
+Nico_laserbot_B = Nico_laserbot:new{
+	Damage = 4,
+    UpgradeDescription = "Increases the starting damage by 2.",
+}
+
+Nico_laserbot_AB = Nico_laserbot_A:new{
+	Damage = 4,
+}
+
+------Cannon Bot------
 Nico_cannonbot=Brute_Tankmech:new{
 	Name="Cannon 8R Mark II",
 	Class="TechnoVek",
@@ -76,7 +59,7 @@ Nico_cannonbot=Brute_Tankmech:new{
 	PowerCost=0,
 	Upgrades=2,
 	UpgradeCost={2,3},
-	UpgradeList = { "+1 damage", "+1 damage"},
+	UpgradeList = { "+1 Damage", "+1 Damage"},
 	Explosion = "ExploAir2",
 	Projectile = "effects/shot_mechtank",
 	TipImage = {
@@ -89,37 +72,19 @@ Nico_cannonbot=Brute_Tankmech:new{
 
 Nico_cannonbot_A=Nico_cannonbot:new{
     Damage=2,
-    UpgradeDescription = "+1 damage",
-	TipImage = {
-		Unit = Point(2,3),
-		Enemy = Point(2,1),
-		Target = Point(2,2),
-		CustomPawn = "Nico_cannonbot_mech",
-	},
+    UpgradeDescription = "Increases damage by 1.",
 }
 
 Nico_cannonbot_B=Nico_cannonbot:new{
     Damage=2,
-    UpgradeDescription = "+1 damage",
-    TipImage = {
-		Unit = Point(2,3),
-		Enemy = Point(2,1),
-		Target = Point(2,2),
-		CustomPawn = "Nico_cannonbot_mech",
-	},
+    UpgradeDescription = "Increases damage by 1.",
 }
 
 Nico_cannonbot_AB=Nico_cannonbot:new{
     Damage=3,
-    TipImage = {
-		Unit = Point(2,3),
-		Enemy = Point(2,1),
-		Target = Point(2,2),
-		CustomPawn = "Nico_cannonbot_mech",
-	},
 }
 
---
+------Artillery Bot------
 Nico_artillerybot=ArtilleryDefault:new{
     Name="Vk8 Rockets Mark II",
     Class = "TechnoVek",
@@ -130,7 +95,7 @@ Nico_artillerybot=ArtilleryDefault:new{
 	PowerCost = 0,
 	BuildingDamage = true,
 	Upgrades = 2,
-    UpgradeList = { "Building immune",  "+1 Damage"  },
+    UpgradeList = { "Building Immune",  "+1 Damage"  },
 	UpgradeCost = {1,3},
 	LaunchSound = "/weapons/ranged_crack",
 	ImpactSound = "",
@@ -176,37 +141,33 @@ end
 
 Nico_artillerybot_A=Nico_artillerybot:new{
     BuildingDamage = false,
-    UpgradeDescription = "doesn't damage buildings",
-    TipImage = {
-		Unit = Point(2,3),
-		Target = Point(2,1),
-		Enemy = Point(2,1),
-		Enemy2 = Point(3,1),
-		Building = Point(1,1),
-        CustomPawn="Nico_artillerybot_mech",
-	},
+    UpgradeDescription = "This attack will no longer damage Grid Buildings.",
 }
 Nico_artillerybot_B=Nico_artillerybot:new{
     Damage=2,
-    UpgradeDescription = "+1 damage",
-    TipImage = {
-		Unit = Point(2,3),
-		Target = Point(2,1),
-		Enemy = Point(2,1),
-		Enemy2 = Point(3,1),
-		Enemy3 = Point(1,1),
-        CustomPawn="Nico_artillerybot_mech",
-	},
+    UpgradeDescription = "Deals 1 additional damage to all targets.",
 }
 Nico_artillerybot_AB=Nico_artillerybot:new{
     BuildingDamage = false,
     Damage=2,
-    TipImage = {
-		Unit = Point(2,3),
-		Target = Point(2,1),
-		Enemy = Point(2,1),
-		Enemy2 = Point(3,1),
-		Building = Point(1,1),
-        CustomPawn="Nico_artillerybot_mech",
-	},
 }
+
+local Nico_FatalFreeze = function(mission, pawn, weaponId, p1, p2, skillEffect)
+	if (weaponId == "Nico_laserbot_A") or (weaponId == "Nico_laserbot_AB") then	
+		for i = 1, skillEffect.effect:size() do
+			local spaceDamage = skillEffect.effect:index(i)
+			local damage = spaceDamage.iDamage
+			local dpawn = Board:GetPawn(spaceDamage.loc) 
+			if (dpawn and Board:IsDeadly(spaceDamage,dpawn)) or Board:IsBuilding(spaceDamage.loc) then
+				spaceDamage.iDamage = 0
+				spaceDamage.iFrozen = EFFECT_CREATE
+			end
+		end
+	end
+end
+
+local function EVENT_onModsLoaded() --This function will run when the mod is loaded
+	modapiext:addSkillBuildHook(Nico_FatalFreeze)
+end
+
+modApi.events.onModsLoaded:subscribe(EVENT_onModsLoaded)
