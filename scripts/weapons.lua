@@ -156,9 +156,11 @@ local Nico_FatalFreeze = function(mission, pawn, weaponId, p1, p2, skillEffect)
 	if (weaponId == "Nico_laserbot_A") or (weaponId == "Nico_laserbot_AB") then	
 		for i = 1, skillEffect.effect:size() do
 			local spaceDamage = skillEffect.effect:index(i)
-			local dpawn = Board:GetPawn(spaceDamage.loc) 
-			if (dpawn and Board:IsDeadly(skillEffect.effect:index(i),dpawn)) or Board:IsBuilding(spaceDamage.loc) then
+			spaceDamage.bKO_Effect = Board:IsDeadly(spaceDamage,Pawn)
+			if spaceDamage.bKO_Effect or Board:IsBuilding(spaceDamage.loc) then
 				spaceDamage.iDamage = 0
+				--invert the KO flag afterwards because it overwrites the spaceDamage image mark for some reason
+				spaceDamage.bKO_Effect = false
 				spaceDamage.iFrozen = EFFECT_CREATE
 			end
 		end
