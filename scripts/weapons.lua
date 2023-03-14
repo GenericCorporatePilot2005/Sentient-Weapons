@@ -156,17 +156,24 @@ local Nico_FatalFreeze = function(mission, pawn, weaponId, p1, p2, skillEffect)
 	if (weaponId == "Nico_laserbot_A") or (weaponId == "Nico_laserbot_AB") then	
 		for i = 1, skillEffect.effect:size() do
 			local spaceDamage = skillEffect.effect:index(i)
-			local damage = spaceDamage.iDamage
+			--Increment the non-zero damage by 1 temporarily to force IsDeadly to accurately reflect the boosted status
+			if pawn:IsBoosted() and spaceDamage.iDamage ~= 0 then
+				spaceDamage.iDamage = spaceDamage.iDamage + 1
+			end
 			local dpawn = Board:GetPawn(spaceDamage.loc) 
 			if (dpawn and Board:IsDeadly(spaceDamage,dpawn)) or Board:IsBuilding(spaceDamage.loc) then
 				spaceDamage.iDamage = 0
 				spaceDamage.iFrozen = EFFECT_CREATE
 			end
+			--Decrement the non-zero damage by 1 to restore accurate boosted damage
+			if pawn:IsBoosted() and spaceDamage.iDamage ~= 0 then
+				spaceDamage.iDamage = spaceDamage.iDamage - 1
+			end
 		end
 	end
 end
 
-local function EVENT_onModsLoaded() --This function will run when the mod is loaded
+local function EVENT_onModsLoaded()
 	modapiext:addSkillBuildHook(Nico_FatalFreeze)
 end
 
