@@ -125,8 +125,8 @@ Nico_laserbot_mech = Pawn:new{
     Class = "TechnoVek",
     
     -- various stats.
-    Health = 3,
-    MoveSpeed = 3,
+    Health = 1,
+    MoveSpeed = 4,
     Massive = true,
     Corpse = true,
     
@@ -158,8 +158,8 @@ Nico_artillerybot_mech = Pawn:new{
     Class = "TechnoVek",
     
     -- various stats.
-    Health = 2,
-    MoveSpeed = 3,
+    Health = 1,
+    MoveSpeed = 4,
     Massive = true,
     Corpse = true,
     
@@ -191,8 +191,8 @@ Nico_cannonbot_mech = Pawn:new{
     Class = "TechnoVek",
     
     -- various stats.
-    Health = 3,
-    MoveSpeed = 3,
+    Health = 1,
+    MoveSpeed = 4,
     Massive = true,
     Corpse = true,
     
