@@ -52,25 +52,54 @@ Nico_laserbot_AB = Nico_laserbot_A:new{
 Nico_cannonbot=TankDefault:new{
 	Name="Cannon 8R Mark II",
 	Class="TechnoVek",
+	Range = RANGE_PROJECTILE,
+	PathSize = INT_MAX,
 	Description="Fire a damaging projectile that applies fire and pushes.",
 	Icon = "weapons/brute_tank.png",
 	Damage=1,
     Fire = 1,
     Push=1,
-	Flip=0,
 	PowerCost=0,
 	Upgrades=2,
+	ShieldFriendly = false,
 	UpgradeCost={2,3},
-	UpgradeList = { "+1 Damage", "+1 Damage, Flip"},
+	UpgradeList = { "+1 Damage", "Shield friendlies"},
 	Explosion = "ExploAir2",
 	Projectile = "effects/shot_mechtank",
 	TipImage = {
 		Unit = Point(2,3),
 		Enemy = Point(2,1),
-		Target = Point(2,2),
+		Target = Point(2,1),
 		CustomPawn = "Nico_cannonbot_mech",
 	},
 }
+
+function Nico_cannonbot:GetSkillEffect(p1,p2)
+	local ret = SkillEffect()
+	local direction = GetDirection(p2 - p1)
+	
+	local damage = SpaceDamage(p2, self.Damage)
+	damage.iFire = self.Fire
+	if self.Push == 1 then
+		damage.iPush = direction
+	end
+	damage.sAnimation = self.Explo..direction
+	
+	
+	ret:AddProjectile(damage, self.ProjectileArt, NO_DELAY)--"effects/shot_mechtank")
+	if self.ShieldFriendly then
+		for dir = DIR_START, DIR_END do
+			local spaceDamage = SpaceDamage(p2 + DIR_VECTORS[dir], 0)
+			if Board:IsBuilding(p2 + DIR_VECTORS[dir]) or Board:GetPawnTeam(p2 + DIR_VECTORS[dir]) == TEAM_PLAYER then
+				spaceDamage.iShield = 1
+				ret:AddDamage(spaceDamage)
+			end
+
+		end
+	end
+	return ret
+end
+
 
 Nico_cannonbot_A=Nico_cannonbot:new{
     Damage=2,
@@ -78,23 +107,22 @@ Nico_cannonbot_A=Nico_cannonbot:new{
 }
 
 Nico_cannonbot_B=Nico_cannonbot:new{
-    Damage=2,
-	Flip=1,
-    UpgradeDescription = "Increases damage by 1, flips target.",
+    Damage=1,
+	ShieldFriendly = true,
+    UpgradeDescription = "Shields ally units and buildings adjacent to target.",
 	TipImage = {
-		Unit = Point(1,2),
+		Unit = Point(1,3),
 		Enemy1 = Point(1,1),
 		Target = Point(1,1),
-		Queued1 = Point(2,1),
-		Friendly = Point(3,1),
-		CustomEnemy = "Firefly2",
+		Building = Point(1,0),
+		CustomEnemy = "Firefly1",
 		CustomPawn = "Nico_cannonbot_mech",
 		Length = 4,
 	},
 }
 
 Nico_cannonbot_AB=Nico_cannonbot_B:new{
-    Damage=3,
+    Damage=2,
 }
 
 ------Artillery Bot------
@@ -128,14 +156,13 @@ function Nico_artillerybot:GetSkillEffect(p1,p2)
     local dir = GetDirection(p2 - p1)
 	local damage = SpaceDamage(p2 + DIR_VECTORS[(dir+1)%4], self.Damage, dir)
 	damage.sAnimation = "explopush1_"..dir
+	damage.sSound = "impact/generic/explosion_multiple"
 	if not self.BuildingDamage and self.shield and Board:IsBuilding(p2 + DIR_VECTORS[(dir+1)%4]) then
 		damage.iDamage = DAMAGE_ZERO
 		damage.iShield=1
-	end 
-	damage.bHidePath = true
-	damage.sSound = "impact/generic/explosion_multiple"
-	if self.Damage==2 then
-		ret:AddArtillery(damage,"effects/shotup_robot.png", NO_DELAY)
+		ret:AddArtillery(damage,"effects/shotup_missileswarm.png", NO_DELAY)
+	elseif self.Damage==2 then
+		ret:AddArtillery(damage,"effects/shotup_robot.png", NO_DELAY)--
 	else
 		ret:AddArtillery(damage,"effects/shotup_guided_missile.png", NO_DELAY)
 	end
@@ -143,12 +170,12 @@ function Nico_artillerybot:GetSkillEffect(p1,p2)
 	
 	damage = SpaceDamage(p2, self.Damage, dir)
 	damage.sAnimation = "explopush1_"..dir
+	damage.bHidePath = false
 	if not self.BuildingDamage and self.shield and Board:IsBuilding(p2) then
 		damage.iDamage = DAMAGE_ZERO 
 		damage.iShield=1
-	end 
-	damage.bHidePath = false
-	if self.Damage==2 then
+		ret:AddArtillery(damage,"effects/shotup_missileswarm.png", NO_DELAY)
+	elseif self.Damage==2 then
 		ret:AddArtillery(damage,"effects/shotup_robot.png", NO_DELAY)
 	else
 		ret:AddArtillery(damage,"effects/shotup_guided_missile.png", NO_DELAY)
@@ -160,17 +187,16 @@ function Nico_artillerybot:GetSkillEffect(p1,p2)
 	if not self.BuildingDamage and self.shield and Board:IsBuilding(p2 + DIR_VECTORS[(dir-1)%4]) then
 		damage.iDamage = DAMAGE_ZERO
 		damage.iShield=1
-	end 
-	damage.bHidePath = true
-	if self.Damage==2 then
+		ret:AddArtillery(damage,"effects/shotup_missileswarm.png", NO_DELAY)
+	elseif self.Damage==2 then
 		ret:AddArtillery(damage,"effects/shotup_robot.png", NO_DELAY)
 	else
 		ret:AddArtillery(damage,"effects/shotup_guided_missile.png", NO_DELAY)
 	end
 	ret:AddDelay(0.5)
-	ret:AddBounce(p2+DIR_VECTORS[dir], 2)
+	ret:AddBounce(p2 + DIR_VECTORS[(dir+1)%4], 2)
 	ret:AddBounce(p2, 2)
-	ret:AddBounce(p2-DIR_VECTORS[dir], 2)
+	ret:AddBounce(p2 + DIR_VECTORS[(dir-1)%4], 2)
 	return ret
 end
 
