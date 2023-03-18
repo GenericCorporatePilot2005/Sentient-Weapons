@@ -350,3 +350,19 @@ Nico_shieldbot_mech = Pawn:new{
     
     AddPawn("Nico_shieldbot_mech")
 }
+
+modApi:appendAsset("img/icon_Nico_zenith_shield.png", path.."img/icon_Nico_zenith_shield.png")--image of the trait
+local mod = modApi:getCurrentMod()--the mod itself
+local trait = require(mod.scriptPath .."libs/trait")--where does it get the code for the rest of this to work
+
+Nico_Pawn_List = {"Nico_laserbot_mech", "Nico_cannonbot_mech", "Nico_artillerybot_mech", "Nico_knightbot_mech", "Nico_shieldbot_mech"}
+
+for i = 1,5 do
+	trait:add{
+		pawnType=Nico_Pawn_List[i],--who will get the trait
+		icon = "img/icon_Nico_zenith_shield.png",--the icon itself
+		icon_offset = Point(0,9),--it's location
+		desc_title = "Zenith\'s Guard",--title
+		desc_text = "Gains a shield when moving.",--description
+	}
+end
