@@ -44,7 +44,7 @@ function mod:load( options, version)
 			id="Nico_Sent_weap"
 		},
 		"Sentient Weapons",
-		"Since the vek treath was destroyed, Zenith managed to put their weapons on their senses again, now they travel across the multiverse to fight the vek and their corrupted brothers.",
+		"After destroying the Vek Hive, Zenith sent these improved Sentient Weapons across time to fight the Vek and their hijacked brethren.",
 		self.resourcePath .."img/mod_icon.png"
 	)
 end
