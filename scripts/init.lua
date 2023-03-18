@@ -37,10 +37,10 @@ function mod:load( options, version)
 	-- after we have added our mechs, we can add a squad using them.
 	modApi:addSquad(
 		{
-			"Sentient Weapons",	-- title
-			"Nico_laserbot_mech",    -- mech #1
+			"Sentient Weapons",-- title
 			"Nico_cannonbot_mech",-- mech #2
-			"Nico_artillerybot_mech",	 -- mech #3
+			"Nico_laserbot_mech",-- mech #1
+			"Nico_artillerybot_mech",-- mech #3
 			id="Nico_Sent_weap"
 		},
 		"Sentient Weapons",
