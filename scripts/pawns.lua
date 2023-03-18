@@ -185,7 +185,7 @@ CreatePilot{
 }
 Nico_laserbot_mech = Pawn:new{
     Name = "Laser-Bot",
-    NicoIsRobot = true;
+    NicoIsRobot = true,
     -- FlameMech is also Prime, so this is redundant, but if you had no base, you would need a class.
     Class = "TechnoVek",
     
@@ -218,7 +218,7 @@ Nico_laserbot_mech = Pawn:new{
 }
 Nico_artillerybot_mech = Pawn:new{
     Name = "Artillery-Bot",
-    NicoIsRobot = true;
+    NicoIsRobot = true,
     -- FlameMech is also Prime, so this is redundant, but if you had no base, you would need a class.
     Class = "TechnoVek",
     
@@ -251,7 +251,7 @@ Nico_artillerybot_mech = Pawn:new{
 }
 Nico_cannonbot_mech = Pawn:new{
     Name = "Cannon-Bot",
-    NicoIsRobot = true;
+    NicoIsRobot = true,
     -- FlameMech is also Prime, so this is redundant, but if you had no base, you would need a class.
     Class = "TechnoVek",
     
@@ -284,7 +284,7 @@ Nico_cannonbot_mech = Pawn:new{
 }
 Nico_knightbot_mech = Pawn:new{
     Name = "Knight-Bot",
-    NicoIsRobot = true;
+    NicoIsRobot = true,
     -- FlameMech is also Prime, so this is redundant, but if you had no base, you would need a class.
     Class = "TechnoVek",
 
@@ -318,7 +318,7 @@ Nico_knightbot_mech = Pawn:new{
 }
 Nico_shieldbot_mech = Pawn:new{
     Name = "Shield-Bot",
-    NicoIsRobot = true;
+    NicoIsRobot = true,
     -- FlameMech is also Prime, so this is redundant, but if you had no base, you would need a class.
     Class = "TechnoVek",
     
