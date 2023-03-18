@@ -18,6 +18,19 @@ function mod:init()
 	require(self.scriptPath .."weapons")
 	require(self.scriptPath .."pawns")
     require(self.scriptPath .."palette")
+	-- add extra mech to selection screen
+	modApi.events.onModsInitialized:subscribe(function()
+
+		local oldGetStartingSquad = getStartingSquad
+		function getStartingSquad(choice, ...)
+		local result = oldGetStartingSquad(choice, ...)
+
+		if choice == 0 then
+			return add_arrays(result, {"Nico_knightbot_mech","Nico_shieldbot_mech"})
+		end
+		return result
+		end
+	end)
 end
 
 function mod:load( options, version)
@@ -26,8 +39,8 @@ function mod:load( options, version)
 		{
 			"Sentient Weapons",	-- title
 			"Nico_laserbot_mech",    -- mech #1
-			"Nico_artillerybot_mech",-- mech #2
-			"Nico_cannonbot_mech",	 -- mech #3
+			"Nico_cannonbot_mech",-- mech #2
+			"Nico_artillerybot_mech",	 -- mech #3
 			id="Nico_Sent_weap"
 		},
 		"Sentient Weapons",

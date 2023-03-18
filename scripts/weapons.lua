@@ -1,3 +1,4 @@
+local path = mod_loader.mods[modApi.currentMod].resourcePath
 ------Laser Bot------
 Nico_laserbot = LaserDefault:new{
     Name="BKR Beam Mark II",
@@ -55,7 +56,7 @@ Nico_cannonbot=TankDefault:new{
 	Range = RANGE_PROJECTILE,
 	PathSize = INT_MAX,
 	Description="Fire a damaging projectile that applies fire and pushes.",
-	Icon = "weapons/brute_tank.png",
+	Icon = "advanced/weapons/SnowtankAtk1_Player.png",
 	Damage=1,
     Fire = 1,
     Push=1,
@@ -214,6 +215,69 @@ Nico_artillerybot_AB=Nico_artillerybot_A:new{
 	shield=true,
     Damage=2,
 }
+
+------Knight Bot------
+
+Nico_knightbot = Punch:new{
+	Name = "0th KPR Sword Mark II",
+	Description = "Dash two tiles to damage and push the target.",
+	Icon = "weapons/prime_sword.png",
+	Class = "TechnoVek",
+	Damage = 2,
+	PathSize = INT_MAX,
+	Dash=true,
+	Push = true,
+	LaunchSound="/weapons/sword",
+	TipImage = {
+		Unit = Point(2,4),
+		Target = Point(2,4),
+		Enemy = Point(2,1),
+		CustomPawn = "Nico_knightbot_mech",
+	}
+}
+
+function Nico_knightbot:GetSkillEffect(p1, p2)
+	local ret = SkillEffect()
+	local direction = GetDirection(p2 - p1)
+
+	local doDamage = true
+	local target = GetProjectileEnd(p1,p2,PATH_PROJECTILE)
+	local push_damage = direction
+	local damage = SpaceDamage(target, self.Damage, push_damage)
+	damage.sAnimation = "explosword_"..direction
+	damage.sSound="/weapons/sword"
+	
+    if self.Dash then
+       
+        if not Board:IsBlocked(target,PATH_PROJECTILE) then -- dont attack an empty edge square, just run to the edge
+	    	doDamage = false
+		    target = target + DIR_VECTORS[direction]
+    	end
+    	
+    	ret:AddCharge(Board:GetSimplePath(p1, target - DIR_VECTORS[direction]), FULL_DELAY)
+    elseif self.Projectile and target:Manhattan(p1) ~= 1 then
+		damage.loc = target
+		ret:AddDamage(SpaceDamage(p1,0,(direction+2)%4))
+		ret:AddProjectile(damage, "effects/shot_fist")
+		doDamage = false--damage covered here
+	else
+		target = p2
+	end
+
+	
+	if doDamage then
+		damage.loc = target
+		ret:AddMelee(p2 - DIR_VECTORS[direction], damage)
+	end
+	
+	if self.PushBack then
+		ret:AddDamage(SpaceDamage(p1, 0, GetDirection(p1 - p2)))
+	end
+	return ret
+end
+
+------Shield Bot------
+modApi:appendAsset("img/weapons/Nico_shieldbot.png", path .."img/weapons/Nico_shieldbot.png")
 
 local Nico_FatalFreeze = function(mission, pawn, weaponId, p1, p2, skillEffect)
 	if (weaponId == "Nico_laserbot_A") or (weaponId == "Nico_laserbot_AB") then	

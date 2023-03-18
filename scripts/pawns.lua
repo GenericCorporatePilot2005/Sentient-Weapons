@@ -8,6 +8,7 @@ local path = mod_loader.mods[modApi.currentMod].resourcePath
 	modApi:appendAsset("img/portraits/pilots/Pilot_Nico_artillerybot_mech.png", path .."img/portraits/Pilot_Nico_artillerybot_mech.png")
 	modApi:appendAsset("img/portraits/pilots/Pilot_Nico_laserbot_mech.png", path .."img/portraits/Pilot_Nico_laserbot_mech.png")
 	modApi:appendAsset("img/portraits/pilots/Pilot_Nico_cannonbot_mech.png", path .."img/portraits/Pilot_Nico_cannonbot_mech.png")
+    modApi:appendAsset("img/portraits/pilots/Pilot_Nico_knightbot_mech.png", path .."img/portraits/Pilot_Nico_knightbot_mech.png")
 -- locate our mech assets.
 local artmechPath = path .."img/units/player/"
 -- make a list of our files.
@@ -70,6 +71,7 @@ for _, file in ipairs(files) do
 	modApi:appendAsset("img/units/player/".. file, cannonmechPath .. file)
 end
 local a=ANIMS
+
 	a.Nico_cannonbot_mech =a.MechUnit:new{Image="units/player/Nico_cannonbot_mech.png", PosX = -20, PosY = 4}
 	a.Nico_cannonbot_mecha = a.MechUnit:new{Image="units/player/Nico_cannonbot_mech_a.png",  PosX = -20, PosY = -4, NumFrames = 3 }
 	a.Nico_cannonbot_mechw = a.MechUnit:new{Image="units/player/Nico_cannonbot_mech_w.png", -17, PosY = 2}
@@ -77,50 +79,113 @@ local a=ANIMS
 	a.Nico_cannonbot_mechw_broken = a.MechUnit:new{Image="units/player/Nico_cannonbot_mech_w_broken.png", PosX = -20, PosY = 2 }
 	a.Nico_cannonbot_mech_ns = a.MechIcon:new{Image="units/player/Nico_cannonbot_mech_ns.png"}
 
-	local oldGetSkillInfo = GetSkillInfo
-		function GetSkillInfo(skill)
+-- locate our mech assets.
+local knightmechPath = path .."img/units/player/"
+-- make a list of our files.
+local files = {
+	"Nico_knightbot_mech.png",
+	"Nico_knightbot_mech_a.png",
+	"Nico_knightbot_mech_w.png",
+	"Nico_knightbot_mech_w_broken.png",
+	"Nico_knightbot_mech_broken.png",
+	"Nico_knightbot_mech_ns.png",
+	"Nico_knightbot_mech_h.png",
+}
+for _, file in ipairs(files) do
+	modApi:appendAsset("img/units/player/".. file, artmechPath .. file)
+end
+local a=ANIMS
+	a.Nico_knightbot_mech =a.MechUnit:new{Image="units/player/Nico_knightbot_mech.png", PosX = -18, PosY = -9}
+	a.Nico_knightbot_mecha = a.MechUnit:new{Image="units/player/Nico_knightbot_mech_a.png",  PosX = -18, PosY = -9, NumFrames = 4 }
+	a.Nico_knightbot_mechw = a.MechUnit:new{Image="units/player/Nico_knightbot_mech_w.png", -18, PosY = -2}
+	a.Nico_knightbot_mech_broken = a.MechUnit:new{Image="units/player/Nico_knightbot_mech_broken.png", PosX = -18, PosY = -9 }
+	a.Nico_knightbot_mechw_broken = a.MechUnit:new{Image="units/player/Nico_knightbot_mech_w_broken.png", PosX = -18, PosY = -2 }
+	a.Nico_knightbot_mech_ns = a.MechIcon:new{Image="units/player/Nico_knightbot_mech_ns.png"}
+
+-- locate our mech assets.
+local shieldmechPath = path .."img/units/player/"
+-- make a list of our files.
+local files = {
+	"Nico_shieldbot_mech.png",
+	"Nico_shieldbot_mech_a.png",
+	"Nico_shieldbot_mech_w.png",
+	"Nico_shieldbot_mech_w_broken.png",
+	"Nico_shieldbot_mech_broken.png",
+	"Nico_shieldbot_mech_ns.png",
+	"Nico_shieldbot_mech_h.png",
+}
+for _, file in ipairs(files) do
+	modApi:appendAsset("img/units/player/".. file, shieldmechPath .. file)
+end
+local a=ANIMS
+	a.Nico_shieldbot_mech =a.MechUnit:new{Image="units/player/Nico_shieldbot_mech.png", PosX = -18, PosY = -9}
+	a.Nico_shieldbot_mecha = a.MechUnit:new{Image="units/player/Nico_shieldbot_mech_a.png",  PosX = -18, PosY = -9, NumFrames = 4 }
+	a.Nico_shieldbot_mechw = a.MechUnit:new{Image="units/player/Nico_shieldbot_mech_w.png", -18, PosY = -2}
+	a.Nico_shieldbot_mech_broken = a.MechUnit:new{Image="units/player/Nico_shieldbot_mech_broken.png", PosX = -18, PosY = -9 }
+	a.Nico_shieldbot_mechw_broken = a.MechUnit:new{Image="units/player/Nico_shieldbot_mech_w_broken.png", PosX = -18, PosY = -2 }
+	a.Nico_shieldbot_mech_ns = a.MechIcon:new{Image="units/player/Nico_shieldbot_mech_ns.png"}
+
+
+local oldGetSkillInfo = GetSkillInfo
+	function GetSkillInfo(skill)
        
-		if IsRobot then
-			IsRobot = nil
-			if skill == "Survive_Death"    then
-				return PilotSkill("Robot", "Normal Pilots cannot be equipped. Loses 25 XP when the unit is disabled.")
-			end
+	if NicoIsRobot then
+		NicoIsRobot = nil
+		if skill == "Survive_Death"    then
+			return PilotSkill("Robot", "Normal Pilots cannot be equipped. Loses 25 XP when the unit is disabled.")
 		end
-        LOG("GetSkillInfo called for ", skill)
-		return oldGetSkillInfo(skill)
 	end
+	return oldGetSkillInfo(skill)
+end
 
 CreatePilot{
  	Id = "Pilot_Nico_laserbot_mech",
     Personality = "Vek",
 	Sex = SEX_VEK,
     Name = "Laser-Bot",
-    GetSkill = function() IsRobot = true; return "Survive_Death" end,
+    GetSkill = function() NicoIsRobot = true; return "Survive_Death" end,
 	Rarity = 0,
-    Blacklist = {"Invulnerable", "Popular","Grid"},
+    Blacklist = {"Invulnerable", "Popular","Grid","Health","Skilled"},
 }
 CreatePilot{
     Id = "Pilot_Nico_cannonbot_mech",
     Personality = "Vek",
     Sex = SEX_VEK,
     Name = "Cannon-Bot",
-    GetSkill = function() IsRobot = true; return "Survive_Death" end,
+    GetSkill = function() NicoIsRobot = true; return "Survive_Death" end,
     Rarity = 0,
-    Blacklist = {"Invulnerable", "Popular","Grid"},
+    Blacklist = {"Invulnerable", "Popular","Grid","Health","Skilled"},
 }
 CreatePilot{
     Id = "Pilot_Nico_artillerybot_mech",
   	Personality = "Vek",
 	Sex = SEX_VEK,
     Name = "Artillery-Bot",
-    GetSkill = function() IsRobot = true; return "Survive_Death" end,
+    GetSkill = function() NicoIsRobot = true; return "Survive_Death" end,
 	Rarity = 0,
-    Blacklist = {"Invulnerable", "Popular","Grid"},
+    Blacklist = {"Invulnerable", "Popular","Grid","Health","Skilled"},
 }
-
+CreatePilot{
+    Id = "Pilot_Nico_knightbot_mech",
+  	Personality = "Vek",
+	Sex = SEX_VEK,
+    Name = "Knight-Bot",
+    GetSkill = function() NicoIsRobot = true; return "Survive_Death" end,
+	Rarity = 0,
+    Blacklist = {"Invulnerable", "Popular","Grid","Health","Skilled"},
+}
+CreatePilot{
+    Id = "Pilot_Nico_shieldbot_mech",
+  	Personality = "Vek",
+	Sex = SEX_VEK,
+    Name = "Shield-Bot",
+    GetSkill = function() NicoIsRobot = true; return "Survive_Death" end,
+	Rarity = 0,
+    Blacklist = {"Invulnerable", "Popular","Grid","Health","Skilled"},
+}
 Nico_laserbot_mech = Pawn:new{
     Name = "Laser-Bot",
-    
+    NicoIsRobot = true;
     -- FlameMech is also Prime, so this is redundant, but if you had no base, you would need a class.
     Class = "TechnoVek",
     
@@ -153,7 +218,7 @@ Nico_laserbot_mech = Pawn:new{
 }
 Nico_artillerybot_mech = Pawn:new{
     Name = "Artillery-Bot",
-    
+    NicoIsRobot = true;
     -- FlameMech is also Prime, so this is redundant, but if you had no base, you would need a class.
     Class = "TechnoVek",
     
@@ -186,7 +251,7 @@ Nico_artillerybot_mech = Pawn:new{
 }
 Nico_cannonbot_mech = Pawn:new{
     Name = "Cannon-Bot",
-    
+    NicoIsRobot = true;
     -- FlameMech is also Prime, so this is redundant, but if you had no base, you would need a class.
     Class = "TechnoVek",
     
@@ -216,4 +281,72 @@ Nico_cannonbot_mech = Pawn:new{
 	ImpactMaterial = IMPACT_METAL,
     
     AddPawn("Nico_cannonbot_mech")
+}
+Nico_knightbot_mech = Pawn:new{
+    Name = "Knight-Bot",
+    NicoIsRobot = true;
+    -- FlameMech is also Prime, so this is redundant, but if you had no base, you would need a class.
+    Class = "TechnoVek",
+
+    -- various stats.
+    Health = 1,
+    MoveSpeed = 4,
+    Massive = true,
+    Corpse = true,
+    Armor = true,
+
+    -- reference the animations we set up earlier.
+    Image = "Nico_knightbot_mech",
+
+    -- ImageOffset specifies which color scheme we will be using.
+    -- (only apporpirate if you draw your mechs with Archive olive green colors)
+	ImageOffset = imageOffset,
+
+    -- Any weapons this mech should start with goes in this table.
+    SkillList = {"Nico_knightbot"},
+
+    -- movement sounds.
+	SoundLocation = "/enemy/snowlaser_1/",
+   
+    -- who will be controlling this unit.
+    DefaultTeam = TEAM_PLAYER,
+    
+    -- impact sounds.
+	ImpactMaterial = IMPACT_METAL,
+    
+    AddPawn("Nico_knightbot_mech")
+}
+Nico_shieldbot_mech = Pawn:new{
+    Name = "Shield-Bot",
+    NicoIsRobot = true;
+    -- FlameMech is also Prime, so this is redundant, but if you had no base, you would need a class.
+    Class = "TechnoVek",
+    
+    -- various stats.
+    Health = 1,
+    MoveSpeed = 5,
+    Massive = true,
+    Corpse = true,
+    Flying=true,
+    
+    -- reference the animations we set up earlier.
+    Image = "Nico_shieldbot_mech",
+    
+    -- ImageOffset specifies which color scheme we will be using.
+    -- (only apporpirate if you draw your mechs with Archive olive green colors)
+	ImageOffset = imageOffset,
+    
+    -- Any weapons this mech should start with goes in this table.
+    SkillList = {"Nico_laserbot"},
+    
+    -- movement sounds.
+	SoundLocation = "/enemy/snowlaser_1/",
+    
+    -- who will be controlling this unit.
+    DefaultTeam = TEAM_PLAYER,
+    
+    -- impact sounds.
+	ImpactMaterial = IMPACT_METAL,
+    
+    AddPawn("Nico_shieldbot_mech")
 }
