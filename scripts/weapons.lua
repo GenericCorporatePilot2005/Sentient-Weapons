@@ -64,15 +64,14 @@ Nico_cannonbot=TankDefault:new{
 	PowerCost=0,
 	Upgrades=2,
 	ShieldFriendly = false,
-	UpgradeCost={2,3},
+	UpgradeCost={2,2},
 	UpgradeList = { "+1 Damage", "Shield Friendly"},
-	Explosion = "ExploAir2",
 	Projectile = "effects/shot_mechtank",
 	LaunchSound = "/enemy/snowtank_1/attack",
 	TipImage = {
 		Unit = Point(2,3),
 		Enemy = Point(2,1),
-		Target = Point(2,1),
+		Target = Point(2,2),
 		CustomPawn = "Nico_cannonbot_mech",
 	},
 }
@@ -80,21 +79,21 @@ Nico_cannonbot=TankDefault:new{
 function Nico_cannonbot:GetSkillEffect(p1,p2)
 	local ret = SkillEffect()
 	local direction = GetDirection(p2 - p1)
+	local target = GetProjectileEnd(p1,p2)
 	
-	local damage = SpaceDamage(p2, self.Damage)
+	local damage = SpaceDamage(target, self.Damage)
 	damage.iFire = self.Fire
 	if self.Push == 1 then
 		damage.iPush = direction
 	end
 	damage.sAnimation = self.Explo..direction
 	
-	
 	ret:AddProjectile(damage, self.ProjectileArt, NO_DELAY)--"effects/shot_mechtank")
 	if self.ShieldFriendly then
-		ret:AddDelay(0.1*p1:Manhattan(p2))
+		ret:AddDelay(0.1*p1:Manhattan(target))
 		for dir = DIR_START, DIR_END do
-			local spaceDamage = SpaceDamage(p2 + DIR_VECTORS[dir], 0)
-			if Board:IsBuilding(p2 + DIR_VECTORS[dir]) or Board:GetPawnTeam(p2 + DIR_VECTORS[dir]) == TEAM_PLAYER then
+			local spaceDamage = SpaceDamage(target + DIR_VECTORS[dir], 0)
+			if Board:IsBuilding(target + DIR_VECTORS[dir]) or Board:GetPawnTeam(target + DIR_VECTORS[dir]) == TEAM_PLAYER then
 				spaceDamage.iShield = 1
 				ret:AddDamage(spaceDamage)
 			end
@@ -106,8 +105,9 @@ end
 
 
 Nico_cannonbot_A=Nico_cannonbot:new{
-    Damage=2,
-    UpgradeDescription = "Increases damage by 1.",
+	Damage=2,
+	Explo = "explopush2_",
+	UpgradeDescription = "Increases damage by 1.",
 }
 
 Nico_cannonbot_B=Nico_cannonbot:new{
@@ -115,10 +115,12 @@ Nico_cannonbot_B=Nico_cannonbot:new{
 	ShieldFriendly = true,
     UpgradeDescription = "Shields allied units and buildings adjacent to the target.",
 	TipImage = {
-		Unit = Point(1,3),
-		Enemy1 = Point(1,1),
-		Target = Point(1,1),
-		Building = Point(1,0),
+		Unit = Point(2,3),
+		Enemy1 = Point(2,1),
+		Target = Point(2,2),
+		Building = Point(2,0),
+		Friendly1 = Point(1,1),
+		Friendly2 = Point(3,1),
 		CustomEnemy = "Firefly1",
 		CustomPawn = "Nico_cannonbot_mech",
 		Length = 4,
@@ -126,22 +128,23 @@ Nico_cannonbot_B=Nico_cannonbot:new{
 }
 
 Nico_cannonbot_AB=Nico_cannonbot_B:new{
-    Damage=2,
+	Damage=2,
+	Explo = "explopush2_",
 }
 
 ------Artillery Bot------
 Nico_artillerybot=ArtilleryDefault:new{
-    Name="Vk8 Rockets Mark II",
-    Class = "TechnoVek",
+	Name="Vk8 Rockets Mark II",
+	Class = "TechnoVek",
 	Icon = "weapons/ranged_tribomb.png",
-    Description="Launch Rockets at 3 tiles.",
-	Explosion = "",
+	Description="Launch Rockets at 3 tiles.",
+	Explo = "explopush1_",
 	Damage = 1,
 	PowerCost = 0,
 	BuildingDamage = true,
 	shield=false,
 	Upgrades = 2,
-    UpgradeList = { "Shield Buildings",  "+1 Damage"  },
+	UpgradeList = { "Shield Buildings",  "+1 Damage"  },
 	UpgradeCost = {2,3},
 	LaunchSound = "/enemy/snowart_1/attack",
 	ImpactSound = "",
@@ -163,8 +166,7 @@ function Nico_artillerybot:GetSkillEffect(p1,p2)
 	
 	for i = -1,1 do
 		damage = SpaceDamage(p2 + DIR_VECTORS[(dir+1)%4]*i, self.Damage, dir)
-		damage.sAnimation = "explopush1_"..dir
-		if self.Damage == 2 then damage.sAnimation = "explopush2_"..dir end
+		damage.sAnimation = self.Explo..dir
 		damage.sSound = "/impact/generic/explosion"
 		if not self.BuildingDamage and self.shield and Board:IsBuilding(p2 + DIR_VECTORS[(dir+1)%4]*i) then
 			damage.iDamage = DAMAGE_ZERO
@@ -185,18 +187,20 @@ function Nico_artillerybot:GetSkillEffect(p1,p2)
 end
 
 Nico_artillerybot_A=Nico_artillerybot:new{
-    BuildingDamage = false,
+	BuildingDamage = false,
 	shield=true,
-    UpgradeDescription = "This attack will shield Grid Buildings.",
+	UpgradeDescription = "This attack will shield Grid Buildings.",
 }
 Nico_artillerybot_B=Nico_artillerybot:new{
-    Damage=2,
-    UpgradeDescription = "Deals 1 additional damage to all targets.",
+	Damage=2,
+	Explo="explopush2_",
+	UpgradeDescription = "Deals 1 additional damage to all targets.",
 }
 Nico_artillerybot_AB=Nico_artillerybot_A:new{
-    BuildingDamage = false,
+	BuildingDamage = false,
 	shield=true,
-    Damage=2,
+	Damage=2,
+	Explo="explopush2_",
 }
 
 ------Knight Bot------
