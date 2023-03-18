@@ -145,7 +145,7 @@ CreatePilot{
     Name = "Laser-Bot",
     GetSkill = function() NicoIsRobot = true; return "Survive_Death" end,
 	Rarity = 0,
-    Blacklist = {"Invulnerable", "Popular","Grid","Health","Skilled"},
+    Blacklist = {"Invulnerable","Thick","Popular","Grid","Health","Skilled"},
 }
 CreatePilot{
     Id = "Pilot_Nico_cannonbot_mech",
@@ -154,7 +154,7 @@ CreatePilot{
     Name = "Cannon-Bot",
     GetSkill = function() NicoIsRobot = true; return "Survive_Death" end,
     Rarity = 0,
-    Blacklist = {"Invulnerable", "Popular","Grid","Health","Skilled"},
+    Blacklist = {"Invulnerable","Thick","Popular","Grid","Health","Skilled"},
 }
 CreatePilot{
     Id = "Pilot_Nico_artillerybot_mech",
@@ -163,7 +163,7 @@ CreatePilot{
     Name = "Artillery-Bot",
     GetSkill = function() NicoIsRobot = true; return "Survive_Death" end,
 	Rarity = 0,
-    Blacklist = {"Invulnerable", "Popular","Grid","Health","Skilled"},
+    Blacklist = {"Invulnerable","Thick","Popular","Grid","Health","Skilled"},
 }
 CreatePilot{
     Id = "Pilot_Nico_knightbot_mech",
@@ -172,7 +172,7 @@ CreatePilot{
     Name = "Knight-Bot",
     GetSkill = function() NicoIsRobot = true; return "Survive_Death" end,
 	Rarity = 0,
-    Blacklist = {"Invulnerable", "Popular","Grid","Health","Skilled"},
+    Blacklist = {"Invulnerable","Thick","Popular","Grid","Health","Skilled"},
 }
 CreatePilot{
     Id = "Pilot_Nico_shieldbot_mech",
@@ -181,7 +181,7 @@ CreatePilot{
     Name = "Shield-Bot",
     GetSkill = function() NicoIsRobot = true; return "Survive_Death" end,
 	Rarity = 0,
-    Blacklist = {"Invulnerable", "Popular","Grid","Health","Skilled"},
+    Blacklist = {"Invulnerable","Thick","Popular","Grid","Health","Skilled"},
 }
 Nico_laserbot_mech = Pawn:new{
     Name = "Laser-Bot",
