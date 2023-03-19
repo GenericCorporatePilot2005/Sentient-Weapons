@@ -210,7 +210,7 @@ Nico_knightbot = Punch:new{
 	Description = "Dash two tiles to damage and push the target.",
 	Icon = "weapons/prime_sword.png",
 	Class = "TechnoVek",
-	Damage = 2,
+	Damage = 1,
 	PathSize = INT_MAX,
 	Dash=true,
 	Push = true,
@@ -233,23 +233,13 @@ function Nico_knightbot:GetSkillEffect(p1, p2)
 	local damage = SpaceDamage(target, self.Damage, push_damage)
 	damage.sAnimation = "explosword_"..direction
 	damage.sSound="/weapons/sword"
-	
-    if self.Dash then
-       
-        if not Board:IsBlocked(target,PATH_PROJECTILE) then -- dont attack an empty edge square, just run to the edge
-	    	doDamage = false
-		    target = target + DIR_VECTORS[direction]
-    	end
-    	
-    	ret:AddCharge(Board:GetSimplePath(p1, target - DIR_VECTORS[direction]), FULL_DELAY)
-    elseif self.Projectile and target:Manhattan(p1) ~= 1 then
-		damage.loc = target
-		ret:AddDamage(SpaceDamage(p1,0,(direction+2)%4))
-		ret:AddProjectile(damage, "effects/shot_fist")
-		doDamage = false--damage covered here
-	else
-		target = p2
+
+    if not Board:IsBlocked(target,PATH_PROJECTILE) then -- dont attack an empty edge square, just run to the edge
+	 	doDamage = false
+	    target = target + DIR_VECTORS[direction]
 	end
+    	
+	ret:AddCharge(Board:GetSimplePath(p1, target - DIR_VECTORS[direction]), FULL_DELAY)
 
 	
 	if doDamage then
@@ -265,6 +255,51 @@ end
 
 ------Shield Bot------
 modApi:appendAsset("img/weapons/Nico_shieldbot.png", path .."img/weapons/Nico_shieldbot.png")
+Nico_shieldbot = Science_Placer:new{
+	Class = "TechnoVek",
+	Name="NRG Shield Mark II",
+	Description="Shields self, push and damage adjacent tiles away.",
+	Icon = "weapons/Nico_shieldbot.png",
+	LaunchSound = "/weapons/enhanced_tractor",
+	Explosion = "",
+	Range = 0,
+	PathSize = 1,
+	Damage = 0,
+	PowerCost = 0,
+	Upgrades = 0,
+	UpgradeCost = { 1,2 },
+	TipImage = {
+		Unit = Point(2,1),
+		Enemy = Point(1,1),
+		Enemy2 = Point(3,1),
+		Target = Point(2,1),
+		CustomPawn="Nico_shieldbot_mech",
+	},
+}
+
+function Nico_shieldbot:GetSkillEffect(p1, p2)
+	local ret = SkillEffect()
+
+	local dir = GetDirection(p2 - p1)
+
+	
+	local damage = SpaceDamage(p2, self.Damage)
+	damage.iShield = EFFECT_CREATE
+	damage.sAnimation = "ExploRepulse1"
+	if p1 == p2 then ret:AddDamage(damage) 
+	else 	
+		ret:AddArtillery(damage, "effects/shot_pull_U.png", NO_DELAY)
+		ret:AddDelay(1)
+	end
+	
+	for i = DIR_START, DIR_END do
+		damage = SpaceDamage(p2 + DIR_VECTORS[i], 1, i)
+		damage.sAnimation = "airpush_"..i
+		ret:AddDamage(damage)
+	end
+	
+	return ret
+end	
 
 local Nico_FatalFreeze = function(mission, pawn, weaponId, p1, p2, skillEffect)
 	if (weaponId == "Nico_laserbot_A") or (weaponId == "Nico_laserbot_AB") then	

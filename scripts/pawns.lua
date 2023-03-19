@@ -9,6 +9,7 @@ local path = mod_loader.mods[modApi.currentMod].resourcePath
 	modApi:appendAsset("img/portraits/pilots/Pilot_Nico_laserbot_mech.png", path .."img/portraits/Pilot_Nico_laserbot_mech.png")
 	modApi:appendAsset("img/portraits/pilots/Pilot_Nico_cannonbot_mech.png", path .."img/portraits/Pilot_Nico_cannonbot_mech.png")
     modApi:appendAsset("img/portraits/pilots/Pilot_Nico_knightbot_mech.png", path .."img/portraits/Pilot_Nico_knightbot_mech.png")
+    modApi:appendAsset("img/portraits/pilots/Pilot_Nico_shieldbot_mech.png", path .."img/portraits/Pilot_Nico_shieldbot_mech.png")
 -- locate our mech assets.
 local artmechPath = path .."img/units/player/"
 -- make a list of our files.
@@ -337,7 +338,7 @@ Nico_shieldbot_mech = Pawn:new{
 	ImageOffset = imageOffset,
     
     -- Any weapons this mech should start with goes in this table.
-    SkillList = {"Nico_laserbot"},
+    SkillList = {"Nico_shieldbot"},
     
     -- movement sounds.
 	SoundLocation = "/enemy/snowlaser_1/",
