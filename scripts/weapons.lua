@@ -307,8 +307,8 @@ local Nico_FatalFreeze = function(mission, pawn, weaponId, p1, p2, skillEffect)
 			local spaceDamage = skillEffect.effect:index(i)
 			spaceDamage.bKO_Effect = Board:IsDeadly(spaceDamage,Pawn)
 			local dpawn = Board:GetPawn(spaceDamage.loc)
-			local friendly_non_mech = Board:IsPawnSpace(spaceDamage.loc) and dpawn:GetTeam() == TEAM_PLAYER and not dpawn:IsMech()
-			if spaceDamage.bKO_Effect or Board:IsBuilding(spaceDamage.loc) or friendly_non_mech then
+			local friendly = Board:IsPawnSpace(spaceDamage.loc) and dpawn:GetTeam() == TEAM_PLAYER
+			if spaceDamage.bKO_Effect or Board:IsBuilding(spaceDamage.loc) or friendly then
 				spaceDamage.iDamage = 0
 				--invert the KO flag afterwards because it overwrites the spaceDamage image mark for some reason
 				spaceDamage.bKO_Effect = false
