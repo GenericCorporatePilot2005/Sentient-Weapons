@@ -364,6 +364,6 @@ for i = 1,5 do
 		icon = "img/icon_Nico_zenith_shield.png",--the icon itself
 		icon_offset = Point(0,9),--it's location
 		desc_title = "Zenith\'s Guard",--title
-		desc_text = "Gains a shield when moving.",--description
+		desc_text = "Gains a shield when moving next to another Mech.",--description
 	}
 end
