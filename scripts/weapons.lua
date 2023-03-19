@@ -319,7 +319,9 @@ local Nico_FatalFreeze = function(mission, pawn, weaponId, p1, p2, skillEffect)
 end
 
 local Nico_MoveShield = function(mission, pawn, weaponId, p1, p2)
-	if _G[pawn:GetType()].NicoIsRobot and weaponId == "Move" then
+	i = pawn:GetId()
+	local adjacent_mech = (Board:GetPawn((i+1)%3):GetSpace():Manhattan(p2)==1) or (Board:GetPawn((i+2)%3):GetSpace():Manhattan(p2)==1)
+	if _G[pawn:GetType()].NicoIsRobot and weaponId == "Move" and adjacent_mech then
 		Game:TriggerSound("/props/shield_activated")
 		pawn:SetShield(true)
 	end
