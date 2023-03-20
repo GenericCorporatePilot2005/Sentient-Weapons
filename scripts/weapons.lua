@@ -28,12 +28,12 @@ Nico_laserbot = LaserDefault:new{
 
 Nico_laserbot_A = Nico_laserbot:new{
     LaserArt = "effects/laser_freeze",
-    UpgradeDescription = "If the target would die, freeze it instead. Freezes Buildings and non-Mech allies.",
+    UpgradeDescription = "If the target would die, freeze it instead. Freezes Buildings and allies.",
 	TipImage = {
 		Unit = Point(2,4),
-		Enemy1 = Point(2,1),
-		Enemy2 = Point(2,2),
-		Enemy3 = Point(2,3),
+		Friendly = Point(2,1),
+		Enemy1 = Point(2,2),
+		Enemy2 = Point(2,3),
 		Target = Point(2,2),
 		Building = Point(2,0),
 		CustomEnemy = "Digger1",
@@ -143,6 +143,7 @@ Nico_artillerybot=ArtilleryDefault:new{
 	PowerCost = 0,
 	BuildingDamage = true,
 	shield=false,
+	TwoClick = true,
 	Upgrades = 2,
 	UpgradeList = { "Shield Buildings",  "+1 Damage"  },
 	UpgradeCost = {2,3},
@@ -157,6 +158,24 @@ Nico_artillerybot=ArtilleryDefault:new{
         CustomPawn="Nico_artillerybot_mech",
 	},
 }
+function Nico_artillerybot:GetSecondTargetArea(p1,p2)
+	local ret = PointList()
+	local dir = GetDirection(p2 - p1)
+	for i = 3,4 do
+		if dir%2 == 1 then
+			if Point(1,i)~= p2 then ret:push_back(Point(1,i)) end
+			if Point(2,i)~= p2 then ret:push_back(Point(2,i)) end
+			if Point(5,i)~= p2 then ret:push_back(Point(5,i)) end
+			if Point(6,i)~= p2 then ret:push_back(Point(6,i)) end
+		else
+			if Point(i,1)~= p2 then ret:push_back(Point(i,1)) end
+			if Point(i,2)~= p2 then ret:push_back(Point(i,2)) end
+			if Point(i,5)~= p2 then ret:push_back(Point(i,5)) end
+			if Point(i,6)~= p2 then ret:push_back(Point(i,6)) end
+		end
+	end
+	return ret
+end
 function Nico_artillerybot:GetSkillEffect(p1,p2)
 	local ret = SkillEffect()
 	local dir = GetDirection(p2 - p1)
@@ -165,7 +184,7 @@ function Nico_artillerybot:GetSkillEffect(p1,p2)
 	if self.Damage == 2 then bounce = 3 end
 	
 	for i = -1,1 do
-		damage = SpaceDamage(p2 + DIR_VECTORS[(dir+1)%4]*i, self.Damage, dir)
+		damage = SpaceDamage(p2 + DIR_VECTORS[(dir+1)%4]*i, self.Damage)
 		damage.sAnimation = self.Explo..dir
 		damage.sSound = "/impact/generic/explosion"
 		if not self.BuildingDamage and self.shield and Board:IsBuilding(p2 + DIR_VECTORS[(dir+1)%4]*i) then
@@ -185,7 +204,44 @@ function Nico_artillerybot:GetSkillEffect(p1,p2)
 	end
 	return ret
 end
-
+function Nico_artillerybot:GetFinalEffect(p1,p2,p3)
+	local ret = SkillEffect()
+	local dir = GetDirection(p2 - p1)
+	local push_dir = dir
+	if p3.x == 1 or p3.x == 2 then
+		push_dir = 3
+	elseif p3.x == 5 or p3.x == 6 then
+		push_dir = 1
+	elseif p3.y == 1 or p3.y == 2 then
+		push_dir = 0
+	elseif p3.y == 5 or p3.y == 6 then
+		push_dir = 2
+	end
+	local damage = SpaceDamage(p2, self.Damage, push_dir)
+	local bounce = 2
+	if self.Damage == 2 then bounce = 3 end
+	
+	for i = -1,1 do
+		damage = SpaceDamage(p2 + DIR_VECTORS[(dir+1)%4]*i, self.Damage, push_dir)
+		damage.sAnimation = self.Explo..push_dir
+		damage.sSound = "/impact/generic/explosion"
+		if not self.BuildingDamage and self.shield and Board:IsBuilding(p2 + DIR_VECTORS[(dir+1)%4]*i) then
+			damage.iDamage = DAMAGE_ZERO
+			damage.iShield=1
+			damage.sAnimation = "airpush_"..push_dir
+			ret:AddArtillery(damage,"effects/shotup_missileswarm.png", NO_DELAY)
+		elseif self.Damage==2 then
+			ret:AddArtillery(damage,"effects/shotup_robot.png", NO_DELAY)--
+		else
+			ret:AddArtillery(damage,"effects/shotup_guided_missile.png", NO_DELAY)
+		end
+	end
+	ret:AddDelay(0.8)
+	for i = -1,1 do
+		ret:AddBounce(p2 + DIR_VECTORS[(dir+1)%4]*i, bounce)
+	end
+	return ret
+end
 Nico_artillerybot_A=Nico_artillerybot:new{
 	BuildingDamage = false,
 	shield=true,
