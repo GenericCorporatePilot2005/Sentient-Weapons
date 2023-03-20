@@ -155,6 +155,7 @@ Nico_artillerybot=ArtilleryDefault:new{
 		Enemy = Point(2,1),
 		Enemy2 = Point(3,1),
 		Building = Point(1,1),
+		Second_Click = Point(3,5),
         CustomPawn="Nico_artillerybot_mech",
 	},
 }
@@ -376,7 +377,8 @@ end
 
 local Nico_MoveShield = function(mission, pawn, weaponId, p1, p2)
 	i = pawn:GetId()
-	local adjacent_mech = (Board:GetPawn((i+1)%3):GetSpace():Manhattan(p2)==1) or (Board:GetPawn((i+2)%3):GetSpace():Manhattan(p2)==1)
+	local IsRealMission = true and (mission ~= nil) and (mission ~= Mission_Test) and Board	and Board:IsMissionBoard()
+	local adjacent_mech = IsRealMission and ((Board:GetPawn((i+1)%3):GetSpace():Manhattan(p2)==1) or (Board:GetPawn((i+2)%3):GetSpace():Manhattan(p2)==1))
 	if _G[pawn:GetType()].NicoIsRobot and weaponId == "Move" and adjacent_mech then
 		Game:TriggerSound("/props/shield_activated")
 		pawn:SetShield(true)
