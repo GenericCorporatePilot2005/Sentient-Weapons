@@ -1,7 +1,5 @@
-local path = GetParentPath(...)
-require(path.."palette")
 local mod = modApi:getCurrentMod()
-local imageOffset = modApi:getPaletteImageOffset(mod.id)
+
 
 -- this line just gets the file path for your mod, so you can find all your files easily.
 local path = mod_loader.mods[modApi.currentMod].resourcePath
@@ -126,6 +124,34 @@ local a=ANIMS
 	a.Nico_shieldbot_mechw_broken = a.MechUnit:new{Image="units/player/Nico_shieldbot_mech_w_broken.png", PosX = -18, PosY = -2 }
 	a.Nico_shieldbot_mech_ns = a.MechIcon:new{Image="units/player/Nico_shieldbot_mech_ns.png"}
 
+    modApi:addPalette{
+        id = "nico_snow",
+        image="units/player/Nico_artillerybot_mech_ns.png",
+        name = "Sentient Weapon's Light Blue & Silver",
+        colorMap = {
+            PlateHighlight = {255,  14,  19},
+            PlateLight     = {100, 151, 143},
+            PlateMid       = { 50,  71,  88},
+            PlateDark      = { 31,  34,  46},
+            PlateOutline   = { 17,  17,  18},
+            PlateShadow    = { 74,  76,  80},
+            BodyColor      = {125, 135, 144},
+            BodyHighlight  = {208, 213, 217},
+        },
+    }
+    modApi:addPalette{
+        ID = "nico_alpha_snow",
+        image="units/player/Nico_knightbot_mech_ns.png",
+        Name = "Pinnacle Robot Alpha",
+        PlateHighlight = {255,  14,  19},
+        PlateLight     = {181, 165, 216},
+        PlateMid       = {151,  88, 153},
+        PlateDark      = { 74,  58,  66},
+        PlateOutline   = { 27,  25,  27},
+        PlateShadow    = { 41,  50,  48},
+        BodyColor      = { 71,  92,  85},
+        BodyHighlight  = {137, 162, 153},
+    }
 
 local oldGetSkillInfo = GetSkillInfo
 	function GetSkillInfo(skill)
@@ -201,7 +227,7 @@ Nico_laserbot_mech = Pawn:new{
     
     -- ImageOffset specifies which color scheme we will be using.
     -- (only apporpirate if you draw your mechs with Archive olive green colors)
-	ImageOffset = imageOffset,
+	ImageOffset = modApi:getPaletteImageOffset("nico_snow"),
     
     -- Any weapons this mech should start with goes in this table.
     SkillList = {"Nico_laserbot"},
@@ -234,7 +260,7 @@ Nico_artillerybot_mech = Pawn:new{
     
     -- ImageOffset specifies which color scheme we will be using.
     -- (only apporpirate if you draw your mechs with Archive olive green colors)
-	ImageOffset = imageOffset,
+	ImageOffset = modApi:getPaletteImageOffset("nico_snow"),
     
     -- Any weapons this mech should start with goes in this table.
     SkillList = {"Nico_artillerybot"},
@@ -267,7 +293,7 @@ Nico_cannonbot_mech = Pawn:new{
     
     -- ImageOffset specifies which color scheme we will be using.
     -- (only apporpirate if you draw your mechs with Archive olive green colors)
-	ImageOffset = imageOffset,
+    ImageOffset = modApi:getPaletteImageOffset("nico_snow"),
     
     -- Any weapons this mech should start with goes in this table.
     SkillList = {"Nico_cannonbot"},
@@ -301,7 +327,7 @@ Nico_knightbot_mech = Pawn:new{
 
     -- ImageOffset specifies which color scheme we will be using.
     -- (only apporpirate if you draw your mechs with Archive olive green colors)
-	ImageOffset = imageOffset,
+    ImageOffset = modApi:getPaletteImageOffset("nico_alpha_snow"),
 
     -- Any weapons this mech should start with goes in this table.
     SkillList = {"Nico_knightbot"},
@@ -335,7 +361,7 @@ Nico_shieldbot_mech = Pawn:new{
     
     -- ImageOffset specifies which color scheme we will be using.
     -- (only apporpirate if you draw your mechs with Archive olive green colors)
-	ImageOffset = imageOffset,
+    ImageOffset = modApi:getPaletteImageOffset("nico_alpha_snow"),
     
     -- Any weapons this mech should start with goes in this table.
     SkillList = {"Nico_shieldbot"},

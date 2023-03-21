@@ -17,7 +17,6 @@ function mod:init()
 	-- look in template/mech to see how to code mechs.
 	require(self.scriptPath .."weapons")
 	require(self.scriptPath .."pawns")
-    require(self.scriptPath .."palette")
 	-- add extra mech to selection screen
 	modApi.events.onModsInitialized:subscribe(function()
 
