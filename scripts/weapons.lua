@@ -204,7 +204,6 @@ Nico_artillerybot=ArtilleryDefault:new{
 	Class = "TechnoVek",
 	Icon = "weapons/ranged_tribomb.png",
 	Description="Launch Rockets at 3 tiles.",
-	Explo = "explopush1_",
 	Damage = 1,
 	PowerCost = 0,
 	BuildingDamage = true,
@@ -229,16 +228,12 @@ function Nico_artillerybot:GetSecondTargetArea(p1,p2)
 	local ret = PointList()
 	local dir = GetDirection(p2 - p1)
 	for i = 3,4 do
-		if dir%2 == 1 then
-			if Point(1,i)~= p2 then ret:push_back(Point(1,i)) end
-			if Point(2,i)~= p2 then ret:push_back(Point(2,i)) end
-			if Point(5,i)~= p2 then ret:push_back(Point(5,i)) end
-			if Point(6,i)~= p2 then ret:push_back(Point(6,i)) end
-		else
-			if Point(i,1)~= p2 then ret:push_back(Point(i,1)) end
-			if Point(i,2)~= p2 then ret:push_back(Point(i,2)) end
-			if Point(i,5)~= p2 then ret:push_back(Point(i,5)) end
-			if Point(i,6)~= p2 then ret:push_back(Point(i,6)) end
+		for j = 1,6 do
+			if dir%2 == 1 then
+				if Point(j,i)~= p2 then ret:push_back(Point(j,i)) end
+			else
+				if Point(i,j)~= p2 then ret:push_back(Point(i,j)) end
+			end
 		end
 	end
 	return ret
@@ -247,12 +242,10 @@ function Nico_artillerybot:GetSkillEffect(p1,p2)
 	local ret = SkillEffect()
 	local dir = GetDirection(p2 - p1)
 	local damage = SpaceDamage(p2, self.Damage, dir)
-	local bounce = 2
-	if self.Damage == 2 then bounce = 3 end
 	
 	for i = -1,1 do
 		damage = SpaceDamage(p2 + DIR_VECTORS[(dir+1)%4]*i, self.Damage)
-		damage.sAnimation = self.Explo..dir
+		damage.sAnimation = "explopush"..self.Damage.."_"..dir
 		damage.sSound = "/impact/generic/explosion"
 		if not self.BuildingDamage and self.shield and Board:IsBuilding(p2 + DIR_VECTORS[(dir+1)%4]*i) then
 			damage.iDamage = DAMAGE_ZERO
@@ -267,7 +260,7 @@ function Nico_artillerybot:GetSkillEffect(p1,p2)
 	end
 	ret:AddDelay(0.8)
 	for i = -1,1 do
-		ret:AddBounce(p2 + DIR_VECTORS[(dir+1)%4]*i, bounce)
+		ret:AddBounce(p2 + DIR_VECTORS[(dir+1)%4]*i, self.Damage + 1)
 	end
 	return ret
 end
@@ -275,27 +268,36 @@ function Nico_artillerybot:GetFinalEffect(p1,p2,p3)
 	local ret = SkillEffect()
 	local dir = GetDirection(p2 - p1)
 	local push_dir = dir
-	if p3.x == 1 or p3.x == 2 then
+	if p3.x < 3 then
 		push_dir = 3
-	elseif p3.x == 5 or p3.x == 6 then
+	elseif p3.x > 4 then
 		push_dir = 1
-	elseif p3.y == 1 or p3.y == 2 then
+	elseif p3.y < 3 then
 		push_dir = 0
-	elseif p3.y == 5 or p3.y == 6 then
+	elseif p3.y > 4 then
 		push_dir = 2
+	else
+		push_dir = nil
 	end
-	local damage = SpaceDamage(p2, self.Damage, push_dir)
-	local bounce = 2
-	if self.Damage == 2 then bounce = 3 end
+	local damage = SpaceDamage(p2, self.Damage)
 	
 	for i = -1,1 do
-		damage = SpaceDamage(p2 + DIR_VECTORS[(dir+1)%4]*i, self.Damage, push_dir)
-		damage.sAnimation = self.Explo..push_dir
+		if push_dir ~= nil then
+			damage = SpaceDamage(p2 + DIR_VECTORS[(dir+1)%4]*i, self.Damage, push_dir)
+			damage.sAnimation = "explopush"..self.Damage.."_"..push_dir
+		else
+			damage = SpaceDamage(p2 + DIR_VECTORS[(dir+1)%4]*i, self.Damage)
+			damage.sAnimation = "ExploArt"..self.Damage
+		end
 		damage.sSound = "/impact/generic/explosion"
 		if not self.BuildingDamage and self.shield and Board:IsBuilding(p2 + DIR_VECTORS[(dir+1)%4]*i) then
 			damage.iDamage = DAMAGE_ZERO
 			damage.iShield=1
-			damage.sAnimation = "airpush_"..push_dir
+			if push_dir ~= nil then
+				damage.sAnimation = "airpush_"..push_dir
+			else
+				damage.sAnimation = "ExploRepulse"..self.Damage
+			end
 			ret:AddArtillery(damage,"effects/shotup_missileswarm.png", NO_DELAY)
 		elseif self.Damage==2 then
 			ret:AddArtillery(damage,"effects/shotup_robot.png", NO_DELAY)--
@@ -305,7 +307,7 @@ function Nico_artillerybot:GetFinalEffect(p1,p2,p3)
 	end
 	ret:AddDelay(0.8)
 	for i = -1,1 do
-		ret:AddBounce(p2 + DIR_VECTORS[(dir+1)%4]*i, bounce)
+		ret:AddBounce(p2 + DIR_VECTORS[(dir+1)%4]*i, self.Damage + 1)
 	end
 	return ret
 end
@@ -316,14 +318,12 @@ Nico_artillerybot_A=Nico_artillerybot:new{
 }
 Nico_artillerybot_B=Nico_artillerybot:new{
 	Damage=2,
-	Explo="explopush2_",
 	UpgradeDescription = "Deals 1 additional damage to all targets.",
 }
 Nico_artillerybot_AB=Nico_artillerybot_A:new{
 	BuildingDamage = false,
 	shield=true,
 	Damage=2,
-	Explo="explopush2_",
 }
 
 ------Knight Bot------
