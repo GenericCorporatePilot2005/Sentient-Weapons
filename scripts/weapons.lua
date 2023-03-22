@@ -220,22 +220,16 @@ Nico_artillerybot=ArtilleryDefault:new{
 		Enemy = Point(2,1),
 		Enemy2 = Point(3,1),
 		Building = Point(1,1),
-		Second_Click = Point(3,5),
+		Second_Click = Point(2,2),
         CustomPawn="Nico_artillerybot_mech",
 	},
 }
 function Nico_artillerybot:GetSecondTargetArea(p1,p2)
 	local ret = PointList()
 	local dir = GetDirection(p2 - p1)
-	for i = 3,4 do
-		for j = 1,6 do
-			if dir%2 == 1 then
-				if Point(j,i)~= p2 then ret:push_back(Point(j,i)) end
-			else
-				if Point(i,j)~= p2 then ret:push_back(Point(i,j)) end
-			end
-		end
-	end
+	ret:push_back(p1)
+	ret:push_back(p2+DIR_VECTORS[dir])
+	ret:push_back(p2-DIR_VECTORS[dir])
 	return ret
 end
 function Nico_artillerybot:GetSkillEffect(p1,p2)
@@ -267,16 +261,8 @@ end
 function Nico_artillerybot:GetFinalEffect(p1,p2,p3)
 	local ret = SkillEffect()
 	local dir = GetDirection(p2 - p1)
-	local push_dir = dir
-	if p3.x < 3 then
-		push_dir = 3
-	elseif p3.x > 4 then
-		push_dir = 1
-	elseif p3.y < 3 then
-		push_dir = 0
-	elseif p3.y > 4 then
-		push_dir = 2
-	else
+	local push_dir = GetDirection(p3 - p2)
+	if p1 == p3 then
 		push_dir = nil
 	end
 	local damage = SpaceDamage(p2, self.Damage)
