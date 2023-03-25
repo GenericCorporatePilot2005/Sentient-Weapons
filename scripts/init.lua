@@ -46,6 +46,18 @@ function mod:load( options, version)
 		"After destroying the Vek Hive, Zenith sent these improved Sentient Weapons across time to fight the Vek and their hijacked brethren.",
 		self.resourcePath .."img/mod_icon.png"
 	)
+	modApi:addSquad(
+		{
+			"Sentient Weapons, Second Divission",-- title
+			"Nico_knightbot_mech",-- mech #2
+			"Nico_laserbot_mech",-- mech #1
+			"Nico_shieldbot_mech",-- mech #3
+			id="Nico_Sent_weap2"
+		},
+		"Sentient Weapons, Second Divission",
+		"After destroying the Vek Hive, Zenith sent these improved Sentient Weapons across time to fight the Vek and their hijacked brethren.",
+		self.resourcePath .."img/mod_icon.png"
+	)
 end
 
 return mod

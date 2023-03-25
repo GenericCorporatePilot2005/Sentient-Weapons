@@ -366,85 +366,11 @@ function Nico_knightbot:GetSkillEffect(p1, p2)
 	return ret
 end
 
+
 Nico_knightbot_A=Nico_knightbot:new{
-	UpgradeDescription="Dashes a second time to a different direction",
-	TipImage={
-		Unit = Point(2,2),
-		Enemy1 = Point(0,2),
-		Enemy2 = Point(2,0),
-		Target = Point(2,0),
-		Second_Click=Point(1,0),
-	}
+	UpgradeDescription="Phases through buildings when charging",
 }
-
-function Nico_knightbot_A:GetSecondTargetArea(p1, p2)
-	local direction = GetDirection(p2 - p1)
-	local ret = PointList()
-	local target = GetProjectileEnd(p1,p2,PATH_PROJECTILE)  
-	local dirs = {(direction + 1) % 4, (direction - 1) % 4}
-	for j, dir in ipairs(dirs) do
-		for i = 1, 8 do
-			local curr = Point(target + DIR_VECTORS[dir] * i)
-			if not Board:IsValid(curr) then
-				break
-			end
-			ret:push_back(curr)
-			if Board:IsBlocked(curr,PATH_PROJECTILE) then
-				break
-			end
-		end
-	end
-	
-	return ret	
-end
-function Nico_knightbot_A:GetSkillEffect(p1, p2,p3)
-	local ret = SkillEffect()
-	local firdirection = GetDirection(p2 - p1)
-	local secdirection = GetDirection(p3 - p2)
-	
-
-	local firtarget = GetProjectileEnd(p1,p2,PATH_PROJECTILE)
-	local firpush_damage = firdirection
-	local firdamage = SpaceDamage(firtarget, self.Damage, firpush_damage)
-	firdamage.sAnimation = "explosword_"..firdirection
-
-    if not Board:IsBlocked(firtarget,PATH_PROJECTILE) then -- dont attack an empty edge square, just run to the edge
-		firtarget = firtarget + DIR_VECTORS[firdirection]
-	end
-    	
-	ret:AddCharge(Board:GetSimplePath(p1, firtarget - DIR_VECTORS[firdirection]), FULL_DELAY)
-
-	if Board:IsPawnSpace(firtarget) and Board:GetPawn(firtarget):IsGuarding() then
-		firdamage.loc = firtarget
-		ret:AddMelee(p2 - DIR_VECTORS[firdirection], firdamage+1)
-	else
-		firdamage.loc = firtarget
-		ret:AddMelee(p2 - DIR_VECTORS[firdirection], firdamage)
-	end
-
-	local sectarget = GetProjectileEnd(p2,p3,PATH_PROJECTILE)
-	local secpush_damage = secdirection
-	local secdamage = SpaceDamage(sectarget, self.Damage, secpush_damage)
-	secdamage.sAnimation = "explosword_"..secdirection
-	
-	if not Board:IsBlocked(sectarget,PATH_PROJECTILE) then -- dont attack an empty edge square, just run to the edge
-		sectarget = sectarget + DIR_VECTORS[secdirection]
-	end
-    	
-	ret:AddCharge(Board:GetSimplePath(p2, sectarget - DIR_VECTORS[secdirection]), FULL_DELAY)
-
-	if Board:IsPawnSpace(sectarget) and Board:GetPawn(sectarget):IsGuarding() then
-		secdamage.loc = sectarget
-		ret:AddMelee(p3 - DIR_VECTORS[secdirection], secdamage+1)
-	else
-		secdamage.loc = sectarget
-		ret:AddMelee(p3 - DIR_VECTORS[secdirection], secdamage)
-	end
-	
-	return ret
-end
-
-Nico_knightbot_B=Nico_knightbot:new{
+Nico_knightbot_A=Nico_knightbot:new{
 	UpgradeDescription="+2 Damage",
 	Damage=3,
 }
@@ -454,6 +380,8 @@ Nico_knightbot_AB=Nico_knightbot_A:new{
 
 ------Shield Bot------
 modApi:appendAsset("img/weapons/Nico_shieldbot.png", path .."img/weapons/Nico_shieldbot.png")
+modApi:appendAsset("img/effects/shield_bot_pulse.png", mod.resourcePath.. "img/effects/explo_repulse_shield.png")
+ANIMS.ExploRepulseShield = ANIMS.ExploRepulse1:new{ Image = "effects/shield_bot_pulse.png" }
 Nico_shieldbot = Science_Placer:new{
 	Class = "TechnoVek",
 	Name="NRG Shield Mark II",
@@ -484,7 +412,7 @@ function Nico_shieldbot:GetSkillEffect(p1, p2)
 	
 	local damage = SpaceDamage(p2, self.Damage)
 	damage.iShield = EFFECT_CREATE
-	damage.sAnimation = "ExploRepulse1"
+	damage.sAnimation = "lmn_ExploRepulseShield"
 	if p1 == p2 then ret:AddDamage(damage) 
 	else 	
 		ret:AddArtillery(damage, "effects/shot_pull_U.png", NO_DELAY)
