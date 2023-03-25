@@ -48,7 +48,7 @@ function mod:load( options, version)
 	)
 	modApi:addSquad(
 		{
-			"Sentient Weapons, Second Divission",-- title
+			"Sentient Weapons, 2nd Divission",-- title
 			"Nico_knightbot_mech",-- mech #2
 			"Nico_laserbot_mech",-- mech #1
 			"Nico_shieldbot_mech",-- mech #3
