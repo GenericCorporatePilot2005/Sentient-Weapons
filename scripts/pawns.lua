@@ -251,7 +251,7 @@ Nico_artillerybot_mech = Pawn:new{
     
     -- various stats.
     Health = 1,
-    MoveSpeed = 4,
+    MoveSpeed = 3,
     Massive = true,
     Corpse = true,
     
@@ -284,7 +284,7 @@ Nico_cannonbot_mech = Pawn:new{
     
     -- various stats.
     Health = 1,
-    MoveSpeed = 4,
+    MoveSpeed = 3,
     Massive = true,
     Corpse = true,
     
@@ -317,7 +317,7 @@ Nico_knightbot_mech = Pawn:new{
 
     -- various stats.
     Health = 1,
-    MoveSpeed = 4,
+    MoveSpeed = 3,
     Massive = true,
     Corpse = true,
     Armor = true,
@@ -351,7 +351,7 @@ Nico_shieldbot_mech = Pawn:new{
     
     -- various stats.
     Health = 1,
-    MoveSpeed = 5,
+    MoveSpeed = 4,
     Massive = true,
     Corpse = true,
     Flying=true,
