@@ -316,18 +316,26 @@ Nico_artillerybot_AB=Nico_artillerybot_A:new{
 
 Nico_knightbot = Punch:new{
 	Name = "0th KPR Sword Mark II",
-	Description = "Dash two tiles to damage and push the target.",
+	Description = "Dash to damage and push the target, +1 damage on stable units.",
 	Icon = "weapons/prime_sword.png",
 	Class = "TechnoVek",
 	Damage = 1,
 	PathSize = INT_MAX,
+	ZoneTargeting = ZONE_DIR,
 	Dash=true,
+	Upgrades=0,
+	UpgradeList={"Phase","+2 Damage"},
+	UpgradeCost={2,3},
 	Push = true,
-	LaunchSound="/weapons/sword",
+	LaunchSound="/weapons/charge",
+	ImpactSound="/weapons/sword",
 	TipImage = {
-		Unit = Point(2,4),
-		Target = Point(2,4),
-		Enemy = Point(2,1),
+		Unit = Point(2,2),
+		Second_Origin=Point(2,2),
+		Target = Point(1,2),
+		Second_Target=Point(2,0),
+		Enemy1 = Point(1,2),
+		Enemy2 = Point(2,0),
 		CustomPawn = "Nico_knightbot_mech",
 	}
 }
@@ -336,32 +344,39 @@ function Nico_knightbot:GetSkillEffect(p1, p2)
 	local ret = SkillEffect()
 	local direction = GetDirection(p2 - p1)
 
-	local doDamage = true
 	local target = GetProjectileEnd(p1,p2,PATH_PROJECTILE)
 	local push_damage = direction
 	local damage = SpaceDamage(target, self.Damage, push_damage)
 	damage.sAnimation = "explosword_"..direction
-	damage.sSound="/weapons/sword"
 
     if not Board:IsBlocked(target,PATH_PROJECTILE) then -- dont attack an empty edge square, just run to the edge
-	 	doDamage = false
-	    target = target + DIR_VECTORS[direction]
+	 	target = target + DIR_VECTORS[direction]
 	end
     	
 	ret:AddCharge(Board:GetSimplePath(p1, target - DIR_VECTORS[direction]), FULL_DELAY)
 
-	
-	if doDamage then
+	if Board:IsPawnSpace(target) and Board:GetPawn(target):IsGuarding() then
+		damage.loc = target
+		ret:AddMelee(p2 - DIR_VECTORS[direction], damage+1)
+	else
 		damage.loc = target
 		ret:AddMelee(p2 - DIR_VECTORS[direction], damage)
 	end
-	
-	if self.PushBack then
-		ret:AddDamage(SpaceDamage(p1, 0, GetDirection(p1 - p2)))
-	end
+
 	return ret
 end
 
+
+Nico_knightbot_A=Nico_knightbot:new{
+	UpgradeDescription="Phases through buildings when charging",
+}
+Nico_knightbot_A=Nico_knightbot:new{
+	UpgradeDescription="+2 Damage",
+	Damage=3,
+}
+Nico_knightbot_AB=Nico_knightbot_A:new{
+	Damage=3,
+}
 ------Shield Bot------
 modApi:appendAsset("img/weapons/Nico_shieldbot.png", path .."img/weapons/Nico_shieldbot.png")
 modApi:appendAsset("img/effects/shield_bot_pulse.png", mod.resourcePath.. "img/effects/explo_repulse_shield.png")
