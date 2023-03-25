@@ -364,6 +364,8 @@ end
 
 ------Shield Bot------
 modApi:appendAsset("img/weapons/Nico_shieldbot.png", path .."img/weapons/Nico_shieldbot.png")
+modApi:appendAsset("img/effects/shield_bot_pulse.png", mod.resourcePath.. "img/effects/explo_repulse_shield.png")
+ANIMS.ExploRepulseShield = ANIMS.ExploRepulse1:new{ Image = "effects/shield_bot_pulse.png" }
 Nico_shieldbot = Science_Placer:new{
 	Class = "TechnoVek",
 	Name="NRG Shield Mark II",
@@ -378,10 +380,10 @@ Nico_shieldbot = Science_Placer:new{
 	Upgrades = 0,
 	UpgradeCost = { 1,2 },
 	TipImage = {
-		Unit = Point(2,1),
-		Enemy = Point(1,1),
-		Enemy2 = Point(3,1),
-		Target = Point(2,1),
+		Unit = Point(2,2),
+		Enemy = Point(1,2),
+		Enemy2 = Point(3,2),
+		Target = Point(2,2),
 		CustomPawn="Nico_shieldbot_mech",
 	},
 }
@@ -394,7 +396,7 @@ function Nico_shieldbot:GetSkillEffect(p1, p2)
 	
 	local damage = SpaceDamage(p2, self.Damage)
 	damage.iShield = EFFECT_CREATE
-	damage.sAnimation = "ExploRepulse1"
+	damage.sAnimation = "lmn_ExploRepulseShield"
 	if p1 == p2 then ret:AddDamage(damage) 
 	else 	
 		ret:AddArtillery(damage, "effects/shot_pull_U.png", NO_DELAY)
