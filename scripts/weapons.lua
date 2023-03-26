@@ -379,15 +379,22 @@ Nico_knightbot_AB=Nico_knightbot_A:new{
 }
 ------Shield Bot------
 modApi:appendAsset("img/weapons/Nico_shieldbot.png", path .."img/weapons/Nico_shieldbot.png")
-modApi:appendAsset("img/effects/shield_bot_pulse.png", mod.resourcePath.. "img/effects/explo_repulse_shield.png")
-ANIMS.ExploRepulseShield = ANIMS.ExploRepulse1:new{ Image = "effects/shield_bot_pulse.png" }
+modApi:appendAsset("img/effects/shield_bot_pulse.png", path.. "img/effects/shield_bot_pulse.png")
+shieldbotpulse = Animation:new{
+	Image = "effects/shield_bot_pulse.png",
+	NumFrames = 8,
+	Time = 0.05,
+	
+	PosX = -33,
+	PosY = -14
+}
 Nico_shieldbot = Science_Placer:new{
 	Class = "TechnoVek",
 	Name="NRG Shield Mark II",
 	Description="Shields self, push and damage adjacent tiles away.",
 	Icon = "weapons/Nico_shieldbot.png",
 	LaunchSound = "/weapons/enhanced_tractor",
-	Explosion = "",
+	Explosion = "shieldbotpulse",
 	Range = 0,
 	PathSize = 1,
 	Damage = 0,
@@ -411,8 +418,8 @@ function Nico_shieldbot:GetSkillEffect(p1, p2)
 	
 	local damage = SpaceDamage(p2, self.Damage)
 	damage.iShield = EFFECT_CREATE
-	damage.sAnimation = "lmn_ExploRepulseShield"
-	if p1 == p2 then ret:AddDamage(damage) 
+	damage.sAnimation = ""
+	if p1 == p2 then ret:AddDamage(damage)
 	else 	
 		ret:AddArtillery(damage, "effects/shot_pull_U.png", NO_DELAY)
 		ret:AddDelay(1)
@@ -426,7 +433,7 @@ function Nico_shieldbot:GetSkillEffect(p1, p2)
 	
 	return ret
 end	
-
+--Fatal Freeze and Zenith's Guard--
 local Nico_FatalFreeze = function(mission, pawn, weaponId, p1, p2, skillEffect)
 	if (weaponId == "Nico_laserbot_A") or (weaponId == "Nico_laserbot_AB") then	
 		for i = 1, skillEffect.effect:size() do

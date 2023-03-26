@@ -8,6 +8,7 @@ local path = mod_loader.mods[modApi.currentMod].resourcePath
 	modApi:appendAsset("img/portraits/pilots/Pilot_Nico_cannonbot_mech.png", path .."img/portraits/Pilot_Nico_cannonbot_mech.png")
     modApi:appendAsset("img/portraits/pilots/Pilot_Nico_knightbot_mech.png", path .."img/portraits/Pilot_Nico_knightbot_mech.png")
     modApi:appendAsset("img/portraits/pilots/Pilot_Nico_shieldbot_mech.png", path .."img/portraits/Pilot_Nico_shieldbot_mech.png")
+    modApi:appendAsset("img/portraits/pilots/Pilot_Nico_minerbot_mech.png", path .."img/portraits/Pilot_Nico_minerbot_mech.png")
 -- locate our mech assets.
 local artmechPath = path .."img/units/player/"
 -- make a list of our files.
@@ -124,6 +125,29 @@ local a=ANIMS
 	a.Nico_shieldbot_mechw_broken = a.MechUnit:new{Image="units/player/Nico_shieldbot_mech_w_broken.png", PosX = -18, PosY = -2 }
 	a.Nico_shieldbot_mech_ns = a.MechIcon:new{Image="units/player/Nico_shieldbot_mech_ns.png"}
 
+-- locate our mech assets.
+local minermechPath = path .."img/units/player/"
+-- make a list of our files.
+local files = {
+	"Nico_minerbot_mech.png",
+	"Nico_minerbot_mech_a.png",
+	"Nico_minerbot_mech_w.png",
+	"Nico_minerbot_mech_w_broken.png",
+	"Nico_minerbot_mech_broken.png",
+	"Nico_minerbot_mech_ns.png",
+	"Nico_minerbot_mech_h.png",
+}
+for _, file in ipairs(files) do
+	modApi:appendAsset("img/units/player/".. file, minermechPath .. file)
+end
+local a=ANIMS
+	a.Nico_minerbot_mech =a.MechUnit:new{Image="units/player/Nico_minerbot_mech.png", PosX = -18, PosY = -9}
+	a.Nico_minerbot_mecha = a.MechUnit:new{Image="units/player/Nico_minerbot_mech_a.png",  PosX = -18, PosY = -9, NumFrames = 4 }
+	a.Nico_minerbot_mechw = a.MechUnit:new{Image="units/player/Nico_minerbot_mech_w.png", -18, PosY = -2}
+	a.Nico_minerbot_mech_broken = a.MechUnit:new{Image="units/player/Nico_minerbot_mech_broken.png", PosX = -18, PosY = -9 }
+	a.Nico_minerbot_mechw_broken = a.MechUnit:new{Image="units/player/Nico_minerbot_mech_w_broken.png", PosX = -18, PosY = -2 }
+	a.Nico_minerbot_mech_ns = a.MechIcon:new{Image="units/player/Nico_minerbot_mech_ns.png"}
+    
     modApi:addPalette{
         id = "nico_snow",
         image="units/player/Nico_artillerybot_mech_ns.png",
@@ -203,6 +227,15 @@ CreatePilot{
 }
 CreatePilot{
     Id = "Pilot_Nico_shieldbot_mech",
+  	Personality = "Vek",
+	Sex = SEX_VEK,
+    Name = "Shield-Bot",
+    GetSkill = function() NicoIsRobot = true; return "Survive_Death" end,
+	Rarity = 0,
+    Blacklist = {"Invulnerable","Thick","Popular","Grid","Health","Skilled","Regen","Pain"},
+}
+CreatePilot{
+    Id = "Pilot_Nico_minerbot_mech",
   	Personality = "Vek",
 	Sex = SEX_VEK,
     Name = "Shield-Bot",
@@ -377,12 +410,45 @@ Nico_shieldbot_mech = Pawn:new{
     
     AddPawn("Nico_shieldbot_mech")
 }
+Nico_minerbot_mech = Pawn:new{
+    Name = "Mine-Bot",
+    NicoIsRobot = true,
+    -- FlameMech is also Prime, so this is redundant, but if you had no base, you would need a class.
+    Class = "TechnoVek",
+    
+    -- various stats.
+    Health = 1,
+    MoveSpeed = 4,
+    Massive = true,
+    Corpse = true,
+    
+    -- reference the animations we set up earlier.
+    Image = "Nico_minerbot_mech",
+    
+    -- ImageOffset specifies which color scheme we will be using.
+    -- (only apporpirate if you draw your mechs with Archive olive green colors)
+	ImageOffset = modApi:getPaletteImageOffset("nico_alpha_snow"),
+    
+    -- Any weapons this mech should start with goes in this table.
+    SkillList = {"SnowmineAtk1"},
+    
+    -- movement sounds.
+    SoundLocation = "/enemy/snowmine_1/",
+    
+    -- who will be controlling this unit.
+    DefaultTeam = TEAM_PLAYER,
+    
+    -- impact sounds.
+	ImpactMaterial = IMPACT_METAL,
+    
+    AddPawn("Nico_minerbot_mech")
+}
 
 modApi:appendAsset("img/icon_Nico_zenith_shield.png", path.."img/icon_Nico_zenith_shield.png")--image of the trait
 local mod = modApi:getCurrentMod()--the mod itself
 local trait = require(mod.scriptPath .."libs/trait")--where does it get the code for the rest of this to work
 
-Nico_Pawn_List = {"Nico_laserbot_mech", "Nico_cannonbot_mech", "Nico_artillerybot_mech", "Nico_knightbot_mech", "Nico_shieldbot_mech"}
+Nico_Pawn_List = {"Nico_laserbot_mech", "Nico_cannonbot_mech", "Nico_artillerybot_mech", "Nico_knightbot_mech", "Nico_shieldbot_mech","Nico_minerbot_mech"}
 
 for i = 1,5 do
 	trait:add{
