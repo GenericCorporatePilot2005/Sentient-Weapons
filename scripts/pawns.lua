@@ -450,7 +450,7 @@ local trait = require(mod.scriptPath .."libs/trait")--where does it get the code
 
 Nico_Pawn_List = {"Nico_laserbot_mech", "Nico_cannonbot_mech", "Nico_artillerybot_mech", "Nico_knightbot_mech", "Nico_shieldbot_mech","Nico_minerbot_mech"}
 
-for i = 1,5 do
+for i = 1,6 do
 	trait:add{
 		pawnType=Nico_Pawn_List[i],--who will get the trait
 		icon = "img/icon_Nico_zenith_shield.png",--the icon itself
