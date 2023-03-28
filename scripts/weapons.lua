@@ -365,6 +365,9 @@ function Nico_knightbot:GetTargetArea(point)
 end
 
 function Nico_knightbot:GetSkillEffect(p1, p2)
+	if Board:IsTipImage() then
+		Board:AddShield(Point(2,0))
+	end
 	local ret = SkillEffect()
 	local direction = GetDirection(p2 - p1)
 	local mech = Board:GetPawn(p1)
