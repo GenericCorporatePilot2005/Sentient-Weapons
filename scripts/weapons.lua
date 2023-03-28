@@ -316,7 +316,7 @@ Nico_artillerybot_AB=Nico_artillerybot_A:new{
 
 Nico_knightbot = Punch:new{
 	Name = "0th KPR Sword Mark II",
-	Description = "Dash to damage and push the target. Double damage if the target is stable, and set it on fire.",
+	Description = "Dash to damage and push the target. If the target was shielded, attack again.",
 	Icon = "weapons/prime_sword.png",
 	Class = "TechnoVek",
 	Damage = 1,
@@ -367,12 +367,9 @@ end
 function Nico_knightbot:GetSkillEffect(p1, p2)
 	local ret = SkillEffect()
 	local direction = GetDirection(p2 - p1)
-
 	local mech = Board:GetPawn(p1)
-
 	local target = GetProjectileEnd(p1,p1+DIR_VECTORS[direction],PATH_PROJECTILE)
-	local push_damage = direction
-	local damage = SpaceDamage(target, self.Damage, push_damage)
+	local damage = SpaceDamage(target, self.Damage, direction)
 	damage.sAnimation = "explospear1_"..direction
 
 	if self.Phase then
@@ -407,16 +404,25 @@ function Nico_knightbot:GetSkillEffect(p1, p2)
 		ret:AddCharge(Board:GetPath(p1, target - DIR_VECTORS[direction], PATH_FLYER), FULL_DELAY)
 	end
 
-	if Board:IsPawnSpace(target) and Board:GetPawn(target):IsGuarding() then
-		damage.iDamage = self.Damage*2
-		damage.iFire = 1
-	end
 	if Board:IsBuilding(target) and self.Phase then damage.iDamage = 0 end
 	damage.loc = target
 	damage.fDelay = -1
 	if Board:IsValid(target) then damage.sSound = "/weapons/sword" end
 	
-	ret:AddMelee(p2 - DIR_VECTORS[direction], damage)
+	local double_flag = Board:IsPawnSpace(target) and Board:GetPawn(target):IsShield()
+	local stable = Board:IsPawnSpace(target) and Board:GetPawn(target):IsGuarding()
+	local unstable_pushed = Board:IsPawnSpace(target) and not Board:GetPawn(target):IsGuarding() and not Board:IsBlocked(target + DIR_VECTORS[direction],PATH_PROJECTILE) and Board:IsValid(target + DIR_VECTORS[direction])
+	local unstable_blocked = Board:IsPawnSpace(target) and not Board:GetPawn(target):IsGuarding() and (Board:IsBlocked(target + DIR_VECTORS[direction],PATH_PROJECTILE) or not Board:IsValid(target + DIR_VECTORS[direction]))
+	ret:AddMelee(target - DIR_VECTORS[direction], damage)
+	if double_flag then
+		if stable or unstable_blocked then ret:AddMelee(target - DIR_VECTORS[direction], damage) end
+		if unstable_pushed then
+			damage.loc = target + DIR_VECTORS[direction]
+			damage.sAnimation = ""--"explospear2_"..direction
+			ret:AddScript("Board:AddAnimation("..target:GetString()..", \"explospear2_"..direction.."\", 0)")
+			ret:AddMelee(target - DIR_VECTORS[direction], damage)
+		end
+	end
 	
 	if target - DIR_VECTORS[direction] ~= p1 and Board:IsBlocked(target - DIR_VECTORS[direction],PATH_PROJECTILE) then
 		local landing = target - DIR_VECTORS[direction]
