@@ -641,14 +641,14 @@ local function Nico_MoveShield(mission, pawn, weaponId, p1, p2)
 	i = pawn:GetId()
 	local IsRealMission = true and (mission ~= nil) and (mission ~= Mission_Test) and Board	and Board:IsMissionBoard()
 	local adjacent_mech = IsRealMission and ((Board:GetPawn((i+1)%3):GetSpace():Manhattan(p2)==1) or (Board:GetPawn((i+2)%3):GetSpace():Manhattan(p2)==1))
-	if _G[pawn:GetType()].NicoIsRobot and weaponId == "Move" and adjacent_mech then
+	if pawn and _G[pawn:GetType()].NicoIsRobot and weaponId == "Move" and adjacent_mech then
 		Game:TriggerSound("/props/shield_activated")
 		pawn:SetShield(true)
 	end
 end
 
 local function Nico_TeamRepair(mission, pawn, weaponId, p1, targetArea)
-	if _G[pawn:GetType()].NicoIsRobot and weaponId == "Skill_Repair" then
+	if pawn and _G[pawn:GetType()].NicoIsRobot and weaponId == "Skill_Repair" then
 		for dir = DIR_START, DIR_END do
 			local curr = p1 + DIR_VECTORS[dir]
 			if Board:IsPawnSpace(curr) and _G[Board:GetPawn(curr):GetType()].NicoIsRobot then
