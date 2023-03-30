@@ -31,9 +31,8 @@ Nico_laserbot_A = Nico_laserbot:new{
     UpgradeDescription = "If the target would die, freeze it instead. Freezes Buildings and allies.",
 	TipImage = {
 		Unit = Point(2,4),
-		Friendly = Point(2,1),
+		Friendly = Point(2,3),
 		Enemy1 = Point(2,2),
-		Enemy2 = Point(2,3),
 		Target = Point(2,2),
 		Building = Point(2,0),
 		CustomEnemy = "Digger1",
@@ -620,8 +619,9 @@ Nico_shieldbot_AB=Nico_shieldbot_B:new{
 	},
 }
 --Fatal Freeze and Zenith's Guard--
-local Nico_FatalFreeze = function(mission, pawn, weaponId, p1, p2, skillEffect)
+local function Nico_FatalFreeze(mission, pawn, weaponId, p1, p2, skillEffect)
 	if (weaponId == "Nico_laserbot_A") or (weaponId == "Nico_laserbot_AB") then	
+		if Board:IsTipImage() then Board:AddPawn("BombRock",Point(2,1)) end
 		for i = 1, skillEffect.effect:size() do
 			local spaceDamage = skillEffect.effect:index(i)
 			spaceDamage.bKO_Effect = Board:IsDeadly(spaceDamage,Pawn)
@@ -637,7 +637,7 @@ local Nico_FatalFreeze = function(mission, pawn, weaponId, p1, p2, skillEffect)
 	end
 end
 
-local Nico_MoveShield = function(mission, pawn, weaponId, p1, p2)
+local function Nico_MoveShield(mission, pawn, weaponId, p1, p2)
 	i = pawn:GetId()
 	local IsRealMission = true and (mission ~= nil) and (mission ~= Mission_Test) and Board	and Board:IsMissionBoard()
 	local adjacent_mech = IsRealMission and ((Board:GetPawn((i+1)%3):GetSpace():Manhattan(p2)==1) or (Board:GetPawn((i+2)%3):GetSpace():Manhattan(p2)==1))
@@ -647,7 +647,19 @@ local Nico_MoveShield = function(mission, pawn, weaponId, p1, p2)
 	end
 end
 
+local function Nico_TeamRepair(mission, pawn, weaponId, p1, targetArea)
+	if _G[pawn:GetType()].NicoIsRobot and weaponId == "Skill_Repair" then
+		for dir = DIR_START, DIR_END do
+			local curr = p1 + DIR_VECTORS[dir]
+			if Board:IsPawnSpace(curr) and _G[Board:GetPawn(curr):GetType()].NicoIsRobot then
+				targetArea:push_back(curr)
+			end
+		end
+	end
+end
+
 local function EVENT_onModsLoaded()
+	modapiext:addTargetAreaBuildHook(Nico_TeamRepair)
 	modapiext:addSkillBuildHook(Nico_FatalFreeze)
 	modapiext:addSkillStartHook(Nico_MoveShield)
 end
