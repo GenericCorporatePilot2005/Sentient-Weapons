@@ -229,7 +229,7 @@ CreatePilot{
     Id = "Pilot_Nico_shieldbot_mech",
   	Personality = "Vek",
 	Sex = SEX_VEK,
-    Name = "Shield-Bot",
+    Name = "Mine-Bot",
     GetSkill = function() NicoIsRobot = true; return "Survive_Death" end,
 	Rarity = 0,
     Blacklist = {"Invulnerable","Thick","Popular","Grid","Health","Skilled","Regen","Pain"},

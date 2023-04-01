@@ -623,7 +623,55 @@ Nico_shieldbot_AB=Nico_shieldbot_B:new{
 }
 
 Nico_minerbot=Ranged_Rockthrow:new{
+	Icon = "weapons/ranged_defensestrike.png",
+	Name="Mini-Mine-Bot Deployer",
+	Description="Launches a missile to a tile, if the tile is occupied, it damages it, if not, deploys a Mine-Bot",
+	Class="TechnoVek",
+	LaunchSound = "/weapons/artillery_volley",
+	ImpactSound = "/impact/generic/mech",
+	Upgrades=0,
+	TipImage = {
+		Unit = Point(2,4),
+		Second_Origin=Point(2,4),
+		Enemy = Point(2,1),
+		Enemy2 = Point(3,1),
+		Target = Point(2,1),
+		Second_Target=Point(2,2),
+		CustomPawn = "Nico_minerbot_mech",
+	}
+}
+
+function Ranged_Rockthrow:GetSkillEffect(p1,p2)
+	local ret = SkillEffect()
+	local dir = GetDirection(p2 - p1)
+	local damage = SpaceDamage(p2, self.Damage)
+	
+	if Board:IsValid(p2) and not Board:IsBlocked(p2,PATH_PROJECTILE) then
+		damage.sPawn = "Snowmine1"
+		damage.sAnimation = ""
+		damage.iDamage = 0
+	else 
+		damage.sAnimation = "ExploArt0" 
+	end
+	
+	ret:AddBounce(p1, 1)
+	ret:AddArtillery(damage,"effects/shotup_robot.png")
+	ret:AddBounce(p2, self.BounceAmount)
+	ret:AddBoardShake(0.15)
+	
+	local damagepush = SpaceDamage(p2 + DIR_VECTORS[(dir+1)%4], 0, (dir+1)%4)
+	damagepush.sAnimation = "airpush_"..((dir+1)%4)
+	ret:AddDamage(damagepush) 
+	damagepush = SpaceDamage(p2 + DIR_VECTORS[(dir-1)%4], 0, (dir-1)%4)
+	damagepush.sAnimation = "airpush_"..((dir-1)%4)
+	ret:AddDamage(damagepush)
+	
+	
+	return ret
+end
+
 modApi:appendAsset("img/weapons/Nico_minerbot.png", path .."img/weapons/Nico_minerbot.png")
+Nico_minibot=SnowmineAtk1:new{
 	Class="TechnoVek",
 	Icon="weapons/Nico_minerbot.png",
 	Name = "Minelayer",
@@ -634,8 +682,6 @@ modApi:appendAsset("img/weapons/Nico_minerbot.png", path .."img/weapons/Nico_min
 		CustomPawn = "Nico_minerbot_mech",
 	},
 }
-	return Board:GetReachable(point, 4, Pawn:GetPathProf())
-end
 
 --Fatal Freeze and Zenith's Guard--
 local function Nico_FatalFreeze(mission, pawn, weaponId, p1, p2, skillEffect)
