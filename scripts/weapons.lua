@@ -585,7 +585,7 @@ Nico_shieldbot_A=Nico_shieldbot:new{
 	},
 }
 Nico_shieldbot_B=Nico_shieldbot:new{
-	UpgradeDescription="If the target is already shielded, explode the shield to increase damage by 1.",
+	UpgradeDescription="If the target is already shielded, explode the shield to damage adjacent enemies.",
 	Blast = true,
 	TipImage = {
 		Unit = Point(2,2),
