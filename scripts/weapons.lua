@@ -489,7 +489,7 @@ shieldbotpulse = Animation:new{
 Nico_shieldbot = Science_Placer:new{
 	Class = "TechnoVek",
 	Name="NRG Shield Mark II",
-	Description="Shields self, push and damage adjacent tiles away.",
+	Description="Shields self, and push adjacent tiles away.",
 	Icon = "weapons/Nico_shieldbot.png",
 	LaunchSound = "/weapons/enhanced_tractor",
 	Explosion = "",--shieldbotpulse",
@@ -618,6 +618,23 @@ Nico_shieldbot_AB=Nico_shieldbot_B:new{
 		CustomPawn="Nico_shieldbot_mech",
 	},
 }
+
+modApi:appendAsset("img/weapons/Nico_minerbot.png", path .."img/weapons/Nico_minerbot.png")
+Nico_minerbot=SnowmineAtk1:new{
+	Class="TechnoVek",
+	Icon="weapons/Nico_minerbot.png",
+	Name = "Minelayer",
+	Description = "Deploy a single Freeze mine.",
+	TipImage = {
+		Unit = Point(2,3),
+		Target = Point(2,1),
+		CustomPawn = "Nico_minerbot_mech",
+	},
+}
+function Nico_minerbot:GetTargetArea(point)
+	return Board:GetReachable(point, 4, Pawn:GetPathProf())
+end
+
 --Fatal Freeze and Zenith's Guard--
 local function Nico_FatalFreeze(mission, pawn, weaponId, p1, p2, skillEffect)
 	if (weaponId == "Nico_laserbot_A") or (weaponId == "Nico_laserbot_AB") then	

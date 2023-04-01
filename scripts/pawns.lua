@@ -119,10 +119,10 @@ for _, file in ipairs(files) do
 end
 local a=ANIMS
 	a.Nico_shieldbot_mech =a.MechUnit:new{Image="units/player/Nico_shieldbot_mech.png", PosX = -18, PosY = -8}
-	a.Nico_shieldbot_mecha = a.MechUnit:new{Image="units/player/Nico_shieldbot_mech_a.png",  PosX = -18, PosY = -8, NumFrames = 4 }
-	a.Nico_shieldbot_mechw = a.MechUnit:new{Image="units/player/Nico_shieldbot_mech_w.png", -18, PosY = -1}
-	a.Nico_shieldbot_mech_broken = a.MechUnit:new{Image="units/player/Nico_shieldbot_mech_broken.png", PosX = -18, PosY = -8 }
-	a.Nico_shieldbot_mechw_broken = a.MechUnit:new{Image="units/player/Nico_shieldbot_mech_w_broken.png", PosX = -18, PosY = -1 }
+	a.Nico_shieldbot_mecha = a.MechUnit:new{Image="units/player/Nico_shieldbot_mech_a.png",  PosX = -16, PosY = -8, NumFrames = 4 }
+	a.Nico_shieldbot_mechw = a.MechUnit:new{Image="units/player/Nico_shieldbot_mech_w.png", -16, PosY = -1}
+	a.Nico_shieldbot_mech_broken = a.MechUnit:new{Image="units/player/Nico_shieldbot_mech_broken.png", PosX = -17, PosY = 0 }
+	a.Nico_shieldbot_mechw_broken = a.MechUnit:new{Image="units/player/Nico_shieldbot_mech_w_broken.png", PosX = -18, PosY = 10 }
 	a.Nico_shieldbot_mech_ns = a.MechIcon:new{Image="units/player/Nico_shieldbot_mech_ns.png"}
 
 -- locate our mech assets.
@@ -141,11 +141,11 @@ for _, file in ipairs(files) do
 	modApi:appendAsset("img/units/player/".. file, minermechPath .. file)
 end
 local a=ANIMS
-	a.Nico_minerbot_mech =a.MechUnit:new{Image="units/player/Nico_minerbot_mech.png", PosX = -18, PosY = -9}
-	a.Nico_minerbot_mecha = a.MechUnit:new{Image="units/player/Nico_minerbot_mech_a.png",  PosX = -18, PosY = -9, NumFrames = 4 }
-	a.Nico_minerbot_mechw = a.MechUnit:new{Image="units/player/Nico_minerbot_mech_w.png", -18, PosY = -2}
-	a.Nico_minerbot_mech_broken = a.MechUnit:new{Image="units/player/Nico_minerbot_mech_broken.png", PosX = -18, PosY = -9 }
-	a.Nico_minerbot_mechw_broken = a.MechUnit:new{Image="units/player/Nico_minerbot_mech_w_broken.png", PosX = -18, PosY = -2 }
+	a.Nico_minerbot_mech =a.MechUnit:new{Image="units/player/Nico_minerbot_mech.png", PosX = -12, PosY = -9}
+	a.Nico_minerbot_mecha = a.MechUnit:new{Image="units/player/Nico_minerbot_mech_a.png",  PosX = -20, PosY = 4, NumFrames = 4 }
+	a.Nico_minerbot_mechw = a.MechUnit:new{Image="units/player/Nico_minerbot_mech_w.png", PosX = -15, PosY = -2}
+	a.Nico_minerbot_mech_broken = a.MechUnit:new{Image="units/player/Nico_minerbot_mech_broken.png", PosX = -15, PosY = 0 }
+	a.Nico_minerbot_mechw_broken = a.MechUnit:new{Image="units/player/Nico_minerbot_mech_w_broken.png", PosX = -15, PosY = 0 }
 	a.Nico_minerbot_mech_ns = a.MechIcon:new{Image="units/player/Nico_minerbot_mech_ns.png"}
     
     modApi:addPalette{
@@ -166,7 +166,7 @@ local a=ANIMS
     modApi:addPalette{
         ID = "nico_alpha_snow",
         image="units/player/Nico_knightbot_mech_ns.png",
-        Name = "Pinnacle Robot Alpha",
+        Name = "Sentient Weapon's Pink & Black",
         PlateHighlight = {255,  14,  19},
         PlateLight     = {181, 165, 216},
         PlateMid       = {151,  88, 153},
@@ -430,7 +430,7 @@ Nico_minerbot_mech = Pawn:new{
 	ImageOffset = modApi:getPaletteImageOffset("nico_alpha_snow"),
     
     -- Any weapons this mech should start with goes in this table.
-    SkillList = {"SnowmineAtk1"},
+    SkillList = {"Nico_minerbot"},
     
     -- movement sounds.
     SoundLocation = "/enemy/snowmine_1/",
