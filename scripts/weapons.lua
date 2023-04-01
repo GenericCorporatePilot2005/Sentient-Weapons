@@ -585,7 +585,10 @@ Nico_shieldbot_A=Nico_shieldbot:new{
 	},
 }
 Nico_shieldbot_B=Nico_shieldbot:new{
+<<<<<<< Updated upstream
 	UpgradeDescription="If the target is already shielded, explode the shield to damage adjacent enemies.",
+=======
+>>>>>>> Stashed changes
 	Blast = true,
 	TipImage = {
 		Unit = Point(2,2),
@@ -619,8 +622,8 @@ Nico_shieldbot_AB=Nico_shieldbot_B:new{
 	},
 }
 
+Nico_minerbot=Ranged_Rockthrow:new{
 modApi:appendAsset("img/weapons/Nico_minerbot.png", path .."img/weapons/Nico_minerbot.png")
-Nico_minerbot=SnowmineAtk1:new{
 	Class="TechnoVek",
 	Icon="weapons/Nico_minerbot.png",
 	Name = "Minelayer",
@@ -631,7 +634,6 @@ Nico_minerbot=SnowmineAtk1:new{
 		CustomPawn = "Nico_minerbot_mech",
 	},
 }
-function Nico_minerbot:GetTargetArea(point)
 	return Board:GetReachable(point, 4, Pawn:GetPathProf())
 end
 
