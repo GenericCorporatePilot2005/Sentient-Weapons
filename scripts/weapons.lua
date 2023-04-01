@@ -585,11 +585,8 @@ Nico_shieldbot_A=Nico_shieldbot:new{
 	},
 }
 Nico_shieldbot_B=Nico_shieldbot:new{
-<<<<<<< Updated upstream
-	UpgradeDescription="If the target is already shielded, explode the shield to damage adjacent enemies.",
-=======
->>>>>>> Stashed changes
 	Blast = true,
+	UpgradeDescription="If the target is already shielded, explode the shield to damage adjacent enemies.",
 	TipImage = {
 		Unit = Point(2,2),
 		Enemy1 = Point(1,2),
