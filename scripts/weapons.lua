@@ -223,6 +223,25 @@ Nico_artillerybot=ArtilleryDefault:new{
         CustomPawn="Nico_artillerybot_mech",
 	},
 }
+function Nico_artillerybot:FireFlyBossFlip(point)
+	local Mirror = false
+	
+	if Board:IsPawnSpace(point) and (Board:GetPawn(point):GetType() == "FireflyBoss" or Board:GetPawn(point):GetType() == "DNT_JunebugBoss") and Board:GetPawn(point):IsQueued()then
+		Mirror = true
+	end
+	
+	if Mirror then
+		local threat = Board:GetPawn(point):GetQueuedTarget()
+		local flip = (GetDirection(threat - point)+1)%4
+		local newthreat = point + DIR_VECTORS[flip]
+		if not Board:IsValid(newthreat) then
+			newthreat = point - DIR_VECTORS[flip]
+		end
+		return "Board:GetPawn("..point:GetString().."):SetQueuedTarget("..newthreat:GetString()..")"
+	else
+		return ""
+	end
+end
 function Nico_artillerybot:GetSecondTargetArea(p1,p2)
 	local ret = PointList()
 	local dir = GetDirection(p2 - p1)
@@ -240,6 +259,7 @@ function Nico_artillerybot:GetSkillEffect(p1,p2)
 		damage = SpaceDamage(p2 + DIR_VECTORS[(dir+1)%4]*i, self.Damage)
 		damage.sAnimation = "explopush"..self.Damage.."_"..dir
 		damage.sSound = "/impact/generic/explosion"
+		if self.Damage == 2 then damage.sSound = "/impact/generic/explosion_large" end
 		if not self.BuildingDamage and self.shield and Board:IsBuilding(p2 + DIR_VECTORS[(dir+1)%4]*i) then
 			damage.iDamage = DAMAGE_ZERO
 			damage.iShield=1
@@ -262,26 +282,26 @@ function Nico_artillerybot:GetFinalEffect(p1,p2,p3)
 	local dir = GetDirection(p2 - p1)
 	local push_dir = GetDirection(p3 - p2)
 	if p1 == p3 then
-		push_dir = nil
+		push_dir = DIR_FLIP
 	end
 	local damage = SpaceDamage(p2, self.Damage)
 	
 	for i = -1,1 do
-		if push_dir ~= nil then
-			damage = SpaceDamage(p2 + DIR_VECTORS[(dir+1)%4]*i, self.Damage, push_dir)
-			damage.sAnimation = "explopush"..self.Damage.."_"..push_dir
-		else
-			damage = SpaceDamage(p2 + DIR_VECTORS[(dir+1)%4]*i, self.Damage)
+		damage = SpaceDamage(p2 + DIR_VECTORS[(dir+1)%4]*i, self.Damage, push_dir)
+		if p1 == p3 then
 			damage.sAnimation = "ExploArt"..self.Damage
+		else
+			damage.sAnimation = "explopush"..self.Damage.."_"..push_dir
 		end
 		damage.sSound = "/impact/generic/explosion"
+		if self.Damage == 2 then damage.sSound = "/impact/generic/explosion_large" end
 		if not self.BuildingDamage and self.shield and Board:IsBuilding(p2 + DIR_VECTORS[(dir+1)%4]*i) then
 			damage.iDamage = DAMAGE_ZERO
 			damage.iShield=1
-			if push_dir ~= nil then
-				damage.sAnimation = "airpush_"..push_dir
-			else
+			if p1 == p3 then
 				damage.sAnimation = "ExploRepulse"..self.Damage
+			else
+				damage.sAnimation = "airpush_"..push_dir
 			end
 			ret:AddArtillery(damage,"effects/shotup_missileswarm.png", NO_DELAY)
 		elseif self.Damage==2 then
@@ -289,6 +309,7 @@ function Nico_artillerybot:GetFinalEffect(p1,p2,p3)
 		else
 			ret:AddArtillery(damage,"effects/shotup_guided_missile.png", NO_DELAY)
 		end
+		if p1 == p3 then ret:AddScript(self:FireFlyBossFlip(p2 + DIR_VECTORS[(dir+1)%4]*i)) end
 	end
 	ret:AddDelay(0.8)
 	for i = -1,1 do
