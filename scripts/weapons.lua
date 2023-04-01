@@ -489,7 +489,7 @@ shieldbotpulse = Animation:new{
 Nico_shieldbot = Science_Placer:new{
 	Class = "TechnoVek",
 	Name="NRG Shield Mark II",
-	Description="Shields self, and push adjacent tiles away.",
+	Description="Shield self or nearby tile, and push adjacent tiles away.",
 	Icon = "weapons/Nico_shieldbot.png",
 	LaunchSound = "/weapons/enhanced_tractor",
 	Explosion = "",--shieldbotpulse",
@@ -554,12 +554,12 @@ function Nico_shieldbot:GetSkillEffect(p1, p2)
 	end
 	
 	for i = DIR_START, DIR_END do
-		damage = SpaceDamage(p2 + DIR_VECTORS[i], self.Damage + blastDamage, i)
-		damage.sAnimation = "explopush"..(self.Damage + blastDamage).."_"..i
+		damage = SpaceDamage(p2 + DIR_VECTORS[i], blastDamage, i)
+		damage.sAnimation = "airpush_"..i
+		if blastFlag then damage.sAnimation = "explopush1_"..i end
 		if (Board:IsBuilding(p2 + DIR_VECTORS[i]) or (Board:IsPawnSpace(p2 + DIR_VECTORS[i]) and Board:GetPawn(p2 + DIR_VECTORS[i]):GetTeam() == TEAM_PLAYER)) and self.ShieldFriendly then
 			damage.iDamage = 0
 			damage.iShield = 1
-			damage.sAnimation = "airpush_"..i
 		end
 		ret:AddDamage(damage)
 	end
@@ -569,7 +569,7 @@ end
 Nico_shieldbot_A=Nico_shieldbot:new{
 	Size = 3,
 	ShieldFriendly = true,
-	UpgradeDescription="Increase the size of the target area by 1, and shield allied units and buildings.",
+	UpgradeDescription="Increase the size of the target area by 1, and shield adjacent allied units and buildings.",
 	TipImage = {
 		Unit = Point(2,2),
 		Enemy1 = Point(1,2),
