@@ -18,7 +18,7 @@ function mod:init()
 	require(self.scriptPath .."weapons")
 	require(self.scriptPath .."pawns")
 	-- add extra mech to selection screen
-	modApi.events.onModsInitialized:subscribe(function()
+	--[[modApi.events.onModsInitialized:subscribe(function()
 
 		local oldGetStartingSquad = getStartingSquad
 		function getStartingSquad(choice, ...)
@@ -29,7 +29,7 @@ function mod:init()
 		end
 		return result
 		end
-	end)
+	end)]]
 end
 
 function mod:load( options, version)
@@ -48,13 +48,13 @@ function mod:load( options, version)
 	)
 	modApi:addSquad(
 		{
-			"Snt. Weapons, 2nd Divission",-- title
+			"Sentient Weapons 2",-- title
 			"Nico_knightbot_mech",-- mech #2
 			"Nico_minerbot_mech",-- mech #1
 			"Nico_shieldbot_mech",-- mech #3
 			id="Nico_Sent_weap2"
 		},
-		"Snt. Weapons, 2nd Divission",
+		"Sentient Weapons 2",
 		"After destroying the Vek Hive, Zenith sent these improved Sentient Weapons across time to fight the Vek and their hijacked brethren.",
 		self.resourcePath .."img/mod_icon.png"
 	)
