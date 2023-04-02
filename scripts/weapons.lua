@@ -874,6 +874,7 @@ end
 local function Nico_UnMine(mission, pawn, undonePosition)
 	if pawn:GetType() == "Nico_minerbot_mech" then
 		if mission.Nico_FireSpace[2] then Board:SetFire(mission.Nico_FireSpace[1],true) end
+		if Board:IsTerrain(pawn:GetSpace(),TERRAIN_WATER) then Board:RemoveItem(pawn:GetSpace()) end
 	end
 end
 
