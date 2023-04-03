@@ -749,11 +749,13 @@ function Nico_minibot2:GetFinalEffect(p1,p2,p3)
 	return ret
 end
 --The mech weapon
-Nico_minerbot=Ranged_Rockthrow:new{
+Nico_minerbot=ArtilleryDefault:new{
 	Icon = "weapons/Ranged_Arachnoid.png",
 	Name="Mini-Mine-Bot Deployer",
 	Description="Launch a Mine-Bot at a tile, pushing tiles to the left and right, creating an improved Mine-Bot on kill.",
 	Class="TechnoVek",
+	ArtilleryStart = 2,
+	ArtillerySize = 8,
 	SpawnBot = "Nico_Snowmine",
 	SpawnBot2 = "Nico_Snowmine2",
 	LaunchSound = "/weapons/artillery_volley",
