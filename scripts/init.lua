@@ -7,9 +7,9 @@ local mod = {
 	version = "0",
 	requirements = {},
 	dependencies = { --This requests modApiExt from the mod loader
-		modApiExt = "1.17", --We can get this by using the variable `modapiext`
+		modApiExt = "1.18", --We can get this by using the variable `modapiext`
 	},
-	modApiVersion = "2.8.3",
+	modApiVersion = "2.9.1",
 	icon = "img/mod_icon.png"
 }
 
