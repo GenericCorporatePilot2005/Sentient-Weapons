@@ -634,16 +634,44 @@ Nico_shieldbot_AB=Nico_shieldbot_B:new{
 	},
 }
 ------Miner Bot------
+--The deployable's palettes
+modApi:addPalette{
+	ID = "Nico_mine_iceflower",
+	Name = "Mine-Bot Mark I",
+	image="units/player/Nico_minerbot_mech_ns.png",
+	PlateHighlight = {233,161,172},--lights
+	PlateLight     = {189,220,255},--main highlight
+	PlateMid       = {146,182,207},--main light
+	PlateDark      = {91,107,158},--main mid
+	PlateOutline   = {32,54,55},--main dark
+	PlateShadow    = {60,91,117},--metal dark
+	BodyColor      = {104,116,193},--metal mid
+	BodyHighlight  = {219,255,242},--metal light
+}
+modApi:addPalette{
+	ID = "Nico_mine_winter",
+	Name = "Mine-Bot Mark III",
+	image="units/player/Nico_minerbot_mech_ns.png",
+	PlateHighlight = {255,245,101},--lights
+	PlateLight     = {217,216,221},--main highlight
+	PlateMid       = {123,122,128},--main light
+	PlateDark      = {71,72,77},--main mid
+	PlateOutline   = {46,45,51},--main dark
+	PlateShadow    = {71,163,157},--metal dark
+	BodyColor      = {144,215,219},--metal mid
+	BodyHighlight  = {246,255,255},--metal light
+}
 --The deployable units
 Nico_Snowmine = Pawn:new{
 	Name = "Mine-Bot Mark I",
 	Health = 1,
 	Class = "TechnoVek",
+	ImageOffset = modApi:getPaletteImageOffset("Nico_mine_iceflower"),
 	DefaultTeam = TEAM_PLAYER,
 	MoveSpeed = 0,
 	MoveAtk = 3,
 	IgnoreSmoke = true,
-	Image = "Arachnoid",
+	Image = "Nico_minerbot_mech",
 	SkillList = { "Nico_minibot" },
 	SoundLocation = "/enemy/snowmine_1/",
 	DefaultTeam = TEAM_PLAYER,
@@ -689,7 +717,8 @@ Nico_Snowmine2 = Pawn:new{
 	MoveSpeed = 0,
 	MoveAtk = 3,
 	IgnoreSmoke = true,
-	Image = "Arachnoid",
+	Image = "Nico_minerbot_mech",
+	ImageOffset = modApi:getPaletteImageOffset("Nico_mine_winter"),
 	SkillList = { "Nico_minibot2" },
 	SoundLocation = "/enemy/snowmine_1/",
 	DefaultTeam = TEAM_PLAYER,
@@ -750,8 +779,8 @@ function Nico_minibot2:GetFinalEffect(p1,p2,p3)
 end
 --The mech weapon
 Nico_minerbot=ArtilleryDefault:new{
-	Icon = "weapons/Ranged_Arachnoid.png",
-	Name="Mini-Mine-Bot Deployer",
+	Icon = "weapons/ranged_defensestrike.png",
+	Name="Mine-Bot Deployer",
 	Description="Launch a Mine-Bot at a tile, pushing tiles to the left and right, creating an improved Mine-Bot on kill.",
 	Class="TechnoVek",
 	ArtilleryStart = 2,
@@ -792,6 +821,9 @@ function Nico_minerbot:GetSkillEffect(p1,p2)
 	
 	ret:AddBounce(p1, 1)
 	ret:AddArtillery(damage,"effects/shotup_robot.png")
+	--[[if damage.bKO_Effect then
+		ret:AddAnimation(damage.loc,"Nico_minerbot_meche", ANIM_NO_DELAY)
+	end]]
 	ret:AddBounce(p2, self.BounceAmount)
 	ret:AddBoardShake(0.15)
 	--if damage.bKO_Effect then ret:AddSound("/enemy/snowmine_1/death") end

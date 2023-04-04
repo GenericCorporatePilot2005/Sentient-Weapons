@@ -56,7 +56,7 @@ function mod:load( options, version)
 		},
 		"Sentient Weapons 2",
 		"After destroying the Vek Hive, Zenith sent these improved Sentient Weapons across time to fight the Vek and their hijacked brethren.",
-		self.resourcePath .."img/mod_icon.png"
+		self.resourcePath .."img/squad2_icon.png"
 	)
 end
 
