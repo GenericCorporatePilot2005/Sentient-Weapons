@@ -767,7 +767,7 @@ function Nico_minibot2:GetSkillEffect(p1,p2)
 end
 function Nico_minibot2:GetFinalEffect(p1,p2,p3)
 	local ret = self:GetSkillEffect(p1,p2)
-	
+	ret:AddDelay(0.2)--so it can pick up time pods
 	if p2 ~= p3 then
 		local damage = SpaceDamage(p2)
 		damage.sItem = "Freeze_Mine"
