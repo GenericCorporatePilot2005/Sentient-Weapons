@@ -492,13 +492,13 @@ modApi:appendAsset("img/weapons/Nico_shield_explode_glow.png", path.."img/weapon
 Location["weapons/Nico_shield_explode_glow.png"] = Point(-16,8)
 modApi:appendAsset("img/weapons/Nico_shieldbot.png", path .."img/weapons/Nico_shieldbot.png")
 modApi:appendAsset("img/effects/shield_bot_pulse.png", path.. "img/effects/shield_bot_pulse.png")
-shieldbotpulse = Animation:new{
+ANIMS.shieldbotpulse = Animation:new{
 	Image = "effects/shield_bot_pulse.png",
 	NumFrames = 8,
-	Time = 0.05,
+	Time = 0.08,
 	
-	PosX = -33,
-	PosY = -14
+	PosX = -22,
+	PosY = 1
 }
 Nico_shieldbot = Science_Placer:new{
 	Class = "TechnoVek",
