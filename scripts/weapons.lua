@@ -495,10 +495,10 @@ modApi:appendAsset("img/effects/shield_bot_pulse.png", path.. "img/effects/shiel
 ANIMS.shieldbotpulse = Animation:new{
 	Image = "effects/shield_bot_pulse.png",
 	NumFrames = 8,
-	Time = 0.08,
+	Time = 0.05,
 	
-	PosX = -22,
-	PosY = 1
+	PosX = -33,
+	PosY = -14,
 }
 Nico_shieldbot = Science_Placer:new{
 	Class = "TechnoVek",

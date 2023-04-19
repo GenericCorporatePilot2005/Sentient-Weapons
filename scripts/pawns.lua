@@ -194,57 +194,57 @@ end
 
 CreatePilot{
  	Id = "Pilot_Nico_laserbot_mech",
-    Personality = "Vek",
+    Personality = "Artificial",
 	Sex = SEX_VEK,
     Name = "Laser-Bot",
     GetSkill = function() NicoIsRobot = true; return "Survive_Death" end,
 	Rarity = 0,
-    Blacklist = {"Invulnerable","Thick","Popular","Grid","Health","Skilled","Regen","Pain"},
+    Blacklist = {"Invulnerable","Thick","Popular","Health","Skilled","Regen","Pain"},
 }
 CreatePilot{
     Id = "Pilot_Nico_cannonbot_mech",
-    Personality = "Vek",
+    Personality = "Artificial",
     Sex = SEX_VEK,
     Name = "Cannon-Bot",
     GetSkill = function() NicoIsRobot = true; return "Survive_Death" end,
     Rarity = 0,
-    Blacklist = {"Invulnerable","Thick","Popular","Grid","Health","Skilled","Regen","Pain"},
+    Blacklist = {"Invulnerable","Thick","Popular","Health","Skilled","Regen","Pain"},
 }
 CreatePilot{
     Id = "Pilot_Nico_artillerybot_mech",
-  	Personality = "Vek",
+  	Personality = "Artificial",
 	Sex = SEX_VEK,
     Name = "Artillery-Bot",
     GetSkill = function() NicoIsRobot = true; return "Survive_Death" end,
 	Rarity = 0,
-    Blacklist = {"Invulnerable","Thick","Popular","Grid","Health","Skilled","Regen","Pain"},
+    Blacklist = {"Invulnerable","Thick","Popular","Health","Skilled","Regen","Pain"},
 }
 CreatePilot{
     Id = "Pilot_Nico_knightbot_mech",
-  	Personality = "Vek",
+  	Personality = "Artificial",
 	Sex = SEX_VEK,
     Name = "Knight-Bot",
     GetSkill = function() NicoIsRobot = true; return "Survive_Death" end,
 	Rarity = 0,
-    Blacklist = {"Invulnerable","Thick","Popular","Grid","Health","Skilled","Regen","Pain"},
+    Blacklist = {"Invulnerable","Thick","Popular","Health","Skilled","Regen","Pain"},
 }
 CreatePilot{
     Id = "Pilot_Nico_shieldbot_mech",
-  	Personality = "Vek",
+  	Personality = "Artificial",
 	Sex = SEX_VEK,
     Name = "Shield-Bot",
     GetSkill = function() NicoIsRobot = true; return "Survive_Death" end,
 	Rarity = 0,
-    Blacklist = {"Invulnerable","Thick","Popular","Grid","Health","Skilled","Regen","Pain"},
+    Blacklist = {"Invulnerable","Thick","Popular","Health","Skilled","Regen","Pain"},
 }
 CreatePilot{
     Id = "Pilot_Nico_minerbot_mech",
-  	Personality = "Vek",
+  	Personality = "Artificial",
 	Sex = SEX_VEK,
     Name = "Mine-Bot",
     GetSkill = function() NicoIsRobot = true; return "Survive_Death" end,
 	Rarity = 0,
-    Blacklist = {"Invulnerable","Thick","Popular","Grid","Health","Skilled","Regen","Pain"},
+    Blacklist = {"Invulnerable","Thick","Popular","Health","Skilled","Regen","Pain"},
 }
 Nico_laserbot_mech = Pawn:new{
     Name = "Laser-Bot",
