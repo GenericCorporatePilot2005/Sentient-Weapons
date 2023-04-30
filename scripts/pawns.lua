@@ -9,6 +9,7 @@ local path = mod_loader.mods[modApi.currentMod].resourcePath
     modApi:appendAsset("img/portraits/pilots/Pilot_Nico_knightbot_mech.png", path .."img/portraits/Pilot_Nico_knightbot_mech.png")
     modApi:appendAsset("img/portraits/pilots/Pilot_Nico_shieldbot_mech.png", path .."img/portraits/Pilot_Nico_shieldbot_mech.png")
     modApi:appendAsset("img/portraits/pilots/Pilot_Nico_minerbot_mech.png", path .."img/portraits/Pilot_Nico_minerbot_mech.png")
+    modApi:appendAsset("img/portraits/pilots/Pilot_Nico_juggernautbot_mech.png", path .."img/portraits/Pilot_Nico_juggernautbot_mech.png")
 -- locate our mech assets.
 local artmechPath = path .."img/units/player/"
 -- make a list of our files.
@@ -32,7 +33,7 @@ local a=ANIMS
 	a.Nico_artillerybot_mechw_broken = a.MechUnit:new{Image="units/player/Nico_artillerybot_mech_w_broken.png", PosX = -18, PosY = -2 }
 	a.Nico_artillerybot_mech_ns = a.MechIcon:new{Image="units/player/Nico_artillerybot_mech_ns.png"}
 
-    -- locate our mech assets.
+-- locate our mech assets.
 local lasermechPath = path .."img/units/player/"
 -- make a list of our files.
 local files = {
@@ -150,35 +151,29 @@ local a=ANIMS
     a.Nico_minerbot_meche =		a.BaseEmerge:new{Image = "units/player/Nico_minerbot_mech_emerge.png", PosX = -15, PosY = 0, NumFrames = 3 }
 	a.Nico_minerbot_mechw_broken = a.MechUnit:new{Image="units/player/Nico_minerbot_mech_w_broken.png", PosX = -20, PosY = 10}
 	a.Nico_minerbot_mech_ns = a.MechIcon:new{Image="units/player/Nico_minerbot_mech_ns.png"}
-    
-    modApi:addPalette{
-        id = "nico_snow",
-        image="units/player/Nico_artillerybot_mech_ns.png",
-        name = "Sentient Weapon's Light Blue & Silver",
-        colorMap = {
-            PlateHighlight = {255,  14,  19},
-            PlateLight     = {100, 151, 143},
-            PlateMid       = { 50,  71,  88},
-            PlateDark      = { 31,  34,  46},
-            PlateOutline   = { 17,  17,  18},
-            PlateShadow    = { 74,  76,  80},
-            BodyColor      = {125, 135, 144},
-            BodyHighlight  = {208, 213, 217},
-        },
-    }
-    modApi:addPalette{
-        ID = "nico_alpha_snow",
-        image="units/player/Nico_knightbot_mech_ns.png",
-        Name = "Sentient Weapon's Pink & Black",
-        PlateHighlight = {255,  14,  19},
-        PlateLight     = {181, 165, 216},
-        PlateMid       = {151,  88, 153},
-        PlateDark      = { 74,  58,  66},
-        PlateOutline   = { 27,  25,  27},
-        PlateShadow    = { 41,  50,  48},
-        BodyColor      = { 71,  92,  85},
-        BodyHighlight  = {137, 162, 153},
-    }
+
+-- locate our mech assets.
+local juggermechPath = path .."img/units/player/"
+-- make a list of our files.
+local files = {
+	"Nico_juggernautbot_mech.png",
+	"Nico_juggernautbot_mech_a.png",
+	"Nico_juggernautbot_mech_w.png",
+	"Nico_juggernautbot_mech_w_broken.png",
+	"Nico_juggernautbot_mech_broken.png",
+	"Nico_juggernautbot_mech_ns.png",
+	"Nico_juggernautbot_mech_h.png",
+}
+for _, file in ipairs(files) do
+	modApi:appendAsset("img/units/player/".. file, juggermechPath .. file)
+end
+local a=ANIMS
+	a.Nico_juggernautbot_mech =a.MechUnit:new{Image="units/player/Nico_juggernautbot_mech.png", PosX = -24, PosY = -9}
+	a.Nico_juggernautbot_mecha = a.MechUnit:new{Image="units/player/Nico_juggernautbot_mech_a.png",  PosX = -24, PosY = -9, NumFrames = 4 }
+	a.Nico_juggernautbot_mechw = a.MechUnit:new{Image="units/player/Nico_juggernautbot_mech_w.png", PosX = -17, PosY = 9}
+	a.Nico_juggernautbot_mech_broken = a.MechUnit:new{Image="units/player/Nico_juggernautbot_mech_broken.png", PosX = -23, PosY = -8 }
+	a.Nico_juggernautbot_mechw_broken = a.MechUnit:new{Image="units/player/Nico_juggernautbot_mech_w_broken.png", PosX = -17, PosY = 9}
+	a.Nico_juggernautbot_mech_ns = a.MechIcon:new{Image="units/player/Nico_juggernautbot_mech_ns.png"}
 
 local oldGetSkillInfo = GetSkillInfo
 	function GetSkillInfo(skill)
@@ -191,7 +186,47 @@ local oldGetSkillInfo = GetSkillInfo
 	end
 	return oldGetSkillInfo(skill)
 end
-
+modApi:addPalette{
+    id = "nico_snow",
+    image="units/player/Nico_artillerybot_mech_ns.png",
+    name = "Sentient Weapon's Light Blue & Silver",
+    colorMap = {
+        PlateHighlight = {255,  14,  19},
+        PlateLight     = {100, 151, 143},
+        PlateMid       = { 50,  71,  88},
+        PlateDark      = { 31,  34,  46},
+        PlateOutline   = { 17,  17,  18},
+        PlateShadow    = { 74,  76,  80},
+        BodyColor      = {125, 135, 144},
+        BodyHighlight  = {208, 213, 217},
+    },
+}
+modApi:addPalette{
+    ID = "nico_alpha_snow",
+    image="units/player/Nico_knightbot_mech_ns.png",
+    Name = "Sentient Weapon's Pink & Black",
+    PlateHighlight = {255,  14,  19},
+    PlateLight     = {181, 165, 216},
+    PlateMid       = {151,  88, 153},
+    PlateDark      = { 74,  58,  66},
+    PlateOutline   = { 27,  25,  27},
+    PlateShadow    = { 41,  50,  48},
+    BodyColor      = { 71,  92,  85},
+    BodyHighlight  = {137, 162, 153},
+}
+modApi:addPalette{
+    ID = "nico_boss_snow",
+    Image="units/player/Nico_juggernautbot_mech_ns.png",
+    Name = "Sentient Weapon's Olive Green & Grey",
+    PlateHighlight = {255,  14,  19},
+    PlateLight     = {200, 216, 165},
+    PlateMid       = { 90, 153,  88},
+    PlateDark      = { 58,  74,  66},
+    PlateOutline   = { 27,  26,  25},
+    PlateShadow    = { 45,  41,  50},
+    BodyColor      = { 76,  71,  92},
+    BodyHighlight  = {137, 146, 162},
+}
 CreatePilot{
  	Id = "Pilot_Nico_laserbot_mech",
     Personality = "Artificial",
@@ -242,6 +277,15 @@ CreatePilot{
   	Personality = "Artificial",
 	Sex = SEX_VEK,
     Name = "Mine-Bot",
+    GetSkill = function() NicoIsRobot = true; return "Survive_Death" end,
+	Rarity = 0,
+    Blacklist = {"Invulnerable","Thick","Popular","Health","Skilled","Regen","Pain"},
+}
+CreatePilot{
+    Id = "Pilot_Nico_juggernautbot_mech",
+  	Personality = "Artificial",
+	Sex = SEX_VEK,
+    Name = "Juggernaut-Bot",
     GetSkill = function() NicoIsRobot = true; return "Survive_Death" end,
 	Rarity = 0,
     Blacklist = {"Invulnerable","Thick","Popular","Health","Skilled","Regen","Pain"},
@@ -446,14 +490,47 @@ Nico_minerbot_mech = Pawn:new{
     
     AddPawn("Nico_minerbot_mech")
 }
+Nico_juggernautbot_mech = Pawn:new{
+	Name = "Juggernaut-Bot",
+    NicoIsRobot = true,
+    -- FlameMech is also Prime, so this is redundant, but if you had no base, you would need a class.
+    Class = "TechnoVek",
+    
+    -- various stats.
+    Health = 1,
+    MoveSpeed = 1,
+    Massive = true,
+    Corpse = true,
+	IgnoreSmoke = true,
+    
+    -- reference the animations we set up earlier.
+    Image = "Nico_juggernautbot_mech",
+    
+    -- ImageOffset specifies which color scheme we will be using.
+    -- (only apporpirate if you draw your mechs with Archive olive green colors)
+    ImageOffset = modApi:getPaletteImageOffset("nico_boss_snow"),
+    
+    -- Any weapons this mech should start with goes in this table.
+    SkillList = {"Nico_juggernaut"},
+    
+    -- movement sounds.
+    SoundLocation = "/enemy/snowart_2/",
+    
+    -- who will be controlling this unit.
+    DefaultTeam = TEAM_PLAYER,
+    
+    -- impact sounds.
+	ImpactMaterial = IMPACT_METAL,
 
+    AddPawn("Nico_juggernautbot_mech")
+}
 modApi:appendAsset("img/icon_Nico_zenith_shield.png", path.."img/icon_Nico_zenith_shield.png")--image of the trait
 local mod = modApi:getCurrentMod()--the mod itself
 local trait = require(mod.scriptPath .."libs/trait")--where does it get the code for the rest of this to work
 
-Nico_Pawn_List = {"Nico_laserbot_mech", "Nico_cannonbot_mech", "Nico_artillerybot_mech", "Nico_knightbot_mech", "Nico_shieldbot_mech","Nico_minerbot_mech"}
+Nico_Pawn_List = {"Nico_laserbot_mech", "Nico_cannonbot_mech", "Nico_artillerybot_mech", "Nico_knightbot_mech", "Nico_shieldbot_mech","Nico_minerbot_mech","Nico_juggernautbot_mech"}
 
-for i = 1,6 do
+for i = 1,7 do
 	trait:add{
 		pawnType=Nico_Pawn_List[i],--who will get the trait
 		icon = "img/icon_Nico_zenith_shield.png",--the icon itself

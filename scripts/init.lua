@@ -18,18 +18,18 @@ function mod:init()
 	require(self.scriptPath .."weapons")
 	require(self.scriptPath .."pawns")
 	-- add extra mech to selection screen
-	--[[modApi.events.onModsInitialized:subscribe(function()
+	modApi.events.onModsInitialized:subscribe(function()
 
 		local oldGetStartingSquad = getStartingSquad
 		function getStartingSquad(choice, ...)
 		local result = oldGetStartingSquad(choice, ...)
 
 		if choice == 0 then
-			return add_arrays(result, {"Nico_knightbot_mech","Nico_shieldbot_mech"})
+			return add_arrays(result, {"Nico_juggernautbot_mech"})
 		end
 		return result
 		end
-	end)]]
+	end)
 end
 
 function mod:load( options, version)
