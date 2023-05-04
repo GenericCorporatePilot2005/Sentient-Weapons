@@ -49,6 +49,7 @@ Nico_laserbot = LaserDefault:new{
 		Damage = 4,
 	}
 
+	modApi:addWeaponDrop("Nico_laserbot")
 ------Cannon Bot------
 Nico_cannonbot=Skill:new{
 	Name="Cannon 8R Mark II",
@@ -195,7 +196,7 @@ Nico_cannonbot=Skill:new{
 			CustomPawn = "Nico_cannonbot_mech",
 		},
 	}
-
+	modApi:addWeaponDrop("Nico_cannonbot")
 ------Artillery Bot------
 Nico_artillerybot=ArtilleryDefault:new{
 	Name="Vk8 Rockets Mark II",
@@ -330,7 +331,7 @@ Nico_artillerybot=ArtilleryDefault:new{
 		shield=true,
 		Damage=2,
 	}
-
+	modApi:addWeaponDrop("Nico_artillerybot")
 ------Knight Bot------
 Nico_knightbot = Punch:new{
 	Name = "0th KPR Sword Mark II",
@@ -484,6 +485,7 @@ Nico_knightbot = Punch:new{
 	Nico_knightbot_AB=Nico_knightbot_A:new{
 		Damage=3,
 	}
+	modApi:addWeaponDrop("Nico_knightbot")
 ------Shield Bot------
 Nico_shieldbot = Science_Placer:new{
 	Class = "TechnoVek",
@@ -630,6 +632,7 @@ Nico_shieldbot = Science_Placer:new{
 		PosX = -33,
 		PosY = -14,
 	}
+	modApi:addWeaponDrop("Nico_shieldbot")
 ------Miner Bot------
 	--The deployable's palettes
 	modApi:addPalette{
@@ -801,43 +804,43 @@ Nico_minerbot=ArtilleryDefault:new{
 		CustomPawn = "Nico_minerbot_mech",
 	}
 	}
-	function Nico_minerbot:GetSkillEffect(p1,p2)
-		local ret = SkillEffect()
-		local dir = GetDirection(p2 - p1)
-		local damage = SpaceDamage(p2, self.Damage)
+		function Nico_minerbot:GetSkillEffect(p1,p2)
+			local ret = SkillEffect()
+			local dir = GetDirection(p2 - p1)
+			local damage = SpaceDamage(p2, self.Damage)
 	
-		if Board:IsValid(p2) and not Board:IsBlocked(p2,PATH_PROJECTILE) then
-			damage.sPawn = self.SpawnBot
-			damage.sAnimation = ""
-			damage.iDamage = 0
-		else
-			damage.sAnimation = "ExploArt0"
-			damage.bKO_Effect = Board:IsDeadly(damage,Pawn)
-			if damage.bKO_Effect then damage.sPawn = self.SpawnBot2 end
+			if Board:IsValid(p2) and not Board:IsBlocked(p2,PATH_PROJECTILE) then
+				damage.sPawn = self.SpawnBot
+				damage.sAnimation = ""
+				damage.iDamage = 0
+			else
+				damage.sAnimation = "ExploArt0"
+				damage.bKO_Effect = Board:IsDeadly(damage,Pawn)
+				if damage.bKO_Effect then damage.sPawn = self.SpawnBot2 end
+			end
+	
+			ret:AddBounce(p1, 1)
+			ret:AddArtillery(damage,"effects/shotup_robot.png")
+			--[[if damage.bKO_Effect then
+				ret:AddAnimation(damage.loc,"Nico_minerbot_meche", ANIM_NO_DELAY)
+			end]]
+			ret:AddBounce(p2, self.BounceAmount)
+			ret:AddBoardShake(0.15)
+			--if damage.bKO_Effect then ret:AddSound("/enemy/snowmine_1/death") end
+	
+			local damagepush = SpaceDamage(p2 + DIR_VECTORS[(dir+1)%4], 0, (dir+1)%4)
+			damagepush.sAnimation = "airpush_"..((dir+1)%4)
+			ret:AddDamage(damagepush) 
+			damagepush = SpaceDamage(p2 + DIR_VECTORS[(dir-1)%4], 0, (dir-1)%4)
+			damagepush.sAnimation = "airpush_"..((dir-1)%4)
+			ret:AddDamage(damagepush)
+			return ret
 		end
-	
-		ret:AddBounce(p1, 1)
-		ret:AddArtillery(damage,"effects/shotup_robot.png")
-		--[[if damage.bKO_Effect then
-			ret:AddAnimation(damage.loc,"Nico_minerbot_meche", ANIM_NO_DELAY)
-		end]]
-		ret:AddBounce(p2, self.BounceAmount)
-		ret:AddBoardShake(0.15)
-		--if damage.bKO_Effect then ret:AddSound("/enemy/snowmine_1/death") end
-	
-		local damagepush = SpaceDamage(p2 + DIR_VECTORS[(dir+1)%4], 0, (dir+1)%4)
-		damagepush.sAnimation = "airpush_"..((dir+1)%4)
-		ret:AddDamage(damagepush) 
-		damagepush = SpaceDamage(p2 + DIR_VECTORS[(dir-1)%4], 0, (dir-1)%4)
-		damagepush.sAnimation = "airpush_"..((dir-1)%4)
-		ret:AddDamage(damagepush)
-		return ret
-	end
-	Nico_minerbot_A=Nico_minerbot:new{
-		SpawnBot = "Nico_SnowmineA",
-		SpawnBot2 = "Nico_Snowmine2A",
-		UpgradeDescription = "Increases the Mine-Bot's move distance to 4.",
-	}
+		Nico_minerbot_A=Nico_minerbot:new{
+			SpawnBot = "Nico_SnowmineA",
+			SpawnBot2 = "Nico_Snowmine2A",
+			UpgradeDescription = "Increases the Mine-Bot's move distance to 4.",
+		}
 	Nico_minerbot_B=Nico_minerbot:new{
 		Damage = 3,
 		UpgradeDescription = "Increases the artillery attack damage by 2.",
@@ -856,6 +859,7 @@ Nico_minerbot=ArtilleryDefault:new{
 		SpawnBot = "Nico_SnowmineA",
 		SpawnBot2 = "Nico_Snowmine2A",
 	}
+	modApi:addWeaponDrop("Nico_minerbot")
 ------Juggernaut Bot------
 Nico_juggernaut = Skill:new{  
 	Name = "Juggernaut Engines",
@@ -864,9 +868,9 @@ Nico_juggernaut = Skill:new{
 	Icon = "weapons/Nico_juggernautbot_weapon1.png",
 	LaunchSound = "/weapons/shield_bash",
 	Damage = DAMAGE_DEATH,
-	Upgrades=1,
-	UpgradeCost={2},
-	UpgradeList={"Terraforming"},
+	Upgrades=2,
+	UpgradeCost={2,1},
+	UpgradeList={"Terraforming","Drift"},
 	Phasing = 0,
 	Range = 7,
 	TipImage = {
@@ -877,89 +881,169 @@ Nico_juggernaut = Skill:new{
 		CustomEnemy = "Snowtank2",
 		CustomPawn = "Nico_juggernautbot_mech",
 	}
-}
-modApi:appendAsset("img/weapons/Nico_juggernautbot_weapon1.png", path .."img/weapons/Nico_juggernautbot_weapon1.png")
-function Nico_juggernaut:GetTargetArea(p1)
-	local ret = PointList()
-	for dir = DIR_START, DIR_END do
-		local stillgood = true
-		local max_i = 0
-		for i = 1,self.Range do
-			local point = p1 + DIR_VECTORS[dir]*i
-			if stillgood and not Board:IsBlocked(point, Pawn:GetPathProf()) then
-				max_i = i
-			end
-			if self.Phasing ~= 1 and (Board:IsBuilding(point) or Board:IsTerrain(point,TERRAIN_MOUNTAIN)) then
-				stillgood = false --needed?
-				break
-			end
-		end
-		if max_i > 0 then
-			for i = 1,max_i do
-				point = p1 + DIR_VECTORS[dir]*i
-				ret:push_back(point)
-			end
-		end
-	end
-	return ret
-end
-
-function Nico_juggernaut:GetSkillEffect(p1,p2)
-	local ret = SkillEffect()
-	local endcharge = p2
-	local direction = GetDirection(p2 - p1)
-	local crushing = false
-
-	-- air graphics to emphasize speed.
-	local damage0 = SpaceDamage(p1, 0)
-	damage0.sAnimation = "airpush_".. ((direction+2)%4)
-	ret:AddDamage(damage0)
-	ret:AddDelay(0.5)
-	
-	-- Jump target to next open tile
-	if Board:IsBlocked(p2, Pawn:GetPathProf()) then
-		for i = 1,6 do
-			local point2 = p2 + DIR_VECTORS[direction]*i
-			if not Board:IsBlocked(point2, Pawn:GetPathProf()) then
-				endcharge = point2
-				break
-			end
-		end
-	end
-    local distance = p1:Manhattan(endcharge)
-		
-	ret:AddCharge(Board:GetPath(p1, endcharge, PATH_FLYER), NO_DELAY)
-	
-	for i = 1,distance-1 do	
-		ret:AddDelay(0.1)
-		local midpoint = p1 + DIR_VECTORS[direction]*i
-		
-		local dodamage = true		
-		if Board:IsBuilding(midpoint) then
-			dodamage = false
-		end
-		
-		if dodamage == true then
-			local damage = SpaceDamage(midpoint,self.Damage)
-			ret:AddDamage(damage)
-		end
-	end
-	return ret
-end
-Nico_juggernaut_A=Nico_juggernaut:new{
-	Phasing=1,
-	UpgradeDescription="Can charge through buildings and mountains, won't destroy buildings.",
-	TipImage = {
-		Unit = Point(0,2),
-		Enemy = Point(1,2),
-		Enemy2 = Point(2,2),
-		Building = Point(3,2),
-		Mountain = Point(4,2),
-		Target = Point(5,2),
-		CustomEnemy = "Snowtank2",
-		CustomPawn = "Nico_juggernautbot_mech",
 	}
-}
+	modApi:appendAsset("img/weapons/Nico_juggernautbot_weapon1.png", path .."img/weapons/Nico_juggernautbot_weapon1.png")
+	function Nico_juggernaut:GetTargetArea(p1)
+		local ret = PointList()
+		for dir = DIR_START, DIR_END do
+			local stillgood = true
+			local max_i = 0
+			for i = 1,self.Range do
+				local point = p1 + DIR_VECTORS[dir]*i
+				if stillgood and not Board:IsBlocked(point, Pawn:GetPathProf()) then
+					max_i = i
+				end
+				if self.Phasing ~= 1 and (Board:IsBuilding(point) or Board:IsTerrain(point,TERRAIN_MOUNTAIN)) then
+					stillgood = false --needed?
+					break
+				end
+			end
+			if max_i > 0 then
+				for i = 1,max_i do
+					point = p1 + DIR_VECTORS[dir]*i
+					ret:push_back(point)
+				end
+			end
+		end
+		return ret
+	end
+
+	function Nico_juggernaut:GetSkillEffect(p1,p2)
+		local ret = SkillEffect()
+		local endcharge = p2
+		local direction = GetDirection(p2 - p1)
+		local crushing = false
+
+		-- air graphics to emphasize speed.
+		local damage0 = SpaceDamage(p1, 0)
+		damage0.sAnimation = "airpush_".. ((direction+2)%4)
+		ret:AddDamage(damage0)
+		ret:AddDelay(0.5)
+	
+		-- Jump target to next open tile
+		if Board:IsBlocked(p2, Pawn:GetPathProf()) then
+			for i = 1,6 do
+				local point2 = p2 + DIR_VECTORS[direction]*i
+				if not Board:IsBlocked(point2, Pawn:GetPathProf()) then
+					endcharge = point2
+					break
+				end
+			end
+		end
+	    local distance = p1:Manhattan(endcharge)
+		
+		ret:AddCharge(Board:GetPath(p1, endcharge, PATH_FLYER), NO_DELAY)
+	
+		for i = 1,distance-1 do	
+			ret:AddDelay(0.1)
+			local midpoint = p1 + DIR_VECTORS[direction]*i
+		
+			local dodamage = true		
+			if Board:IsBuilding(midpoint) then
+				dodamage = false
+			end
+		
+			if dodamage == true then
+				local damage = SpaceDamage(midpoint,self.Damage)
+				ret:AddDamage(damage)
+			end
+		end
+		return ret
+	end
+	Nico_juggernaut_A=Nico_juggernaut:new{
+		Phasing=1,
+		UpgradeDescription="Can charge through buildings and mountains, won't destroy buildings.",
+		TipImage = {
+			Unit = Point(0,2),
+			Enemy = Point(1,2),
+			Enemy2 = Point(2,2),
+			Building = Point(3,2),
+			Mountain = Point(4,2),
+			Target = Point(5,2),
+			CustomEnemy = "Snowtank2",
+			CustomPawn = "Nico_juggernautbot_mech",
+		}
+	}
+	Nico_juggernaut_B=Nico_juggernaut:new{
+		TwoClick=true,
+		UpgradeDescription="can drift, ramming through a second line of tiles",
+		TipImage = {
+			Unit = Point(0,3),
+			Enemy = Point(1,3),
+			Enemy2 = Point(2,3),
+			Target = Point(3,3),
+			Second_Click=Point(3,1),
+			CustomEnemy = "Snowtank2",
+			CustomPawn = "Nico_juggernautbot_mech",
+			Length = 5,
+		}
+	}
+	function Nico_juggernaut_B:GetSecondTargetArea(p1,p2)
+		local ret = self:GetTargetArea(p2)
+		self:RemoveBackwards(ret,p1,p2)
+		self:RemoveForwards(ret,p1,p2) -- also remove forwards
+		return ret
+	end
+	function Nico_juggernaut_B:IsTwoClickException(p1,p2)
+		return Board:IsBuilding(p2) or Board:IsTerrain(p2,TERRAIN_MOUNTAIN)
+	end
+	function Nico_juggernaut_B:GetFinalEffect(p1,p2,p3)
+		local ret = self:GetSkillEffect(p1,p2)
+		local endcharge = p3
+		local direction = GetDirection(p3 - p2)
+		local crushing = false
+
+		-- air graphics to emphasize speed.
+		local damage0 = SpaceDamage(p2, 0)
+		damage0.sAnimation = "airpush_".. ((direction+2)%4)
+		ret:AddDamage(damage0)
+		ret:AddDelay(0.5)
+	
+		-- Jump target to next open tile
+		if Board:IsBlocked(p3, Pawn:GetPathProf()) then
+			for i = 1,6 do
+				local point2 = p3 + DIR_VECTORS[direction]*i
+				if not Board:IsBlocked(point2, Pawn:GetPathProf()) then
+					endcharge = point2
+					break
+				end
+			end
+		end
+	    local distance = p2:Manhattan(endcharge)
+		
+		ret:AddCharge(Board:GetPath(p2, endcharge, PATH_FLYER), NO_DELAY)
+	
+		for i = 1,distance-1 do	
+			ret:AddDelay(0.1)
+			local midpoint = p2 + DIR_VECTORS[direction]*i
+		
+			local dodamage = true		
+			if Board:IsBuilding(midpoint) then
+				dodamage = false
+			end
+		
+			if dodamage == true then
+				local damage = SpaceDamage(midpoint,self.Damage)
+				ret:AddDamage(damage)
+			end
+		end
+		return ret
+	end
+	Nico_juggernaut_AB=Nico_juggernaut_B:new{
+		Phasing=1,
+		TipImage = {
+			Unit = Point(0,3),
+			Enemy = Point(1,3),
+			Enemy2 = Point(2,3),
+			Target = Point(3,3),
+			Mountain = Point(3,2),
+			Second_Click=Point(3,1),
+			CustomEnemy = "Snowtank2",
+			CustomPawn = "Nico_juggernautbot_mech",
+			Length = 5,
+		}
+	}
+	modApi:addWeaponDrop("Nico_juggernaut")
 --Fatal Freeze and Zenith's Guard--
 local function Nico_FatalFreeze(mission, pawn, weaponId, p1, p2, skillEffect)
 	if (weaponId == "Nico_laserbot_A") or (weaponId == "Nico_laserbot_AB") then	
