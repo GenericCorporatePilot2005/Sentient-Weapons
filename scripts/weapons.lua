@@ -865,11 +865,11 @@ Nico_juggernaut = Skill:new{
 	Name = "Juggernaut Engines",
 	Description = "Charge through units, destroying them.",
 	Class="TechnoVek",
-	Icon = "weapons/Nico_juggernautbot_weapon1.png",
+	Icon = "weapons/brute_beetle.png",
 	LaunchSound = "/weapons/shield_bash",
 	Damage = DAMAGE_DEATH,
 	Upgrades=2,
-	UpgradeCost={2,1},
+	UpgradeCost={2,2},
 	UpgradeList={"Terraforming","Drift"},
 	Phasing = 0,
 	Range = 7,
@@ -882,7 +882,6 @@ Nico_juggernaut = Skill:new{
 		CustomPawn = "Nico_juggernautbot_mech",
 	}
 	}
-	modApi:appendAsset("img/weapons/Nico_juggernautbot_weapon1.png", path .."img/weapons/Nico_juggernautbot_weapon1.png")
 	function Nico_juggernaut:GetTargetArea(p1)
 		local ret = PointList()
 		for dir = DIR_START, DIR_END do
@@ -956,10 +955,9 @@ Nico_juggernaut = Skill:new{
 		TipImage = {
 			Unit = Point(0,2),
 			Enemy = Point(1,2),
-			Enemy2 = Point(2,2),
-			Building = Point(3,2),
-			Mountain = Point(4,2),
-			Target = Point(5,2),
+			Building = Point(2,2),
+			Mountain = Point(3,2),
+			Target = Point(4,2),
 			CustomEnemy = "Snowtank2",
 			CustomPawn = "Nico_juggernautbot_mech",
 		}
@@ -968,11 +966,11 @@ Nico_juggernaut = Skill:new{
 		TwoClick=true,
 		UpgradeDescription="can drift, ramming through a second line of tiles",
 		TipImage = {
-			Unit = Point(0,3),
-			Enemy = Point(1,3),
-			Enemy2 = Point(2,3),
-			Target = Point(3,3),
-			Second_Click=Point(3,1),
+			Unit = Point(0,2),
+			Enemy = Point(2,1),
+			Enemy2 = Point(1,2),
+			Target = Point(2,2),
+			Second_Click=Point(2,0),
 			CustomEnemy = "Snowtank2",
 			CustomPawn = "Nico_juggernautbot_mech",
 			Length = 5,
@@ -985,7 +983,7 @@ Nico_juggernaut = Skill:new{
 		return ret
 	end
 	function Nico_juggernaut_B:IsTwoClickException(p1,p2)
-		return Board:IsBuilding(p2) or Board:IsTerrain(p2,TERRAIN_MOUNTAIN)
+		return Board:IsBuilding(p2) or Board:IsTerrain(p2,TERRAIN_MOUNTAIN) or Board:IsBlocked(p2, Pawn:GetPathProf()) or ((not Pawn:IsShield()) and (Board:GetItem(p2) == "Freeze_Mine" or Board:GetItem(p2) == "Nico_Freeze_Mine" or Board:GetItem(p2) == "lmn_Minelayer_Item_Mine")) or Board:GetItem(p2) == "Item_Mine"
 	end
 	function Nico_juggernaut_B:GetFinalEffect(p1,p2,p3)
 		local ret = self:GetSkillEffect(p1,p2)
@@ -1032,12 +1030,11 @@ Nico_juggernaut = Skill:new{
 	Nico_juggernaut_AB=Nico_juggernaut_B:new{
 		Phasing=1,
 		TipImage = {
-			Unit = Point(0,3),
-			Enemy = Point(1,3),
-			Enemy2 = Point(2,3),
-			Target = Point(3,3),
-			Mountain = Point(3,2),
-			Second_Click=Point(3,1),
+			Unit = Point(0,2),
+			Enemy = Point(2,1),
+			Mountain = Point(1,2),
+			Target = Point(2,2),
+			Second_Click=Point(2,0),
 			CustomEnemy = "Snowtank2",
 			CustomPawn = "Nico_juggernautbot_mech",
 			Length = 5,
