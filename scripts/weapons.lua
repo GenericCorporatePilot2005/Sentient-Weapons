@@ -1122,6 +1122,12 @@ BoardEvents.onItemRemoved:subscribe(function(loc, removed_item)
 			Board:DamageSpace(freeze_damage)
 		end
 	end
+	if removed_item == "Freeze_Mine" then
+		local pawn = Board:GetPawn(loc)
+		if pawn and pawn:GetType() == "Train_Armored" then
+			pawn:SetFrozen(true)
+		end
+	end
 end)
 
 modApi.events.onModsInitialized:subscribe(function()
