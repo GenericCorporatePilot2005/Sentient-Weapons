@@ -1084,22 +1084,20 @@ local function Nico_MoveShield(mission, pawn, weaponId, p1, p2)
 end
 
 local function Nico_MoveShieldWeapon(mission, pawn, weaponId, p1, p2, p3, skillEffect)
-	if weaponId == "Science_TC_Control_AB" then
-		for i = 1, skillEffect.effect:size() do
-			local spaceDamage = skillEffect.effect:index(i)
-			if spaceDamage:IsMovement() and spaceDamage:GetMoveType() == 0 then
-				local movePawn = Board:GetPawn(spaceDamage:MoveStart())
-				local i = movePawn:GetId()
-				local IsRealMission = true and (mission ~= nil) and (mission ~= Mission_Test) and Board	and Board:IsMissionBoard()
-				local endpoint = spaceDamage:MoveEnd()--spaceDamage:MoveStart()
-				local adjacent_mech = IsRealMission and ((Board:GetPawn((i+1)%3):GetSpace():Manhattan(endpoint)==1) or (Board:GetPawn((i+2)%3):GetSpace():Manhattan(endpoint)==1))
-				if movePawn and _G[movePawn:GetType()].NicoIsRobot and adjacent_mech then
-					local dam = SpaceDamage(spaceDamage:MoveStart(),0)
-					dam.iShield = 1
-					skillEffect:AddDamage(dam)
-					skillEffect:AddScript("Game:TriggerSound(\"/props/shield_activated\")")
-					skillEffect:AddScript("Board:GetPawn("..i.."):SetShield(true)")
-				end
+	for i = 1, skillEffect.effect:size() do
+		local spaceDamage = skillEffect.effect:index(i)
+		if spaceDamage:IsMovement() and spaceDamage:GetMoveType() == 0 then
+			local movePawn = Board:GetPawn(spaceDamage:MoveStart())
+			local i = movePawn:GetId()
+			local IsRealMission = true and (mission ~= nil) and (mission ~= Mission_Test) and Board	and Board:IsMissionBoard()
+			local endpoint = spaceDamage:MoveEnd()--spaceDamage:MoveStart()
+			local adjacent_mech = IsRealMission and ((Board:GetPawn((i+1)%3):GetSpace():Manhattan(endpoint)==1) or (Board:GetPawn((i+2)%3):GetSpace():Manhattan(endpoint)==1))
+			if movePawn and _G[movePawn:GetType()].NicoIsRobot and adjacent_mech then
+				local dam = SpaceDamage(spaceDamage:MoveStart(),0)
+				dam.iShield = 1
+				skillEffect:AddDamage(dam)
+				skillEffect:AddScript("Game:TriggerSound(\"/props/shield_activated\")")
+				skillEffect:AddScript("Board:GetPawn("..i.."):SetShield(true)")
 			end
 		end
 	end
