@@ -10,6 +10,7 @@ local path = mod_loader.mods[modApi.currentMod].resourcePath
     modApi:appendAsset("img/portraits/pilots/Pilot_Nico_shieldbot_mech.png", path .."img/portraits/Pilot_Nico_shieldbot_mech.png")
     modApi:appendAsset("img/portraits/pilots/Pilot_Nico_minerbot_mech.png", path .."img/portraits/Pilot_Nico_minerbot_mech.png")
     modApi:appendAsset("img/portraits/pilots/Pilot_Nico_juggernautbot_mech.png", path .."img/portraits/Pilot_Nico_juggernautbot_mech.png")
+    modApi:appendAsset("img/portraits/pilots/Pilot_Nico_botleader_mech.png", path .."img/portraits/Pilot_Nico_botleader_mech.png")
 -- locate our mech assets.
 local artmechPath = path .."img/units/player/"
 -- make a list of our files.
@@ -147,7 +148,7 @@ local a=ANIMS
 	a.Nico_minerbot_mecha = a.MechUnit:new{Image="units/player/Nico_minerbot_mech_a.png",  PosX = -20, PosY = 4, NumFrames = 4 }
     a.Nico_minerbot_mechd = a.EnemyUnit:new{Image="units/player/Nico_minerbot_mech_death.png",  PosX = -24, PosY = -3, NumFrames = 11, Time = 0.1, Loop = false  }
 	a.Nico_minerbot_mechw = a.MechUnit:new{Image="units/player/Nico_minerbot_mech_w.png", PosX = -20, PosY = 10}
-	a.Nico_minerbot_mech_broken = a.MechUnit:new{Image="units/player/Nico_minerbot_mech_broken.png", PosX = -15, PosY = 0 }
+	a.Nico_minerbot_mech_broken = a.MechUnit:new{Image="units/player/Nico_minerbot_mech_broken.png", PosX = -12, PosY = 0 }
     a.Nico_minerbot_meche =		a.BaseEmerge:new{Image = "units/player/Nico_minerbot_mech_emerge.png", PosX = -15, PosY = 0, NumFrames = 3 }
 	a.Nico_minerbot_mechw_broken = a.MechUnit:new{Image="units/player/Nico_minerbot_mech_w_broken.png", PosX = -20, PosY = 10}
 	a.Nico_minerbot_mech_ns = a.MechIcon:new{Image="units/player/Nico_minerbot_mech_ns.png"}
@@ -288,7 +289,16 @@ CreatePilot{
     Name = "Juggernaut-Bot",
     GetSkill = function() NicoIsRobot = true; return "Survive_Death" end,
 	Rarity = 0,
-    Blacklist = {"Invulnerable","Thick","Popular","Health","Skilled","Regen","Pain"},
+    Blacklist = {"Invulnerable","Popular","Health","Skilled","Regen","Pain"},
+}
+CreatePilot{
+    Id = "Pilot_Nico_botleader_mech",
+    Name = "Bot Leader",
+  	Personality = "Artificial",
+	Sex = SEX_VEK,
+    GetSkill = function() NicoIsRobot = true; return "Survive_Death" end,
+	Rarity = 0,
+    Blacklist = {"Invulnerable","Popular","Health","Skilled"},
 }
 Nico_laserbot_mech = Pawn:new{
     Name = "Laser-Bot",
@@ -524,13 +534,46 @@ Nico_juggernautbot_mech = Pawn:new{
 
     AddPawn("Nico_juggernautbot_mech")
 }
+Nico_botleader_mech = Pawn:new{
+    Name = "Bot Leader",
+    NicoIsRobot = true,
+    -- FlameMech is also Prime, so this is redundant, but if you had no base, you would need a class.
+    Class = "TechnoVek",
+    
+    -- various stats.
+    Health = 4,
+    MoveSpeed = 3,
+    Massive = true,
+    Corpse = true,
+    
+    -- reference the animations we set up earlier.
+    Image = "Nico_artillerybot_mech",
+    
+    -- ImageOffset specifies which color scheme we will be using.
+    -- (only apporpirate if you draw your mechs with Archive olive green colors)
+    ImageOffset = modApi:getPaletteImageOffset("nico_boss_snow"),
+    
+    -- Any weapons this mech should start with goes in this table.
+    SkillList = {"Nico_artillerybot"},
+    
+    -- movement sounds.
+    SoundLocation = "/enemy/snowart_1/",
+    
+    -- who will be controlling this unit.
+    DefaultTeam = TEAM_PLAYER,
+    
+    -- impact sounds.
+	ImpactMaterial = IMPACT_METAL,
+    
+    AddPawn("Nico_botleader_mech")
+}
 modApi:appendAsset("img/icon_Nico_zenith_shield.png", path.."img/icon_Nico_zenith_shield.png")--image of the trait
 local mod = modApi:getCurrentMod()--the mod itself
 local trait = require(mod.scriptPath .."libs/trait")--where does it get the code for the rest of this to work
 
-Nico_Pawn_List = {"Nico_laserbot_mech", "Nico_cannonbot_mech", "Nico_artillerybot_mech", "Nico_knightbot_mech", "Nico_shieldbot_mech","Nico_minerbot_mech","Nico_juggernautbot_mech"}
+Nico_Pawn_List = {"Nico_laserbot_mech", "Nico_cannonbot_mech", "Nico_artillerybot_mech", "Nico_knightbot_mech", "Nico_shieldbot_mech","Nico_minerbot_mech","Nico_juggernautbot_mech","Nico_botleader_mech"}
 
-for i = 1,7 do
+for i = 1,8 do
 	trait:add{
 		pawnType=Nico_Pawn_List[i],--who will get the trait
 		icon = "img/icon_Nico_zenith_shield.png",--the icon itself

@@ -4,7 +4,7 @@
 local mod = {
 	id = "Nico_Sent_weap",
 	name = "Sentient Weapons",
-	version = "0",
+	version = "Beta",
 	requirements = {},
 	dependencies = { --This requests modApiExt from the mod loader
 		modApiExt = "1.18", --We can get this by using the variable `modapiext`
@@ -25,7 +25,7 @@ function mod:init()
 		local result = oldGetStartingSquad(choice, ...)
 
 		if choice == 0 then
-			return add_arrays(result, {"Nico_juggernautbot_mech"})
+			return add_arrays(result, {"Nico_juggernautbot_mech","Nico_botleader_mech"})
 		end
 		return result
 		end
