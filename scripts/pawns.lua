@@ -536,12 +536,12 @@ Nico_juggernautbot_mech = Pawn:new{
 }
 Nico_botleader_mech = Pawn:new{
     Name = "Bot Leader",
-    NicoIsRobot = true,
+    NicoIsBotLeader = true,
     -- FlameMech is also Prime, so this is redundant, but if you had no base, you would need a class.
     Class = "TechnoVek",
     
     -- various stats.
-    Health = 4,
+    Health = 5,
     MoveSpeed = 3,
     Massive = true,
     Corpse = true,
@@ -571,9 +571,9 @@ modApi:appendAsset("img/icon_Nico_zenith_shield.png", path.."img/icon_Nico_zenit
 local mod = modApi:getCurrentMod()--the mod itself
 local trait = require(mod.scriptPath .."libs/trait")--where does it get the code for the rest of this to work
 
-Nico_Pawn_List = {"Nico_laserbot_mech", "Nico_cannonbot_mech", "Nico_artillerybot_mech", "Nico_knightbot_mech", "Nico_shieldbot_mech","Nico_minerbot_mech","Nico_juggernautbot_mech","Nico_botleader_mech"}
+Nico_Pawn_List = {"Nico_laserbot_mech", "Nico_cannonbot_mech", "Nico_artillerybot_mech", "Nico_knightbot_mech", "Nico_shieldbot_mech","Nico_minerbot_mech","Nico_juggernautbot_mech"}
 
-for i = 1,8 do
+for i = 1,7 do
 	trait:add{
 		pawnType=Nico_Pawn_List[i],--who will get the trait
 		icon = "img/icon_Nico_zenith_shield.png",--the icon itself
@@ -582,3 +582,11 @@ for i = 1,8 do
 		desc_text = "Gains a shield when moving next to another Mech. Bots can repair other adjacent Bots.",--description
 	}
 end
+
+trait:add{
+	pawnType="Nico_botleader_mech",--who will get the trait
+	icon = "img/icon_Nico_zenith_shield.png",--the icon itself
+	icon_offset = Point(0,9),--it's location
+	desc_title = "Bot Leader",--title
+	desc_text = "After taking any damage, the next action is a forced repair. Repairing fully heals the Bot Leader, and Shields it.",--description
+}
