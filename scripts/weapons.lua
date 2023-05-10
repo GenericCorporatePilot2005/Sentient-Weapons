@@ -1121,12 +1121,36 @@ local function Nico_UnMine(mission, pawn, undonePosition)
 	end
 end
 
+local function Nico_BotLeaderA(mission, pawn, weaponId, p1, p2, skillEffect)
+	if pawn and weaponId ~= "Move" and _G[pawn:GetType()].NicoIsBotLeader and (pawn:IsDamaged() or weaponId == "Skill_Repair") then
+		skillEffect.effect = DamageList()
+		local damage = SpaceDamage(p1,-10)
+		damage.iFire = EFFECT_REMOVE
+		damage.iAcid = EFFECT_REMOVE
+		skillEffect:AddDamage(damage)
+		skillEffect:AddScript("Board:AddShield("..p1:GetString()..")")
+	end
+end
+
+local function Nico_BotLeaderB(mission, pawn, weaponId, p1, p2, p3, skillEffect)
+	if pawn and weaponId ~= "Move" and _G[pawn:GetType()].NicoIsBotLeader and pawn:IsDamaged() then
+		skillEffect.effect = DamageList()
+		local damage = SpaceDamage(p1,-10)
+		damage.iFire = EFFECT_REMOVE
+		damage.iAcid = EFFECT_REMOVE
+		skillEffect:AddDamage(damage)
+		skillEffect:AddScript("Board:AddShield("..p1:GetString()..")")
+	end
+end
+
 local function EVENT_onModsLoaded()
 	modapiext:addTargetAreaBuildHook(Nico_TeamRepair)
 	modapiext:addSkillBuildHook(Nico_FatalFreeze)
 	modapiext:addSkillStartHook(Nico_MoveShield)
 	modapiext:addFinalEffectBuildHook(Nico_MoveShieldWeapon)
 	modapiext:addPawnUndoMoveHook(Nico_UnMine)
+	modapiext:addSkillBuildHook(Nico_BotLeaderA)
+	modapiext:addFinalEffectBuildHook(Nico_BotLeaderB)
 end
 
 modApi.events.onModsLoaded:subscribe(EVENT_onModsLoaded)
