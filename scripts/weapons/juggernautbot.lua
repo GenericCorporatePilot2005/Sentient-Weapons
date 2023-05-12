@@ -119,10 +119,11 @@ Nico_juggernaut = Skill:new{
 		local ret = self:GetTargetArea(p2)
 		self:RemoveBackwards(ret,p1,p2)
 		self:RemoveForwards(ret,p1,p2) -- also remove forwards
+		ret:push_back(p1)
 		return ret
 	end
 	function Nico_juggernaut_B:IsTwoClickException(p1,p2)
-		return Board:IsBuilding(p2) or Board:IsTerrain(p2,TERRAIN_MOUNTAIN) or Board:IsTerrain(p2,TERRAIN_WATER) or Board:IsTerrain(p2,TERRAIN_LAVA) or Board:IsBlocked(p2, Pawn:GetPathProf()) or ((not Pawn:IsShield()) and (Board:GetItem(p2) == "Freeze_Mine" or Board:GetItem(p2) == "Nico_Freeze_Mine" or Board:GetItem(p2) == "lmn_Minelayer_Item_Mine")) or Board:GetItem(p2) == "Item_Mine"
+		return Board:IsBuilding(p2) or Board:IsTerrain(p2,TERRAIN_MOUNTAIN) or Board:IsBlocked(p2, Pawn:GetPathProf()) or ((not Pawn:IsShield()) and (Board:GetItem(p2) == "Freeze_Mine" or Board:GetItem(p2) == "Nico_Freeze_Mine" or Board:GetItem(p2) == "lmn_Minelayer_Item_Mine")) or Board:GetItem(p2) == "Item_Mine"
 	end
     function Nico_juggernaut_B:GetFinalEffect(p1,p2,p3)
         local ret = self:GetSkillEffect(p1,p2)
