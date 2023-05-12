@@ -161,9 +161,19 @@ function this:init(mod)
         damage.iAcid = EFFECT_REMOVE
         damage.iShield = 1
         
-        if self.Pulse then
-            damage.sAnimation = "ExploRepulse1"
-        end
+		local mechs = extract_table(Board:GetPawns(TEAM_MECH))
+		for i,id in pairs(mechs) do
+			local point = Board:GetPawnSpace(id)
+			if point == p2 or IsPassiveSkill("Mass_Repair") then
+				damage.loc = point			
+				if Board:IsPawnSpace(point) then
+					if Board:GetPawn(point):IsAcid() then
+						damage.iAcid = EFFECT_REMOVE
+					end
+				end
+				ret:AddDamage(damage)
+			end
+		end
         
         ret:AddDamage(damage)
         return ret       
