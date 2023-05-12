@@ -15,8 +15,12 @@ local mod = {
 
 function mod:init()
 	-- look in template/mech to see how to code mechs.
-	require(self.scriptPath .."weapons")
+	local replaceRepair = require(self.scriptPath.."replaceRepair/replaceRepair")
+	require(self.scriptPath .."weapons/weapons")
 	require(self.scriptPath .."pawns")
+	require(self.scriptPath .."pilots")
+	require(self.scriptPath .."assets")
+	
 	-- add extra mech to selection screen
 	modApi.events.onModsInitialized:subscribe(function()
 
@@ -44,7 +48,7 @@ function mod:load( options, version)
 		},
 		"Sentient Weapons",
 		"After destroying the Vek Hive, Zenith sent these improved Sentient Weapons across time to fight the Vek and their hijacked brethren.",
-		self.resourcePath .."img/mod_icon.png"
+		self.resourcePath .."img/squad1_icon.png"
 	)
 	modApi:addSquad(
 		{
