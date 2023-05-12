@@ -231,9 +231,6 @@ Nico_minerbot_AB=Nico_minerbot_B:new{
 modApi:addWeaponDrop("Nico_minerbot")
 
 local function Nico_MoveMine(mission, pawn, weaponId, p1, p2)
-	i = pawn:GetId()
-	local IsRealMission = true and (mission ~= nil) and (mission ~= Mission_Test) and Board	and Board:IsMissionBoard()
-	local adjacent_mech = IsRealMission and ((Board:GetPawn((i+1)%3):GetSpace():Manhattan(p2)==1) or (Board:GetPawn((i+2)%3):GetSpace():Manhattan(p2)==1))
 	if pawn and pawn:GetType() == "Nico_minerbot_mech" and weaponId == "Move" then
 		mission.Nico_FireSpace = {p1,Board:IsFire(p1)}
 		if Board:IsFire(p1) then Board:SetItem(p1,"Freeze_Mine") else Board:SetItem(p1,"Nico_Freeze_Mine") end
