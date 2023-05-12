@@ -47,3 +47,27 @@ Nico_laserbot = LaserDefault:new{
 	}
 
 	modApi:addWeaponDrop("Nico_laserbot")
+	
+local function Nico_FatalFreeze(mission, pawn, weaponId, p1, p2, skillEffect)
+	if (weaponId == "Nico_laserbot_A") or (weaponId == "Nico_laserbot_AB") then	
+		if Board:IsTipImage() then Board:AddPawn("BombRock",Point(2,1)) end
+		for i = 1, skillEffect.effect:size() do
+			local spaceDamage = skillEffect.effect:index(i)
+			spaceDamage.bKO_Effect = Board:IsDeadly(spaceDamage,Pawn)
+			local dpawn = Board:GetPawn(spaceDamage.loc)
+			local friendly = Board:IsPawnSpace(spaceDamage.loc) and dpawn:GetTeam() == TEAM_PLAYER
+			if spaceDamage.bKO_Effect or Board:IsBuilding(spaceDamage.loc) or friendly then
+				spaceDamage.iDamage = 0
+				--invert the KO flag afterwards because it overwrites the spaceDamage image mark for some reason
+				spaceDamage.bKO_Effect = false
+				spaceDamage.iFrozen = EFFECT_CREATE
+			end
+		end
+	end
+end
+
+local function EVENT_onModsLoaded()
+	modapiext:addSkillBuildHook(Nico_FatalFreeze)
+end
+
+modApi.events.onModsLoaded:subscribe(EVENT_onModsLoaded)
