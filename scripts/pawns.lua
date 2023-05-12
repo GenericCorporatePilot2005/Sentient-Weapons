@@ -123,7 +123,7 @@ require(path2 .."palettes")
         Corpse = true,
         Image = "Nico_artillerybot_mech",
         ImageOffset = modApi:getPaletteImageOffset("nico_boss_snow"),
-        SkillList = {"Nico_artillerybot"},
+        SkillList = {"Nico_leaderbot"},
         SoundLocation = "/enemy/snowart_1/",
         DefaultTeam = TEAM_PLAYER,
     	ImpactMaterial = IMPACT_METAL,
