@@ -27,7 +27,7 @@ Nico_juggernaut = Skill:new{
 			local max_i = 0
 			for i = 1,self.Range do
 				local point = p1 + DIR_VECTORS[dir]*i
-				if stillgood and not Board:IsBlocked(point, PATH_PROJECTILE) then
+				if stillgood and not Board:IsBlocked(point, Pawn:GetPathProf()) then
 					max_i = i
 				end
 				if self.Phasing ~= 1 and (Board:IsBuilding(point) or Board:IsTerrain(point,TERRAIN_MOUNTAIN)) then
@@ -139,7 +139,7 @@ Nico_juggernaut = Skill:new{
 		ret:AddDelay(0.5)
 		local crack = SpaceDamage(p2, 0)
 		crack.iCrack = EFFECT_CREATE
-		AddDamage(crack)
+		ret:AddDamage(crack)
 	
 		-- Jump target to next open tile
 		if Board:IsBlocked(p3, Pawn:GetPathProf()) then
