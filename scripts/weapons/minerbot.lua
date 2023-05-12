@@ -1,4 +1,7 @@
 local path = mod_loader.mods[modApi.currentMod].resourcePath
+local BoardEvents = require(modApi:getCurrentMod().scriptPath .."libs/boardEvents")
+
+Nico_Freeze_Mine = { Image = "combat/freeze_mine.png", Damage = SpaceDamage(0), Tooltip = "freeze_mine", Icon = "combat/icons/icon_frozenmine_glow.png", UsedImage = ""}--needs to be global not local
 ------Miner Bot------
 	--The deployable's palettes
     modApi:addPalette{
@@ -226,3 +229,61 @@ Nico_minerbot_AB=Nico_minerbot_B:new{
     SpawnBot2 = "Nico_Snowmine2A",
 }
 modApi:addWeaponDrop("Nico_minerbot")
+
+local function Nico_MoveMine(mission, pawn, weaponId, p1, p2)
+	i = pawn:GetId()
+	local IsRealMission = true and (mission ~= nil) and (mission ~= Mission_Test) and Board	and Board:IsMissionBoard()
+	local adjacent_mech = IsRealMission and ((Board:GetPawn((i+1)%3):GetSpace():Manhattan(p2)==1) or (Board:GetPawn((i+2)%3):GetSpace():Manhattan(p2)==1))
+	if pawn and pawn:GetType() == "Nico_minerbot_mech" and weaponId == "Move" then
+		mission.Nico_FireSpace = {p1,Board:IsFire(p1)}
+		if Board:IsFire(p1) then Board:SetItem(p1,"Freeze_Mine") else Board:SetItem(p1,"Nico_Freeze_Mine") end
+	end
+end
+
+local function Nico_UnMine(mission, pawn, undonePosition)
+	if pawn:GetType() == "Nico_minerbot_mech" then
+		if mission.Nico_FireSpace[2] then Board:SetFire(mission.Nico_FireSpace[1],true) end
+		if Board:IsTerrain(pawn:GetSpace(),TERRAIN_WATER) then Board:RemoveItem(pawn:GetSpace()) end
+	end
+end
+
+local function EVENT_onModsLoaded()
+	modapiext:addSkillStartHook(Nico_MoveMine)
+	modapiext:addPawnUndoMoveHook(Nico_UnMine)
+end
+
+modApi.events.onModsLoaded:subscribe(EVENT_onModsLoaded)
+
+--this part copied from Lemon's Minelayer Mech
+local undoPawnId_thisFrame = nil
+
+modapiext.events.onPawnUndoMove:subscribe(function(mission, pawn)
+	undoPawnId_thisFrame = pawn:GetId()
+end)
+
+BoardEvents.onItemRemoved:subscribe(function(loc, removed_item)
+	if removed_item == "Nico_Freeze_Mine" then
+		local pawn = Board:GetPawn(loc)
+		if pawn and pawn:GetId() == undoPawnId_thisFrame then
+			-- do nothing
+		else
+			local freeze_damage = SpaceDamage(loc, 0)
+			freeze_damage.sSound = "/props/freezing_mine"
+			freeze_damage.sAnimation = ""
+			freeze_damage.iFrozen = 1
+			Board:DamageSpace(freeze_damage)
+		end
+	end
+	if removed_item == "Freeze_Mine" then
+		local pawn = Board:GetPawn(loc)
+		if pawn and pawn:GetType() == "Train_Armored" then
+			pawn:SetFrozen(true)
+		end
+	end
+end)
+
+modApi.events.onModsInitialized:subscribe(function()
+	modApi.events.onMissionUpdate:subscribe(function(mission)
+		undoPawnId_thisFrame = nil
+	end)
+end)
