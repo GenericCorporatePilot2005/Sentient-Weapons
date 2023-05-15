@@ -52,6 +52,7 @@ Nico_juggernaut = Skill:new{
 		local crushing = false
 
 		-- air graphics to emphasize speed.
+		ret:AddBounce(p1,1)
 		local damage0 = SpaceDamage(p1, 0)
 		damage0.sAnimation = "airpush_".. ((direction+2)%4)
 		damage0.sSound = self.LaunchSound
@@ -69,7 +70,7 @@ Nico_juggernaut = Skill:new{
 			end
 		end
 	    local distance = p1:Manhattan(endcharge)
-		
+
 		ret:AddCharge(Board:GetPath(p1, endcharge, PATH_FLYER), NO_DELAY)
 	
 		for i = 1,distance-1 do	
@@ -85,6 +86,13 @@ Nico_juggernaut = Skill:new{
 				local damage = SpaceDamage(midpoint,self.Damage)
 				ret:AddDamage(damage)
 			end
+		end
+		if Board:IsTerrain(endcharge,TERRAIN_WATER) then
+			local ice = SpaceDamage(endcharge,0)
+			ice.iTerrain = TERRAIN_ICE
+			ice.sAnimation="Splash"
+			ice.sSound= "/impact/generic/ice",
+			ret:AddDamage(ice)
 		end
 		return ret
 	end
@@ -138,10 +146,12 @@ Nico_juggernaut = Skill:new{
 		damage0.sAnimation = "airpush_".. ((direction+2)%4)
 		ret:AddDamage(damage0)
 		ret:AddDelay(0.5)
+		ret:AddBounce(p2,3)
 		local crack = SpaceDamage(p2, 0)
 		crack.iCrack = EFFECT_CREATE
 		ret:AddDamage(crack)
-	
+		ret:AddBurst(p2,"Emitter_Crack_Start", DIR_NONE)
+
 		-- Jump target to next open tile
 		if Board:IsBlocked(p3, Pawn:GetPathProf()) then
 			for i = 1,6 do
@@ -153,7 +163,7 @@ Nico_juggernaut = Skill:new{
 			end
 		end
 	    local distance = p2:Manhattan(endcharge)
-		
+
 		ret:AddCharge(Board:GetPath(p2, endcharge, PATH_FLYER), NO_DELAY)
 	
 		for i = 1,distance-1 do	
@@ -170,7 +180,13 @@ Nico_juggernaut = Skill:new{
 				ret:AddDamage(damage)
 			end
 		end
-
+		if Board:IsTerrain(endcharge,TERRAIN_WATER) then
+			local ice = SpaceDamage(endcharge,0)
+			ice.iTerrain = TERRAIN_ICE
+			ice.sAnimation="Splash"
+			ice.sSound= "/impact/generic/ice"
+			ret:AddDamage(ice)
+		end
 		return ret
 	end
 	Nico_juggernaut_AB=Nico_juggernaut_B:new{

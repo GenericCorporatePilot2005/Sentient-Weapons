@@ -169,6 +169,7 @@ function this:init(mod)
 				if Board:IsPawnSpace(point) then
 					if Board:GetPawn(point):IsAcid() then
 						damage.iAcid = EFFECT_REMOVE
+                        damage.iShield = 1--Generic says: I added this line but it doesn't give any shields to the other mechs, so remove it if you want Para
 					end
 				end
 				ret:AddDamage(damage)

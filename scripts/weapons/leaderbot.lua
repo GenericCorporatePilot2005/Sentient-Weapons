@@ -2,7 +2,7 @@
 Nico_leaderbot=ArtilleryDefault:new{
 	Name="Vk8 Rockets Mark V",
 	Class = "TechnoVek",
-	Icon = "weapons/ranged_tribomb.png",
+	Icon = "weapons/Ranged_KO_Combo.png",
 	Description="Launch Rockets at up to 3 tiles.",
 	Damage = 3,
 	PowerCost = 0,
@@ -50,7 +50,7 @@ end
 function Nico_leaderbot:GetSkillEffect(p1,p2)
 	local ret = SkillEffect()
 	local damage = SpaceDamage(p2, self.Damage)
-	ret:AddArtillery(damage,"effects/shotup_guided_missile.png", NO_DELAY)
+	ret:AddArtillery(damage,"effects/upshot_KO_combo.png", NO_DELAY)
 	return ret
 end
 function Nico_leaderbot:GetFinalEffect(p1,p2,p3)
@@ -67,21 +67,21 @@ function Nico_leaderbot:GetFinalEffect(p1,p2,p3)
 		local q = p2+DIR_VECTORS[(dir+1)%4]*x
 		if z<0 then
 			damage.loc = q
-			ret:AddArtillery(damage,"effects/shotup_guided_missile.png", NO_DELAY)
+			ret:AddArtillery(damage,"effects/upshot_KO_combo.png", NO_DELAY)
 		elseif z>0 then
 			for i = -1,1 do
 				damage.loc = p2+DIR_VECTORS[(dir+1)%4]*i
-				if damage.loc ~= q then ret:AddArtillery(damage,"effects/shotup_guided_missile.png", NO_DELAY) end
+				if damage.loc ~= q then ret:AddArtillery(damage,"effects/upshot_KO_combo.png", NO_DELAY) end
 			end
 		elseif z==0 then
 			for i = -1,1 do
 				damage.loc = p2+DIR_VECTORS[(dir+1)%4]*i
-				ret:AddArtillery(damage,"effects/shotup_guided_missile.png", NO_DELAY)
+				ret:AddArtillery(damage,"effects/upshot_KO_combo.png", NO_DELAY)
 			end
 		end
 	--shoot that singular tile
 	elseif p1 == p3 then
-		ret:AddArtillery(damage,"effects/shotup_guided_missile.png", NO_DELAY)
+		ret:AddArtillery(damage,"effects/upshot_KO_combo.png", NO_DELAY)
 	--shoot all three tiles
 	elseif p1:Manhattan(p3) == 1 then
 		--get the effective artillery distance, disregarding the sideways offset
@@ -90,13 +90,13 @@ function Nico_leaderbot:GetFinalEffect(p1,p2,p3)
 		local arti_point = p1+DIR_VECTORS[dir]*arti_dist
 		for i = -1,1 do
 			damage.loc = arti_point+DIR_VECTORS[(dir+1)%4]*i
-			ret:AddArtillery(damage,"effects/shotup_guided_missile.png", NO_DELAY)
+			ret:AddArtillery(damage,"effects/upshot_KO_combo.png", NO_DELAY)
 		end
 	--shoot those two tiles
 	else
-		ret:AddArtillery(damage,"effects/shotup_guided_missile.png", NO_DELAY)
+		ret:AddArtillery(damage,"effects/upshot_KO_combo.png", NO_DELAY)
 		damage.loc = p3
-		ret:AddArtillery(damage,"effects/shotup_guided_missile.png", NO_DELAY)
+		ret:AddArtillery(damage,"effects/upshot_KO_combo.png", NO_DELAY)
 	end
 	ret:AddDelay(0.8)
 	--instead of manually doing the Bounce at each branch, just run through the existing SkillEffect and pull the points from there
