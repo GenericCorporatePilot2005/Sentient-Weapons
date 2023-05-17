@@ -118,3 +118,18 @@ Nico_leaderbot_AB=Nico_leaderbot_A:new{
 	Damage=5,
 }
 modApi:addWeaponDrop("Nico_leaderbot")
+
+local function Nico_BotLeader(mission, pawn, weaponId, p1, targetArea)
+	if pawn and _G[pawn:GetType()].NicoIsBotLeader and pawn:IsDamaged() and weaponId ~= "Skill_Repair" and weaponId ~= "Move" then
+		local n = targetArea:size()
+		for i = 1,n do
+			targetArea:erase(1)
+		end
+	end
+end
+
+local function EVENT_onModsLoaded()
+	modapiext:addTargetAreaBuildHook(Nico_BotLeader)
+end
+
+modApi.events.onModsLoaded:subscribe(EVENT_onModsLoaded)
