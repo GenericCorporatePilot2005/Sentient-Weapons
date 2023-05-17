@@ -39,50 +39,10 @@ local function Nico_TeamRepair(mission, pawn, weaponId, p1, targetArea)
 	end
 end
 
-local function Nico_BotLeaderA(mission, pawn, weaponId, p1, p2, skillEffect)
-	local IsRealMission = true and (mission ~= nil) and (mission ~= Mission_Test) and Board	and Board:IsMissionBoard()
-	if pawn and weaponId ~= "Move" and _G[pawn:GetType()].NicoIsBotLeader and (pawn:IsDamaged() or weaponId == "Skill_Repair") then
-		skillEffect.effect = DamageList()
-		local damage = SpaceDamage(p1,-10)
-		damage.iFire = EFFECT_REMOVE
-		damage.iAcid = EFFECT_REMOVE
-		if IsPassiveSkill("Mass_Repair") and IsRealMission then
-			for i = 0,2 do
-				damage.loc = Board:GetPawn(i):GetSpace()
-				skillEffect:AddDamage(damage)
-			end
-		else
-			skillEffect:AddDamage(damage)
-		end
-		skillEffect:AddScript("Board:AddShield("..p1:GetString()..")")
-	end
-end
-
-local function Nico_BotLeaderB(mission, pawn, weaponId, p1, p2, p3, skillEffect)
-	local IsRealMission = true and (mission ~= nil) and (mission ~= Mission_Test) and Board	and Board:IsMissionBoard()
-	if pawn and weaponId ~= "Move" and _G[pawn:GetType()].NicoIsBotLeader and pawn:IsDamaged() then
-		skillEffect.effect = DamageList()
-		local damage = SpaceDamage(p1,-10)
-		damage.iFire = EFFECT_REMOVE
-		damage.iAcid = EFFECT_REMOVE
-		if IsPassiveSkill("Mass_Repair") and IsRealMission then
-			for i = 0,2 do
-				damage.loc = Board:GetPawn(i):GetSpace()
-				skillEffect:AddDamage(damage)
-			end
-		else
-			skillEffect:AddDamage(damage)
-		end
-		skillEffect:AddScript("Board:AddShield("..p1:GetString()..")")
-	end
-end
-
 local function EVENT_onModsLoaded()
 	modapiext:addSkillStartHook(Nico_MoveShield)
 	modapiext:addFinalEffectBuildHook(Nico_MoveShieldWeapon)
 	modapiext:addTargetAreaBuildHook(Nico_TeamRepair)
-	modapiext:addSkillBuildHook(Nico_BotLeaderA)
-	modapiext:addFinalEffectBuildHook(Nico_BotLeaderB)
 end
 
 modApi.events.onModsLoaded:subscribe(EVENT_onModsLoaded)
