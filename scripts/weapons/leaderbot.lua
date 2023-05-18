@@ -119,6 +119,82 @@ Nico_leaderbot_AB=Nico_leaderbot_A:new{
 }
 modApi:addWeaponDrop("Nico_leaderbot")
 
+--this section detects the event that triggers when End Turn is pressed
+EXCL = {"GetAmbience", "GetBonusStatus", "BaseUpdate", "UpdateMission", "GetCustomTile", "GetDamage", "GetTurnLimit", "BaseObjectives", "UpdateObjectives",} 
+
+for i,v in pairs(Mission) do 
+    if type(v) == 'function' then 
+        local oldfn = v 
+        Mission[i] = function(...) 
+            if not list_contains(_G["EXCL"], i) then 
+                if i == "IsEnvironmentEffect" then
+			--LOG("The fire has started burning!")
+			if Game:GetTurnCount() == 0 then GetCurrentMission().Nico_BotDeployed = false end
+		end 
+            end 
+            return oldfn(...) 
+        end 
+    end 
+end
+
+local function Nico_DeployBots(mission)
+	if Game:GetTurnCount() == 1 and Game:GetTeamTurn() == TEAM_PLAYER and not mission.Nico_BotDeployed then
+		local pilot0 = GameData.current.pilot0
+		local pilot1 = GameData.current.pilot1
+		local pilot2 = GameData.current.pilot2
+		mission.Nico_BotDeploySpaces = {}
+		local ret = SkillEffect()
+		local owner = SkillEffect()
+		ret:AddSound("/weapons/artillery_volley")
+		for k = 0,2 do
+			local pawn = Board:GetPawn(k)
+			local level1 = (k==0 and pilot0.level > 0) or (k==1 and pilot1.level > 0) or (k==2 and pilot2.level > 0)
+			local level2 = (k==0 and pilot0.level > 1) or (k==1 and pilot1.level > 1) or (k==2 and pilot2.level > 1)
+			if _G[pawn:GetType()].NicoIsBotLeader and level1 then
+				local p1 = pawn:GetSpace()
+				local death = {}
+				if mission.LiveEnvironment and mission.LiveEnvironment.Locations then
+					for k,v in pairs(mission.LiveEnvironment.Locations) do death[#death + 1] = v end
+				end
+				local targets = extract_table(Board:GetReachable(p1, 3, PATH_FLYER))
+				math.randomseed(os.time())
+				local i = math.random(#targets)
+				i = math.random(#targets)
+				while (Board:IsBlocked(targets[i], PATH_PROJECTILE) or Board:IsTerrain(targets[i],TERRAIN_WATER) or Board:IsTerrain(targets[i],TERRAIN_HOLE) or Board:IsPawnSpace(targets[i]) or list_contains(mission.Nico_BotDeploySpaces,targets[i]) or list_contains(death,targets[i]) or Board:IsEdge(targets[i])) do
+					i = math.random(#targets)
+				end
+				local deploy = SpaceDamage(targets[i],0)
+				mission.Nico_BotDeploySpaces[#mission.Nico_BotDeploySpaces + 1] = targets[i]
+				deploy.sPawn = "DeployUnit_Aracnoid"
+				ret:AddArtillery(p1,deploy,"effects/shotup_robot.png",NO_DELAY)
+				owner:AddScript("Board:GetPawn("..targets[i]:GetString().."):SetOwner("..k..")")
+				if level2 then
+					while (Board:IsBlocked(targets[i], PATH_PROJECTILE) or Board:IsTerrain(targets[i],TERRAIN_WATER) or Board:IsTerrain(targets[i],TERRAIN_HOLE) or Board:IsPawnSpace(targets[i]) or list_contains(mission.Nico_BotDeploySpaces,targets[i]) or list_contains(death,targets[i]) or Board:IsEdge(targets[i])) do
+						i = math.random(#targets)
+					end
+					local deploy = SpaceDamage(targets[i],0)
+					mission.Nico_BotDeploySpaces[#mission.Nico_BotDeploySpaces + 1] = targets[i]
+					deploy.sPawn = "DeployUnit_Aracnoid"
+					ret:AddArtillery(p1,deploy,"effects/shotup_robot.png",NO_DELAY)
+					owner:AddScript("Board:GetPawn("..targets[i]:GetString().."):SetOwner("..k..")")
+				end
+			end
+		end
+		if ret.effect:size() > 1 then
+			ret:AddDelay(FULL_DELAY)
+			ret:AddSound("/impact/generic/mech")
+			for i = 1,#mission.Nico_BotDeploySpaces do
+				local freeze = SpaceDamage(mission.Nico_BotDeploySpaces[i],0)
+				freeze.iFrozen = 1
+				ret:AddDamage(freeze)
+			end
+			Board:AddEffect(ret)
+			Board:AddEffect(owner)
+		end
+		mission.Nico_BotDeployed = true
+	end
+end
+
 local function Nico_BotLeader(mission, pawn, weaponId, p1, targetArea)
 	if pawn and _G[pawn:GetType()].NicoIsBotLeader and pawn:IsDamaged() and weaponId ~= "Skill_Repair" and weaponId ~= "Move" then
 		local n = targetArea:size()
@@ -129,6 +205,7 @@ local function Nico_BotLeader(mission, pawn, weaponId, p1, targetArea)
 end
 
 local function EVENT_onModsLoaded()
+	modApi:addMissionUpdateHook(Nico_DeployBots)
 	modapiext:addTargetAreaBuildHook(Nico_BotLeader)
 end
 
