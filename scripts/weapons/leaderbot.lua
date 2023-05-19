@@ -160,7 +160,7 @@ local function Nico_DeployBots(mission)
 				math.randomseed(os.time())
 				local i = math.random(#targets)
 				i = math.random(#targets)
-				while (Board:IsBlocked(targets[i], PATH_PROJECTILE) or Board:IsTerrain(targets[i],TERRAIN_WATER) or Board:IsTerrain(targets[i],TERRAIN_HOLE) or Board:IsPawnSpace(targets[i]) or list_contains(mission.Nico_BotDeploySpaces,targets[i]) or list_contains(death,targets[i]) or Board:IsEdge(targets[i])) do
+				while (Board:IsBlocked(targets[i], PATH_PROJECTILE) or Board:IsTerrain(targets[i],TERRAIN_WATER) or Board:IsTerrain(targets[i],TERRAIN_HOLE) or Board:IsPawnSpace(targets[i]) or list_contains(mission.Nico_BotDeploySpaces,targets[i]) or list_contains(death,targets[i]) or Board:IsEdge(targets[i]) or Board:IsDangerousItem(targets[i])) do
 					i = math.random(#targets)
 				end
 				local deploy = SpaceDamage(targets[i],0)
@@ -169,7 +169,7 @@ local function Nico_DeployBots(mission)
 				ret:AddArtillery(p1,deploy,"effects/shotup_robot.png",NO_DELAY)
 				owner:AddScript("Board:GetPawn("..targets[i]:GetString().."):SetOwner("..k..")")
 				if level2 then
-					while (Board:IsBlocked(targets[i], PATH_PROJECTILE) or Board:IsTerrain(targets[i],TERRAIN_WATER) or Board:IsTerrain(targets[i],TERRAIN_HOLE) or Board:IsPawnSpace(targets[i]) or list_contains(mission.Nico_BotDeploySpaces,targets[i]) or list_contains(death,targets[i]) or Board:IsEdge(targets[i])) do
+					while (Board:IsBlocked(targets[i], PATH_PROJECTILE) or Board:IsTerrain(targets[i],TERRAIN_WATER) or Board:IsTerrain(targets[i],TERRAIN_HOLE) or Board:IsPawnSpace(targets[i]) or list_contains(mission.Nico_BotDeploySpaces,targets[i]) or list_contains(death,targets[i]) or Board:IsEdge(targets[i]) or Board:IsDangerousItem(targets[i])) do
 						i = math.random(#targets)
 					end
 					local deploy = SpaceDamage(targets[i],0)
