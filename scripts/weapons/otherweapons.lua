@@ -46,6 +46,7 @@ local function Nico_BotLeaderA(mission, pawn, weaponId, p1, p2, skillEffect)
 		local damage = SpaceDamage(p1,-10)
 		damage.iFire = EFFECT_REMOVE
 		damage.iAcid = EFFECT_REMOVE
+		damage.iShield = 1
 		if IsPassiveSkill("Mass_Repair") and IsRealMission then
 			for i = 0,2 do
 				damage.loc = Board:GetPawn(i):GetSpace()
@@ -65,6 +66,7 @@ local function Nico_BotLeaderB(mission, pawn, weaponId, p1, p2, p3, skillEffect)
 		local damage = SpaceDamage(p1,-10)
 		damage.iFire = EFFECT_REMOVE
 		damage.iAcid = EFFECT_REMOVE
+		damage.iShield = 1
 		if IsPassiveSkill("Mass_Repair") and IsRealMission then
 			for i = 0,2 do
 				damage.loc = Board:GetPawn(i):GetSpace()

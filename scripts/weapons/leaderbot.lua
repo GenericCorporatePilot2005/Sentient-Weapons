@@ -2,7 +2,7 @@
 Nico_leaderbot=ArtilleryDefault:new{
 	Name="Vk8 Rockets Mark V",
 	Class = "TechnoVek",
-	Icon = "weapons/Ranged_KO_Combo.png",
+	Icon = "weapons/Nico_leaderbot.png",
 	Description="Launch Rockets at up to 3 tiles.",
 	Damage = 3,
 	PowerCost = 0,
@@ -22,6 +22,8 @@ Nico_leaderbot=ArtilleryDefault:new{
         CustomPawn="Nico_botleader_mech",
 	},
 }
+local path = mod_loader.mods[modApi.currentMod].resourcePath
+modApi:appendAsset("img/weapons/Nico_leaderbot.png", path .."img/weapons/Nico_leaderbot.png")
 function Nico_leaderbot:GetTargetArea(point)
 	local ret = PointList()
 	for i = 0,3 do

@@ -165,11 +165,11 @@ function this:init(mod)
 		for i,id in pairs(mechs) do
 			local point = Board:GetPawnSpace(id)
 			if point == p2 or IsPassiveSkill("Mass_Repair") then
-				damage.loc = point			
+				damage.loc = point
 				if Board:IsPawnSpace(point) then
+                    damage.iShield = 1
 					if Board:GetPawn(point):IsAcid() then
 						damage.iAcid = EFFECT_REMOVE
-                        damage.iShield = 1--Generic says: I added this line but it doesn't give any shields to the other mechs, so remove it if you want Para
 					end
 				end
 				ret:AddDamage(damage)

@@ -2,7 +2,7 @@
 Nico_laserbot = LaserDefault:new{
     Name="BKR Beam Mark II",
 	Class="TechnoVek",
-	Icon = "weapons/prime_laser.png",
+	Icon = "weapons/Nico_laserbot.png",
     Description="Fire a piercing beam that decreases in damage the further it goes, doesn't damage allies.",
 	Explosion = "",
 	Sound = "",
@@ -23,6 +23,8 @@ Nico_laserbot = LaserDefault:new{
         CustomPawn="Nico_laserbot_mech",
 	}
 }
+local path = mod_loader.mods[modApi.currentMod].resourcePath
+modApi:appendAsset("img/weapons/Nico_laserbot.png", path .."img/weapons/Nico_laserbot.png")
 	Nico_laserbot_A = Nico_laserbot:new{
 	    LaserArt = "effects/laser_freeze",
 	    UpgradeDescription = "If the target would die, freeze it instead. Freezes Buildings and allies.",

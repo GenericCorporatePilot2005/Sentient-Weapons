@@ -1,6 +1,6 @@
 ------Juggernaut Bot------
 Nico_juggernaut = Skill:new{  
-	Name = "Juggernaut Engines",
+	Name = "Juggernaut Engines V2",
 	Description = "Charge through units, destroying them.",
 	Class="TechnoVek",
 	Icon = "weapons/brute_beetle.png",
@@ -19,7 +19,7 @@ Nico_juggernaut = Skill:new{
 		CustomEnemy = "Snowtank2",
 		CustomPawn = "Nico_juggernautbot_mech",
 	}
-	}
+}
 	function Nico_juggernaut:GetTargetArea(p1)
 		local ret = PointList()
 		for dir = DIR_START, DIR_END do
