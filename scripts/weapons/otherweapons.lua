@@ -83,8 +83,6 @@ local function EVENT_onModsLoaded()
 	modapiext:addSkillStartHook(Nico_MoveShield)
 	modapiext:addFinalEffectBuildHook(Nico_MoveShieldWeapon)
 	modapiext:addTargetAreaBuildHook(Nico_TeamRepair)
-	modapiext:addSkillBuildHook(Nico_BotLeaderA)
-	modapiext:addFinalEffectBuildHook(Nico_BotLeaderB)
 end
 
 modApi.events.onModsLoaded:subscribe(EVENT_onModsLoaded)
