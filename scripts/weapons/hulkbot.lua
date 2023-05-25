@@ -1,6 +1,6 @@
 ------Frozen Hulks------
 Nico_hulkbot=ArtilleryDefault:new{
-	Name="Flambeaux Artillery",
+	Name="Artillery Mark III",
 	Class = "TechnoVek",
 	Icon = "weapons/ranged_ignite.png",
 	Description="Launch a Vulcan Artillery shot in one direction, and then a Cluster Artillery shot in a different direction. Freeze Self.",-- Every time this weapon is selected, swap the order of the shots.",
