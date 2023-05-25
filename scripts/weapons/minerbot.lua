@@ -4,32 +4,10 @@ local BoardEvents = require(modApi:getCurrentMod().scriptPath .."libs/boardEvent
 Nico_Freeze_Mine = { Image = "combat/freeze_mine.png", Damage = SpaceDamage(0), Tooltip = "freeze_mine", Icon = "combat/icons/icon_frozenmine_glow.png", UsedImage = ""}--needs to be global not local
 ------Miner Bot------
 	--The deployable's palettes
-    modApi:addPalette{
-        ID = "Nico_mine_iceflower",
-        Name = "Mine-Bot Mark I",
-        image="units/player/Nico_minerbot_mech_ns.png",
-        PlateHighlight = {233,161,172},--lights
-        PlateLight     = {189,220,255},--main highlight
-        PlateMid       = {146,182,207},--main light
-        PlateDark      = {91,107,158},--main mid
-        PlateOutline   = {32,54,55},--main dark
-        PlateShadow    = {60,91,117},--metal dark
-        BodyColor      = {104,116,193},--metal mid
-        BodyHighlight  = {219,255,242},--metal light
-    }
-    modApi:addPalette{
-        ID = "Nico_mine_winter",
-        Name = "Mine-Bot Mark III",
-        image="units/player/Nico_minerbot_mech_ns.png",
-        PlateHighlight = {255,245,101},--lights
-        PlateLight     = {217,216,221},--main highlight
-        PlateMid       = {123,122,128},--main light
-        PlateDark      = {71,72,77},--main mid
-        PlateOutline   = {46,45,51},--main dark
-        PlateShadow    = {71,163,157},--metal dark
-        BodyColor      = {144,215,219},--metal mid
-        BodyHighlight  = {246,255,255},--metal light
-    }
+    local mod = modApi:getCurrentMod()
+    local path2 = mod.scriptPath
+    require(path2 .."palettes")
+    
 --The deployable units
     Nico_Snowmine = Pawn:new{
         Name = "Mine-Bot Mark I",
@@ -120,7 +98,7 @@ Nico_Freeze_Mine = { Image = "combat/freeze_mine.png", Damage = SpaceDamage(0), 
         return ret
     end
     function Nico_minibot2:IsTwoClickException(p1,p2)
-        return ((not Pawn:IsShield()) and (Board:GetItem(p2) == "Freeze_Mine" or Board:GetItem(p2) == "Nico_Freeze_Mine" or Board:GetItem(p2) == "lmn_Minelayer_Item_Mine")) or Board:GetItem(p2) == "Item_Mine"
+        return ((not Pawn:IsShield()) and (Board:GetItem(p2) == "Freeze_Mine" or Board:GetItem(p2) == "Nico_Freeze_Mine" or Board:GetItem(p2) == "lmn_Minelayer_Item_Mine" or Board:GetItem(p2) == "Djinn_Spike_Mine" or Board:GetItem(p2) == "Djinn_Spike_Mine2" or Board:GetItem(p2) == "Nautilus_Spike_Mine" or Board:GetItem(p2) == "Nautilus_Spike_Mine2")) or Board:GetItem(p2) == "Item_Mine"
     end
     function Nico_minibot2:GetSkillEffect(p1,p2)
         local ret = SkillEffect()

@@ -128,59 +128,6 @@ require(path2 .."palettes")
         DefaultTeam = TEAM_PLAYER,
     	ImpactMaterial = IMPACT_METAL,
         AddPawn("Nico_botleader_mech")}
---Bot Leader's skill replacement
-local this={}
-function this:init(mod)
-
-	replaceRepair:addSkill{
-		Name = "Bot Repair",
-		Description = "Repairing fully heals the Bot Leader, and Shields it.",
-		weapon = "Nico_BotRepair",
-		mechType = "Nico_botleader_mech",
-		Icon = "img/weapons/repair_super.png",
-		IsActive = function(pawn)
-			return pawn:IsAbility(pilot.Skill)
-		end
-	}
-    Nico_BotRepair=Skill_Repair:new{
-        Name = "Bot Repair",
-		Description = "Repairing fully heals the Bot Leader, and Shields it.",
-        Icon="img/weapons/Nico_Bot_Repair",
-        Amount=-10,
-        TipImage = {
-            Unit = Point(2,2),
-            Target = Point(2,2),
-            Fire = Point(2,2),
-            CustomPawn="Nico_botleader_mech",
-        }
-    }
-	function Nico_BotRepair:GetSkillEffect(p1,p2)
-        local ret = SkillEffect()
-        local damage = SpaceDamage(p2,self.Amount)
-        damage.iFire = EFFECT_REMOVE
-        damage.iAcid = EFFECT_REMOVE
-        damage.iShield = 1
-        
-		local mechs = extract_table(Board:GetPawns(TEAM_MECH))
-		for i,id in pairs(mechs) do
-			local point = Board:GetPawnSpace(id)
-			if point == p2 or IsPassiveSkill("Mass_Repair") then
-				damage.loc = point
-				if Board:IsPawnSpace(point) then
-                    damage.iShield = 1
-					if Board:GetPawn(point):IsAcid() then
-						damage.iAcid = EFFECT_REMOVE
-					end
-				end
-				ret:AddDamage(damage)
-			end
-		end
-        
-        ret:AddDamage(damage)
-        return ret       
-    end
-
-end
 --Traits
     modApi:appendAsset("img/icon_Nico_zenith_shield.png", path.."img/icon_Nico_zenith_shield.png")--image of the trait
     modApi:appendAsset("img/icon_Nico_shield_heal.png", path.."img/icon_Nico_shield_heal.png")--image of the trait

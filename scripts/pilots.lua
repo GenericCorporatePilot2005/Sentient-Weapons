@@ -1,4 +1,6 @@
 local mod = modApi:getCurrentMod()
+local scriptPath = modApi:getCurrentMod().scriptPath
+local replaceRepair = require(scriptPath.."replaceRepair/replaceRepair")
 
 --portraits
     local path = mod_loader.mods[modApi.currentMod].resourcePath
@@ -80,10 +82,10 @@ local mod = modApi:getCurrentMod()
        Name = "Bot Leader",
        Personality = "Artificial",
        Sex = SEX_VEK,
-       GetSkill = function() NicoIsRobot = true; return "Survive_Death" end,
+       Skill = "Nico_BotRepair",
        Rarity = 0,
-       Blacklist = {"Invulnerable","Popular","Health","Skilled"},
-   }
+       Blacklist = {"Invulnerable","Popular","Regen","Pain"},
+    }
 --replacement for the skill's name and description
 local oldGetSkillInfo = GetSkillInfo
 function GetSkillInfo(skill)
@@ -96,3 +98,65 @@ if NicoIsRobot then
 end
 return oldGetSkillInfo(skill)
 end
+--Bot Leader's skill replacement
+
+local this={}
+function this:init(mod)
+
+	replaceRepair:addSkill{
+		Name = "Pinnacle Technologies",
+		Description = "Repairing fully heals the Bot Leader, and Shields it.\n\nRevives when dead at the end of a battle",
+		weapon = "Nico_BotRepair",
+		pilotSkill = "Nico_BotRepair",
+		Icon = "img/weapons/repair_super.png",
+        IsActive = function(pawn)
+			return pawn:IsAbility("Nico_BotRepair")
+		end
+	}
+    Nico_BotRepair=Skill_Repair:new{
+        Name = "Bot Repair",
+		Description = "Repairing fully heals the Bot Leader, and Shields it.",
+        Icon="img/weapons/repair_super",
+        Amount=-10,
+        TipImage = {
+            Unit = Point(2,2),
+            Target = Point(2,2),
+            Fire = Point(2,2),
+            CustomPawn="Nico_botleader_mech",
+        }
+    }
+	function Nico_BotRepair:GetSkillEffect(p1,p2)
+        local ret = SkillEffect()
+        local damage = SpaceDamage(p2,self.Amount)
+        damage.iFire = EFFECT_REMOVE
+        damage.iAcid = EFFECT_REMOVE
+        damage.sImageMark= "Nico_icon_shield_glow"
+        local shield= SpaceDamage(p2,0)
+        shield.iShield = 1
+        
+		local mechs = extract_table(Board:GetPawns(TEAM_MECH))
+		for i,id in pairs(mechs) do
+			local point = Board:GetPawnSpace(id)
+			if point == p2 or IsPassiveSkill("Mass_Repair") then
+				damage.loc = point
+                shield.loc = point
+				if Board:IsPawnSpace(point) then
+                    shield.iShield = 1
+					if Board:GetPawn(point):IsAcid() then
+						damage.iAcid = EFFECT_REMOVE
+					end
+				end
+                ret:AddDamage(shield)
+				ret:AddDamage(damage)
+			end
+		end
+        
+        ret:AddDamage(shield)
+        ret:AddDamage(damage)
+        return ret       
+    end
+end
+local path = mod_loader.mods[modApi.currentMod].resourcePath
+modApi:appendAsset("img/effects/Nico_icon_shield_glow.png", path.."img/weapons/Nico_icon_shield_glow.png")
+Location["effects/Nico_icon_shield_glow.png"] = Point(-16,8)
+return this

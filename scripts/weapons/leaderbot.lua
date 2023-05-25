@@ -167,7 +167,7 @@ local function Nico_DeployBots(mission)
 				end
 				local deploy = SpaceDamage(targets[i],0)
 				mission.Nico_BotDeploySpaces[#mission.Nico_BotDeploySpaces + 1] = targets[i]
-				deploy.sPawn = "DeployUnit_Aracnoid"
+				deploy.sPawn = "Nico_Snowmine"
 				ret:AddArtillery(p1,deploy,"effects/shotup_robot.png",NO_DELAY)
 				owner:AddScript("Board:GetPawn("..targets[i]:GetString().."):SetOwner("..k..")")
 				if level2 then
@@ -176,7 +176,7 @@ local function Nico_DeployBots(mission)
 					end
 					local deploy = SpaceDamage(targets[i],0)
 					mission.Nico_BotDeploySpaces[#mission.Nico_BotDeploySpaces + 1] = targets[i]
-					deploy.sPawn = "DeployUnit_Aracnoid"
+					deploy.sPawn = "Nico_Snowmine"
 					ret:AddArtillery(p1,deploy,"effects/shotup_robot.png",NO_DELAY)
 					owner:AddScript("Board:GetPawn("..targets[i]:GetString().."):SetOwner("..k..")")
 				end

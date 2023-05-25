@@ -18,7 +18,8 @@ function mod:init()
 	local replaceRepair = require(self.scriptPath.."replaceRepair/replaceRepair")
 	require(self.scriptPath .."weapons/weapons")
 	require(self.scriptPath .."pawns")
-	require(self.scriptPath .."pilots")
+	local pilot = require(self.scriptPath .."pilots")
+	pilot:init(mod)
 	require(self.scriptPath .."assets")
 	
 	-- add extra mech to selection screen
@@ -62,6 +63,23 @@ function mod:load( options, version)
 		"After destroying the Vek Hive, Zenith sent these improved Sentient Weapons across time to fight the Vek and their hijacked brethren.",
 		self.resourcePath .."img/squad2_icon.png"
 	)
+	modApi:addMissionEndHook(function()
+        for id = 0, 2 do
+            local pawn = Game:GetPawn(id)
+            if pawn then
+                LOG("Detected pawn ".. pawn:GetMechName())
+                
+                if pawn:IsDead() then
+                    LOG(pawn:GetMechName() .." is dead")
+                    
+                    if pawn:IsAbility("Nico_BotRepair") then
+                        LOG("reviving Leader Bot")
+						pawn:SetHealth(1)
+                    end
+                end
+            end
+        end
+    end)
 end
 
 return mod

@@ -40,3 +40,29 @@ modApi:addPalette{
     BodyColor      = { 76,  71,  92},
     BodyHighlight  = {137, 146, 162},
 }
+modApi:addPalette{
+    ID = "Nico_mine_iceflower",
+    Name = "Mine-Bot Mark I/II",
+    image="units/player/Nico_minerbot_mech_ns.png",
+    PlateHighlight = {233,161,172},--lights
+    PlateLight     = {189,220,255},--main highlight
+    PlateMid       = {146,182,207},--main light
+    PlateDark      = {91,107,158},--main mid
+    PlateOutline   = {32,54,55},--main dark
+    PlateShadow    = {60,91,117},--metal dark
+    BodyColor      = {104,116,193},--metal mid
+    BodyHighlight  = {219,255,242},--metal light
+}
+modApi:addPalette{
+    ID = "Nico_mine_winter",
+    Name = "Mine-Bot Mark III/IV",
+    image="units/player/Nico_minerbot_mech_ns.png",
+    PlateHighlight = {255,245,101},--lights
+    PlateLight     = {217,216,221},--main highlight
+    PlateMid       = {123,122,128},--main light
+    PlateDark      = {71,72,77},--main mid
+    PlateOutline   = {46,45,51},--main dark
+    PlateShadow    = {71,163,157},--metal dark
+    BodyColor      = {144,215,219},--metal mid
+    BodyHighlight  = {246,255,255},--metal light
+}

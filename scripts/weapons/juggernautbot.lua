@@ -1,7 +1,7 @@
 ------Juggernaut Bot------
 Nico_juggernaut = Skill:new{  
 	Name = "Juggernaut Engines V2",
-	Description = "Charge through units, destroying them.",
+	Description = "Charge through units, destroying them.\nFreezes the tile it stops if it's water.",
 	Class="TechnoVek",
 	Icon = "weapons/brute_beetle.png",
 	LaunchSound = "/weapons/charge",
@@ -57,6 +57,7 @@ Nico_juggernaut = Skill:new{
 		damage0.sAnimation = "airpush_".. ((direction+2)%4)
 		damage0.sSound = self.LaunchSound
 		ret:AddDamage(damage0)
+		ret:AddBurst(p1,"Emitter_Crack_Start", DIR_NONE)
 		ret:AddDelay(0.5)
 	
 		-- Jump target to next open tile
@@ -90,6 +91,7 @@ Nico_juggernaut = Skill:new{
 		if Board:IsTerrain(endcharge,TERRAIN_WATER) then
 			local ice = SpaceDamage(endcharge,0)
 			ice.iTerrain = TERRAIN_ICE
+			ice.sImageMark = "effects/Nico_icon_ice_glow.png"
 			ice.sAnimation="Splash"
 			ice.sSound= "/impact/generic/ice",
 			ret:AddDamage(ice)
@@ -131,7 +133,7 @@ Nico_juggernaut = Skill:new{
 		return ret
 	end
 	function Nico_juggernaut_B:IsTwoClickException(p1,p2)
-		return Board:IsBuilding(p2) or Board:IsTerrain(p2,TERRAIN_MOUNTAIN) or Board:IsBlocked(p2, Pawn:GetPathProf()) or ((not Pawn:IsShield()) and (Board:GetItem(p2) == "Freeze_Mine" or Board:GetItem(p2) == "Nico_Freeze_Mine" or Board:GetItem(p2) == "lmn_Minelayer_Item_Mine")) or Board:GetItem(p2) == "Item_Mine"
+		return Board:IsBuilding(p2) or Board:IsTerrain(p2,TERRAIN_MOUNTAIN) or Board:IsBlocked(p2, Pawn:GetPathProf()) or ((not Pawn:IsShield()) and (Board:GetItem(p2) == "Freeze_Mine" or Board:GetItem(p2) == "Nico_Freeze_Mine" or Board:GetItem(p2) == "lmn_Minelayer_Item_Mine" or Board:GetItem(p2) == "Djinn_Spike_Mine" or Board:GetItem(p2) == "Djinn_Spike_Mine2" or Board:GetItem(p2) == "Nautilus_Spike_Mine" or Board:GetItem(p2) == "Nautilus_Spike_Mine2")) or Board:GetItem(p2) == "Item_Mine"
 	end
     function Nico_juggernaut_B:GetFinalEffect(p1,p2,p3)
         local ret = self:GetSkillEffect(p1,p2)
@@ -150,7 +152,7 @@ Nico_juggernaut = Skill:new{
 		local crack = SpaceDamage(p2, 0)
 		crack.iCrack = EFFECT_CREATE
 		ret:AddDamage(crack)
-		ret:AddBurst(p2,"Emitter_Crack_Start", DIR_NONE)
+		ret:AddBurst(p2,"Emitter_Crack_Start2", DIR_NONE)
 
 		-- Jump target to next open tile
 		if Board:IsBlocked(p3, Pawn:GetPathProf()) then
@@ -183,6 +185,7 @@ Nico_juggernaut = Skill:new{
 		if Board:IsTerrain(endcharge,TERRAIN_WATER) then
 			local ice = SpaceDamage(endcharge,0)
 			ice.iTerrain = TERRAIN_ICE
+			ice.sImageMark = "effects/Nico_icon_ice_glow.png"
 			ice.sAnimation="Splash"
 			ice.sSound= "/impact/generic/ice"
 			ret:AddDamage(ice)
@@ -203,3 +206,6 @@ Nico_juggernaut = Skill:new{
 		}
 	}
 	modApi:addWeaponDrop("Nico_juggernaut")
+	local path = mod_loader.mods[modApi.currentMod].resourcePath
+	modApi:appendAsset("img/effects/Nico_icon_ice_glow.png", path.."img/weapons/Nico_icon_ice_glow.png")
+	Location["effects/Nico_icon_ice_glow.png"] = Point(-10,8)
