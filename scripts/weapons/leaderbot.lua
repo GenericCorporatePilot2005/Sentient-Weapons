@@ -140,6 +140,7 @@ for i,v in pairs(Mission) do
 end
 
 local function Nico_DeployBots(mission)
+	if not isRealMission() then return end
 	if Game:GetTurnCount() == 1 and Game:GetTeamTurn() == TEAM_PLAYER and not mission.Nico_BotDeployed then
 		local pilot0 = GameData.current.pilot0
 		local pilot1 = GameData.current.pilot1
@@ -159,10 +160,14 @@ local function Nico_DeployBots(mission)
 					for k,v in pairs(mission.LiveEnvironment.Locations) do death[#death + 1] = v end
 				end
 				local targets = extract_table(Board:GetReachable(p1, 3, PATH_FLYER))
+				local seen = {}
+				local avoid_water = true
 				math.randomseed(os.time())
 				local i = math.random(#targets)
 				i = math.random(#targets)
-				while (Board:IsBlocked(targets[i], PATH_PROJECTILE) or Board:IsTerrain(targets[i],TERRAIN_WATER) or Board:IsTerrain(targets[i],TERRAIN_HOLE) or Board:IsPawnSpace(targets[i]) or list_contains(mission.Nico_BotDeploySpaces,targets[i]) or list_contains(death,targets[i]) or Board:IsEdge(targets[i]) or Board:IsDangerousItem(targets[i])) do
+				while (Board:IsBlocked(targets[i], PATH_PROJECTILE) or Board:IsTerrain(targets[i],TERRAIN_LAVA) or (Board:IsTerrain(targets[i],TERRAIN_WATER) and avoid_water) or Board:IsTerrain(targets[i],TERRAIN_HOLE) or Board:IsPawnSpace(targets[i]) or list_contains(mission.Nico_BotDeploySpaces,targets[i]) or list_contains(death,targets[i]) or Board:IsEdge(targets[i]) or Board:IsDangerousItem(targets[i])) do
+					if not list_contains(seen,targets[i]) then seen[#seen + 1] = targets[i] end
+					if #seen == #targets then avoid_water = false end
 					i = math.random(#targets)
 				end
 				local deploy = SpaceDamage(targets[i],0)
@@ -171,7 +176,11 @@ local function Nico_DeployBots(mission)
 				ret:AddArtillery(p1,deploy,"effects/shotup_robot.png",NO_DELAY)
 				owner:AddScript("Board:GetPawn("..targets[i]:GetString().."):SetOwner("..k..")")
 				if level2 then
-					while (Board:IsBlocked(targets[i], PATH_PROJECTILE) or Board:IsTerrain(targets[i],TERRAIN_WATER) or Board:IsTerrain(targets[i],TERRAIN_HOLE) or Board:IsPawnSpace(targets[i]) or list_contains(mission.Nico_BotDeploySpaces,targets[i]) or list_contains(death,targets[i]) or Board:IsEdge(targets[i]) or Board:IsDangerousItem(targets[i])) do
+					seen = {}
+					avoid_water = true
+					while (Board:IsBlocked(targets[i], PATH_PROJECTILE) or Board:IsTerrain(targets[i],TERRAIN_LAVA) or (Board:IsTerrain(targets[i],TERRAIN_WATER) and avoid_water) or Board:IsTerrain(targets[i],TERRAIN_HOLE) or Board:IsPawnSpace(targets[i]) or list_contains(mission.Nico_BotDeploySpaces,targets[i]) or list_contains(death,targets[i]) or Board:IsEdge(targets[i]) or Board:IsDangerousItem(targets[i])) do
+						if not list_contains(seen,targets[i]) then seen[#seen + 1] = targets[i] end
+						if #seen == #targets then avoid_water = false end
 						i = math.random(#targets)
 					end
 					local deploy = SpaceDamage(targets[i],0)
@@ -183,6 +192,9 @@ local function Nico_DeployBots(mission)
 			end
 		end
 		if ret.effect:size() > 1 then
+			for i = 1,#mission.Nico_BotDeploySpaces do
+				ret:AddScript("modApi:scheduleHook(750, function() Board:SetFrozen("..mission.Nico_BotDeploySpaces[i]:GetString()..",true) end)")
+			end
 			ret:AddDelay(FULL_DELAY)
 			ret:AddSound("/impact/generic/mech")
 			for i = 1,#mission.Nico_BotDeploySpaces do
