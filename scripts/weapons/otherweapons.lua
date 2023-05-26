@@ -32,7 +32,7 @@ local function Nico_TeamRepair(mission, pawn, weaponId, p1, targetArea)
 	if pawn and _G[pawn:GetType()].NicoIsRobot and weaponId == "Skill_Repair" then
 		for dir = DIR_START, DIR_END do
 			local curr = p1 + DIR_VECTORS[dir]
-			if Board:IsPawnSpace(curr) and _G[Board:GetPawn(curr):GetType()].NicoIsRobot then
+			if Board:IsPawnSpace(curr) and (_G[Board:GetPawn(curr):GetType()].NicoIsRobot or _G[Board:GetPawn(curr):GetType()].NicoIsBotLeader) then
 				targetArea:push_back(curr)
 			end
 		end
