@@ -93,8 +93,8 @@ Nico_juggernaut = Skill:new{
 			ice.iTerrain = TERRAIN_ICE
 			ice.sImageMark = "effects/Nico_icon_ice_glow.png"
 			ice.sAnimation="Splash"
-			ice.sSound= "/impact/generic/ice",
 			ret:AddDamage(ice)
+			ret:AddSound("/impact/generic/ice")
 		end
 		return ret
 	end
@@ -187,8 +187,8 @@ Nico_juggernaut = Skill:new{
 			ice.iTerrain = TERRAIN_ICE
 			ice.sImageMark = "effects/Nico_icon_ice_glow.png"
 			ice.sAnimation="Splash"
-			ice.sSound= "/impact/generic/ice"
 			ret:AddDamage(ice)
+			ret:AddSound("/impact/generic/ice")
 		end
 		return ret
 	end
