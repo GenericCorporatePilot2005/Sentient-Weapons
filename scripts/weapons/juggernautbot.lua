@@ -79,7 +79,7 @@ Nico_juggernaut = Skill:new{
 			local midpoint = p1 + DIR_VECTORS[direction]*i
 		
 			local dodamage = true		
-			if Board:IsBuilding(midpoint) then
+			if Board:IsBuilding(midpoint) or Board:IsPod(midpoint) then
 				dodamage = false
 			end
 		
@@ -173,7 +173,7 @@ Nico_juggernaut = Skill:new{
 			local midpoint = p2 + DIR_VECTORS[direction]*i
 		
 			local dodamage = true		
-			if Board:IsBuilding(midpoint) then
+			if Board:IsBuilding(midpoint) or Board:IsPod(midpoint) then
 				dodamage = false
 			end
 		
