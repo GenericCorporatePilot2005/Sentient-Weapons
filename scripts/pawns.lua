@@ -167,5 +167,5 @@ require(path2 .."palettes")
 	    icon = "img/icon_Nico_shield_heal.png",--the icon itself
 	    icon_offset = Point(0,9),--it's location
 	    desc_title = "Bot Leader",--title
-	    desc_text = "After taking any damage, the next action is a forced repair. Repairing fully heals the Bot Leader, and Shields it.",--description
+	    desc_text = "After taking any damage, the next action is a forced repair.\nAt mission start, can deploy a number of Cannon Mechs equal to pilot level.\nRevives when dead at the end of a battle",--description
     }
