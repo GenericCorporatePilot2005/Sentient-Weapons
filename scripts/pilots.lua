@@ -114,7 +114,7 @@ end
 
         replaceRepair:addSkill{
             Name = "Pinnacle Technologies",
-            Description = "Repairing fully heals the Bot Leader, and Shields it.",
+            Description = "Repairing fully heals the Bot Leader, and Shields it.\nAt mission start, can deploy a number of Cannon Mechs equal to pilot level.\nRevives when dead at the end of a battle.",
             weapon = "Nico_BotRepair",
             pilotSkill = "Nico_BotRepair",
             Icon = "img/weapons/repair_super.png",
