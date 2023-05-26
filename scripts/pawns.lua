@@ -128,15 +128,31 @@ require(path2 .."palettes")
         DefaultTeam = TEAM_PLAYER,
     	ImpactMaterial = IMPACT_METAL,
         AddPawn("Nico_botleader_mech")}
+    Nico_hulkbot_mech = Pawn:new{
+        Name = "Cryo Hulk",
+        NicoIsRobot = true,
+        Class = "TechnoVek",
+        Health = 4,
+        MoveSpeed = 3,
+        Armor = true,
+        Massive = true,
+        Corpse = true,
+        Image = "Nico_artillerybot_mech",
+        ImageOffset = modApi:getPaletteImageOffset("nico_alpha_snow"),
+        SkillList = {"Nico_hulkbot"},
+        SoundLocation = "/enemy/snowart_1/",
+        DefaultTeam = TEAM_PLAYER,
+        ImpactMaterial = IMPACT_METAL,
+        AddPawn("Nico_hulkbot_mech")}
 --Traits
     modApi:appendAsset("img/icon_Nico_zenith_shield.png", path.."img/icon_Nico_zenith_shield.png")--image of the trait
     modApi:appendAsset("img/icon_Nico_shield_heal.png", path.."img/icon_Nico_shield_heal.png")--image of the trait
     local mod = modApi:getCurrentMod()--the mod itself
     local trait = require(mod.scriptPath .."libs/trait")--where does it get the code for the rest of this to work
 
-    Nico_Pawn_List = {"Nico_laserbot_mech", "Nico_cannonbot_mech", "Nico_artillerybot_mech", "Nico_knightbot_mech", "Nico_shieldbot_mech","Nico_minerbot_mech","Nico_juggernautbot_mech"}
+    Nico_Pawn_List = {"Nico_laserbot_mech", "Nico_cannonbot_mech", "Nico_artillerybot_mech", "Nico_knightbot_mech", "Nico_shieldbot_mech","Nico_minerbot_mech","Nico_juggernautbot_mech","Nico_hulkbot_mech"}
 
-    for i = 1,7 do
+    for i = 1,8 do
     	trait:add{
 		    pawnType=Nico_Pawn_List[i],--who will get the trait
 		    icon = "img/icon_Nico_zenith_shield.png",--the icon itself

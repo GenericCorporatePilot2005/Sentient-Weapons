@@ -25,7 +25,7 @@ Nico_hulkbot=ArtilleryDefault:new{
 		Enemy3 = Point(3,2),
 		Queued1 = Point(2,3),
 		Second_Click = Point(1,1),
-        CustomPawn="Nico_artillerybot_mech",
+        CustomPawn="Nico_hulkbot_mech",
 	},
 	}
 	function Nico_hulkbot:GetSecondTargetArea(p1, p2)  --This is a copy of the GetTargetArea for LineArtillery

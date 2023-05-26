@@ -30,7 +30,7 @@ function mod:init()
 		local result = oldGetStartingSquad(choice, ...)
 
 		if choice == 0 then
-			return add_arrays(result, {"Nico_juggernautbot_mech","Nico_botleader_mech"})
+			return add_arrays(result, {"Nico_juggernautbot_mech","Nico_botleader_mech","Nico_hulkbot_mech"})
 		end
 		return result
 		end

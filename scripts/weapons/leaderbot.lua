@@ -23,6 +23,10 @@ Nico_leaderbot=ArtilleryDefault:new{
 	},
 }
 local path = mod_loader.mods[modApi.currentMod].resourcePath
+local mod = modApi:getCurrentMod()
+local path2 = mod.scriptPath
+require(path2 .."palettes")
+
 modApi:appendAsset("img/weapons/Nico_leaderbot.png", path .."img/weapons/Nico_leaderbot.png")
 function Nico_leaderbot:GetTargetArea(point)
 	local ret = PointList()
@@ -139,8 +143,46 @@ for i,v in pairs(Mission) do
     end 
 end
 
+Nico_cannonbot_deploy = Pawn:new{
+	Name = "Cannon-Mech",
+	Class = "TechnoVek",
+	Health = 1,
+	MoveSpeed = 3,
+	Corpse = true,
+	Image = "Nico_cannonbot_mech",
+	ImageOffset = modApi:getPaletteImageOffset("nico_boss_snow"),
+	SkillList = {"Nico_cannonmech"},
+	SoundLocation = "/enemy/snowtank_1/",
+	DefaultTeam = TEAM_PLAYER,
+	ImpactMaterial = IMPACT_METAL,
+}
+
+------Cannon Bot------
+Nico_cannonmech=TankDefault:new{
+	Name="Cannon 7R Mark I",
+	Class="TechnoVek",
+	Description="Projectile that causes target to burn.",
+	Icon = "advanced/weapons/SnowtankAtk1_Player.png",
+	Damage=0,
+    Fire = 1,
+    Push=1,
+	Upgrades=0,
+	ProjectileArt = "effects/shot_mechtank",
+	Explo = "explopush1_",
+	Projectile = "effects/shot_mechtank",
+	UpShot = "effects/shotup_ignite_fireball.png",
+	LaunchSound = "",
+	ImpactSound = "",
+	TipImage = {
+		Unit = Point(2,4),
+		Enemy = Point(2,1),
+		Target = Point(2,1),
+		CustomPawn = "Nico_cannonbot_deploy",
+	}
+	}
+
 local function Nico_DeployBots(mission)
-	if not isRealMission() then return end
+--	if not isRealMission() then return end
 	if Game:GetTurnCount() == 1 and Game:GetTeamTurn() == TEAM_PLAYER and not mission.Nico_BotDeployed then
 		local pilot0 = GameData.current.pilot0
 		local pilot1 = GameData.current.pilot1
@@ -172,7 +214,7 @@ local function Nico_DeployBots(mission)
 				end
 				local deploy = SpaceDamage(targets[i],0)
 				mission.Nico_BotDeploySpaces[#mission.Nico_BotDeploySpaces + 1] = targets[i]
-				deploy.sPawn = "Nico_Snowmine"
+				deploy.sPawn = "Nico_cannonbot_deploy"
 				ret:AddArtillery(p1,deploy,"effects/shotup_robot.png",NO_DELAY)
 				owner:AddScript("Board:GetPawn("..targets[i]:GetString().."):SetOwner("..k..")")
 				if level2 then
@@ -185,7 +227,7 @@ local function Nico_DeployBots(mission)
 					end
 					local deploy = SpaceDamage(targets[i],0)
 					mission.Nico_BotDeploySpaces[#mission.Nico_BotDeploySpaces + 1] = targets[i]
-					deploy.sPawn = "Nico_Snowmine"
+					deploy.sPawn = "Nico_cannonbot_deploy"
 					ret:AddArtillery(p1,deploy,"effects/shotup_robot.png",NO_DELAY)
 					owner:AddScript("Board:GetPawn("..targets[i]:GetString().."):SetOwner("..k..")")
 				end
