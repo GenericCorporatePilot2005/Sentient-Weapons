@@ -84,7 +84,7 @@ local replaceRepair = require(scriptPath.."replaceRepair/replaceRepair")
         Sex = SEX_VEK,
         Skill = "Nico_BotRepair",
         Rarity = 0,
-        Blacklist = {"Invulnerable","Popular","Regen","Pain"},
+        Blacklist = {"Invulnerable","Popular","Pain"},
     }
     CreatePilot{
         Id = "Pilot_Nico_hulkbot_mech",
@@ -93,7 +93,7 @@ local replaceRepair = require(scriptPath.."replaceRepair/replaceRepair")
         Name = "Cryo Hulk",
         GetSkill = function() NicoIsRobot = true; return "Survive_Death" end,
         Rarity = 0,
-        Blacklist = {"Invulnerable","Thick","Popular","Health","Skilled","Regen","Pain"},
+        Blacklist = {"Invulnerable","Popular"},
     }
 --replacement for the skill's name and description
 local oldGetSkillInfo = GetSkillInfo
@@ -114,7 +114,7 @@ end
 
         replaceRepair:addSkill{
             Name = "Pinnacle Technologies",
-            Description = "Repairing fully heals the Bot Leader, and Shields it.\nAt mission start, can deploy up to two Cannon-Mechs, the amount is equal to level.\nRevives when dead at the end of a battle",
+            Description = "Repairing fully heals the Bot Leader, and Shields it.",
             weapon = "Nico_BotRepair",
             pilotSkill = "Nico_BotRepair",
             Icon = "img/weapons/repair_super.png",
