@@ -1,3 +1,13 @@
+--Lemon's Real Mission Checker
+local function isRealMission()
+local mission = GetCurrentMission()
+
+return true
+	and mission ~= nil
+	and mission ~= Mission_Test
+	and Board
+	and Board:IsMissionBoard()
+end
 ------Bot Leader------
 Nico_leaderbot=ArtilleryDefault:new{
 	Name="Vk8 Rockets Mark V",
@@ -182,7 +192,7 @@ Nico_cannonmech=TankDefault:new{
 	}
 
 local function Nico_DeployBots(mission)
---	if not isRealMission() then return end
+	if not isRealMission() then return end
 	if Game:GetTurnCount() == 1 and Game:GetTeamTurn() == TEAM_PLAYER and not mission.Nico_BotDeployed then
 		local pilot0 = GameData.current.pilot0
 		local pilot1 = GameData.current.pilot1
