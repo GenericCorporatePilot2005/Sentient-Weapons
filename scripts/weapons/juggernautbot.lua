@@ -1,7 +1,7 @@
 ------Juggernaut Bot------
 Nico_juggernaut = Skill:new{  
 	Name = "Juggernaut Engines V2",
-	Description = "Charge through units, destroying them.\nFreezes the tile it stops if it's water.",
+	Description = "Charge through units, destroying them.\nFreezes any water it terminates on.",
 	Class="TechnoVek",
 	Icon = "weapons/brute_beetle.png",
 	LaunchSound = "/weapons/charge",
