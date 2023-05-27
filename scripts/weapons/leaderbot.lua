@@ -168,25 +168,21 @@ Nico_cannonbot_deploy = Pawn:new{
 }
 
 ------Cannon Bot------
-Nico_cannondeploy=TankDefault:new{
+Nico_cannondeploy=Nico_cannonbot:new{
 	Name="Cannon 7R Mark I",
 	Class="TechnoVek",
 	Description="Projectile that causes target to burn.",
 	Icon = "advanced/weapons/SnowtankAtk1_Player.png",
 	Damage=0,
-    Fire = 1,
-    Push=1,
 	Upgrades=0,
-	ProjectileArt = "effects/shot_mechtank",
-	Explo = "explopush1_",
-	Projectile = "effects/shot_mechtank",
-	UpShot = "effects/shotup_ignite_fireball.png",
-	LaunchSound = "/enemy/snowart_1/attack",
-	ImpactSound = "/impact/generic/explosion",
 	TipImage = {
 		Unit = Point(2,4),
-		Enemy = Point(2,1),
-		Target = Point(2,1),
+		Enemy1 = Point(2,0),
+		Enemy2 = Point(2,2),
+		Target = Point(2,2),
+		Second_Origin = Point(2,4),
+		Second_Target = Point(2,0),
+		CustomEnemy = "Digger1",
 		CustomPawn = "Nico_cannonbot_deploy",
 	}
 	}
