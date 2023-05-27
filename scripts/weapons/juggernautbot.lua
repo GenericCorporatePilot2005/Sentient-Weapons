@@ -15,8 +15,8 @@ Nico_juggernaut = Skill:new{
 		Unit = Point(1,2),
 		Enemy = Point(2,2),
 		Enemy2 = Point(3,2),
+		Water = Point(4,2),
 		Target = Point(4,2),
-		Water=Point(4,2),
 		CustomEnemy = "Snowtank2",
 		CustomPawn = "Nico_juggernautbot_mech",
 	}
@@ -47,6 +47,16 @@ Nico_juggernaut = Skill:new{
 	end
 
 	function Nico_juggernaut:GetSkillEffect(p1,p2)
+		if Board:IsTipImage() then
+			local x = math.random(2)
+			if Board:IsTerrain(Point(2,2),3) then
+				if x==1 then
+					Board:SetTerrain(Point(2,2),0)
+				else
+					Board:SetTerrain(Point(2,2),3)
+				end
+			end
+		end
 		local ret = SkillEffect()
 		local endcharge = p2
 		local direction = GetDirection(p2 - p1)
@@ -115,6 +125,7 @@ Nico_juggernaut = Skill:new{
 			Enemy = Point(1,2),
 			Building = Point(2,2),
 			Mountain = Point(3,2),
+			Water = Point(4,2),
 			Target = Point(4,2),
 			CustomEnemy = "Snowtank2",
 			CustomPawn = "Nico_juggernautbot_mech",
@@ -127,8 +138,9 @@ Nico_juggernaut = Skill:new{
 			Unit = Point(0,2),
 			Enemy = Point(2,1),
 			Enemy2 = Point(1,2),
+			Water = Point(2,2),
+			Water2 = Point(2,0),
 			Target = Point(2,2),
-			Water = Point(2,0),
 			Second_Click=Point(2,0),
 			CustomEnemy = "Snowtank2",
 			CustomPawn = "Nico_juggernautbot_mech",
@@ -216,8 +228,9 @@ Nico_juggernaut = Skill:new{
 			Unit = Point(0,2),
 			Enemy = Point(2,1),
 			Mountain = Point(1,2),
-			Target = Point(2,2),
 			Water = Point(2,2),
+			Water2 = Point(2,0),
+			Target = Point(2,2),
 			Second_Click=Point(2,0),
 			CustomEnemy = "Snowtank2",
 			CustomPawn = "Nico_juggernautbot_mech",
