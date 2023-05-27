@@ -47,7 +47,7 @@ Nico_cannonbot=Skill:new{
 		local direction = GetDirection(p2 - p1)
 		local target = GetProjectileEnd(p1,p1+DIR_VECTORS[direction])
 		if p1:Manhattan(target) < p1:Manhattan(p2) then
-			ret:AddBounce(p1, self.Damage)
+			ret:AddBounce(p1, math.max(self.Damage,1))
 			ret:AddSound("/weapons/fireball")
 			local damage = SpaceDamage(p2,self.Damage)
 			damage.sAnimation = (self.Damage == 1 and "ExploArt2") or "explo_fire1"
