@@ -74,7 +74,7 @@ function mod:load( options, version)
                     
                     if pawn:IsAbility("Nico_BotRepair") then
 						if pawn.loc==TERRAIN_HOLE then
-							pawn:SetHealth(1) Board:RemovePawn(pawn) Board:AddPawn(pawn, Point(-1,-1)) pawn:SetSpace(Point(-1,-1))
+							pawn:SetHealth(1) Board:RemovePawn(pawn) Board:AddPawn(pawn, Point(0,7)) pawn:SetSpace(Point(-1,-1))
 							LOG("reviving Leader Bot")
 						else
 							pawn:SetHealth(1)
