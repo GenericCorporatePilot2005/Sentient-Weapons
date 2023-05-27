@@ -50,7 +50,7 @@ Nico_cannonbot=Skill:new{
 			ret:AddBounce(p1, math.max(self.Damage,1))
 			ret:AddSound("/weapons/fireball")
 			local damage = SpaceDamage(p2,self.Damage)
-			damage.sAnimation = (self.Damage == 1 and "ExploArt2") or "explo_fire1"
+			damage.sAnimation = (self.Damage < 2 and "ExploArt2") or "explo_fire1"
 			damage.iFire = 1
 			ret:AddArtillery(damage, self.UpShot)
 			ret:AddSound("/props/fire_damage")
