@@ -84,7 +84,7 @@ local replaceRepair = require(scriptPath.."replaceRepair/replaceRepair")
         Sex = SEX_VEK,
         Skill = "Nico_BotRepair",
         Rarity = 0,
-        Blacklist = {"Invulnerable","Popular","Pain"},
+        Blacklist = {"Invulnerable","Popular","Pain","Health"},
     }
     CreatePilot{
         Id = "Pilot_Nico_hulkbot_mech",
