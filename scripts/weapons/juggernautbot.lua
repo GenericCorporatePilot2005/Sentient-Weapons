@@ -16,6 +16,7 @@ Nico_juggernaut = Skill:new{
 		Enemy = Point(2,2),
 		Enemy2 = Point(3,2),
 		Target = Point(4,2),
+		Water=Point(4,2),
 		CustomEnemy = "Snowtank2",
 		CustomPawn = "Nico_juggernautbot_mech",
 	}
@@ -86,13 +87,21 @@ Nico_juggernaut = Skill:new{
 			if dodamage == true then
 				local damage = SpaceDamage(midpoint,self.Damage)
 				ret:AddDamage(damage)
+				ret:AddBurst(midpoint,"Emitter_Crack_Start", DIR_NONE)
+				ret:AddBounce(midpoint,1)
 			end
 		end
 		if Board:IsTerrain(endcharge,TERRAIN_WATER) then
 			local ice = SpaceDamage(endcharge,0)
 			ice.iTerrain = TERRAIN_ICE
 			ice.sImageMark = "effects/Nico_icon_ice_glow.png"
-			ice.sAnimation="Splash"
+			if Board:IsAcid(endcharge) then
+				ice.sAnimation="Splash_acid"
+			elseif Board:IsTerrain(endcharge,TERRAIN_LAVA) then
+				ice.sAnimation="Splash_lava"
+			else
+				ice.sAnimation="Splash"
+			end
 			ret:AddDamage(ice)
 			ret:AddSound("/impact/generic/ice")
 		end
@@ -119,6 +128,7 @@ Nico_juggernaut = Skill:new{
 			Enemy = Point(2,1),
 			Enemy2 = Point(1,2),
 			Target = Point(2,2),
+			Water = Point(2,0),
 			Second_Click=Point(2,0),
 			CustomEnemy = "Snowtank2",
 			CustomPawn = "Nico_juggernautbot_mech",
@@ -180,13 +190,21 @@ Nico_juggernaut = Skill:new{
 			if dodamage == true then
 				local damage = SpaceDamage(midpoint,self.Damage)
 				ret:AddDamage(damage)
+				ret:AddBurst(midpoint,"Emitter_Crack_Start2", DIR_NONE)
+				ret:AddBounce(midpoint,1)
 			end
 		end
 		if Board:IsTerrain(endcharge,TERRAIN_WATER) then
 			local ice = SpaceDamage(endcharge,0)
 			ice.iTerrain = TERRAIN_ICE
 			ice.sImageMark = "effects/Nico_icon_ice_glow.png"
-			ice.sAnimation="Splash"
+			if Board:IsAcid(endcharge) then
+				ice.sAnimation="Splash_acid"
+			elseif Board:IsTerrain(endcharge,TERRAIN_LAVA) then
+				ice.sAnimation="Splash_lava"
+			else
+				ice.sAnimation="Splash"
+			end
 			ret:AddDamage(ice)
 			ret:AddSound("/impact/generic/ice")
 		end
@@ -199,6 +217,7 @@ Nico_juggernaut = Skill:new{
 			Enemy = Point(2,1),
 			Mountain = Point(1,2),
 			Target = Point(2,2),
+			Water = Point(2,2),
 			Second_Click=Point(2,0),
 			CustomEnemy = "Snowtank2",
 			CustomPawn = "Nico_juggernautbot_mech",

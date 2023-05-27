@@ -69,12 +69,17 @@ function mod:load( options, version)
             if pawn then
                 LOG("Detected pawn ".. pawn:GetMechName())
                 
-                if pawn:IsDead() then
+                if pawn:IsDead() and GetCurrentMission().ID ~= "Mission_Final_Cave" then
                     LOG(pawn:GetMechName() .." is dead")
                     
                     if pawn:IsAbility("Nico_BotRepair") then
-                        LOG("reviving Leader Bot")
-						pawn:SetHealth(1)
+						if pawn.loc==TERRAIN_HOLE then
+							pawn:SetHealth(1) Board:RemovePawn(pawn) Board:AddPawn(pawn, Point(-1,-1)) pawn:SetSpace(Point(-1,-1))
+							LOG("reviving Leader Bot")
+						else
+							pawn:SetHealth(1)
+							LOG("reviving Leader Bot")
+						end
                     end
                 end
             end

@@ -60,6 +60,7 @@ local files = {
     "Nico_cannonbot_mech_broken.png",
     "Nico_cannonbot_mech_ns.png",
     "Nico_cannonbot_mech_h.png",
+    "Nico_cannonbot_mech_death.png",
 }
 for _, file in ipairs(files) do
     modApi:appendAsset("img/units/player/".. file, cannonmechPath .. file)
@@ -68,6 +69,7 @@ local a=ANIMS
     a.Nico_cannonbot_mech =a.MechUnit:new{Image="units/player/Nico_cannonbot_mech.png", PosX = -20, PosY = -4}
     a.Nico_cannonbot_mecha = a.MechUnit:new{Image="units/player/Nico_cannonbot_mech_a.png",  PosX = -20, PosY = -4, NumFrames = 3 }
     a.Nico_cannonbot_mechw = a.MechUnit:new{Image="units/player/Nico_cannonbot_mech_w.png", PosX = -17, PosY = 2}
+    a.Nico_cannonbot_mechd = a.EnemyUnit:new{Image="units/player/Nico_cannonbot_mech_death.png",  PosX = -30, PosY = -4, NumFrames = 10, Time = 0.1, Loop = false  }
     a.Nico_cannonbot_mech_broken = a.MechUnit:new{Image="units/player/Nico_cannonbot_mech_broken.png", PosX = -20, PosY = -4 }
     a.Nico_cannonbot_mechw_broken = a.MechUnit:new{Image="units/player/Nico_cannonbot_mech_w_broken.png", PosX = -20, PosY = 2 }
     a.Nico_cannonbot_mech_ns = a.MechIcon:new{Image="units/player/Nico_cannonbot_mech_ns.png"}
@@ -140,7 +142,6 @@ local a=ANIMS
     a.Nico_minerbot_mechd = a.EnemyUnit:new{Image="units/player/Nico_minerbot_mech_death.png",  PosX = -24, PosY = -3, NumFrames = 11, Time = 0.1, Loop = false  }
     a.Nico_minerbot_mechw = a.MechUnit:new{Image="units/player/Nico_minerbot_mech_w.png", PosX = -20, PosY = 10}
     a.Nico_minerbot_mech_broken = a.MechUnit:new{Image="units/player/Nico_minerbot_mech_broken.png", PosX = -12, PosY = 0 }
-    a.Nico_minerbot_meche =		a.BaseEmerge:new{Image = "units/player/Nico_minerbot_mech_emerge.png", PosX = -15, PosY = 0, NumFrames = 3 }
     a.Nico_minerbot_mechw_broken = a.MechUnit:new{Image="units/player/Nico_minerbot_mech_w_broken.png", PosX = -20, PosY = 10}
     a.Nico_minerbot_mech_ns = a.MechIcon:new{Image="units/player/Nico_minerbot_mech_ns.png"}
 --Juggernaut-bot

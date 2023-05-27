@@ -139,9 +139,10 @@ end
             local damage = SpaceDamage(p2,self.Amount)
             damage.iFire = EFFECT_REMOVE
             damage.iAcid = EFFECT_REMOVE
-            damage.sImageMark= "Nico_icon_shield_glow"
+            damage.bHide=true
             local shield= SpaceDamage(p2,0)
             shield.iShield = 1
+            shield.sImageMark= "effects/Nico_icon_shield_glow.png"
             
             local mechs = extract_table(Board:GetPawns(TEAM_MECH))
             for i,id in pairs(mechs) do

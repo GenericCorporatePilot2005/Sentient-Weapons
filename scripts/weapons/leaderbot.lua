@@ -154,21 +154,21 @@ for i,v in pairs(Mission) do
 end
 
 Nico_cannonbot_deploy = Pawn:new{
-	Name = "Cannon-Mech",
+	Name = "Cannon-Bot",
 	Class = "TechnoVek",
 	Health = 1,
 	MoveSpeed = 3,
 	Corpse = false,
 	Image = "Nico_cannonbot_mech",
 	ImageOffset = modApi:getPaletteImageOffset("nico_boss_snow"),
-	SkillList = {"Nico_cannonmech"},
+	SkillList = {"Nico_cannondeploy"},
 	SoundLocation = "/enemy/snowtank_1/",
 	DefaultTeam = TEAM_PLAYER,
 	ImpactMaterial = IMPACT_METAL,
 }
 
 ------Cannon Bot------
-Nico_cannonmech=TankDefault:new{
+Nico_cannondeploy=TankDefault:new{
 	Name="Cannon 7R Mark I",
 	Class="TechnoVek",
 	Description="Projectile that causes target to burn.",
