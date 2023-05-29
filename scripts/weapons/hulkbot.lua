@@ -71,7 +71,7 @@ Nico_hulkbot=ArtilleryDefault:new{
 				ret:AddScript("Board:GetPawn("..p2:GetString().."):ClearQueued()")
 			end
 			local web_id = Board:GetPawn(p2):GetId()--Store pawn id
-			ret:AddScript("Board:GetPawn("..web_id.."):SetSpace(Point(-1,-1))")--Move the pawn to Point(-1,-1) to delete webbing
+			if Board:GetPawn(p2):GetType() ~= "tosx_IceHornet" then ret:AddScript("Board:GetPawn("..web_id.."):SetSpace(Point(-1,-1))") end--Move the pawn to Point(-1,-1) to delete webbing
 			local damage = SpaceDamage(p1,0)
 			damage.bHide = true
 			damage.fDelay = 0.00017--force a one frame delay on the board
@@ -114,3 +114,4 @@ Nico_hulkbot=ArtilleryDefault:new{
 	--end
 
 	--modApi.events.onModsLoaded:subscribe(EVENT_onModsLoaded)
+	
