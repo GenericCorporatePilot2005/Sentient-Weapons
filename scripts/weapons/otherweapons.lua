@@ -9,6 +9,7 @@ local function Nico_MoveShield(mission, pawn, weaponId, p1, p2)
 end
 
 local function Nico_MoveShieldWeapon(mission, pawn, weaponId, p1, p2, p3, skillEffect)
+	if weaponId == "Nico_minibot" or weaponId == "Nico_minibot2" then return end
 	for i = 1, skillEffect.effect:size() do
 		local spaceDamage = skillEffect.effect:index(i)
 		if spaceDamage:IsMovement() and spaceDamage:GetMoveType() == 0 then
