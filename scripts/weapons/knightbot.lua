@@ -111,6 +111,7 @@ modApi:appendAsset("img/weapons/Nico_knightbot.png", path .."img/weapons/Nico_kn
 		if double_flag then
 			if stable or unstable_blocked then ret:AddMelee(target - DIR_VECTORS[direction], damage) end
 			if unstable_pushed then
+				damage.iSmoke = 0
 				damage.loc = target + DIR_VECTORS[direction]
 				damage.sAnimation = ""--"explospear2_"..direction
 				ret:AddScript("Board:AddAnimation("..target:GetString()..", \"explospear2_"..direction.."\", 0)")
