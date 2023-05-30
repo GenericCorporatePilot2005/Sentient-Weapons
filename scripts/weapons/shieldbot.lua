@@ -50,6 +50,8 @@ local path = mod_loader.mods[modApi.currentMod].resourcePath
 			ret:AddDelay(0.8)
 		end
 	
+		local multiPawn = -1
+	
 		if blastFlag then
 			if self.Damage == 2 then
 				ret:AddSound("/impact/generic/explosion_large")
@@ -58,6 +60,11 @@ local path = mod_loader.mods[modApi.currentMod].resourcePath
 			end
 			if Board:IsPawnSpace(p2) and Board:GetPawn(p2):IsShield() then
 				ret:AddScript("Board:GetPawn("..p2:GetString().."):SetShield(false,false)")
+				if _G[Board:GetPawn(p2):GetType()].ExtraSpaces[1] == Point(0,1) then--this is a train or train-like pawn
+					multiPawn = 0
+				elseif _G[Board:GetPawn(p2):GetType()].ExtraSpaces[1] == Point(1,0) then--this is a dam or dam-like pawn
+					multiPawn = 1
+				end
 			end
 			if Board:IsShield(p2) then
 				ret:AddScript("Board:SetShield("..p2:GetString()..",false,false)")
@@ -66,18 +73,53 @@ local path = mod_loader.mods[modApi.currentMod].resourcePath
 			ret:AddSound("/weapons/science_repulse")
 		end
 	
-		for i = DIR_START, DIR_END do
-			damage = SpaceDamage(p2 + DIR_VECTORS[i], 0, i)
-			damage.sAnimation = "airpush_"..i
-			if blastFlag then damage.sAnimation = "explopush"..self.Damage.."_"..i damage.iDamage = self.Damage end
-			if Board:IsBuilding(p2 + DIR_VECTORS[i]) or (Board:IsPawnSpace(p2 + DIR_VECTORS[i]) and Board:GetPawn(p2 + DIR_VECTORS[i]):GetTeam() == TEAM_PLAYER) then
-				damage.iDamage = 0
+		if multiPawn == -1 or not blastFlag then
+			for i = DIR_START, DIR_END do
+				damage = SpaceDamage(p2 + DIR_VECTORS[i], 0, i)
 				damage.sAnimation = "airpush_"..i
-				if self.ShieldFriendly then damage.iShield = 1 end
+				if blastFlag then damage.sAnimation = "explopush"..self.Damage.."_"..i damage.iDamage = self.Damage end
+				if Board:IsBuilding(p2 + DIR_VECTORS[i]) or (Board:IsPawnSpace(p2 + DIR_VECTORS[i]) and Board:GetPawn(p2 + DIR_VECTORS[i]):GetTeam() == TEAM_PLAYER) then
+					damage.iDamage = 0
+					damage.sAnimation = "airpush_"..i
+					if self.ShieldFriendly then damage.iShield = 1 end
+				end
+				ret:AddDamage(damage)
 			end
-			ret:AddDamage(damage)
+		else
+			local otherPawnSpace = Point(-1,-1)
+			for i = DIR_START, DIR_END do
+				damage = SpaceDamage(p2 + DIR_VECTORS[i], 0, i)
+				damage.sAnimation = "airpush_"..i
+				if blastFlag then damage.sAnimation = "explopush"..self.Damage.."_"..i damage.iDamage = self.Damage end
+				if Board:IsBuilding(p2 + DIR_VECTORS[i]) or (Board:IsPawnSpace(p2 + DIR_VECTORS[i]) and Board:GetPawn(p2 + DIR_VECTORS[i]):GetTeam() == TEAM_PLAYER) then
+					damage.iDamage = 0
+					damage.sAnimation = "airpush_"..i
+					if self.ShieldFriendly then damage.iShield = 1 end
+				end
+				if not Board:IsPawnSpace(p2 + DIR_VECTORS[i]) or #_G[Board:GetPawn(p2 + DIR_VECTORS[i]):GetType()].ExtraSpaces<1 then
+					ret:AddDamage(damage)
+				elseif #_G[Board:GetPawn(p2 + DIR_VECTORS[i]):GetType()].ExtraSpaces>0 then
+					damage.iPush = DIR_NONE
+					damage.sAnimation = ""
+					damage.sImageMark = "weapons/Nico_shield_explode_glow.png"
+					otherPawnSpace = p2 + DIR_VECTORS[i]
+					ret:AddDamage(damage)
+				end
+			end
+			for i = DIR_START, DIR_END do
+				damage = SpaceDamage(otherPawnSpace + DIR_VECTORS[i], 0, i)
+				damage.sAnimation = "airpush_"..i
+				if blastFlag then damage.sAnimation = "explopush"..self.Damage.."_"..i damage.iDamage = self.Damage end
+				if Board:IsBuilding(otherPawnSpace + DIR_VECTORS[i]) or (Board:IsPawnSpace(otherPawnSpace + DIR_VECTORS[i]) and Board:GetPawn(otherPawnSpace + DIR_VECTORS[i]):GetTeam() == TEAM_PLAYER) then
+					damage.iDamage = 0
+					damage.sAnimation = "airpush_"..i
+					if self.ShieldFriendly then damage.iShield = 1 end
+				end
+				if not Board:IsPawnSpace(otherPawnSpace + DIR_VECTORS[i]) or #_G[Board:GetPawn(otherPawnSpace + DIR_VECTORS[i]):GetType()].ExtraSpaces<1 then
+					ret:AddDamage(damage)
+				end
+			end
 		end
-	
 		return ret
 	end
 	Nico_shieldbot_A=Nico_shieldbot:new{
