@@ -234,6 +234,9 @@ local undoPawnId_thisFrame = nil
 
 modapiext.events.onPawnUndoMove:subscribe(function(mission, pawn)
 	undoPawnId_thisFrame = pawn:GetId()
+	modApi:runLater(function(mission)
+		undoPawnId_thisFrame = nil
+	end)
 end)
 
 BoardEvents.onItemRemoved:subscribe(function(loc, removed_item)
@@ -257,8 +260,8 @@ BoardEvents.onItemRemoved:subscribe(function(loc, removed_item)
 	end
 end)
 
-modApi.events.onModsInitialized:subscribe(function()
+--[[modApi.events.onModsInitialized:subscribe(function()
 	modApi.events.onMissionUpdate:subscribe(function(mission)
 		undoPawnId_thisFrame = nil
 	end)
-end)
+end)]]
