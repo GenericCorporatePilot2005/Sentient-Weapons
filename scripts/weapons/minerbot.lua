@@ -254,7 +254,7 @@ BoardEvents.onItemRemoved:subscribe(function(loc, removed_item)
 	end
 	if removed_item == "Freeze_Mine" then
 		local pawn = Board:GetPawn(loc)
-		if pawn and pawn:GetType() == "Train_Armored" then
+		if pawn and pawn:GetType() == "Train_Armored" and not pawn:IsShield() then
 			pawn:SetFrozen(true)
 		end
 	end
