@@ -1,7 +1,7 @@
 ------Knight Bot------
 Nico_knightbot = Punch:new{
 	Name = "0th KPR Sword Mark II",
-	Description = "Dash to damage and push the target. If the target was shielded, attack again. Phase through Buildings and Mountains. If the destination is blocked, leap backwards to the nearest empty tile.",
+	Description = "Dash to damage and push the target. If the target was shielded, smoke it and attack again. Phase through Buildings and Mountains. If the destination is blocked, leap backwards to the nearest empty tile.",
 	Icon = "weapons/Nico_knightbot.png",
 	Class = "TechnoVek",
 	Damage = 1,
@@ -106,6 +106,7 @@ modApi:appendAsset("img/weapons/Nico_knightbot.png", path .."img/weapons/Nico_kn
 		local stable = Board:IsPawnSpace(target) and Board:GetPawn(target):IsGuarding()
 		local unstable_pushed = Board:IsPawnSpace(target) and not Board:GetPawn(target):IsGuarding() and not Board:IsBlocked(target + DIR_VECTORS[direction],PATH_PROJECTILE) and Board:IsValid(target + DIR_VECTORS[direction])
 		local unstable_blocked = Board:IsPawnSpace(target) and not Board:GetPawn(target):IsGuarding() and (Board:IsBlocked(target + DIR_VECTORS[direction],PATH_PROJECTILE) or not Board:IsValid(target + DIR_VECTORS[direction]))
+		if double_flag then local smokeDam = SpaceDamage(target,0) smokeDam.iSmoke = 1 ret:AddDamage(smokeDam) damage.iSmoke = 1 end
 		ret:AddMelee(target - DIR_VECTORS[direction], damage)
 		if double_flag then
 			if stable or unstable_blocked then ret:AddMelee(target - DIR_VECTORS[direction], damage) end
