@@ -30,7 +30,7 @@ function mod:init()
 		local result = oldGetStartingSquad(choice, ...)
 
 		if choice == 0 then
-			return add_arrays(result, {"Nico_juggernautbot_mech","Nico_botleader_mech","Nico_hulkbot_mech"})
+			return add_arrays(result, {})
 		end
 		return result
 		end
@@ -42,8 +42,8 @@ function mod:load( options, version)
 	modApi:addSquad(
 		{
 			"Sentient Weapons",-- title
-			"Nico_cannonbot_mech",-- mech #2
-			"Nico_laserbot_mech",-- mech #1
+			"Nico_cannonbot_mech",-- mech #1
+			"Nico_laserbot_mech",-- mech #2
 			"Nico_artillerybot_mech",-- mech #3
 			id="Nico_Sent_weap"
 		},
@@ -54,14 +54,26 @@ function mod:load( options, version)
 	modApi:addSquad(
 		{
 			"Sentient Weapons 2",-- title
-			"Nico_knightbot_mech",-- mech #2
 			"Nico_minerbot_mech",-- mech #1
+			"Nico_knightbot_mech",-- mech #2
 			"Nico_shieldbot_mech",-- mech #3
 			id="Nico_Sent_weap2"
 		},
 		"Sentient Weapons 2",
 		"After destroying the Vek Hive, Zenith sent these improved Sentient Weapons across time to fight the Vek and their hijacked brethren.",
 		self.resourcePath .."img/squad2_icon.png"
+	)
+	modApi:addSquad(
+		{
+			"Sentient Weapons 3",-- title
+			"Nico_juggernautbot_mech",-- mech #1
+			"Nico_botleader_mech",-- mech #2
+			"Nico_hulkbot_mech",-- mech #3
+			id="Nico_Sent_weap3"
+		},
+		"Sentient Weapons 3",
+		"After destroying the Vek Hive, Zenith sent these improved Sentient Weapons across time to fight the Vek and their hijacked brethren.",
+		self.resourcePath .."img/squad3_icon.png"
 	)
 	modApi:addMissionEndHook(function()
         for id = 0, 2 do
