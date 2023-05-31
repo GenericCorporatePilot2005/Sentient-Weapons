@@ -42,7 +42,7 @@ Nico_Freeze_Mine = { Image = "combat/freeze_mine.png", Damage = SpaceDamage(0), 
         }
     }
     function Nico_minibot:GetTargetArea(point)
-        return Board:GetReachable(point, _G[Pawn:GetType()].MoveAtk, Pawn:GetPathProf())
+        return Board:GetReachable(point, _G[Pawn:GetType()].MoveAtk or 4, Pawn:GetPathProf())
     end
     function Nico_minibot:GetSkillEffect(p1,p2)
         local ret = SkillEffect()
@@ -90,10 +90,11 @@ Nico_Freeze_Mine = { Image = "combat/freeze_mine.png", Damage = SpaceDamage(0), 
         }
     }
     function Nico_minibot2:GetTargetArea(point)
-        return Board:GetReachable(point, _G[Pawn:GetType()].MoveAtk, Pawn:GetPathProf())
+        return Board:GetReachable(point, _G[Pawn:GetType()].MoveAtk or 4, Pawn:GetPathProf())
     end
     function Nico_minibot2:GetSecondTargetArea(p1,p2)
-        local ret = Board:GetReachable(p2, _G[Pawn:GetType()].MoveAtk, Pawn:GetPathProf())
+		if ((not Pawn:IsShield()) and (Board:GetItem(p2) == "Freeze_Mine" or Board:GetItem(p2) == "Nico_Freeze_Mine" or Board:GetItem(p2) == "lmn_Minelayer_Item_Mine" or Board:GetItem(p2) == "Djinn_Spike_Mine" or Board:GetItem(p2) == "Djinn_Spike_Mine2" or Board:GetItem(p2) == "Nautilus_Spike_Mine" or Board:GetItem(p2) == "Nautilus_Spike_Mine2")) or Board:GetItem(p2) == "Item_Mine" then return PointList() end
+        local ret = Board:GetReachable(p2, _G[Pawn:GetType()].MoveAtk or 4, Pawn:GetPathProf())
         ret:push_back(p1)
         return ret
     end
