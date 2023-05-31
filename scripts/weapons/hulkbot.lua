@@ -66,7 +66,7 @@ Nico_hulkbot=ArtilleryDefault:new{
 		
 		local damage = SpaceDamage(p3,0)
 		damage.sAnimation = "ExploArt2"
-		damage.iFire = 1
+		if not self.Cancel then damage.iFire = 1 end
 		ret:AddArtillery(damage, "effects/shotup_ignite_fireball.png")
 		
 		for dir = DIR_START, DIR_END do
@@ -77,15 +77,21 @@ Nico_hulkbot=ArtilleryDefault:new{
 		end
 		ret:AddBounce(p3, self.BounceAmount)
 		if self.Cancel then
-			if Board:IsTipImage() then
+			damage = SpaceDamage(p3,0)
+			damage.iSmoke = 1
+			ret:AddDamage(damage)
+			ret:AddDelay(0.017)
+			damage.iSmoke = 0
+			damage.iFire = 1
+			ret:AddDamage(damage)
+			--[[if Board:IsTipImage() then
 				ret:AddScript("Board:AddAlert("..p3:GetString()..",\"ATTACK CANCELED\")")
 				ret:AddScript("Board:GetPawn("..p3:GetString().."):ClearQueued()")
 			else
-				ret:AddScript("modApi:runLater(function() Board:SetSmoke("..p3:GetString()..",true,true) modApi:runLater(function() Board:SetFire("..p3:GetString()..",true) end) end)")
-			end
-		else
-			ret:AddSound("/props/fire_damage")
+				ret:AddScript("modApi:runLater(function() Board:SetSmoke("..p3:GetString()..",true,true) modApi:runLater(function() Board:SetSmoke("..p3:GetString()..",false,false) Board:SetFire("..p3:GetString()..",true) end) end)")
+			end]]
 		end
+		ret:AddSound("/props/fire_damage")
 		return ret
 	end
 	Nico_hulkbot_A=Nico_hulkbot:new{
