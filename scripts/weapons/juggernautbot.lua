@@ -103,6 +103,8 @@ Nico_juggernaut = Skill:new{
 		end
 		if Board:IsTerrain(endcharge,TERRAIN_WATER) then
 			local ice = SpaceDamage(endcharge,0)
+			local del = SpaceDamage(0)
+			del.fDelay = -1
 			ice.iTerrain = TERRAIN_ICE
 			ice.sImageMark = "effects/Nico_icon_ice_glow.png"
 			if Board:IsAcid(endcharge) then
@@ -112,6 +114,7 @@ Nico_juggernaut = Skill:new{
 			else
 				ice.sAnimation="Splash"
 			end
+			ret:AddDamage(del)
 			ret:AddDamage(ice)
 			ret:AddSound("/impact/generic/ice")
 		end
@@ -147,7 +150,8 @@ Nico_juggernaut = Skill:new{
 			Length = 5,
 		}
 	}
-	function Nico_juggernaut_B:GetSecondTargetArea(p1,p2,p3)
+	function Nico_juggernaut_B:GetSecondTargetArea(p1,p2)
+		if Board:IsBuilding(p2) or Board:IsTerrain(p2,TERRAIN_MOUNTAIN) or Board:IsBlocked(p2, Pawn:GetPathProf()) or ((not Pawn:IsShield()) and (Board:GetItem(p2) == "Freeze_Mine" or Board:GetItem(p2) == "Nico_Freeze_Mine" or Board:GetItem(p2) == "lmn_Minelayer_Item_Mine" or Board:GetItem(p2) == "Djinn_Spike_Mine" or Board:GetItem(p2) == "Djinn_Spike_Mine2" or Board:GetItem(p2) == "Nautilus_Spike_Mine" or Board:GetItem(p2) == "Nautilus_Spike_Mine2")) or Board:GetItem(p2) == "Item_Mine" then return PointList() end
 		local ret = self:GetTargetArea(p2)
 		self:RemoveBackwards(ret,p1,p2)
 		self:RemoveForwards(ret,p1,p2) -- also remove forwards
@@ -187,7 +191,6 @@ Nico_juggernaut = Skill:new{
 			end
 		end
 	    local distance = p2:Manhattan(endcharge)
-
 		ret:AddCharge(Board:GetPath(p2, endcharge, PATH_FLYER), NO_DELAY)
 	
 		for i = 1,distance-1 do	
@@ -208,6 +211,8 @@ Nico_juggernaut = Skill:new{
 		end
 		if Board:IsTerrain(endcharge,TERRAIN_WATER) then
 			local ice = SpaceDamage(endcharge,0)
+			local del = SpaceDamage(0)
+			del.fDelay = -1
 			ice.iTerrain = TERRAIN_ICE
 			ice.sImageMark = "effects/Nico_icon_ice_glow.png"
 			if Board:IsAcid(endcharge) then
@@ -217,6 +222,7 @@ Nico_juggernaut = Skill:new{
 			else
 				ice.sAnimation="Splash"
 			end
+			ret:AddDamage(del)
 			ret:AddDamage(ice)
 			ret:AddSound("/impact/generic/ice")
 		end
