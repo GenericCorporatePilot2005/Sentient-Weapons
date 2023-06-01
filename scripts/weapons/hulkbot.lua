@@ -28,6 +28,11 @@ Nico_hulkbot=ArtilleryDefault:new{
         CustomPawn="Nico_hulkbot_mech",
 	},
 	}
+	local path = mod_loader.mods[modApi.currentMod].resourcePath
+	modApi:appendAsset("img/weapons/Nico_fire_cancel.png",path.."img/weapons/Nico_fire_cancel.png")
+	Location["weapons/Nico_fire_cancel.png"] = Point(-12,8)
+	modApi:appendAsset("img/weapons/Nico_fire_cancel_off.png",path.."img/weapons/Nico_fire_cancel_off.png")
+	Location["weapons/Nico_fire_cancel_off.png"] = Point(-12,8)
 	function Nico_hulkbot:GetSecondTargetArea(p1, p2)  --This is a copy of the GetTargetArea for LineArtillery
 		local ret = PointList()
 		local dir = GetDirection(p2 - p1)
@@ -77,12 +82,21 @@ Nico_hulkbot=ArtilleryDefault:new{
 		end
 		ret:AddBounce(p3, self.BounceAmount)
 		if self.Cancel then
+			local iconfire=SpaceDamage(p3,0)
+			if Board:IsPawnSpace(p3) then
+				iconfire.sImageMark = "weapons/Nico_fire_cancel.png"
+			else
+				iconfire.sImageMark = "weapons/Nico_fire_cancel_off.png"
+			end
 			damage = SpaceDamage(p3,0)
 			damage.iSmoke = 1
+			damage.bHide=true
 			ret:AddDamage(damage)
 			ret:AddDelay(0.017)
+			damage.bHide=true
 			damage.iSmoke = 0
 			damage.iFire = 1
+			ret:AddDamage(iconfire)
 			ret:AddDamage(damage)
 			--[[if Board:IsTipImage() then
 				ret:AddScript("Board:AddAlert("..p3:GetString()..",\"ATTACK CANCELED\")")

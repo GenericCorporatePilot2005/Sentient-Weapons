@@ -66,8 +66,8 @@ function mod:load( options, version)
 	modApi:addSquad(
 		{
 			"Sentient Weapons 3",-- title
-			"Nico_juggernautbot_mech",-- mech #1
 			"Nico_botleader_mech",-- mech #2
+			"Nico_juggernautbot_mech",-- mech #1
 			"Nico_hulkbot_mech",-- mech #3
 			id="Nico_Sent_weap3"
 		},

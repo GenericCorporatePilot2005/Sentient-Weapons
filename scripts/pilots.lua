@@ -12,6 +12,7 @@ local replaceRepair = require(scriptPath.."replaceRepair/replaceRepair")
     modApi:appendAsset("img/portraits/pilots/Pilot_Nico_minerbot_mech.png", path .."img/portraits/Pilot_Nico_minerbot_mech.png")
     modApi:appendAsset("img/portraits/pilots/Pilot_Nico_juggernautbot_mech.png", path .."img/portraits/Pilot_Nico_juggernautbot_mech.png")
     modApi:appendAsset("img/portraits/pilots/Pilot_Nico_botleader_mech.png", path .."img/portraits/Pilot_Nico_botleader_mech.png")
+    modApi:appendAsset("img/portraits/pilots/Pilot_Nico_hulkbot_mech.png", path .."img/portraits/Pilot_Nico_hulkbot_mech.png")
 
 --pilots
     CreatePilot{

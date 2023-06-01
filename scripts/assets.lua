@@ -167,3 +167,25 @@ local a=ANIMS
     a.Nico_juggernautbot_mech_broken = a.MechUnit:new{Image="units/player/Nico_juggernautbot_mech_broken.png", PosX = -23, PosY = -8 }
     a.Nico_juggernautbot_mechw_broken = a.MechUnit:new{Image="units/player/Nico_juggernautbot_mech_w_broken.png", PosX = -17, PosY = 9}
     a.Nico_juggernautbot_mech_ns = a.MechIcon:new{Image="units/player/Nico_juggernautbot_mech_ns.png"}
+--Hulk-bot
+local artmechPath = path .."img/units/player/"
+-- make a list of our files.
+local files = {
+    "Nico_hulkbot_mech.png",
+    "Nico_hulkbot_mech_a.png",
+    "Nico_hulkbot_mech_w.png",
+    "Nico_hulkbot_mech_w_broken.png",
+    "Nico_hulkbot_mech_broken.png",
+    "Nico_hulkbot_mech_ns.png",
+    "Nico_hulkbot_mech_h.png",
+}
+for _, file in ipairs(files) do
+    modApi:appendAsset("img/units/player/".. file, artmechPath .. file)
+end
+local a=ANIMS
+    a.Nico_hulkbot_mech =a.MechUnit:new{Image="units/player/Nico_hulkbot_mech.png", PosX = -20, PosY = -10 }
+    a.Nico_hulkbot_mecha = a.MechUnit:new{Image="units/player/Nico_hulkbot_mech_a.png",  PosX = -20, PosY = -10, NumFrames = 4 }
+    a.Nico_hulkbot_mechw = a.MechUnit:new{Image="units/player/Nico_hulkbot_mech_w.png", PosX = -20, PosY = 0 }
+    a.Nico_hulkbot_mech_broken = a.MechUnit:new{Image="units/player/Nico_hulkbot_mech_broken.png", PosX = -20, PosY = -10 }
+    a.Nico_hulkbot_mechw_broken = a.MechUnit:new{Image="units/player/Nico_hulkbot_mech_w_broken.png", PosX = -20, PosY = 0 }
+    a.Nico_hulkbot_mech_ns = a.MechIcon:new{Image="units/player/Nico_hulkbot_mech_ns.png"}
