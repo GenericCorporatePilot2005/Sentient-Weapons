@@ -5,6 +5,7 @@ Nico_hulkbot=ArtilleryDefault:new{
 	Icon = "weapons/ranged_ignite.png",
 	Description="Launch a Cluster Artillery shot in one direction, and then a Vulcan Artillery shot in a different direction. Freeze Self.",-- Every time this weapon is selected, swap the order of the shots.",
 	Damage = 1,
+	SelfDamage = 1,
 	PowerCost = 0,
 	BuildingDamage = false,
 	shield=false,
@@ -49,6 +50,7 @@ Nico_hulkbot=ArtilleryDefault:new{
 	end
 	function Nico_hulkbot:GetSkillEffect(p1,p2)
 		local ret = SkillEffect()
+		ret:AddDamage(SpaceDamage(p1,1))
 		local temp = Ranged_Defensestrike_A:GetSkillEffect(p1,p2)
 		if self.Damage == 2 then temp = Ranged_Defensestrike_AB:GetSkillEffect(p1,p2) end
 		
@@ -96,6 +98,7 @@ Nico_hulkbot=ArtilleryDefault:new{
 			damage.bHide=true
 			damage.iSmoke = 0
 			damage.iFire = 1
+			if not Board:IsTipImage() then damage.sScript = "Board:SetSmoke("..p3:GetString()..",false,false)" end
 			ret:AddDamage(iconfire)
 			ret:AddDamage(damage)
 			--[[if Board:IsTipImage() then
