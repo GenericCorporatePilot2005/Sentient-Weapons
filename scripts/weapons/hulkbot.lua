@@ -83,7 +83,7 @@ Nico_hulkbot=ArtilleryDefault:new{
 		ret:AddBounce(p3, self.BounceAmount)
 		if self.Cancel then
 			local iconfire=SpaceDamage(p3,0)
-			if Board:IsPawnSpace(p3) then
+			if Board:IsPawnSpace(p3) and Board:GetPawn(p3):GetTeam() == TEAM_ENEMY then
 				iconfire.sImageMark = "weapons/Nico_fire_cancel.png"
 			else
 				iconfire.sImageMark = "weapons/Nico_fire_cancel_off.png"
@@ -109,7 +109,7 @@ Nico_hulkbot=ArtilleryDefault:new{
 		return ret
 	end
 	Nico_hulkbot_A=Nico_hulkbot:new{
-		UpgradeDescription = "The Vulcan Artillery shot cancels the target unit on impact.",
+		UpgradeDescription = "The Vulcan Artillery shot cancels the target enemy on impact.",
 		Cancel = true,
 	}
 	Nico_hulkbot_B=Nico_hulkbot:new{
