@@ -84,23 +84,23 @@ Nico_hulkbot=ArtilleryDefault:new{
 		end
 		ret:AddBounce(p3, self.BounceAmount)
 		if self.Cancel then
-			local iconfire=SpaceDamage(p3,0)
+			local iconfire = SpaceDamage(p3,0)
 			if Board:IsPawnSpace(p3) and Board:GetPawn(p3):GetTeam() == TEAM_ENEMY then
 				iconfire.sImageMark = "weapons/Nico_fire_cancel.png"
+				damage = SpaceDamage(p3,0)
+				damage.iSmoke = 1
+				damage.bHide=true
+				ret:AddDamage(damage)
+				ret:AddDelay(0.017)
+				damage.bHide=true
+				damage.iSmoke = 0
+				damage.iFire = 1
+				if not Board:IsTipImage() then damage.sScript = "Board:SetSmoke("..p3:GetString()..",false,false)" end
+				ret:AddDamage(damage)
 			else
 				iconfire.sImageMark = "weapons/Nico_fire_cancel_off.png"
 			end
-			damage = SpaceDamage(p3,0)
-			damage.iSmoke = 1
-			damage.bHide=true
-			ret:AddDamage(damage)
-			ret:AddDelay(0.017)
-			damage.bHide=true
-			damage.iSmoke = 0
-			damage.iFire = 1
-			if not Board:IsTipImage() then damage.sScript = "Board:SetSmoke("..p3:GetString()..",false,false)" end
 			ret:AddDamage(iconfire)
-			ret:AddDamage(damage)
 			--[[if Board:IsTipImage() then
 				ret:AddScript("Board:AddAlert("..p3:GetString()..",\"ATTACK CANCELED\")")
 				ret:AddScript("Board:GetPawn("..p3:GetString().."):ClearQueued()")
