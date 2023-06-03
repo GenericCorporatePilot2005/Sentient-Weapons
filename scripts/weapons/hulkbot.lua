@@ -99,6 +99,10 @@ Nico_hulkbot=ArtilleryDefault:new{
 				ret:AddDamage(damage)
 			else
 				iconfire.sImageMark = "weapons/Nico_fire_cancel_off.png"
+				damage = SpaceDamage(p3,0)
+				damage.bHide=true
+				damage.iFire = 1
+				ret:AddDamage(damage)
 			end
 			ret:AddDamage(iconfire)
 			--[[if Board:IsTipImage() then
