@@ -91,7 +91,7 @@ local replaceRepair = require(scriptPath.."replaceRepair/replaceRepair")
         Id = "Pilot_Nico_hulkbot_mech",
         Personality = "Artificial",
         Sex = SEX_VEK,
-        Name = "Cryo Hulk",
+        Name = "Cryo-Hulk",
         GetSkill = function() NicoIsRobot = true; return "Survive_Death" end,
         Rarity = 0,
         Blacklist = {"Invulnerable","Popular"},

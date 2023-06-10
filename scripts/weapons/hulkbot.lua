@@ -2,7 +2,7 @@
 Nico_hulkbot=ArtilleryDefault:new{
 	Name="Artillery Mark III",
 	Class = "TechnoVek",
-	Icon = "weapons/ranged_ignite.png",
+	Icon = "weapons/Nico_hulkbot.png",
 	Description="Launch a Cluster Artillery shot in one direction, and then a Vulcan Artillery shot in a different direction. Freeze Self.",-- Every time this weapon is selected, swap the order of the shots.",
 	Damage = 1,
 	SelfDamage = 1,
@@ -30,6 +30,7 @@ Nico_hulkbot=ArtilleryDefault:new{
 	},
 	}
 	local path = mod_loader.mods[modApi.currentMod].resourcePath
+	modApi:appendAsset("img/weapons/Nico_hulkbot.png", path .."img/weapons/Nico_hulkbot.png")
 	modApi:appendAsset("img/weapons/Nico_fire_cancel.png",path.."img/weapons/Nico_fire_cancel.png")
 	Location["weapons/Nico_fire_cancel.png"] = Point(-12,8)
 	modApi:appendAsset("img/weapons/Nico_fire_cancel_off.png",path.."img/weapons/Nico_fire_cancel_off.png")
