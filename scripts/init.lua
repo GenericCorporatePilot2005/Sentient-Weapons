@@ -22,6 +22,7 @@ function mod:init()
 	pilot:init(mod)
 	require(self.scriptPath .."assets")
 	
+	--[[commented out for the moment, just in case we need it
 	-- add extra mech to selection screen
 	modApi.events.onModsInitialized:subscribe(function()
 
@@ -34,7 +35,7 @@ function mod:init()
 		end
 		return result
 		end
-	end)
+	end)]]
 end
 
 function mod:load( options, version)
@@ -62,6 +63,18 @@ function mod:load( options, version)
 		"Sentient Weapons 2",
 		"After destroying the Vek Hive, Zenith sent these improved Sentient Weapons across time to fight the Vek and their hijacked brethren.",
 		self.resourcePath .."img/squad2_icon.png"
+	)
+	modApi:addSquad(
+		{
+			"Boom Bots",-- title
+			"Nico_cannonboom_mech",-- mech #1
+			"Nico_laserboom_mech",-- mech #2
+			"Nico_artilleryboom_mech",-- mech #3
+			id="Nico_Boom_bots"
+		},
+		"Boom Bots",
+		"After destroying the Vek Hive, Zenith sent these improved Sentient Weapons across time to fight the Vek and their hijacked brethren.",
+		self.resourcePath .."img/squadboom_icon.png"
 	)
 	modApi:addSquad(
 		{

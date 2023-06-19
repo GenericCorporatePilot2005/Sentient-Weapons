@@ -10,6 +10,9 @@ local replaceRepair = require(scriptPath.."replaceRepair/replaceRepair")
     modApi:appendAsset("img/portraits/pilots/Pilot_Nico_knightbot_mech.png", path .."img/portraits/Pilot_Nico_knightbot_mech.png")
     modApi:appendAsset("img/portraits/pilots/Pilot_Nico_shieldbot_mech.png", path .."img/portraits/Pilot_Nico_shieldbot_mech.png")
     modApi:appendAsset("img/portraits/pilots/Pilot_Nico_minerbot_mech.png", path .."img/portraits/Pilot_Nico_minerbot_mech.png")
+    modApi:appendAsset("img/portraits/pilots/Pilot_Nico_artilleryboom_mech.png", path .."img/portraits/Pilot_Nico_artilleryboom_mech.png")
+	modApi:appendAsset("img/portraits/pilots/Pilot_Nico_laserboom_mech.png", path .."img/portraits/Pilot_Nico_laserboom_mech.png")
+	modApi:appendAsset("img/portraits/pilots/Pilot_Nico_cannonboom_mech.png", path .."img/portraits/Pilot_Nico_cannonboom_mech.png")
     modApi:appendAsset("img/portraits/pilots/Pilot_Nico_juggernautbot_mech.png", path .."img/portraits/Pilot_Nico_juggernautbot_mech.png")
     modApi:appendAsset("img/portraits/pilots/Pilot_Nico_botleader_mech.png", path .."img/portraits/Pilot_Nico_botleader_mech.png")
     modApi:appendAsset("img/portraits/pilots/Pilot_Nico_hulkbot_mech.png", path .."img/portraits/Pilot_Nico_hulkbot_mech.png")
@@ -65,6 +68,33 @@ local replaceRepair = require(scriptPath.."replaceRepair/replaceRepair")
         Personality = "Artificial",
         Sex = SEX_VEK,
         Name = "Mine-Bot",
+        GetSkill = function() NicoIsRobot = true; return "Survive_Death" end,
+        Rarity = 0,
+        Blacklist = {"Invulnerable","Thick","Popular","Health","Skilled","Regen","Pain"},
+    }
+    CreatePilot{
+        Id = "Pilot_Nico_laserboom_mech",
+        Personality = "Artificial",
+        Sex = SEX_VEK,
+        Name = "Boom Laser",
+        GetSkill = function() NicoIsRobot = true; return "Survive_Death" end,
+        Rarity = 0,
+        Blacklist = {"Invulnerable","Thick","Popular","Health","Skilled","Regen","Pain"},
+    }
+    CreatePilot{
+        Id = "Pilot_Nico_cannonboom_mech",
+        Personality = "Artificial",
+        Sex = SEX_VEK,
+        Name = "Boom Cannon",
+        GetSkill = function() NicoIsRobot = true; return "Survive_Death" end,
+        Rarity = 0,
+        Blacklist = {"Invulnerable","Thick","Popular","Health","Skilled","Regen","Pain"},
+    }
+    CreatePilot{
+        Id = "Pilot_Nico_artilleryboom_mech",
+        Personality = "Artificial",
+        Sex = SEX_VEK,
+        Name = "Boom Artillery",
         GetSkill = function() NicoIsRobot = true; return "Survive_Death" end,
         Rarity = 0,
         Blacklist = {"Invulnerable","Thick","Popular","Health","Skilled","Regen","Pain"},

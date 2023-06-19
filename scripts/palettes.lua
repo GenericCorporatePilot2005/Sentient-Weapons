@@ -28,6 +28,19 @@ modApi:addPalette{
     BodyHighlight  = {137, 162, 153},
 }
 modApi:addPalette{
+    ID = "Nico_boom_snow",
+    Name = "Boom Bots' Orange and Blue Silver",
+    image="units/player/Nico_laserboom_mech_ns.png",
+    PlateHighlight = {255,233,231},--lights
+    PlateLight     = {252,160,81},--main highlight
+    PlateMid       = {146,94,53},--main light
+    PlateDark      = {86,66,48},--main mid
+    PlateOutline   = {27,25,27},--main dark
+    PlateShadow    = {42,42,50},--metal dark
+    BodyColor      = {72,71,92},--metal mid
+    BodyHighlight  = {137,137,162},--metal light
+}
+modApi:addPalette{
     ID = "nico_boss_snow",
     Image="units/player/Nico_juggernautbot_mech_ns.png",
     Name = "Sentient Weapon's Olive Green & Grey",

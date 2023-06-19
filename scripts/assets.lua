@@ -144,6 +144,77 @@ local a=ANIMS
     a.Nico_minerbot_mech_broken = a.MechUnit:new{Image="units/player/Nico_minerbot_mech_broken.png", PosX = -12, PosY = 0 }
     a.Nico_minerbot_mechw_broken = a.MechUnit:new{Image="units/player/Nico_minerbot_mech_w_broken.png", PosX = -20, PosY = 10}
     a.Nico_minerbot_mech_ns = a.MechIcon:new{Image="units/player/Nico_minerbot_mech_ns.png"}
+
+--Boom Artillery
+local artboomPath = path .."img/units/player/"
+-- make a list of our files.
+local files = {
+    "Nico_artilleryboom_mech.png",
+    "Nico_artilleryboom_mech_a.png",
+    "Nico_artilleryboom_mech_w.png",
+    "Nico_artilleryboom_mech_w_broken.png",
+    "Nico_artilleryboom_mech_broken.png",
+    "Nico_artilleryboom_mech_ns.png",
+    "Nico_artilleryboom_mech_h.png",
+}
+for _, file in ipairs(files) do
+    modApi:appendAsset("img/units/player/".. file, artboomPath .. file)
+end
+local a=ANIMS
+    a.Nico_artilleryboom_mech =a.MechUnit:new{Image="units/player/Nico_artilleryboom_mech.png", PosX = -18, PosY = -9}
+    a.Nico_artilleryboom_mecha = a.MechUnit:new{Image="units/player/Nico_artilleryboom_mech_a.png",  PosX = -18, PosY = -9, NumFrames = 4 }
+    a.Nico_artilleryboom_mechw = a.MechUnit:new{Image="units/player/Nico_artilleryboom_mech_w.png", PosX = -18, PosY = -2}
+    a.Nico_artilleryboom_mech_broken = a.MechUnit:new{Image="units/player/Nico_artilleryboom_mech_broken.png", PosX = -18, PosY = -9 }
+    a.Nico_artilleryboom_mechw_broken = a.MechUnit:new{Image="units/player/Nico_artilleryboom_mech_w_broken.png", PosX = -18, PosY = -2 }
+    a.Nico_artilleryboom_mech_ns = a.MechIcon:new{Image="units/player/Nico_artilleryboom_mech_ns.png"}
+
+-- locate our mech assets.
+--Boom Laser
+local laserboomPath = path .."img/units/player/"
+-- make a list of our files.
+local files = {
+    "Nico_laserboom_mech.png",
+    "Nico_laserboom_mech_a.png",
+    "Nico_laserboom_mech_w.png",
+    "Nico_laserboom_mech_w_broken.png",
+    "Nico_laserboom_mech_broken.png",
+    "Nico_laserboom_mech_ns.png",
+    "Nico_laserboom_mech_h.png",
+}
+for _, file in ipairs(files) do
+    modApi:appendAsset("img/units/player/".. file, laserboomPath .. file)
+end
+local a=ANIMS
+    a.Nico_laserboom_mech =a.MechUnit:new{Image="units/player/Nico_laserboom_mech.png", PosX = -15, PosY = -2}
+    a.Nico_laserboom_mecha = a.MechUnit:new{Image="units/player/Nico_laserboom_mech_a.png",  PosX = -15, PosY = -2, NumFrames = 4 }
+    a.Nico_laserboom_mechw = a.MechUnit:new{Image="units/player/Nico_laserboom_mech_w.png", PosX = -15, PosY = 4}
+    a.Nico_laserboom_mech_broken = a.MechUnit:new{Image="units/player/Nico_laserboom_mech_broken.png", PosX = -15, PosY = -2 }
+    a.Nico_laserboom_mechw_broken = a.MechUnit:new{Image="units/player/Nico_laserboom_mech_w_broken.png", PosX = -15, PosY = 4 }
+    a.Nico_laserboom_mech_ns = a.MechIcon:new{Image="units/player/Nico_laserboom_mech_ns.png"}
+
+-- locate our mech assets.
+--Boom Cannon
+local cannonboomPath = path .."img/units/player/"
+-- make a list of our files.
+local files = {
+    "Nico_cannonboom_mech.png",
+    "Nico_cannonboom_mech_a.png",
+    "Nico_cannonboom_mech_w.png",
+    "Nico_cannonboom_mech_w_broken.png",
+    "Nico_cannonboom_mech_broken.png",
+    "Nico_cannonboom_mech_ns.png",
+    "Nico_cannonboom_mech_h.png",
+}
+for _, file in ipairs(files) do
+    modApi:appendAsset("img/units/player/".. file, cannonboomPath .. file)
+end
+local a=ANIMS
+    a.Nico_cannonboom_mech =a.MechUnit:new{Image="units/player/Nico_cannonboom_mech.png", PosX = -20, PosY = -4}
+    a.Nico_cannonboom_mecha = a.MechUnit:new{Image="units/player/Nico_cannonboom_mech_a.png",  PosX = -20, PosY = -4, NumFrames = 3 }
+    a.Nico_cannonboom_mechw = a.MechUnit:new{Image="units/player/Nico_cannonboom_mech_w.png", PosX = -17, PosY = 2}
+    a.Nico_cannonboom_mech_broken = a.MechUnit:new{Image="units/player/Nico_cannonboom_mech_broken.png", PosX = -20, PosY = -4 }
+    a.Nico_cannonboom_mechw_broken = a.MechUnit:new{Image="units/player/Nico_cannonboom_mech_w_broken.png", PosX = -20, PosY = 2 }
+    a.Nico_cannonboom_mech_ns = a.MechIcon:new{Image="units/player/Nico_cannonboom_mech_ns.png"}
 --Juggernaut-bot
 -- locate our mech assets.
 local juggermechPath = path .."img/units/player/"

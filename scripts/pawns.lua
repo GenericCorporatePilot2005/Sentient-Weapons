@@ -5,6 +5,7 @@ local path = mod_loader.mods[modApi.currentMod].resourcePath
 local path2 = mod.scriptPath
 require(path2 .."palettes")
 --mechs
+--Sentient weapons 1
     Nico_laserbot_mech = Pawn:new{
         Name = "Laser-Bot",
         NicoIsRobot = true,
@@ -50,6 +51,7 @@ require(path2 .."palettes")
         DefaultTeam = TEAM_PLAYER,
 	    ImpactMaterial = IMPACT_METAL,
         AddPawn("Nico_cannonbot_mech")}
+--Sentient Weapons 2
     Nico_knightbot_mech = Pawn:new{
         Name = "Knight-Bot",
         NicoIsRobot = true,
@@ -97,6 +99,56 @@ require(path2 .."palettes")
         DefaultTeam = TEAM_PLAYER,
 	    ImpactMaterial = IMPACT_METAL,
         AddPawn("Nico_minerbot_mech")}
+--Boom Bots
+    Nico_laserboom_mech = Pawn:new{
+        Name = "Boom Laser",
+        NicoIsRobot = true,
+        Class = "TechnoVek",
+        Health = 1,
+        MoveSpeed = 4,
+        Massive = true,
+        Corpse = true,
+        Image = "Nico_laserboom_mech",
+	    ImageOffset = modApi:getPaletteImageOffset("Nico_boom_snow"),
+        SkillList = {"Nico_laserbot"},
+	    SoundLocation = "/enemy/snowlaser_1/",
+        DefaultTeam = TEAM_PLAYER,
+	    ImpactMaterial = IMPACT_METAL,
+        Explodes=true,
+        AddPawn("Nico_laserboom_mech")}
+    Nico_artilleryboom_mech = Pawn:new{
+        Name = "Boom Artillery",
+        NicoIsRobot = true,
+        Class = "TechnoVek",
+        Health = 1,
+        MoveSpeed = 3,
+        Massive = true,
+        Corpse = true,
+        Image = "Nico_artilleryboom_mech",
+	    ImageOffset = modApi:getPaletteImageOffset("Nico_boom_snow"),
+        SkillList = {"Nico_artillerybot"},
+        SoundLocation = "/enemy/snowart_1/",
+        DefaultTeam = TEAM_PLAYER,
+	    ImpactMaterial = IMPACT_METAL,
+        Explodes=true,
+        AddPawn("Nico_artillerybot_mech")}
+    Nico_cannonboom_mech = Pawn:new{
+        Name = "Boom Cannon",
+        NicoIsRobot = true,
+        Class = "TechnoVek",
+        Health = 1,
+        MoveSpeed = 3,
+        Massive = true,
+        Corpse = true,
+        Image = "Nico_cannonboom_mech",
+        ImageOffset = modApi:getPaletteImageOffset("Nico_boom_snow"),
+        SkillList = {"Nico_cannonbot"},
+	    SoundLocation = "/enemy/snowtank_1/",
+        DefaultTeam = TEAM_PLAYER,
+	    ImpactMaterial = IMPACT_METAL,
+        Explodes=true,
+        AddPawn("Nico_cannonboom_mech")}
+--Sentient Weapon 3
     Nico_juggernautbot_mech = Pawn:new{
     	Name = "Juggernaut-Bot",
         NicoIsRobot = true,
@@ -150,9 +202,9 @@ require(path2 .."palettes")
     local mod = modApi:getCurrentMod()--the mod itself
     local trait = require(mod.scriptPath .."libs/trait")--where does it get the code for the rest of this to work
 
-    Nico_Pawn_List = {"Nico_laserbot_mech", "Nico_cannonbot_mech", "Nico_artillerybot_mech", "Nico_knightbot_mech", "Nico_shieldbot_mech","Nico_minerbot_mech","Nico_juggernautbot_mech","Nico_hulkbot_mech"}
+    Nico_Pawn_List = {"Nico_laserbot_mech", "Nico_cannonbot_mech", "Nico_artillerybot_mech", "Nico_knightbot_mech", "Nico_shieldbot_mech","Nico_minerbot_mech","Nico_juggernautbot_mech","Nico_hulkbot_mech","Nico_laserboom_mech", "Nico_cannonboom_mech", "Nico_artilleryboom_mech"}
 
-    for i = 1,8 do
+    for i = 1,11 do
     	trait:add{
 		    pawnType=Nico_Pawn_List[i],--who will get the trait
 		    icon = "img/icon_Nico_zenith_shield.png",--the icon itself
