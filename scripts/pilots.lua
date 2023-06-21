@@ -140,15 +140,17 @@ return oldGetSkillInfo(skill)
 end
 --Bot Leader's skill replacement
 
+    local path = mod_loader.mods[modApi.currentMod].resourcePath
+    modApi:appendAsset("img/weapons/Nico_Bot_Repair.png", path.."img/weapons/Nico_Bot_Repair.png")
     local this={}
     function this:init(mod)
-
         replaceRepair:addSkill{
             Name = "Pinnacle Technologies",
             Description = "Repairing fully heals the Bot Leader, and Shields it.\nAt mission start, deploy a number of Cannon Bots equal to pilot level.\nRevives when dead at the end of a battle.",
             weapon = "Nico_BotRepair",
             pilotSkill = "Nico_BotRepair",
-            Icon = "img/weapons/repair_super.png",
+            Icon = "img/weapons/Nico_Bot_Repair.png",
+            iconFrozen = "img/weapons/Nico_Bot_Repair_frozen.png",
             IsActive = function(pawn)
                 return pawn:IsAbility("Nico_BotRepair")
             end
@@ -156,7 +158,6 @@ end
         Nico_BotRepair=Skill_Repair:new{
             Name = "Bot Repair",
             Description = "Repairing fully heals the Bot Leader, and Shields it.",
-            Icon="img/weapons/repair_super",
             Amount=-10,
             TipImage = {
                 Unit = Point(2,2),
@@ -172,7 +173,7 @@ end
             damage.iAcid = EFFECT_REMOVE
             damage.bHide=true
             local shield= SpaceDamage(p2,0)
-            shield.iShield = 1
+            damage.iShield = 1
             shield.sImageMark= "effects/Nico_icon_shield_glow.png"
             
             local mechs = extract_table(Board:GetPawns(TEAM_MECH))
@@ -182,7 +183,7 @@ end
                     damage.loc = point
                     shield.loc = point
                     if Board:IsPawnSpace(point) then
-                        shield.iShield = 1
+                        damage.iShield = 1
                         if Board:GetPawn(point):IsAcid() then
                             damage.iAcid = EFFECT_REMOVE
                         end
@@ -197,7 +198,6 @@ end
             return ret       
         end
     end
-    local path = mod_loader.mods[modApi.currentMod].resourcePath
     modApi:appendAsset("img/effects/Nico_icon_shield_glow.png", path.."img/weapons/Nico_icon_shield_glow.png")
     Location["effects/Nico_icon_shield_glow.png"] = Point(-16,8)
     return this

@@ -167,12 +167,15 @@ Nico_cannonbot_deploy = Pawn:new{
 	ImpactMaterial = IMPACT_METAL,
 }
 
-------Cannon Bot------
+------Deployable Cannon Bot------
+
+local path = mod_loader.mods[modApi.currentMod].resourcePath
+modApi:appendAsset("img/weapons/Nico_cannondeploy.png", path .."img/weapons/Nico_cannondeploy.png")
 Nico_cannondeploy=Nico_cannonbot:new{
 	Name="Cannon 7R Mark I",
 	Class="TechnoVek",
 	Description="Projectile that causes target to burn.",
-	Icon = "advanced/weapons/SnowtankAtk1_Player.png",
+	Icon = "weapons/Nico_cannondeploy.png",
 	Damage=0,
 	Upgrades=0,
 	TipImage = {

@@ -2,7 +2,7 @@
 Nico_artilleryboom=Nico_artillerybot:new{
 	Name="Bang Rockets Mark I",
 	Class = "TechnoVek",
-	Icon = "weapons/ranged_tribomb.png",
+	Icon = "weapons/support_missiles.png",
 	Description="Launch Rockets at 3 tiles.",
 	Damage = 1,
 	PowerCost = 0,

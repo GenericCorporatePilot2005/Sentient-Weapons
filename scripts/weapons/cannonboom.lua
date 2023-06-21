@@ -5,7 +5,7 @@ Nico_cannonboom=Nico_cannonbot:new{
 	Range = RANGE_PROJECTILE,
 	PathSize = INT_MAX,
 	Description="Projectile that causes target to burn.",
-	Icon = "advanced/weapons/SnowtankAtk1_Player.png",
+	Icon = "weapons/Nico_cannonboom.png",
 	Damage=1,
     Fire = 1,
     Push=1,
@@ -31,6 +31,8 @@ Nico_cannonboom=Nico_cannonbot:new{
 		CustomPawn = "Nico_cannonboom_mech",
 	},
 	}
+	local path = mod_loader.mods[modApi.currentMod].resourcePath
+	modApi:appendAsset("img/weapons/Nico_cannonboom.png", path .."img/weapons/Nico_cannonboom.png")
 
 	Nico_cannonboom_A=Nico_cannonboom:new{
 		Damage=2,
