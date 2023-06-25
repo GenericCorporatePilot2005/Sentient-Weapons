@@ -2,25 +2,27 @@ Nico_laserboom=Nico_laserbot:new{
     Name="K-b00m Beam Mark I",
 	Class="TechnoVek",
 	Icon = "weapons/Nico_laserboom.png",
-    Description="Fire a piercing beam that decreases in damage the further it goes, doesn't damage allies.",
+    Description="Fire a phasing beam that decreases in damage the further it goes, doesn't damage buildings.",
 	Explosion = "",
 	Sound = "",
 	Damage = 3,
-    SelfDamage=1,
+    SelfDamage=0,
 	PowerCost = 0,
-    Piercer=false,
+    Phaser=true,
 	MinDamage = 1,
-	FriendlyDamage = false,
+	FriendlyDamage = true,
+	BuildingDamage = false,
 	ZoneTargeting = ZONE_DIR,
 	Upgrades = 2,
-	UpgradeList = { "Piercer", "+1 Damage" },
-	UpgradeCost = { 2,3 },
+	UpgradeList = { "+1 Damage Each", "Static Damage, Ally Immune" },
+	UpgradeCost = { 1,2 },
 	TipImage = {
 		Unit = Point(2,4),
-		Enemy = Point(2,2),
-		Friendly = Point(2,1),
-		Target = Point(2,2),
-		Mountain = Point(2,0),
+		Enemy = Point(2,3),
+		Friendly = Point(2,2),
+		Target = Point(2,3),
+		Mountain = Point(2,1),
+		Building = Point(2,0),
         CustomPawn="Nico_laserboom_mech",
 	}
 }
@@ -30,20 +32,21 @@ modApi:appendAsset("img/weapons/Nico_laserboom.png", path .."img/weapons/Nico_la
 
 Nico_laserboom_A = Nico_laserboom:new{
     LaserArt = "effects/laser_push",
-    UpgradeDescription = "The laser can pierce through mountains AND BUILDINGS.",
-    Piercer=true,
-    TipImage = {
-        Unit = Point(2,4),
-        Friendly = Point(2,3),
-        Mountain = Point(2,2),
-        Target = Point(2,0),
-        Enemy1 = Point(2,0),
-        CustomEnemy = "Digger1",
+    UpgradeDescription = "Increases damage by 1 and damages self.",
+	Damage = 4,
+	SelfDamage=1,
+	TipImage = {
+		Unit = Point(2,4),
+		Enemy = Point(2,3),
+		Friendly = Point(2,2),
+		Target = Point(2,3),
+		Mountain = Point(2,1),
+		Building = Point(2,0),
         CustomPawn="Nico_laserboom_mech",
-    },
+	}
 }
 
-function Nico_laserboom_A:GetTargetArea(point)
+function Nico_laserboom:GetTargetArea(point)
 	local ret = PointList()
 	for dir = DIR_START, DIR_END do
 		local curr = point + DIR_VECTORS[dir]
@@ -59,7 +62,7 @@ function Nico_laserboom_A:GetTargetArea(point)
 	
 	return ret
 end
-function Nico_laserboom_A:AddLaser(ret,point,direction)
+function Nico_laserboom:AddLaser(ret,point,direction)
 	local queued = queued or false
 	local minDamage = self.MinDamage or 1
 	local damage = self.Damage
@@ -69,11 +72,12 @@ function Nico_laserboom_A:AddLaser(ret,point,direction)
 	--else
 	--	LOG("No forced end!")
 	--end
+	if self.SelfDamage == 1 then ret:AddDamage(SpaceDamage(start, 1)) end
 	while Board:IsValid(point) do
 	
 		local temp_damage = damage  --This is so that if damage is set to 0 because of an ally, it doesn't affect the damage calculation of the laser.
 		
-		if not self.FriendlyDamage and Board:IsPawnTeam(point, TEAM_PLAYER) or (self.Damage==4 and Board:IsBuilding(point)) then
+		if (not self.FriendlyDamage and Board:IsPawnTeam(point, TEAM_PLAYER)) or (not self.BuildingDamage and Board:IsBuilding(point)) then
 			temp_damage = DAMAGE_ZERO
 		end
 		
@@ -93,13 +97,15 @@ function Nico_laserboom_A:AddLaser(ret,point,direction)
 	end
 end
 Nico_laserboom_B = Nico_laserboom:new{
-    Damage = 4,
-    MinDamage=4,
-    UpgradeDescription = "Damage doesn't decrease.\nWhen 'Piercer' is powered on, won't deal damage to buildings",
+    MinDamage = 3,
+	FriendlyDamage = false,
+    UpgradeDescription = "Damage doesn't decrease and no longer damages friendly units.",
 }
 
 Nico_laserboom_AB = Nico_laserboom_A:new{
     Damage = 4,
+    MinDamage = 4,
+	FriendlyDamage = false,
 }
 
 modApi:addWeaponDrop("Nico_laserboom")
