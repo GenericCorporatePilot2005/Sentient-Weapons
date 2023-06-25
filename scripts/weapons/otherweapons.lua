@@ -40,11 +40,11 @@ local function Nico_TeamRepair(mission, pawn, weaponId, p1, targetArea)
 	end
 end
 
-local function Nico_Boom(mission)
+local function Nico_BoomTest(mission)
 	if mission == Mission_Test then
 		local pawnList = extract_table(Board:GetPawns(TEAM_PLAYER))
 		for i = 1, #pawnList do
-			if Board:GetPawn(pawnList[i]):IsMech() and not Board:GetPawn(pawnList[i]):IsShield() then
+			if _G[Board:GetPawn(pawnList[i]):GetType()].NicoIsBoom and not Board:GetPawn(pawnList[i]):IsShield() then
 				Board:GetPawn(pawnList[i]):SetShield(true)
 			end
 		end
@@ -52,7 +52,7 @@ local function Nico_Boom(mission)
 end
 
 local function EVENT_onModsLoaded()
-	modApi:addMissionUpdateHook(Nico_Boom)
+	modApi:addMissionUpdateHook(Nico_BoomTest)
 	modapiext:addSkillStartHook(Nico_MoveShield)
 	modapiext:addFinalEffectBuildHook(Nico_MoveShieldWeapon)
 	modapiext:addTargetAreaBuildHook(Nico_TeamRepair)
