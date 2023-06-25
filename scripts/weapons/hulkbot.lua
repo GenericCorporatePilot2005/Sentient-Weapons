@@ -74,7 +74,7 @@ Nico_hulkbot=ArtilleryDefault:new{
 		
 		local damage = SpaceDamage(p3,0)
 		damage.sAnimation = "ExploArt2"
-		if not self.Cancel then damage.iFire = 1 end
+		damage.iFire = 1
 		ret:AddArtillery(damage, "effects/shotup_ignite_fireball.png")
 		
 		for dir = DIR_START, DIR_END do
@@ -88,16 +88,17 @@ Nico_hulkbot=ArtilleryDefault:new{
 			local iconfire = SpaceDamage(p3,0)
 			if Board:IsPawnSpace(p3) and Board:GetPawn(p3):GetTeam() == TEAM_ENEMY then
 				iconfire.sImageMark = "weapons/Nico_fire_cancel.png"
-				damage = SpaceDamage(p3,0)
-				damage.iSmoke = 1
-				damage.bHide=true
+				ret:AddScript("Board:GetPawn("..p3:GetString().."):ClearQueued()")
+				if Board:GetPawn(p3):IsQueued() and Board:IsPawnTeam(p3, TEAM_ENEMY) then
+					ret:AddScript("Board:AddAlert("..p3:GetString()..",\"ATTACK CANCELED\")")
+				end
+				local web_id = Board:GetPawn(p3):GetId()--Store pawn id
+				if Board:GetPawn(p3):GetType() ~= "tosx_IceHornet" then ret:AddScript("Board:GetPawn("..web_id.."):SetSpace(Point(-1,-1))") end--Move the pawn to Point(-1,-1) to delete webbing
+				local damage = SpaceDamage(p1,0)
+				damage.bHide = true
+				damage.fDelay = 0.00017--force a one frame delay on the board
 				ret:AddDamage(damage)
-				ret:AddDelay(0.017)
-				damage.bHide=true
-				damage.iSmoke = 0
-				damage.iFire = 1
-				if not Board:IsTipImage() then damage.sScript = "Board:SetSmoke("..p3:GetString()..",false,false)" end
-				ret:AddDamage(damage)
+				ret:AddScript("Board:GetPawn("..web_id.."):SetSpace("..p3:GetString()..")")--Move the pawn back
 			else
 				iconfire.sImageMark = "weapons/Nico_fire_cancel_off.png"
 				damage = SpaceDamage(p3,0)
@@ -106,12 +107,10 @@ Nico_hulkbot=ArtilleryDefault:new{
 				ret:AddDamage(damage)
 			end
 			ret:AddDamage(iconfire)
-			--[[if Board:IsTipImage() then
+			if Board:IsTipImage() then
 				ret:AddScript("Board:AddAlert("..p3:GetString()..",\"ATTACK CANCELED\")")
 				ret:AddScript("Board:GetPawn("..p3:GetString().."):ClearQueued()")
-			else
-				ret:AddScript("modApi:runLater(function() Board:SetSmoke("..p3:GetString()..",true,true) modApi:runLater(function() Board:SetSmoke("..p3:GetString()..",false,false) Board:SetFire("..p3:GetString()..",true) end) end)")
-			end]]
+			end
 		end
 		ret:AddSound("/props/fire_damage")
 		return ret
