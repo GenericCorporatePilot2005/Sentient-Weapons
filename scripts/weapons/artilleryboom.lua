@@ -71,7 +71,7 @@ function Nico_artilleryboom:GetFinalEffect(p1,p2,p3)
 	local projected_distance = (p1.x == p2.x and math.abs(p3.x - p2.x)) or (p1.y == p2.y and math.abs(p3.y - p2.y))
 	local projected_dir = GetDirection((p1.x == p2.x and Point(p1.x,p3.y) - p3) or (p1.y == p2.y and Point(p3.x,p1.y) - p3))
 	local dir = GetDirection(p2-p3)
-	ret:AddDamage(SpaceDamage(p1,(GetCurrentMission() == Mission_Test and 0) or self.SelfDamage))
+	ret:AddDamage(SpaceDamage(p1,self.SelfDamage))
 	ret:AddBounce(p1,self.BounceAmount)
 	if p1:Manhattan(p2) == 1 then
 		local dam = SpaceDamage(p3,self.Damage,direction)
