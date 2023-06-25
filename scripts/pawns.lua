@@ -102,7 +102,7 @@ require(path2 .."palettes")
 --Boom Bots
     Nico_laserboom_mech = Pawn:new{
         Name = "Boom Laser",
-        NicoIsRobot = true,
+        NicoIsBoom = true,
         Class = "TechnoVek",
         Health = 1,
         MoveSpeed = 4,
@@ -118,7 +118,7 @@ require(path2 .."palettes")
         AddPawn("Nico_laserboom_mech")}
     Nico_artilleryboom_mech = Pawn:new{
         Name = "Boom Artillery",
-        NicoIsRobot = true,
+        NicoIsBoom = true,
         Class = "TechnoVek",
         Health = 1,
         MoveSpeed = 3,
@@ -134,7 +134,7 @@ require(path2 .."palettes")
         AddPawn("Nico_artillerybot_mech")}
     Nico_cannonboom_mech = Pawn:new{
         Name = "Boom Cannon",
-        NicoIsRobot = true,
+        NicoIsBoom = true,
         Class = "TechnoVek",
         Health = 1,
         MoveSpeed = 4,
