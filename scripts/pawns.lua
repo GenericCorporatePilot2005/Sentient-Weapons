@@ -202,9 +202,9 @@ require(path2 .."palettes")
     local mod = modApi:getCurrentMod()--the mod itself
     local trait = require(mod.scriptPath .."libs/trait")--where does it get the code for the rest of this to work
 
-    Nico_Pawn_List = {"Nico_laserbot_mech", "Nico_cannonbot_mech", "Nico_artillerybot_mech", "Nico_knightbot_mech", "Nico_shieldbot_mech","Nico_minerbot_mech","Nico_juggernautbot_mech","Nico_hulkbot_mech","Nico_laserboom_mech", "Nico_cannonboom_mech", "Nico_artilleryboom_mech"}
+    Nico_Pawn_List = {"Nico_laserbot_mech", "Nico_cannonbot_mech", "Nico_artillerybot_mech", "Nico_knightbot_mech", "Nico_shieldbot_mech","Nico_minerbot_mech","Nico_juggernautbot_mech","Nico_hulkbot_mech"}
 
-    for i = 1,11 do
+    for i = 1,8 do
     	trait:add{
 		    pawnType=Nico_Pawn_List[i],--who will get the trait
 		    icon = "img/icon_Nico_zenith_shield.png",--the icon itself

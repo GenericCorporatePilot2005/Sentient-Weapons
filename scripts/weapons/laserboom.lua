@@ -88,7 +88,21 @@ function Nico_laserboom:AddLaser(ret,point,direction)
 		dam.iFire = self.Fire
 		dam.iFrozen = self.Freeze
 		
-		ret:AddProjectile(start,dam,self.LaserArt,FULL_DELAY)
+		-- if it's the end of the line (ha), add the laser art -- not pretty
+		if forced_end == point or not Board:IsValid(point + DIR_VECTORS[direction]) then
+			if queued then 
+				ret:AddQueuedProjectile(dam,self.LaserArt)
+			else
+				ret:AddProjectile(start,dam,self.LaserArt,FULL_DELAY)
+			end
+			break
+		else
+			if queued then
+				ret:AddQueuedDamage(dam)  
+			else
+				ret:AddDamage(dam)   --JUSTIN TEST
+			end
+		end
 		
 		damage = damage - 1
 		if damage < minDamage then damage = minDamage end
