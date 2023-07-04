@@ -54,7 +54,8 @@ end
 local function Nico_BoomRepair(mission, pawn)
 	if _G[pawn:GetType()].NicoIsBoom then
 		for i = 0,3 do
-			Board:AddShield(pawn:GetSpace()+DIR_VECTORS[i])
+			local curr = pawn:GetSpace()+DIR_VECTORS[i]
+			if Board:IsBuilding(curr) or (Board:IsPawnSpace(curr) and Board:GetPawn(curr):GetTeam() == TEAM_PLAYER) then Board:AddShield(curr) end
 		end
 		modApi:conditionalHook(
 			function()
