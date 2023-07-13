@@ -65,7 +65,7 @@ function Nico_cannonboom:GetSecondTargetArea(p1,p2)
 	return ret
 end
 
-function Nico_cannonbot:GetSkillEffect(p1,p2)
+function Nico_cannonboom:GetSkillEffect(p1,p2)
 	local ret = SkillEffect()
 	local direction = GetDirection(p2-p1)
 	ret:AddDamage(SpaceDamage(p1,self.SelfDamage))
@@ -73,7 +73,7 @@ function Nico_cannonbot:GetSkillEffect(p1,p2)
 	return ret
 end
 
-function Nico_cannonbot:GetFinalEffect(p1,p2,p3)
+function Nico_cannonboom:GetFinalEffect(p1,p2,p3)
 	local ret = SkillEffect()
 	local dir = GetDirection(p2-p1)
 	local target = GetProjectileEnd(p1,p2)
