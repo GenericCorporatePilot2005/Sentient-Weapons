@@ -26,7 +26,7 @@ modApi.achievements:add{
 	id = "Nico_Bot_Laser",
 	name = "Septacular Snowstorm",
 	tip = "End a mission with at least 7 enemies frozen.",
-	image = "img/achievements/Laser.png",
+	image = "img/achievements/Nico_Bot_Laser.png",
 	squad = "Nico_Sent_weap",
 	objective=1,
 }
@@ -35,7 +35,7 @@ modApi.achievements:add{
 	id = "Nico_Bot_Cannon",
 	name = "One Hit Wonder",
 	tip = "Kill an enemy with at least 5 HP using the Cannon 8R Mark II, without inflicting bump damage, and without pushing it.",
-	image = "img/achievements/Cannon.png",
+	image = "img/achievements/Nico_Bot_Cannon.png",
 	squad = "Nico_Sent_weap",
 	objective=1,
 }
@@ -44,7 +44,7 @@ modApi.achievements:add{
 	id = "Nico_Bot_Arti",
 	name = "Bubble Blaster",
 	tip = "End a mission with all Mechs and Buildings Shielded.",
-	image = "img/achievements/Arti.png",
+	image = "img/achievements/Nico_Bot_Arti.png",
 	squad = "Nico_Sent_weap",
 	objective = 1,
 }
