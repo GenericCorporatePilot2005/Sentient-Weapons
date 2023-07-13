@@ -84,7 +84,7 @@ local function Nico_MissionEnd(mission)
 	if count > 6 then modApi.achievements:trigger(modid,"Nico_Bot_Laser") end
 	local bubble = true
 	for j = 0,2 do
-		if not Board:GetPawn(k):IsShield() then
+		if not Board:GetPawn(j):IsShield() then
 			bubble = false
 			break
 		end
