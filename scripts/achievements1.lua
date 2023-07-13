@@ -24,8 +24,8 @@ end
 
 modApi.achievements:add{
 	id = "Nico_Bot_Laser",
-	name = "Pentacular Popsicle",
-	tip = "End a mission with at least 5 enemies frozen.",
+	name = "Septacular Snowstorm",
+	tip = "End a mission with at least 7 enemies frozen.",
 	image = "img/achievements/Laser.png",
 	squad = "Nico_Sent_weap",
 	objective=1,
@@ -81,7 +81,7 @@ local function Nico_MissionEnd(mission)
 			count = count + 1
 		end
 	end
-	if count > 4 then modApi.achievements:trigger(modid,"Nico_Bot_Laser") end
+	if count > 6 then modApi.achievements:trigger(modid,"Nico_Bot_Laser") end
 	local bubble = true
 	for j = 0,2 do
 		if not Board:GetPawn(k):IsShield() then
