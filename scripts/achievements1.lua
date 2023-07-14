@@ -107,7 +107,11 @@ local function preKillCheck(mission, pawn, weaponId, p1, p2)
 		local target = GetProjectileEnd(p1,p1+DIR_VECTORS[direction])
 		if p1:Manhattan(target) < p1:Manhattan(p2) then target = p2 end
 		
-		if Board:IsPawnSpace(target) then nico_cannon_enemy = Board:GetPawn(target):GetId() end
+		if Board:IsPawnSpace(target) then--store the id of the target pawn
+			nico_cannon_enemy = Board:GetPawn(target):GetId()
+		else
+			nico_cannon_enemy = -1
+		end
 		
 		if Board:IsPawnSpace(target) and Board:GetPawn(target):GetHealth()>4 and Board:IsPawnTeam(target,TEAM_ENEMY) then
 			if p1:Manhattan(GetProjectileEnd(p1,p1+DIR_VECTORS[direction])) < p1:Manhattan(p2) then--arti shot doesn't push
