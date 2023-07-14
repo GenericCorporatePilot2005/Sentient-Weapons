@@ -22,6 +22,7 @@ function mod:init()
 	pilot:init(mod)
 	require(self.scriptPath .."assets")
 	require(self.scriptPath .."achievements1")
+	require(self.scriptPath .."achievements2")
 	
 	--[[commented out for the moment, just in case we need it
 	-- add extra mech to selection screen
