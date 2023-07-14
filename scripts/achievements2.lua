@@ -42,7 +42,7 @@ modApi.achievements:add{
 
 modApi.achievements:add{
 	id = "Nico_Bot_Shield",
-	name = "Navigating Mine-Shields",
+	name = "Treading Mine-Shields",
 	tip = "End a mission with all Mechs and 4 Mine-Bots Shielded.",
 	image = "img/achievements/Nico_Bot_Shield.png",
 	squad = "Nico_Sent_weap2",
