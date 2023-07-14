@@ -1,7 +1,7 @@
 ------Knight Bot------
 Nico_knightbot = Punch:new{
 	Name = "0th KPR Sword Mark II",
-	Description = "Dash to damage and push the target. If the target was shielded, smoke it and attack again. Phase through Buildings and Mountains. If the destination is blocked, leap backwards to the nearest empty tile.",
+	Description = "Dash through Buildings and Mountains to damage and push the target. If the target was shielded, smoke it and attack again. If the destination is blocked, leap backwards to the nearest empty tile.",
 	Icon = "weapons/Nico_knightbot.png",
 	Class = "TechnoVek",
 	Damage = 1,
@@ -96,6 +96,8 @@ modApi:appendAsset("img/weapons/Nico_knightbot.png", path .."img/weapons/Nico_kn
 		else
 			ret:AddCharge(Board:GetPath(p1, target - DIR_VECTORS[direction], PATH_FLYER), FULL_DELAY)
 		end
+		
+		local targ = target
 
 		if Board:IsBuilding(target) and self.Phase then damage.iDamage = 0 end
 		damage.loc = target
@@ -140,6 +142,18 @@ modApi:appendAsset("img/weapons/Nico_knightbot.png", path .."img/weapons/Nico_kn
 		if Board:IsTipImage() then
 			mech:RemoveWeapon(1)
 			mech:AddWeapon(self.__Id)
+		end
+		if self.Shield and GAME.additionalSquadData.squad == "Nico_Sent_weap2" and not modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_Knight") then
+			local curr = p1
+			local mons = 0
+			for i = 1,p1:Manhattan(targ) do
+				curr = curr + DIR_VECTORS[direction]
+				if Board:IsTerrain(curr, TERRAIN_MOUNTAIN) then mons = mons + 1 end
+			end
+		
+			if mons > 2 then
+				ret:AddScript("Nico_Sent_weap2squad_Chievo('Nico_Bot_Knight')")
+			end
 		end
 		return ret
 	end
