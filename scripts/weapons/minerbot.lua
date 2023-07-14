@@ -1,6 +1,8 @@
 local path = mod_loader.mods[modApi.currentMod].resourcePath
 local BoardEvents = require(modApi:getCurrentMod().scriptPath .."libs/boardEvents")
 
+modApi:appendAsset("img/weapons/Nico_minebot.png", path .."img/weapons/Nico_minebot.png")
+modApi:appendAsset("img/effects/shotup_deploymine.png", path.. "img/effects/shotup_deploymine.png")
 Nico_Freeze_Mine = { Image = "combat/freeze_mine.png", Damage = SpaceDamage(0), Tooltip = "freeze_mine", Icon = "combat/icons/icon_frozenmine_glow.png", UsedImage = ""}--needs to be global not local
 ------Miner Bot------
 	--The deployable's palettes
@@ -127,7 +129,7 @@ Nico_Freeze_Mine = { Image = "combat/freeze_mine.png", Damage = SpaceDamage(0), 
     end
 --The mech's weapon
 Nico_minerbot=ArtilleryDefault:new{
-Icon = "weapons/ranged_defensestrike.png",
+Icon = "weapons/Nico_minebot.png",
 Name="Mine-Bot Deployer",
 Description="Launch a Mine-Bot at a tile, pushing tiles to the left and right, creating an improved Mine-Bot on kill.",
 Class="TechnoVek",
@@ -170,7 +172,7 @@ TipImage = {
         end
 
         ret:AddBounce(p1, 1)
-        ret:AddArtillery(damage,"effects/shotup_robot.png")
+        ret:AddArtillery(damage,"effects/shotup_deploymine.png")
 
         ret:AddBounce(p2, self.BounceAmount)
         ret:AddBoardShake(0.15)
