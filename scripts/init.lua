@@ -45,8 +45,8 @@ function mod:load( options, version)
 	modApi:addSquad(
 		{
 			"Sentient Weapons",-- title
-			"Nico_cannonbot_mech",-- mech #1
-			"Nico_laserbot_mech",-- mech #2
+			"Nico_cannonbot_mech",-- mech #2
+			"Nico_laserbot_mech",-- mech #1
 			"Nico_artillerybot_mech",-- mech #3
 			id="Nico_Sent_weap"
 		},
@@ -57,26 +57,14 @@ function mod:load( options, version)
 	modApi:addSquad(
 		{
 			"Sentient Weapons 2",-- title
-			"Nico_minerbot_mech",-- mech #1
-			"Nico_knightbot_mech",-- mech #2
+			"Nico_minerbot_mech",-- mech #2
+			"Nico_knightbot_mech",-- mech #1
 			"Nico_shieldbot_mech",-- mech #3
 			id="Nico_Sent_weap2"
 		},
 		"Sentient Weapons 2",
 		"After destroying the Vek Hive, Zenith sent these improved Sentient Weapons across time to fight the Vek and their hijacked brethren.",
 		self.resourcePath .."img/squad2_icon.png"
-	)
-	modApi:addSquad(
-		{
-			"Boom Bots",-- title
-			"Nico_cannonboom_mech",-- mech #1
-			"Nico_laserboom_mech",-- mech #2
-			"Nico_artilleryboom_mech",-- mech #3
-			id="Nico_Boom_bots"
-		},
-		"Boom Bots",
-		"After destroying the Vek Hive, Zenith sent these improved Sentient Weapons across time to fight the Vek and their hijacked brethren.",
-		self.resourcePath .."img/squadboom_icon.png"
 	)
 	modApi:addSquad(
 		{
@@ -89,6 +77,18 @@ function mod:load( options, version)
 		"Sentient Weapons 3",
 		"After destroying the Vek Hive, Zenith sent these improved Sentient Weapons across time to fight the Vek and their hijacked brethren.",
 		self.resourcePath .."img/squad3_icon.png"
+	)
+	modApi:addSquad(
+		{
+			"Boom Bots",-- title
+			"Nico_cannonboom_mech",-- mech #2
+			"Nico_laserboom_mech",-- mech #1
+			"Nico_artilleryboom_mech",-- mech #3
+			id="Nico_Boom_bots"
+		},
+		"Boom Bots",
+		"After destroying the Vek Hive, Zenith sent these improved Volatile Sentient Weapons across time to fight the Vek and their hijacked brethren.",
+		self.resourcePath .."img/squadboom_icon.png"
 	)
 	modApi:addMissionEndHook(function()
         for id = 0, 2 do
