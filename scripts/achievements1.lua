@@ -3,8 +3,8 @@ local this={}
 local path = mod_loader.mods[modApi.currentMod].resourcePath
 local modid = "Nico_Sent_weap" -- also Squad id
 
-function Nico_Techno_Veks2squad_Chievo(id)
-    	-- exit if not our squad
+function Nico_Sent_weapsquad_Chievo(id)
+    -- exit if not our squad
 	if Board:GetSize() == Point(6,6) then return end -- TipImage
 	if GAME.additionalSquadData.squad ~= modid then return end
 	if IsTestMechScenario() then return end
@@ -49,16 +49,6 @@ modApi.achievements:add{
 	objective = 1,
 }
 
---[[modApi.achievements:add{
-	id = "Nico_Techno_Shield",
-	global = "Secret Rewards",
-	secret=true,
-	name = "The Call of The Psion",
-	tip = "New Mech Unlocked on Random and Custom Squads",
-	image = "img/achievements/Nico_Techno_Shield.png",
-	squad = "Nico_Techno_Veks 2",
-}]]
-
 --Lemon's Real Mission Checker
 local function isRealMission()
 local mission = GetCurrentMission()
@@ -81,7 +71,7 @@ local function Nico_MissionEnd(mission)
 			count = count + 1
 		end
 	end
-	if count > 6 then modApi.achievements:trigger(modid,"Nico_Bot_Laser") end
+	if count > 6 and GAME.additionalSquadData.squad == modid and not modApi.achievements:isComplete(modid,"Nico_Bot_Laser") then modApi.achievements:trigger(modid,"Nico_Bot_Laser") end
 	local bubble = true
 	for j = 0,2 do
 		if not Board:GetPawn(j):IsShield() then
@@ -95,12 +85,12 @@ local function Nico_MissionEnd(mission)
 			break
 		end
 	end
-	if bubble then modApi.achievements:trigger(modid,"Nico_Bot_Arti") end
+	if bubble and GAME.additionalSquadData.squad == modid and not modApi.achievements:isComplete(modid,"Nico_Bot_Arti") then modApi.achievements:trigger(modid,"Nico_Bot_Arti") end
 end
 
 --Cannon's Achievement
 
-	--This function has a global variable created in it for detecting the weapon shot
+--This function has a global variable created in it for detecting the weapon shot
 local function preKillCheck(mission, pawn, weaponId, p1, p2)
 	if (weaponId == "Nico_cannonbot") or (weaponId == "Nico_cannonbot_A") or (weaponId == "Nico_cannonbot_B") or (weaponId == "Nico_cannonbot_AB") then
 		local direction = GetDirection(p2 - p1)
@@ -135,7 +125,7 @@ local function postKillCheck(mission, pawn)
 	end
 end
 
-	local function EVENT_onModsLoaded() --This function will run when the mod is loaded
+local function EVENT_onModsLoaded() --This function will run when the mod is loaded
 	--modapiext is requested in the init.lua
 	modApi:addMissionEndHook(Nico_MissionEnd)
 	--This line tells us that we want to run the above function every time a mission is over
@@ -146,8 +136,8 @@ end
 	modapiext:addPawnKilledHook(postKillCheck)
 	--This line tells us that we want to run the above function every time a pawn dies
 	--modApi:addSaveGameHook(function(mission) nico_cannon_flag = false end)
-	end
+end
 
-	modApi.events.onModsLoaded:subscribe(EVENT_onModsLoaded)
+modApi.events.onModsLoaded:subscribe(EVENT_onModsLoaded)
 
 return this
