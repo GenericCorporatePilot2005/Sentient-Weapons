@@ -1,4 +1,16 @@
 ------Frozen Hulks------
+
+--Lemon's Real Mission Checker
+local function isRealMission()
+local mission = GetCurrentMission()
+
+return true
+	and mission ~= nil
+	and mission ~= Mission_Test
+	and Board
+	and Board:IsMissionBoard()
+end
+
 Nico_hulkbot=ArtilleryDefault:new{
 	Name="Artillery Mark III",
 	Class = "TechnoVek",
@@ -113,6 +125,9 @@ Nico_hulkbot=ArtilleryDefault:new{
 			end
 		end
 		ret:AddSound("/props/fire_damage")
+		if isRealMission() and GAME.additionalSquadData.squad == "Nico_Sent_weap3" and not modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_Hulk") then
+			ret:AddScript('modApi.achievements:addProgress("Nico_Sent_weap","Nico_Bot_Hulk",1)')
+		end
 		return ret
 	end
 	Nico_hulkbot_A=Nico_hulkbot:new{
