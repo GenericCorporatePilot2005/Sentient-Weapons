@@ -126,7 +126,11 @@ Nico_hulkbot=ArtilleryDefault:new{
 		end
 		ret:AddSound("/props/fire_damage")
 		if isRealMission() and GAME.additionalSquadData.squad == "Nico_Sent_weap3" and not modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_Hulk") then
-			ret:AddScript('modApi.achievements:addProgress("Nico_Sent_weap","Nico_Bot_Hulk",1)')
+			if GetCurrentMission().Nico_HulkUses == 3 then
+				ret:AddScript("Nico_Sent_weap3squad_Chievo('Nico_Bot_Hulk')")
+			else
+				ret:AddScript('GetCurrentMission().Nico_HulkUses = GetCurrentMission().Nico_HulkUses + 1')
+			end
 		end
 		return ret
 	end
