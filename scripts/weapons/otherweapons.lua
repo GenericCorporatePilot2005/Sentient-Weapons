@@ -13,7 +13,7 @@ local function Nico_MoveShieldWeap(mission, pawn, weaponId, p1, p2, skillEffect)
 	for i = 1, skillEffect.effect:size() do
 		local spaceDamage = skillEffect.effect:index(i)
 		if spaceDamage:IsMovement() and spaceDamage:GetMoveType() ~= 3 then
-			local movePawn = pawn
+			local movePawn = Board:GetPawn(spaceDamage:MoveStart()) or pawn
 			local j = movePawn:GetId()
 			local IsRealMission = true and (mission ~= nil) and (mission ~= Mission_Test) and Board	and Board:IsMissionBoard()
 			local endpoint = spaceDamage:MoveEnd()--spaceDamage:MoveStart()
