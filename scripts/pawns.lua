@@ -210,7 +210,7 @@ require(path2 .."palettes")
 		    icon = "img/icon_Nico_zenith_shield.png",--the icon itself
 		    icon_offset = Point(0,9),--it's location
 		    desc_title = "Zenith\'s Guard",--title
-		    desc_text = "Gains a shield when moving next to another Mech. Bots can repair other adjacent Bots.",--description
+		    desc_text = "Gains a shield when moving, leaping, charging, or teleporting to a destination next to another Mech. Bots can repair other adjacent Bots.",--description
 	    }
     end
 
