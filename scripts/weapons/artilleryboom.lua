@@ -2,7 +2,7 @@ Nico_artillerybloom = Pawn:new{
 	Name = "Bloom-Artillery",
 	Health = 1,
 	Class = "TechnoVek",
-	ImageOffset = modApi:getPaletteImageOffset("Nico_mine_iceflower"),
+	ImageOffset = modApi:getPaletteImageOffset("Nico_bloom_3"),
 	DefaultTeam = TEAM_PLAYER,
 	MoveSpeed = 3,
 	Image = "Nico_artillerybot_mech",
@@ -86,6 +86,7 @@ Nico_artilleryboom=Nico_artillerybot:new{
 		Second_Origin = Point(3,3),
 		Second_Target = Point(3,1),
         CustomPawn="Nico_artilleryboom_mech",
+		CustomEnemy="Scorpion1",
 	},
 	}
 function Nico_artilleryboom:GetTargetArea(point)
@@ -122,10 +123,12 @@ function Nico_artilleryboom:GetSkillEffect(p1,p2)
 	local direction = GetDirection(p1-p2)
 	ret:AddDamage(SpaceDamage(p1,self.SelfDamage))
 	if p1:Manhattan(p2) > 1 then ret:AddArtillery(SpaceDamage(p2,self.Damage,direction), "effects/shotup_missileswarm.png", NO_DELAY) end
-	for i = 1,ret.effect:size() do
-		ret.effect:index(i).bKO_Effect = Board:IsDeadly(ret.effect:index(i),Pawn)
-		if ret.effect:index(i).bKO_Effect then
-			ret.effect:index(i).sPawn = "Nico_artillerybloom"
+	if self.SelfDamage==1 then
+		for i = 1,ret.effect:size() do
+			ret.effect:index(i).bKO_Effect = Board:IsDeadly(ret.effect:index(i),Pawn)
+			if ret.effect:index(i).bKO_Effect then
+				ret.effect:index(i).sPawn = "Nico_artillerybloom"
+			end
 		end
 	end
 	return ret
@@ -166,10 +169,12 @@ function Nico_artilleryboom:GetFinalEffect(p1,p2,p3)
 		ret:AddBounce(p3, self.BounceAmount)
 		ret:AddBounce(p3+DIR_VECTORS[dir]*distance*2, self.BounceAmount)
 	end
-	for i = 1,ret.effect:size() do
-		ret.effect:index(i).bKO_Effect = Board:IsDeadly(ret.effect:index(i),Pawn)
-		if ret.effect:index(i).bKO_Effect then
-			ret.effect:index(i).sPawn = "Nico_artillerybloom"
+	if self.SelfDamage==1 then
+		for i = 1,ret.effect:size() do
+			ret.effect:index(i).bKO_Effect = Board:IsDeadly(ret.effect:index(i),Pawn)
+			if ret.effect:index(i).bKO_Effect then
+				ret.effect:index(i).sPawn = "Nico_artillerybloom"
+			end
 		end
 	end
 	return ret
@@ -179,13 +184,26 @@ end
 		Damage=2,
 		SelfDamage = 1,
 		UpgradeDescription = "Deals 1 additional damage to all targets and damages self. On kill, create a Bloom-Artillery.",
+		TipImage = {
+			Unit = Point(3,3),
+			Target = Point(3,2),
+			Enemy1 = Point(1,1),
+			Enemy2 = Point(3,1),
+			Mountain1 = Point(1,0),
+			Mountain2 = Point(3,0),
+			Second_Click = Point(1,1),
+			Second_Origin = Point(3,3),
+			Second_Target = Point(3,1),
+			CustomPawn="Nico_artilleryboom_mech",
+			CustomEnemy="Scorpion2",
+		},
 	}
 	Nico_artilleryboom_B=Nico_artilleryboom:new{
 		BounceAmount = 3,
 		Damage=2,
 		UpgradeDescription = "Deals 1 additional damage to all targets.",
 	}
-	Nico_artilleryboom_AB=Nico_artilleryboom:new{
+	Nico_artilleryboom_AB=Nico_artilleryboom_A:new{
 		BounceAmount = 3,
 		Damage=3,
 		SelfDamage = 1,

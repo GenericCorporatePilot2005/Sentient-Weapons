@@ -2,7 +2,7 @@ Nico_laserbloom = Pawn:new{
 	Name = "Bloom-Laser",
 	Health = 1,
 	Class = "TechnoVek",
-	ImageOffset = modApi:getPaletteImageOffset("Nico_mine_iceflower"),
+	ImageOffset = modApi:getPaletteImageOffset("Nico_bloom_1"),
 	DefaultTeam = TEAM_PLAYER,
 	MoveSpeed = 3,
 	Image = "Nico_laserbot_mech",
@@ -122,7 +122,6 @@ Nico_laserboom=Nico_laserbot:new{
 		Target = Point(2,3),
 		Mountain = Point(2,1),
 		Building = Point(2,0),
-		--CustomEnemy = "Digger2",--idk why this is here
         CustomPawn="Nico_laserboom_mech",
 	}
 }
@@ -137,12 +136,12 @@ Nico_laserboom_A = Nico_laserboom:new{
 	SelfDamage=1,
 	TipImage = {
 		Unit = Point(2,4),
-		Enemy = Point(2,3),
-		Friendly = Point(2,2),
+		Enemy1 = Point(2,3),
+		Enemy2 = Point(2,2),
 		Target = Point(2,3),
 		Mountain = Point(2,1),
 		Building = Point(2,0),
-		--CustomEnemy = "Digger2",--idk why this is here
+		CustomEnemy="Scorpion1",
         CustomPawn="Nico_laserboom_mech",
 	}
 }

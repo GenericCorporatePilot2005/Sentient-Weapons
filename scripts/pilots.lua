@@ -174,7 +174,7 @@ end
             damage.bHide=true
             local shield= SpaceDamage(p2,0)
             damage.iShield = 1
-            shield.sImageMark= "effects/Nico_icon_shield_glow.png"
+            shield.sImageMark= "effects/Nico_icon_shield+10.png"
             
             local mechs = extract_table(Board:GetPawns(TEAM_MECH))
             for i,id in pairs(mechs) do
@@ -198,6 +198,6 @@ end
             return ret       
         end
     end
-    modApi:appendAsset("img/effects/Nico_icon_shield_glow.png", path.."img/weapons/Nico_icon_shield_glow.png")
-    Location["effects/Nico_icon_shield_glow.png"] = Point(-16,8)
+    modApi:appendAsset("img/effects/Nico_icon_shield+10.png", path.."img/weapons/Nico_icon_shield+10.png")
+    Location["effects/Nico_icon_shield+10.png"] = Point(-16,8)
     return this

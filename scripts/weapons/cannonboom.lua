@@ -2,7 +2,7 @@ Nico_cannonbloom = Pawn:new{
 	Name = "Bloom-Cannon",
 	Health = 1,
 	Class = "TechnoVek",
-	ImageOffset = modApi:getPaletteImageOffset("Nico_mine_iceflower"),
+	ImageOffset = modApi:getPaletteImageOffset("Nico_bloom_2"),
 	DefaultTeam = TEAM_PLAYER,
 	MoveSpeed = 3,
 	Image = "Nico_cannonbot_mech",
@@ -42,7 +42,9 @@ Nico_cannonheal = TankDefault:new{
         CustomPawn="Nico_cannonbloom",
 	}
 }
-
+local path = mod_loader.mods[modApi.currentMod].resourcePath
+modApi:appendAsset("img/effects/Nico_icon_shield+1.png", path.."img/weapons/Nico_icon_shield+1.png")
+Location["effects/Nico_icon_shield+1.png"] = Point(-20,0)
 function Nico_cannonheal:GetSkillEffect(p1,p2)
 	local ret = SkillEffect()
 	local direction = GetDirection(p2 - p1)
@@ -51,9 +53,12 @@ function Nico_cannonheal:GetSkillEffect(p1,p2)
 	ret:AddDamage(SpaceDamage(p1,self.SelfDamage))
 	local dam = SpaceDamage(target,self.Damage)
 	dam.iFire = -1
-	dam.sImageMark= "effects/Nico_icon_shield_glow.png"--placeholder replace with 1 heal shield later
+	dam.bHide=true
 	dam.sScript = "Board:SetFire("..target:GetString()..",false) modApi:runLater(function() Board:AddShield("..target:GetString()..") end)"
-	ret:AddProjectile(dam, self.ProjectileArt, NO_DELAY)
+	local shield=SpaceDamage(target,0)
+	shield.sImageMark= "effects/Nico_icon_shield+1.png"
+	ret:AddDamage(dam)
+	ret:AddProjectile(shield, self.ProjectileArt, NO_DELAY)
 	return ret
 end
 
@@ -84,7 +89,6 @@ Nico_cannonboom=Nico_cannonbot:new{
 	ImpactSound = "/impact/generic/explosion",
 	CustomTipImage = "Nico_cannonboom_Tip",
 }
-local path = mod_loader.mods[modApi.currentMod].resourcePath
 modApi:appendAsset("img/weapons/Nico_cannonboom.png", path .."img/weapons/Nico_cannonboom.png")
 
 function Nico_cannonboom:GetTargetArea(point)
@@ -290,10 +294,12 @@ function Nico_cannonboom:GetFinalEffect(p1,p2,p3)
 		--if not self.BuildingDamage and Board:IsBuilding(first_tar) then	damage.iDamage = DAMAGE_ZERO 	end 
 		ret:AddDamage(damage)
 	end
-	for i = 1,ret.effect:size() do
-		ret.effect:index(i).bKO_Effect = Board:IsDeadly(ret.effect:index(i),Pawn)
-		if ret.effect:index(i).bKO_Effect then
-			ret.effect:index(i).sPawn = "Nico_cannonbloom"
+	if self.SelfDamage==1 then
+		for i = 1,ret.effect:size() do
+			ret.effect:index(i).bKO_Effect = Board:IsDeadly(ret.effect:index(i),Pawn)
+			if ret.effect:index(i).bKO_Effect then
+				ret.effect:index(i).sPawn = "Nico_cannonbloom"
+			end
 		end
 	end
 	return ret
@@ -335,6 +341,7 @@ Nico_cannonboom_Tip = Nico_cannonboom:new{
 		Target = Point(2,2),
 		Second_Click = Point(2,1),
 		CustomPawn = "Nico_cannonboom_mech",
+		CustomEnemy="Scorpion1",
 	},
 }
 Nico_cannonboom_Tip_A = Nico_cannonboom_Tip:new{ Damage=2, SelfDamage=1, Explo = "explopush2_", Exploart = "explopush2_", }
