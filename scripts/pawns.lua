@@ -114,7 +114,7 @@ require(path2 .."palettes")
 	    SoundLocation = "/enemy/snowlaser_1/",
         DefaultTeam = TEAM_PLAYER,
 	    ImpactMaterial = IMPACT_METAL,
-        Explodes=true,
+        --Explodes=true,
         AddPawn("Nico_laserboom_mech")}
     Nico_artilleryboom_mech = Pawn:new{
         Name = "Boom Artillery",
@@ -130,7 +130,7 @@ require(path2 .."palettes")
         SoundLocation = "/enemy/snowart_1/",
         DefaultTeam = TEAM_PLAYER,
 	    ImpactMaterial = IMPACT_METAL,
-        Explodes=true,
+        --Explodes=true,
         AddPawn("Nico_artillerybot_mech")}
     Nico_cannonboom_mech = Pawn:new{
         Name = "Boom Cannon",
@@ -146,7 +146,7 @@ require(path2 .."palettes")
 	    SoundLocation = "/enemy/snowtank_1/",
         DefaultTeam = TEAM_PLAYER,
 	    ImpactMaterial = IMPACT_METAL,
-        Explodes=true,
+        --Explodes=true,
         AddPawn("Nico_cannonboom_mech")}
 --Sentient Weapon 3
     Nico_juggernautbot_mech = Pawn:new{
