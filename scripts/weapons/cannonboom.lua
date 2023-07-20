@@ -1,3 +1,63 @@
+Nico_cannonbloom = Pawn:new{
+	Name = "Bloom-Cannon",
+	Health = 1,
+	Class = "TechnoVek",
+	ImageOffset = modApi:getPaletteImageOffset("Nico_mine_iceflower"),
+	DefaultTeam = TEAM_PLAYER,
+	MoveSpeed = 3,
+	Image = "Nico_cannonbot_mech",
+	SkillList = { "Nico_cannonheal" },
+	SoundLocation = "/enemy/snowtank_1/",
+	DefaultTeam = TEAM_PLAYER,
+	ImpactMaterial = IMPACT_METAL,
+	Corpse = false,
+	Explodes = true,
+}
+Nico_cannonheal = TankDefault:new{
+    Name="Cannon Grow Mark I",
+	Class="TechnoVek",
+	Range = RANGE_PROJECTILE,
+	PathSize = INT_MAX,
+	Description="Sacrifice self to fire a projectile that repairs and shields the target.",
+	Icon = "advanced/weapons/SnowtankAtk1_Player.png",
+	SelfDamage = DAMAGE_DEATH,
+	Damage = -1,
+    Fire = -1,
+	Shield = 1,
+    Push=0,
+	PowerCost=0,
+	Upgrades=0,
+	ProjectileArt = "effects/shot_mechtank",
+	Explo = "airpush1_",
+	ShieldFriendly = true,
+	UpgradeCost={},
+	UpgradeList = {},
+	Projectile = "effects/shot_mechtank",
+	LaunchSound = "/enemy/snowtank_1/attack",
+	ImpactSound = "/impact/generic/explosion",
+	TipImage = {
+		Unit = Point(2,4),
+		Friendly_Damaged = Point(2,2),
+		Target = Point(2,3),
+        CustomPawn="Nico_cannonbloom",
+	}
+}
+
+function Nico_cannonheal:GetSkillEffect(p1,p2)
+	local ret = SkillEffect()
+	local direction = GetDirection(p2 - p1)
+	local target = GetProjectileEnd(p1,p2,PATH_PROJECTILE)
+	
+	ret:AddDamage(SpaceDamage(p1,self.SelfDamage))
+	local dam = SpaceDamage(target,self.Damage)
+	dam.iFire = -1
+	dam.iShield = 1
+	dam.sScript = "Board:SetFire("..target:GetString()..",false)"
+	ret:AddProjectile(dam, self.ProjectileArt, NO_DELAY)
+	return ret
+end
+
+--the actual weapon
 ------Boom Cannon------
 Nico_cannonboom=Nico_cannonbot:new{
 	Name="Cannon Explo Mark I",
@@ -230,6 +290,12 @@ function Nico_cannonboom:GetFinalEffect(p1,p2,p3)
 		--if not self.BuildingDamage and Board:IsBuilding(first_tar) then	damage.iDamage = DAMAGE_ZERO 	end 
 		ret:AddDamage(damage)
 	end
+	for i = 1,ret.effect:size() do
+		ret.effect:index(i).bKO_Effect = Board:IsDeadly(ret.effect:index(i),Pawn)
+		if ret.effect:index(i).bKO_Effect then
+			ret.effect:index(i).sPawn = "Nico_cannonbloom"
+		end
+	end
 	return ret
 end
 
@@ -238,7 +304,7 @@ Nico_cannonboom_A=Nico_cannonboom:new{
 	SelfDamage=1,
 	Explo = "explopush2_",
 	Exploart = "explopush2_",
-	UpgradeDescription = "Increases damage by 1 and damages self.",
+	UpgradeDescription = "Increases damage by 1 and damages self. On kill, create a Bloom-Cannon.",
 	CustomTipImage = "Nico_cannonboom_Tip_A",
 }
 
