@@ -1,3 +1,99 @@
+Nico_laserbloom = Pawn:new{
+	Name = "Bloom-Laser",
+	Health = 1,
+	Class = "TechnoVek",
+	ImageOffset = modApi:getPaletteImageOffset("Nico_mine_iceflower"),
+	DefaultTeam = TEAM_PLAYER,
+	MoveSpeed = 3,
+	Image = "Nico_laserbot_mech",
+	SkillList = { "Nico_laserheal" },
+	SoundLocation = "/enemy/snowlaser_1/",
+	DefaultTeam = TEAM_PLAYER,
+	ImpactMaterial = IMPACT_METAL,
+	Corpse = false,
+	Explodes = true,
+}
+Nico_laserheal = Nico_laserbot:new{
+    Name="K-bL00m Beam Mark I",
+	Class="TechnoVek",
+    Description="Sacrifice self to fire a piercing beam that repairs all targets and shields the adjacent friendly target.",
+	Explosion = "",
+	Sound = "",
+	Damage = -1,
+	Fire = -1,
+    SelfDamage=DAMAGE_DEATH,
+	PowerCost = 0,
+	MinDamage = -1,
+	FriendlyDamage = true,
+	BuildingDamage = true,
+	ZoneTargeting = ZONE_DIR,
+	Upgrades = 0,
+	UpgradeList = {},
+	UpgradeCost = {},
+	TipImage = {
+		Unit = Point(2,4),
+		Enemy = Point(2,3),
+		Friendly_Damaged = Point(2,2),
+		Target = Point(2,3),
+		Friendly2_Damaged = Point(2,1),
+		Building = Point(2,0),
+		CustomEnemy = "Leaper1",
+        CustomPawn="Nico_laserbloom",
+	}
+}
+
+function Nico_laserheal:AddLaser(ret,point,direction)
+	local queued = queued or false
+	local minDamage = self.MinDamage or 1
+	local damage = self.Damage
+	local start = point - DIR_VECTORS[direction]
+	--if forced_end ~= nil then
+	--	LOG("Forced end = "..forced_end:GetString())
+	--else
+	--	LOG("No forced end!")
+	--end
+	ret:AddDamage(SpaceDamage(start, self.SelfDamage))
+	while Board:IsValid(point) do
+	
+		local temp_damage = damage  --This is so that if damage is set to 0 because of an ally, it doesn't affect the damage calculation of the laser.
+		
+		if (not self.FriendlyDamage and Board:IsPawnTeam(point, TEAM_PLAYER)) or (not self.BuildingDamage and Board:IsBuilding(point)) then
+			temp_damage = DAMAGE_ZERO
+		end
+		
+		local dam = SpaceDamage(point, temp_damage)
+		
+		dam.iSmoke = self.Smoke
+		dam.iAcid = self.Acid
+		dam.iFire = self.Fire
+		dam.iFrozen = self.Freeze
+		dam.sScript = "Board:SetFire("..point:GetString()..",false)"
+		if (start:Manhattan(point) == 1 and Board:IsPawnTeam(point, TEAM_PLAYER)) then dam.iShield = 1 end
+		
+		-- if it's the end of the line (ha), add the laser art -- not pretty
+		if forced_end == point or not Board:IsValid(point + DIR_VECTORS[direction]) then
+			if queued then 
+				ret:AddQueuedProjectile(dam,self.LaserArt)
+			else
+				ret:AddProjectile(start,dam,self.LaserArt,FULL_DELAY)
+			end
+			break
+		else
+			if queued then
+				ret:AddQueuedDamage(dam)  
+			else
+				ret:AddDamage(dam)   --JUSTIN TEST
+			end
+		end
+		
+		damage = damage - 1
+		if damage < minDamage then damage = minDamage end
+					
+		point = point + DIR_VECTORS[direction]	
+	end
+end
+
+--the actual weapon
 Nico_laserboom=Nico_laserbot:new{
     Name="K-b00m Beam Mark I",
 	Class="TechnoVek",
@@ -23,6 +119,7 @@ Nico_laserboom=Nico_laserbot:new{
 		Target = Point(2,3),
 		Mountain = Point(2,1),
 		Building = Point(2,0),
+		--CustomEnemy = "Digger2",--idk why this is here
         CustomPawn="Nico_laserboom_mech",
 	}
 }
@@ -32,7 +129,7 @@ modApi:appendAsset("img/weapons/Nico_laserboom.png", path .."img/weapons/Nico_la
 
 Nico_laserboom_A = Nico_laserboom:new{
     LaserArt = "effects/laser_push",
-    UpgradeDescription = "Increases damage by 1 and damages self.",
+    UpgradeDescription = "Increases damage by 1 and damages self. On kill, create a Bloom-Laser.",
 	Damage = 4,
 	SelfDamage=1,
 	TipImage = {
@@ -42,6 +139,7 @@ Nico_laserboom_A = Nico_laserboom:new{
 		Target = Point(2,3),
 		Mountain = Point(2,1),
 		Building = Point(2,0),
+		--CustomEnemy = "Digger2",--idk why this is here
         CustomPawn="Nico_laserboom_mech",
 	}
 }
@@ -87,6 +185,12 @@ function Nico_laserboom:AddLaser(ret,point,direction)
 		dam.iAcid = self.Acid
 		dam.iFire = self.Fire
 		dam.iFrozen = self.Freeze
+		if self.SelfDamage == 1 then
+			dam.bKO_Effect = Board:IsDeadly(dam,Pawn)
+			if dam.bKO_Effect then
+				dam.sPawn = "Nico_laserbloom"
+			end
+		end
 		
 		-- if it's the end of the line (ha), add the laser art -- not pretty
 		if forced_end == point or not Board:IsValid(point + DIR_VECTORS[direction]) then
