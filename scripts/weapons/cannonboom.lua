@@ -51,8 +51,8 @@ function Nico_cannonheal:GetSkillEffect(p1,p2)
 	ret:AddDamage(SpaceDamage(p1,self.SelfDamage))
 	local dam = SpaceDamage(target,self.Damage)
 	dam.iFire = -1
-	dam.iShield = 1
-	dam.sScript = "Board:SetFire("..target:GetString()..",false)"
+	dam.sImageMark= "effects/Nico_icon_shield_glow.png"--placeholder replace with 1 heal shield later
+	dam.sScript = "Board:SetFire("..target:GetString()..",false) modApi:runLater(function() Board:AddShield("..target:GetString()..") end)"
 	ret:AddProjectile(dam, self.ProjectileArt, NO_DELAY)
 	return ret
 end
