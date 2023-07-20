@@ -67,7 +67,7 @@ function Nico_laserheal:AddLaser(ret,point,direction)
 		dam.iAcid = self.Acid
 		dam.iFire = self.Fire
 		dam.iFrozen = self.Freeze
-		dam.sScript = "Board:SetFire("..point:GetString()..",false)"
+		dam.sScript = "Board:SetFire("..point:GetString()..",false) modApi:runLater(function() Board:AddShield("..point:GetString()..") end)"
 		if (start:Manhattan(point) == 1 and Board:IsPawnTeam(point, TEAM_PLAYER)) then dam.iShield = 1 end
 		
 		-- if it's the end of the line (ha), add the laser art -- not pretty
