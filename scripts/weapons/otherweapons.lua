@@ -96,8 +96,8 @@ local function EVENT_onModsLoaded()
 	modapiext:addSkillBuildHook(Nico_MoveShieldWeap)
 	modapiext:addFinalEffectBuildHook(Nico_MoveShieldWeapon)
 	modapiext:addTargetAreaBuildHook(Nico_TeamRepair)
-	modApi:addMissionUpdateHook(Nico_BoomTest)
-	modapiext:addPawnKilledHook(Nico_BoomRepair)
+	--modApi:addMissionUpdateHook(Nico_BoomTest)
+	--modapiext:addPawnKilledHook(Nico_BoomRepair)
 end
 
 modApi.events.onModsLoaded:subscribe(EVENT_onModsLoaded)
