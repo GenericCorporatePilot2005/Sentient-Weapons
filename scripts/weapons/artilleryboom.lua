@@ -1,3 +1,63 @@
+Nico_artillerybloom = Pawn:new{
+	Name = "Bloom-Artillery",
+	Health = 1,
+	Class = "TechnoVek",
+	ImageOffset = modApi:getPaletteImageOffset("Nico_mine_iceflower"),
+	DefaultTeam = TEAM_PLAYER,
+	MoveSpeed = 3,
+	Image = "Nico_artillerybot_mech",
+	SkillList = { "Nico_artilleryheal" },
+	SoundLocation = "/enemy/snowart_1/",
+	DefaultTeam = TEAM_PLAYER,
+	ImpactMaterial = IMPACT_METAL,
+	Corpse = false,
+	Explodes = true,
+}
+
+Nico_artilleryheal = SnowartAtk1:new{
+	Name="Vk8 Repair Rockets Mark I",
+	ArtillerySize = 8,
+	Explosion = "ExploRepulse2",
+	Damage = -1,
+	Fire = -1,
+	Queued = false,
+	SelfDamage = DAMAGE_DEATH,
+	Class = "TechnoVek",
+	Description="Sacrifice self to fire three rockets that repair the targets.",
+	Icon = "weapons/ranged_tribomb.png",
+	LaunchSound = "/enemy/snowart_1/attack",
+	ImpactSound = "/impact/generic/explosion",
+	Projectile = "effects/shot_artimech.png",
+	TipImage = {
+		Unit = Point(2,3),
+		Friendly_Damaged1 = Point(1,1),
+		Friendly_Damaged2 = Point(2,1),
+		Friendly_Damaged3 = Point(3,1),
+		Target = Point(2,1),
+		CustomPawn = "Nico_artillerybloom",
+	}
+}
+
+function Nico_artilleryheal:GetSkillEffect(p1,p2)
+	local ret = SkillEffect()
+	local dir = GetDirection(p2-p1)
+	
+	ret:AddDamage(SpaceDamage(p1,self.SelfDamage))
+	local dam = SpaceDamage(p2, self.Damage)
+	dam.iFire = -1
+	dam.sScript = "Board:SetFire("..p2:GetString()..",false)"
+	ret:AddArtillery(dam,self.Projectile)
+	dam.loc = p2 + DIR_VECTORS[(dir + 1)% 4]
+	dam.sScript = "Board:SetFire("..(p2 + DIR_VECTORS[(dir + 1)% 4]):GetString()..",false)"
+	ret:AddDamage(dam)
+	dam.loc = p2 + DIR_VECTORS[(dir - 1)% 4]
+	dam.sScript = "Board:SetFire("..(p2 + DIR_VECTORS[(dir - 1)% 4]):GetString()..",false)"
+	ret:AddDamage(dam)
+	
+	return ret
+end
+
+--the actual weapon
 ------Artillery Bot------
 Nico_artilleryboom=Nico_artillerybot:new{
 	Name="Bang Rockets Mark I",
@@ -62,6 +122,12 @@ function Nico_artilleryboom:GetSkillEffect(p1,p2)
 	local direction = GetDirection(p1-p2)
 	ret:AddDamage(SpaceDamage(p1,self.SelfDamage))
 	if p1:Manhattan(p2) > 1 then ret:AddArtillery(SpaceDamage(p2,self.Damage,direction), "effects/shotup_missileswarm.png", NO_DELAY) end
+	for i = 1,ret.effect:size() do
+		ret.effect:index(i).bKO_Effect = Board:IsDeadly(ret.effect:index(i),Pawn)
+		if ret.effect:index(i).bKO_Effect then
+			ret.effect:index(i).sPawn = "Nico_artillerybloom"
+		end
+	end
 	return ret
 end
 function Nico_artilleryboom:GetFinalEffect(p1,p2,p3)
@@ -100,14 +166,19 @@ function Nico_artilleryboom:GetFinalEffect(p1,p2,p3)
 		ret:AddBounce(p3, self.BounceAmount)
 		ret:AddBounce(p3+DIR_VECTORS[dir]*distance*2, self.BounceAmount)
 	end
-	
+	for i = 1,ret.effect:size() do
+		ret.effect:index(i).bKO_Effect = Board:IsDeadly(ret.effect:index(i),Pawn)
+		if ret.effect:index(i).bKO_Effect then
+			ret.effect:index(i).sPawn = "Nico_artillerybloom"
+		end
+	end
 	return ret
 end
 	Nico_artilleryboom_A=Nico_artilleryboom:new{
 		BounceAmount = 3,
 		Damage=2,
 		SelfDamage = 1,
-		UpgradeDescription = "Deals 1 additional damage to all targets and damages self.",
+		UpgradeDescription = "Deals 1 additional damage to all targets and damages self. On kill, create a Bloom-Artillery.",
 	}
 	Nico_artilleryboom_B=Nico_artilleryboom:new{
 		BounceAmount = 3,
