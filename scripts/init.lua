@@ -10,7 +10,7 @@ local mod = {
 		modApiExt = "1.18", --We can get this by using the variable `modapiext`
 	},
 	modApiVersion = "2.9.1",
-	icon = "img/mod_icon.png"
+	icon = icon
 }
 
 function mod:init()
@@ -55,42 +55,48 @@ function mod:load( options, version)
 		"After destroying the Vek Hive, Zenith sent these improved Sentient Weapons across time to fight the Vek and their hijacked brethren.",
 		self.resourcePath .."img/squad1_icon.png"
 	)
-	modApi:addSquad(
-		{
-			"Sentient Weapons 2",-- title
-			"Nico_minerbot_mech",-- mech #2
-			"Nico_knightbot_mech",-- mech #1
-			"Nico_shieldbot_mech",-- mech #3
-			id="Nico_Sent_weap2"
-		},
-		"Sentient Weapons 2",
-		"After destroying the Vek Hive, Zenith sent these improved Sentient Weapons across time to fight the Vek and their hijacked brethren.",
-		self.resourcePath .."img/squad2_icon.png"
-	)
-	modApi:addSquad(
-		{
-			"Sentient Weapons 3",-- title
-			"Nico_botleader_mech",-- mech #2
-			"Nico_juggernautbot_mech",-- mech #1
-			"Nico_hulkbot_mech",-- mech #3
-			id="Nico_Sent_weap3"
-		},
-		"Sentient Weapons 3",
-		"After destroying the Vek Hive, Zenith sent these improved Sentient Weapons across time to fight the Vek and their hijacked brethren.",
-		self.resourcePath .."img/squad3_icon.png"
-	)
-	modApi:addSquad(
-		{
-			"Boom Bots",-- title
-			"Nico_cannonboom_mech",-- mech #2
-			"Nico_laserboom_mech",-- mech #1
-			"Nico_artilleryboom_mech",-- mech #3
-			id="Nico_Boom_bots"
-		},
-		"Boom Bots",
-		"After destroying the Vek Hive, Zenith sent these improved Volatile Sentient Weapons across time to fight the Vek and their hijacked brethren.",
-		self.resourcePath .."img/squadboom_icon.png"
-	)
+	if modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SW2") then
+		modApi:addSquad(
+			{
+				"Sentient Weapons 2",-- title
+				"Nico_minerbot_mech",-- mech #2
+				"Nico_knightbot_mech",-- mech #1
+				"Nico_shieldbot_mech",-- mech #3
+				id="Nico_Sent_weap2"
+			},
+			"Sentient Weapons 2",
+			"After destroying the Vek Hive, Zenith sent these improved Sentient Weapons across time to fight the Vek and their hijacked brethren.",
+			self.resourcePath .."img/squad2_icon.png"
+		)
+	end
+	if modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SW3") then
+		modApi:addSquad(
+			{
+				"Sentient Weapons 3",-- title
+				"Nico_botleader_mech",-- mech #2
+				"Nico_juggernautbot_mech",-- mech #1
+				"Nico_hulkbot_mech",-- mech #3
+				id="Nico_Sent_weap3"
+			},
+			"Sentient Weapons 3",
+			"After destroying the Vek Hive, Zenith sent these improved Sentient Weapons across time to fight the Vek and their hijacked brethren.",
+			self.resourcePath .."img/squad3_icon.png"
+		)
+	end
+	if modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SWBB") then
+		modApi:addSquad(
+			{
+				"Boom Bots",-- title
+				"Nico_cannonboom_mech",-- mech #2
+				"Nico_laserboom_mech",-- mech #1
+				"Nico_artilleryboom_mech",-- mech #3
+				id="Nico_Boom_bots"
+			},
+			"Boom Bots",
+			"After destroying the Vek Hive, Zenith sent these improved Volatile Sentient Weapons across time to fight the Vek and their hijacked brethren.",
+			self.resourcePath .."img/squadboom_icon.png"
+		)
+	end
 	modApi:addMissionEndHook(function()
         for id = 0, 2 do
             local pawn = Game:GetPawn(id)
@@ -114,6 +120,12 @@ function mod:load( options, version)
             end
         end
     end)
+
+	if modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SW2") and modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SW3") and modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SWBB") then
+		mod.icon = self.resourcePath .."img/mod_icon.png"
+	else
+		mod.icon = self.resourcePath .."img/squad1_icon.png"
+	end
 end
 
 return mod

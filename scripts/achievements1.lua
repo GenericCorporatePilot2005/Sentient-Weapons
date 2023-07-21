@@ -15,6 +15,9 @@ local imgs = {
 	"Laser",
 	"Cannon",
 	"Arti",
+	"SW2",
+	"SW3",
+	"SWBB",
 }
 
 local achname = "Nico_Bot_"
@@ -49,6 +52,33 @@ modApi.achievements:add{
 	objective = 1,
 }
 
+modApi.achievements:add{
+	id = "Nico_Bot_SW2",
+	global = "Secret Rewards",
+	secret=true,
+	name = "The Sentient Weapons 2!",
+	image = "img/achievements/Nico_Bot_SW2.png",
+	tip = "New squad unlocked on the squad selection screen, NEEDS A RESTART TO APPLY",
+	squad = "Nico_Sent_weap",
+}
+modApi.achievements:add{
+	id = "Nico_Bot_SW3",
+	global = "Secret Rewards",
+	secret=true,
+	name = "The Sentient Weapons 3!",
+	image = "img/achievements/Nico_Bot_SW3.png",
+	tip = "New squad unlocked on the squad selection screen, NEEDS A RESTART TO APPLY",
+	squad = "Nico_Sent_weap",
+}
+modApi.achievements:add{
+	id = "Nico_Bot_SWBB",
+	global = "Secret Rewards",
+	secret=true,
+	name = "The Boom Bots!",
+	image = "img/achievements/Nico_Bot_SWBB.png",
+	tip = "New squad unlocked on the squad selection screen, NEEDS A RESTART TO APPLY",
+	squad = "Nico_Sent_weap",
+}
 --Lemon's Real Mission Checker
 local function isRealMission()
 local mission = GetCurrentMission()
@@ -71,7 +101,10 @@ local function Nico_MissionEnd(mission)
 			count = count + 1
 		end
 	end
-	if count > 6 and GAME.additionalSquadData.squad == modid and not modApi.achievements:isComplete(modid,"Nico_Bot_Laser") then modApi.achievements:trigger(modid,"Nico_Bot_Laser") end
+	if count > 6 and GAME.additionalSquadData.squad == modid and not modApi.achievements:isComplete(modid,"Nico_Bot_Laser") then
+		modApi.achievements:trigger(modid,"Nico_Bot_Laser") 
+		modApi.achievements:trigger(modid,"Nico_Bot_SW2")
+	end
 	local bubble = true
 	for j = 0,2 do
 		if not Board:GetPawn(j):IsShield() then
@@ -85,7 +118,11 @@ local function Nico_MissionEnd(mission)
 			break
 		end
 	end
-	if bubble and GAME.additionalSquadData.squad == modid and not modApi.achievements:isComplete(modid,"Nico_Bot_Arti") then modApi.achievements:trigger(modid,"Nico_Bot_Arti") end
+	if bubble and GAME.additionalSquadData.squad == modid and not modApi.achievements:isComplete(modid,"Nico_Bot_Arti") then
+		modApi.achievements:trigger(modid,"Nico_Bot_Arti")
+		modApi.achievements:trigger(modid,"Nico_Bot_SWBB")
+		ret:AddScript("('')")
+	end
 end
 
 --Cannon's Achievement
@@ -122,6 +159,7 @@ local function postKillCheck(mission, pawn)
 	local ret = SkillEffect()
 	if isRealMission() and nico_cannon_flag and pawn:GetId() == nico_cannon_enemy and GAME.additionalSquadData.squad == modid and not modApi.achievements:isComplete(modid,"Nico_Bot_Cannon") then
 		modApi.achievements:trigger(modid,"Nico_Bot_Cannon")
+		modApi.achievements:trigger(modid,"Nico_Bot_SW3")
 	end
 end
 

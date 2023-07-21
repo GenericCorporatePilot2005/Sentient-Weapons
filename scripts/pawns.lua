@@ -20,7 +20,8 @@ require(path2 .."palettes")
 	    SoundLocation = "/enemy/snowlaser_1/",
         DefaultTeam = TEAM_PLAYER,
 	    ImpactMaterial = IMPACT_METAL,
-        AddPawn("Nico_laserbot_mech")}
+        AddPawn("Nico_laserbot_mech")
+    }
     Nico_artillerybot_mech = Pawn:new{
         Name = "Artillery-Bot",
         NicoIsRobot = true,
@@ -35,7 +36,8 @@ require(path2 .."palettes")
         SoundLocation = "/enemy/snowart_1/",
         DefaultTeam = TEAM_PLAYER,
 	    ImpactMaterial = IMPACT_METAL,
-        AddPawn("Nico_artillerybot_mech")}
+        AddPawn("Nico_artillerybot_mech")
+    }
     Nico_cannonbot_mech = Pawn:new{
         Name = "Cannon-Bot",
         NicoIsRobot = true,
@@ -50,152 +52,169 @@ require(path2 .."palettes")
 	    SoundLocation = "/enemy/snowtank_1/",
         DefaultTeam = TEAM_PLAYER,
 	    ImpactMaterial = IMPACT_METAL,
-        AddPawn("Nico_cannonbot_mech")}
+        AddPawn("Nico_cannonbot_mech")
+    }
 --Sentient Weapons 2
-    Nico_knightbot_mech = Pawn:new{
-        Name = "Knight-Bot",
-        NicoIsRobot = true,
-        Class = "TechnoVek",
-        Health = 1,
-        MoveSpeed = 3,
-        Massive = true,
-        Corpse = true,
-        Armor = true,
-        Image = "Nico_knightbot_mech",
-        ImageOffset = modApi:getPaletteImageOffset("nico_alpha_snow"),
-        SkillList = {"Nico_knightbot"},
-	    SoundLocation = "/enemy/snowlaser_1/",
-        DefaultTeam = TEAM_PLAYER,
-	    ImpactMaterial = IMPACT_METAL,
-        AddPawn("Nico_knightbot_mech")}
-    Nico_shieldbot_mech = Pawn:new{
-        Name = "Shield-Bot",
-        NicoIsRobot = true,
-        Class = "TechnoVek",
-        Health = 1,
-        MoveSpeed = 4,
-        Massive = true,
-        Corpse = true,
-        Flying=true,
-        Image = "Nico_shieldbot_mech",
-        ImageOffset = modApi:getPaletteImageOffset("nico_alpha_snow"),
-        SkillList = {"Nico_shieldbot"},
-	    SoundLocation = "/enemy/snowlaser_1/",
-        DefaultTeam = TEAM_PLAYER,
-	    ImpactMaterial = IMPACT_METAL,
-        AddPawn("Nico_shieldbot_mech")}
-    Nico_minerbot_mech = Pawn:new{
-        Name = "Mine-Bot",
-        NicoIsRobot = true,
-        Class = "TechnoVek",
-        Health = 1,
-        MoveSpeed = 4,
-        Massive = true,
-        Corpse = true,
-        Image = "Nico_minerbot_mech",
-	    ImageOffset = modApi:getPaletteImageOffset("nico_alpha_snow"),
-        SkillList = {"Nico_minerbot"},
-        SoundLocation = "/enemy/snowmine_1/",
-        DefaultTeam = TEAM_PLAYER,
-	    ImpactMaterial = IMPACT_METAL,
-        AddPawn("Nico_minerbot_mech")}
---Boom Bots
-    Nico_laserboom_mech = Pawn:new{
-        Name = "Boom Laser",
-        NicoIsBoom = true,
-        Class = "TechnoVek",
-        Health = 1,
-        MoveSpeed = 4,
-        Massive = true,
-        Corpse = true,
-        Image = "Nico_laserboom_mech",
-	    ImageOffset = modApi:getPaletteImageOffset("Nico_boom_snow"),
-        SkillList = {"Nico_laserboom"},
-	    SoundLocation = "/enemy/snowlaser_1/",
-        DefaultTeam = TEAM_PLAYER,
-	    ImpactMaterial = IMPACT_METAL,
-        --Explodes=true,
-        AddPawn("Nico_laserboom_mech")}
-    Nico_artilleryboom_mech = Pawn:new{
-        Name = "Boom Artillery",
-        NicoIsBoom = true,
-        Class = "TechnoVek",
-        Health = 1,
-        MoveSpeed = 3,
-        Massive = true,
-        Corpse = true,
-        Image = "Nico_artilleryboom_mech",
-	    ImageOffset = modApi:getPaletteImageOffset("Nico_boom_snow"),
-        SkillList = {"Nico_artilleryboom"},
-        SoundLocation = "/enemy/snowart_1/",
-        DefaultTeam = TEAM_PLAYER,
-	    ImpactMaterial = IMPACT_METAL,
-        --Explodes=true,
-        AddPawn("Nico_artillerybot_mech")}
-    Nico_cannonboom_mech = Pawn:new{
-        Name = "Boom Cannon",
-        NicoIsBoom = true,
-        Class = "TechnoVek",
-        Health = 1,
-        MoveSpeed = 4,
-        Massive = true,
-        Corpse = true,
-        Image = "Nico_cannonboom_mech",
-        ImageOffset = modApi:getPaletteImageOffset("Nico_boom_snow"),
-        SkillList = {"Nico_cannonboom"},
-	    SoundLocation = "/enemy/snowtank_1/",
-        DefaultTeam = TEAM_PLAYER,
-	    ImpactMaterial = IMPACT_METAL,
-        --Explodes=true,
-        AddPawn("Nico_cannonboom_mech")}
+    if modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SW2") then
+        Nico_knightbot_mech = Pawn:new{
+            Name = "Knight-Bot",
+            NicoIsRobot = true,
+            Class = "TechnoVek",
+            Health = 1,
+            MoveSpeed = 3,
+            Massive = true,
+            Corpse = true,
+            Armor = true,
+            Image = "Nico_knightbot_mech",
+            ImageOffset = modApi:getPaletteImageOffset("nico_alpha_snow"),
+            SkillList = {"Nico_knightbot"},
+            SoundLocation = "/enemy/snowlaser_1/",
+            DefaultTeam = TEAM_PLAYER,
+            ImpactMaterial = IMPACT_METAL,
+            AddPawn("Nico_knightbot_mech")
+        }
+        Nico_shieldbot_mech = Pawn:new{
+            Name = "Shield-Bot",
+            NicoIsRobot = true,
+            Class = "TechnoVek",
+            Health = 1,
+            MoveSpeed = 4,
+            Massive = true,
+            Corpse = true,
+            Flying=true,
+            Image = "Nico_shieldbot_mech",
+            ImageOffset = modApi:getPaletteImageOffset("nico_alpha_snow"),
+            SkillList = {"Nico_shieldbot"},
+            SoundLocation = "/enemy/snowlaser_1/",
+            DefaultTeam = TEAM_PLAYER,
+            ImpactMaterial = IMPACT_METAL,
+            AddPawn("Nico_shieldbot_mech")
+        }
+        Nico_minerbot_mech = Pawn:new{
+            Name = "Mine-Bot",
+            NicoIsRobot = true,
+            Class = "TechnoVek",
+            Health = 1,
+            MoveSpeed = 4,
+            Massive = true,
+            Corpse = true,
+            Image = "Nico_minerbot_mech",
+            ImageOffset = modApi:getPaletteImageOffset("nico_alpha_snow"),
+            SkillList = {"Nico_minerbot"},
+            SoundLocation = "/enemy/snowmine_1/",
+            DefaultTeam = TEAM_PLAYER,
+            ImpactMaterial = IMPACT_METAL,
+            AddPawn("Nico_minerbot_mech")
+        }
+    end
+
 --Sentient Weapon 3
-    Nico_juggernautbot_mech = Pawn:new{
-    	Name = "Juggernaut-Bot",
-        NicoIsRobot = true,
-        Class = "TechnoVek",
-        Health = 1,
-        MoveSpeed = 1,
-        Massive = true,
-        Corpse = true,
-	    IgnoreSmoke = true,
-        Image = "Nico_juggernautbot_mech",
-        ImageOffset = modApi:getPaletteImageOffset("nico_boss_snow"),
-        SkillList = {"Nico_juggernaut"},
-        SoundLocation = "/enemy/snowart_2/",
-        DefaultTeam = TEAM_PLAYER,
-	    ImpactMaterial = IMPACT_METAL,
-        AddPawn("Nico_juggernautbot_mech")}
-    Nico_botleader_mech = Pawn:new{
-        Name = "Bot Leader",
-        NicoIsBotLeader = true,
-        Class = "TechnoVek",
-        Health = 5,
-        MoveSpeed = 3,
-        Massive = true,
-        Corpse = true,
-        Image = "Nico_artillerybot_mech",
-        ImageOffset = modApi:getPaletteImageOffset("nico_boss_snow"),
-        SkillList = {"Nico_leaderbot"},
-        SoundLocation = "/enemy/snowart_1/",
-        DefaultTeam = TEAM_PLAYER,
-    	ImpactMaterial = IMPACT_METAL,
-        AddPawn("Nico_botleader_mech")}
-    Nico_hulkbot_mech = Pawn:new{
-        Name = "Cryo Hulk",
-        NicoIsRobot = true,
-        Class = "TechnoVek",
-        Health = 4,
-        MoveSpeed = 3,
-        Armor = true,
-        Massive = true,
-        Corpse = true,
-        Image = "Nico_hulkbot_mech",
-        ImageOffset = modApi:getPaletteImageOffset("nico_boss_snow"),
-        SkillList = {"Nico_hulkbot"},
-        SoundLocation = "/enemy/snowart_1/",
-        DefaultTeam = TEAM_PLAYER,
-        ImpactMaterial = IMPACT_METAL,
-        AddPawn("Nico_hulkbot_mech")}
+    if modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SW3") then
+        Nico_juggernautbot_mech = Pawn:new{
+            Name = "Juggernaut-Bot",
+            NicoIsRobot = true,
+            Class = "TechnoVek",
+            Health = 1,
+            MoveSpeed = 1,
+            Massive = true,
+            Corpse = true,
+            IgnoreSmoke = true,
+            Image = "Nico_juggernautbot_mech",
+            ImageOffset = modApi:getPaletteImageOffset("nico_boss_snow"),
+            SkillList = {"Nico_juggernaut"},
+            SoundLocation = "/enemy/snowart_2/",
+            DefaultTeam = TEAM_PLAYER,
+            ImpactMaterial = IMPACT_METAL,
+            AddPawn("Nico_juggernautbot_mech")
+        }
+        Nico_botleader_mech = Pawn:new{
+            Name = "Bot Leader",
+            NicoIsBotLeader = true,
+            Class = "TechnoVek",
+            Health = 5,
+            MoveSpeed = 3,
+            Massive = true,
+            Corpse = true,
+            Image = "Nico_artillerybot_mech",
+            ImageOffset = modApi:getPaletteImageOffset("nico_boss_snow"),
+            SkillList = {"Nico_leaderbot"},
+            SoundLocation = "/enemy/snowart_1/",
+            DefaultTeam = TEAM_PLAYER,
+            ImpactMaterial = IMPACT_METAL,
+            AddPawn("Nico_botleader_mech")
+        }
+        Nico_hulkbot_mech = Pawn:new{
+            Name = "Cryo Hulk",
+            NicoIsRobot = true,
+            Class = "TechnoVek",
+            Health = 4,
+            MoveSpeed = 3,
+            Armor = true,
+            Massive = true,
+            Corpse = true,
+            Image = "Nico_hulkbot_mech",
+            ImageOffset = modApi:getPaletteImageOffset("nico_boss_snow"),
+            SkillList = {"Nico_hulkbot"},
+            SoundLocation = "/enemy/snowart_1/",
+            DefaultTeam = TEAM_PLAYER,
+            ImpactMaterial = IMPACT_METAL,
+            AddPawn("Nico_hulkbot_mech")
+        }
+    end
+--Boom Bots
+    if modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SWBB") then
+        Nico_laserboom_mech = Pawn:new{
+            Name = "Boom Laser",
+            NicoIsBoom = true,
+            Class = "TechnoVek",
+            Health = 1,
+            MoveSpeed = 4,
+            Massive = true,
+            Corpse = true,
+            Image = "Nico_laserboom_mech",
+            ImageOffset = modApi:getPaletteImageOffset("Nico_boom_snow"),
+            SkillList = {"Nico_laserboom"},
+            SoundLocation = "/enemy/snowlaser_1/",
+            DefaultTeam = TEAM_PLAYER,
+            ImpactMaterial = IMPACT_METAL,
+            --Explodes=true,
+            AddPawn("Nico_laserboom_mech")
+        }
+        Nico_artilleryboom_mech = Pawn:new{
+            Name = "Boom Artillery",
+            NicoIsBoom = true,
+            Class = "TechnoVek",
+            Health = 1,
+            MoveSpeed = 3,
+            Massive = true,
+            Corpse = true,
+            Image = "Nico_artilleryboom_mech",
+            ImageOffset = modApi:getPaletteImageOffset("Nico_boom_snow"),
+            SkillList = {"Nico_artilleryboom"},
+            SoundLocation = "/enemy/snowart_1/",
+            DefaultTeam = TEAM_PLAYER,
+            ImpactMaterial = IMPACT_METAL,
+            --Explodes=true,
+            AddPawn("Nico_artillerybot_mech")
+        }
+        Nico_cannonboom_mech = Pawn:new{
+            Name = "Boom Cannon",
+            NicoIsBoom = true,
+            Class = "TechnoVek",
+            Health = 1,
+            MoveSpeed = 4,
+            Massive = true,
+            Corpse = true,
+            Image = "Nico_cannonboom_mech",
+            ImageOffset = modApi:getPaletteImageOffset("Nico_boom_snow"),
+            SkillList = {"Nico_cannonboom"},
+            SoundLocation = "/enemy/snowtank_1/",
+            DefaultTeam = TEAM_PLAYER,
+            ImpactMaterial = IMPACT_METAL,
+            --Explodes=true,
+            AddPawn("Nico_cannonboom_mech")
+        }
+    end
 --Traits
     modApi:appendAsset("img/icon_Nico_zenith_shield.png", path.."img/icon_Nico_zenith_shield.png")--image of the trait
     modApi:appendAsset("img/icon_Nico_shield_heal.png", path.."img/icon_Nico_shield_heal.png")--image of the trait
