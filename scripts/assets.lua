@@ -1,5 +1,6 @@
 local mod = modApi:getCurrentMod()
 local path = mod_loader.mods[modApi.currentMod].resourcePath
+modApi:appendAsset("img/units/player/BloomBotPrototype.png",path.."img/units/player/BloomBotPrototype.png")
 -- locate our mech assets.
 --Artillery-bot
 local artmechPath = path .."img/units/player/"

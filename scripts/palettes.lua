@@ -1,7 +1,7 @@
 local mod = modApi:getCurrentMod()
 local path = mod.scriptPath
 require(path .."achievements1")
---palettes
+--palettes--
 modApi:addPalette{--base sentient weapons
     id = "nico_snow",
     image="units/player/Nico_artillerybot_mech_ns.png",
@@ -88,7 +88,7 @@ if modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SWBB") then
     modApi:addPalette{--Bloom Bot Laser
         ID = "Nico_bloom_1",
         Name = "Bloom Bot Laser",
-        image="units/player/Nico_laserbot_mech_ns.png",
+        image="units/player/BloomBotPrototype.png",
         PlateHighlight = {255,0,0},--lights
         PlateLight     = {177,221,108},--main highlight
         PlateMid       = {76,130,79},--main light
@@ -101,7 +101,7 @@ if modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SWBB") then
     modApi:addPalette{--Bloom Bot Cannon
         ID = "Nico_bloom_2",
         Name = "Bloom Bot Cannon",
-        image="units/player/Nico_cannonbot_mech_ns.png",
+        image="units/player/BloomBotPrototype.png",
         PlateHighlight = {255,0,0},--lights
         PlateLight     = {177,221,108},--main highlight
         PlateMid       = {76,130,79},--main light
@@ -114,7 +114,7 @@ if modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SWBB") then
     modApi:addPalette{--Bloom Bot Artillery
         ID = "Nico_bloom_3",
         Name = "Bloom Bot Artillery",
-        image="units/player/Nico_artillerybot_mech_ns.png",
+        image="units/player/BloomBotPrototype.png",
         PlateHighlight = {255,0,0},--lights
         PlateLight     = {177,221,108},--main highlight
         PlateMid       = {76,130,79},--main light

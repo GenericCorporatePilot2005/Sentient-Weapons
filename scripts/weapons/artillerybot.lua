@@ -62,7 +62,7 @@ Nico_artillerybot=ArtilleryDefault:new{
 			damage.sSound = "/impact/generic/explosion"
 			if self.Damage == 2 then damage.sSound = "/impact/generic/explosion_large" end
 			if not self.BuildingDamage and self.shield and Board:IsBuilding(p2 + DIR_VECTORS[(dir+1)%4]*i) then
-				damage.iDamage = DAMAGE_ZERO
+				damage.iDamage = 0
 				damage.iShield=1
 				damage.sAnimation = "airpush_"..dir
 				ret:AddArtillery(damage,"effects/shotup_missileswarm.png", NO_DELAY)
@@ -97,7 +97,7 @@ Nico_artillerybot=ArtilleryDefault:new{
 			damage.sSound = "/impact/generic/explosion"
 			if self.Damage == 2 then damage.sSound = "/impact/generic/explosion_large" end
 			if not self.BuildingDamage and self.shield and Board:IsBuilding(p2 + DIR_VECTORS[(dir+1)%4]*i) then
-				damage.iDamage = DAMAGE_ZERO
+				damage.iDamage = 0
 				damage.iShield=1
 				if p1 == p3 then
 					damage.sAnimation = "ExploRepulse"..self.Damage
