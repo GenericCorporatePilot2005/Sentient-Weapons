@@ -40,13 +40,7 @@ Nico_hulkbot=ArtilleryDefault:new{
 		Second_Click = Point(3,3),
         CustomPawn="Nico_hulkbot_mech",
 	},
-	}
-	local path = mod_loader.mods[modApi.currentMod].resourcePath
-	modApi:appendAsset("img/weapons/Nico_hulkbot.png", path .."img/weapons/Nico_hulkbot.png")
-	modApi:appendAsset("img/weapons/Nico_fire_cancel.png",path.."img/weapons/Nico_fire_cancel.png")
-	Location["weapons/Nico_fire_cancel.png"] = Point(-12,8)
-	modApi:appendAsset("img/weapons/Nico_fire_cancel_off.png",path.."img/weapons/Nico_fire_cancel_off.png")
-	Location["weapons/Nico_fire_cancel_off.png"] = Point(-12,8)
+}
 	function Nico_hulkbot:GetSecondTargetArea(p1, p2)  --This is a copy of the GetTargetArea for LineArtillery
 		local ret = PointList()
 		local dir = GetDirection(p2 - p1)

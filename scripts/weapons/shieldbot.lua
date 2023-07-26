@@ -174,10 +174,7 @@ local path = mod_loader.mods[modApi.currentMod].resourcePath
 			CustomPawn="Nico_shieldbot_mech",
 		},
 	}
-	modApi:appendAsset("img/weapons/Nico_shield_explode_glow.png", path.."img/weapons/Nico_shield_explode_glow.png")
-	Location["weapons/Nico_shield_explode_glow.png"] = Point(-16,8)
-	modApi:appendAsset("img/weapons/Nico_shieldbot.png", path .."img/weapons/Nico_shieldbot.png")
-	modApi:appendAsset("img/effects/shield_bot_pulse.png", path.. "img/effects/shield_bot_pulse.png")
+
 	ANIMS.shieldbotpulse = Animation:new{
 		Image = "effects/shield_bot_pulse.png",
 		NumFrames = 8,

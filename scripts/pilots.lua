@@ -2,21 +2,6 @@ local mod = modApi:getCurrentMod()
 local scriptPath = modApi:getCurrentMod().scriptPath
 local replaceRepair = require(scriptPath.."replaceRepair/replaceRepair")
 
---portraits
-    local path = mod_loader.mods[modApi.currentMod].resourcePath
-	modApi:appendAsset("img/portraits/pilots/Pilot_Nico_artillerybot_mech.png", path .."img/portraits/Pilot_Nico_artillerybot_mech.png")
-	modApi:appendAsset("img/portraits/pilots/Pilot_Nico_laserbot_mech.png", path .."img/portraits/Pilot_Nico_laserbot_mech.png")
-	modApi:appendAsset("img/portraits/pilots/Pilot_Nico_cannonbot_mech.png", path .."img/portraits/Pilot_Nico_cannonbot_mech.png")
-    modApi:appendAsset("img/portraits/pilots/Pilot_Nico_knightbot_mech.png", path .."img/portraits/Pilot_Nico_knightbot_mech.png")
-    modApi:appendAsset("img/portraits/pilots/Pilot_Nico_shieldbot_mech.png", path .."img/portraits/Pilot_Nico_shieldbot_mech.png")
-    modApi:appendAsset("img/portraits/pilots/Pilot_Nico_minerbot_mech.png", path .."img/portraits/Pilot_Nico_minerbot_mech.png")
-    modApi:appendAsset("img/portraits/pilots/Pilot_Nico_artilleryboom_mech.png", path .."img/portraits/Pilot_Nico_artilleryboom_mech.png")
-	modApi:appendAsset("img/portraits/pilots/Pilot_Nico_laserboom_mech.png", path .."img/portraits/Pilot_Nico_laserboom_mech.png")
-	modApi:appendAsset("img/portraits/pilots/Pilot_Nico_cannonboom_mech.png", path .."img/portraits/Pilot_Nico_cannonboom_mech.png")
-    modApi:appendAsset("img/portraits/pilots/Pilot_Nico_juggernautbot_mech.png", path .."img/portraits/Pilot_Nico_juggernautbot_mech.png")
-    modApi:appendAsset("img/portraits/pilots/Pilot_Nico_botleader_mech.png", path .."img/portraits/Pilot_Nico_botleader_mech.png")
-    modApi:appendAsset("img/portraits/pilots/Pilot_Nico_hulkbot_mech.png", path .."img/portraits/Pilot_Nico_hulkbot_mech.png")
-
 --pilots
     CreatePilot{
         Id = "Pilot_Nico_laserbot_mech",
@@ -140,8 +125,6 @@ return oldGetSkillInfo(skill)
 end
 --Bot Leader's skill replacement
 
-    local path = mod_loader.mods[modApi.currentMod].resourcePath
-    modApi:appendAsset("img/weapons/Nico_Bot_Repair.png", path.."img/weapons/Nico_Bot_Repair.png")
     local this={}
     function this:init(mod)
         replaceRepair:addSkill{
@@ -198,6 +181,4 @@ end
             return ret       
         end
     end
-    modApi:appendAsset("img/effects/Nico_icon_shield+10.png", path.."img/weapons/Nico_icon_shield+10.png")
-    Location["effects/Nico_icon_shield+10.png"] = Point(-16,8)
     return this

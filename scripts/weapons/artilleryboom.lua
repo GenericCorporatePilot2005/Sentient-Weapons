@@ -1,5 +1,4 @@
 local mod = modApi:getCurrentMod()
-local path = mod_loader.mods[modApi.currentMod].resourcePath
 --the actual weapon
 ------Artillery Bot------
 Nico_artilleryboom=Nico_artillerybot:new{

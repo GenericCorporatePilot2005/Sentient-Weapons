@@ -1,8 +1,6 @@
-local path = mod_loader.mods[modApi.currentMod].resourcePath
+
 local BoardEvents = require(modApi:getCurrentMod().scriptPath .."libs/boardEvents")
 
-modApi:appendAsset("img/weapons/Nico_minebot.png", path .."img/weapons/Nico_minebot.png")
-modApi:appendAsset("img/effects/shotup_deploymine.png", path.. "img/effects/shotup_deploymine.png")
 Nico_Freeze_Mine = { Image = "combat/freeze_mine.png", Damage = SpaceDamage(0), Tooltip = "freeze_mine", Icon = "combat/icons/icon_frozenmine_glow.png", UsedImage = ""}--needs to be global not local
 ------Miner Bot------
 	--The deployable's palettes
@@ -31,7 +29,6 @@ Nico_Freeze_Mine = { Image = "combat/freeze_mine.png", Damage = SpaceDamage(0), 
         Name = "Mine-Bot Mark II",
         MoveAtk = 4,
     }
-    modApi:appendAsset("img/weapons/Nico_minerbot.png", path .."img/weapons/Nico_minerbot.png")
     Nico_minibot = Skill:new{
         Name = "Minelayer",
         Class="TechnoVek",
