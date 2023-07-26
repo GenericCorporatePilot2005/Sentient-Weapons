@@ -1,5 +1,4 @@
 local mod = modApi:getCurrentMod()
-local path = mod_loader.mods[modApi.currentMod].resourcePath
 --the actual weapon
 Nico_laserboom=Nico_laserbot:new{
     Name="K-b00m Beam Mark I",
@@ -29,9 +28,6 @@ Nico_laserboom=Nico_laserbot:new{
         CustomPawn="Nico_laserboom_mech",
 	}
 }
-
-local path = mod_loader.mods[modApi.currentMod].resourcePath
-modApi:appendAsset("img/weapons/Nico_laserboom.png", path .."img/weapons/Nico_laserboom.png")
 
 Nico_laserboom_A = Nico_laserboom:new{
     LaserArt = "effects/laser_push",

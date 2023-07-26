@@ -1,9 +1,8 @@
 local mod = modApi:getCurrentMod()
-local path = mod_loader.mods[modApi.currentMod].resourcePath
 -- this line just gets the file path for your mod, so you can find all your files easily.
 
-local path2 = mod.scriptPath
-require(path2 .."palettes")
+local path = mod.scriptPath
+require(path .."palettes")
 --mechs
 --Sentient weapons 1
     Nico_laserbot_mech = Pawn:new{
@@ -216,9 +215,6 @@ require(path2 .."palettes")
         }
     end
 --Traits
-    modApi:appendAsset("img/icon_Nico_zenith_shield.png", path.."img/icon_Nico_zenith_shield.png")--image of the trait
-    modApi:appendAsset("img/icon_Nico_shield_heal.png", path.."img/icon_Nico_shield_heal.png")--image of the trait
-    local mod = modApi:getCurrentMod()--the mod itself
     local trait = require(mod.scriptPath .."libs/trait")--where does it get the code for the rest of this to work
 
     Nico_Pawn_List = {"Nico_laserbot_mech", "Nico_cannonbot_mech", "Nico_artillerybot_mech", "Nico_knightbot_mech", "Nico_shieldbot_mech","Nico_minerbot_mech","Nico_juggernautbot_mech","Nico_hulkbot_mech"}
