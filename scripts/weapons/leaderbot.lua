@@ -32,10 +32,12 @@ Nico_leaderbot=ArtilleryDefault:new{
         CustomPawn="Nico_botleader_mech",
 	},
 }
+local path = mod_loader.mods[modApi.currentMod].resourcePath
 local mod = modApi:getCurrentMod()
-local path = mod.scriptPath
-require(path .."palettes")
+local path2 = mod.scriptPath
+require(path2 .."palettes")
 
+modApi:appendAsset("img/weapons/Nico_leaderbot.png", path .."img/weapons/Nico_leaderbot.png")
 function Nico_leaderbot:GetTargetArea(point)
 	local ret = PointList()
 	for i = 0,3 do
@@ -167,6 +169,8 @@ Nico_cannonbot_deploy = Pawn:new{
 
 ------Deployable Cannon Bot------
 
+local path = mod_loader.mods[modApi.currentMod].resourcePath
+modApi:appendAsset("img/weapons/Nico_cannondeploy.png", path .."img/weapons/Nico_cannondeploy.png")
 Nico_cannondeploy=Nico_cannonbot:new{
 	Name="Cannon 7R Mark I",
 	Class="TechnoVek",

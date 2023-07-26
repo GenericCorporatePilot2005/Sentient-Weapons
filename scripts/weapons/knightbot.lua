@@ -29,6 +29,8 @@ Nico_knightbot = Punch:new{
 		CustomPawn = "Nico_knightbot_mech",
 	}
 }
+local path = mod_loader.mods[modApi.currentMod].resourcePath
+modApi:appendAsset("img/weapons/Nico_knightbot.png", path .."img/weapons/Nico_knightbot.png")
 	function Nico_knightbot:GetTargetArea(point)
 		local ret = PointList()
 		local curr = point

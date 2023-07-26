@@ -1,4 +1,6 @@
 local mod = modApi:getCurrentMod()
+local path = mod_loader.mods[modApi.currentMod].resourcePath
+--the actual weapon
 ------Boom Cannon------
 Nico_cannonboom=Nico_cannonbot:new{
 	Name="Cannon Explo Mark I",
@@ -25,6 +27,7 @@ Nico_cannonboom=Nico_cannonbot:new{
 	ImpactSound = "/impact/generic/explosion",
 	CustomTipImage = "Nico_cannonboom_Tip",
 }
+modApi:appendAsset("img/weapons/Nico_cannonboom.png", path .."img/weapons/Nico_cannonboom.png")
 
 function Nico_cannonboom:GetTargetArea(point)
 	return Board:GetSimpleReachable(point, self.PathSize, self.CornersAllowed)

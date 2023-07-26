@@ -244,4 +244,6 @@ Nico_juggernaut = Skill:new{
 		}
 	}
 	modApi:addWeaponDrop("Nico_juggernaut")
-
+	local path = mod_loader.mods[modApi.currentMod].resourcePath
+	modApi:appendAsset("img/effects/Nico_icon_ice_glow.png", path.."img/weapons/Nico_icon_ice_glow.png")
+	Location["effects/Nico_icon_ice_glow.png"] = Point(-10,8)
