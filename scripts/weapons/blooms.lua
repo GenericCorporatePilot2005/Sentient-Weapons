@@ -7,11 +7,12 @@ require(path .."palettes")
 Nico_laserbloom = Pawn:new{
 	Name = "Bloom-Laser",
 	Health = 1,
+	Nico_onDeath="BloomDeath",
 	Class = "TechnoVek",
 	ImageOffset = modApi:getPaletteImageOffset("Nico_bloom_1"),
 	DefaultTeam = TEAM_PLAYER,
 	MoveSpeed = 3,
-	Image = "Nico_laserbot_mech",
+	Image = "Nico_Laser_Bloom",
 	SkillList = { "Nico_laserheal" },
 	SoundLocation = "/enemy/snowlaser_1/",
 	DefaultTeam = TEAM_PLAYER,
@@ -110,11 +111,12 @@ end
 Nico_cannonbloom = Pawn:new{
 	Name = "Bloom-Cannon",
 	Health = 1,
+	Nico_onDeath="BloomDeath",
 	Class = "TechnoVek",
 	ImageOffset = modApi:getPaletteImageOffset("Nico_bloom_2"),
 	DefaultTeam = TEAM_PLAYER,
 	MoveSpeed = 3,
-	Image = "Nico_cannonbot_mech",
+	Image = "Nico_Cannon_Bloom",
 	SkillList = { "Nico_cannonheal" },
 	SoundLocation = "/enemy/snowtank_1/",
 	DefaultTeam = TEAM_PLAYER,
@@ -151,9 +153,6 @@ Nico_cannonheal = TankDefault:new{
         CustomPawn="Nico_cannonbloom",
 	}
 }
-local path = mod_loader.mods[modApi.currentMod].resourcePath
-modApi:appendAsset("img/effects/Nico_icon_shield+1.png", path.."img/weapons/Nico_icon_shield+1.png")
-Location["effects/Nico_icon_shield+1.png"] = Point(-18,5)
 function Nico_cannonheal:GetSkillEffect(p1,p2)
 	local ret = SkillEffect()
 	local direction = GetDirection(p2 - p1)
@@ -176,10 +175,11 @@ Nico_artillerybloom = Pawn:new{
 	Name = "Bloom-Artillery",
 	Health = 1,
 	Class = "TechnoVek",
+	Nico_onDeath="BloomDeath",
 	ImageOffset = modApi:getPaletteImageOffset("Nico_bloom_3"),
 	DefaultTeam = TEAM_PLAYER,
 	MoveSpeed = 3,
-	Image = "Nico_artillerybot_mech",
+	Image = "Nico_Artillery_Bloom",
 	SkillList = { "Nico_artilleryheal" },
 	SoundLocation = "/enemy/snowart_1/",
 	DefaultTeam = TEAM_PLAYER,
@@ -230,3 +230,18 @@ function Nico_artilleryheal:GetSkillEffect(p1,p2)
 	
 	return ret
 end
+
+BloomDeath = Emitter:new{
+	image = "effects/Bloom_Bot's_petal.png",
+	image_count = 1,
+	max_alpha = 1.0,
+	min_alpha = 0.0,
+	rot_speed = 100,
+	x = 0, y = 10, variance_x = 0, variance_y = 0,
+	angle = 20, angle_variance = 220,
+	timer = 0,
+	burst_count = 1, speed = 1.00, lifespan = 1.0, birth_rate = 0,
+	max_particles = 16,
+	gravity = true,
+	layer = LAYER_FRONT
+}

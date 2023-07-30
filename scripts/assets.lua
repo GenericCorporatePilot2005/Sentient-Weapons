@@ -1,6 +1,5 @@
 local mod = modApi:getCurrentMod()
 local path = mod_loader.mods[modApi.currentMod].resourcePath
-modApi:appendAsset("img/units/player/BloomBotPrototype.png",path.."img/units/player/BloomBotPrototype.png")
 local mechPath = path .."img/units/player/"
 -- make a list of our files.
 local files = {
@@ -48,6 +47,20 @@ local files = {
     "Nico_minerbot_mech_ns.png",
     "Nico_minerbot_mech_h.png",
     "Nico_minerbot_mech_death.png",
+    "Nico_juggernautbot_mech.png",
+    "Nico_juggernautbot_mech_a.png",
+    "Nico_juggernautbot_mech_w.png",
+    "Nico_juggernautbot_mech_w_broken.png",
+    "Nico_juggernautbot_mech_broken.png",
+    "Nico_juggernautbot_mech_ns.png",
+    "Nico_juggernautbot_mech_h.png",
+    "Nico_hulkbot_mech.png",
+    "Nico_hulkbot_mech_a.png",
+    "Nico_hulkbot_mech_w.png",
+    "Nico_hulkbot_mech_w_broken.png",
+    "Nico_hulkbot_mech_broken.png",
+    "Nico_hulkbot_mech_ns.png",
+    "Nico_hulkbot_mech_h.png",
     "Nico_artilleryboom_mech.png",
     "Nico_artilleryboom_mech_a.png",
     "Nico_artilleryboom_mech_w.png",
@@ -69,20 +82,16 @@ local files = {
     "Nico_cannonboom_mech_broken.png",
     "Nico_cannonboom_mech_ns.png",
     "Nico_cannonboom_mech_h.png",
-    "Nico_juggernautbot_mech.png",
-    "Nico_juggernautbot_mech_a.png",
-    "Nico_juggernautbot_mech_w.png",
-    "Nico_juggernautbot_mech_w_broken.png",
-    "Nico_juggernautbot_mech_broken.png",
-    "Nico_juggernautbot_mech_ns.png",
-    "Nico_juggernautbot_mech_h.png",
-    "Nico_hulkbot_mech.png",
-    "Nico_hulkbot_mech_a.png",
-    "Nico_hulkbot_mech_w.png",
-    "Nico_hulkbot_mech_w_broken.png",
-    "Nico_hulkbot_mech_broken.png",
-    "Nico_hulkbot_mech_ns.png",
-    "Nico_hulkbot_mech_h.png",
+    "Nico_Laser_Bloom.png",
+    "Nico_Laser_Bloom_ns.png",
+    "Nico_Laser_Bloom_a.png",
+    "Nico_Artillery_Bloom.png",
+    "Nico_Artillery_Bloom_ns.png",
+    "Nico_Artillery_Bloom_a.png",
+    "Nico_Cannon_Bloom.png",
+    "Nico_Cannon_Bloom_ns.png",
+    "Nico_Cannon_Bloom_a.png",
+    "Nico_Bloomd.png",
 }
 for _, file in ipairs(files) do
     modApi:appendAsset("img/units/player/".. file, mechPath .. file)
@@ -127,11 +136,25 @@ local a=ANIMS
     --Mine-Bot
         a.Nico_minerbot_mech =a.MechUnit:new{Image="units/player/Nico_minerbot_mech.png", PosX = -20, PosY = 4}
         a.Nico_minerbot_mecha = a.MechUnit:new{Image="units/player/Nico_minerbot_mech_a.png",  PosX = -20, PosY = 4, NumFrames = 4 }
-        a.Nico_minerbot_mechd = a.EnemyUnit:new{Image="units/player/Nico_minerbot_mech_death.png",  PosX = -24, PosY = -3, NumFrames = 11, Time = 0.1, Loop = false  }
+        a.Nico_minerbot_mechd = a.MechUnit:new{Image="units/player/Nico_minerbot_mech_death.png",  PosX = -24, PosY = -3, NumFrames = 11, Time = 0.1, Loop = false  }
         a.Nico_minerbot_mechw = a.MechUnit:new{Image="units/player/Nico_minerbot_mech_w.png", PosX = -20, PosY = 10}
         a.Nico_minerbot_mech_broken = a.MechUnit:new{Image="units/player/Nico_minerbot_mech_broken.png", PosX = -12, PosY = 0 }
         a.Nico_minerbot_mechw_broken = a.MechUnit:new{Image="units/player/Nico_minerbot_mech_w_broken.png", PosX = -20, PosY = 10}
         a.Nico_minerbot_mech_ns = a.MechIcon:new{Image="units/player/Nico_minerbot_mech_ns.png"}
+    --Juggernaut-Bot
+        a.Nico_juggernautbot_mech =a.MechUnit:new{Image="units/player/Nico_juggernautbot_mech.png", PosX = -24, PosY = -9}
+        a.Nico_juggernautbot_mecha = a.MechUnit:new{Image="units/player/Nico_juggernautbot_mech_a.png",  PosX = -24, PosY = -9, NumFrames = 4 }
+        a.Nico_juggernautbot_mechw = a.MechUnit:new{Image="units/player/Nico_juggernautbot_mech_w.png", PosX = -17, PosY = 9}
+        a.Nico_juggernautbot_mech_broken = a.MechUnit:new{Image="units/player/Nico_juggernautbot_mech_broken.png", PosX = -23, PosY = -8 }
+        a.Nico_juggernautbot_mechw_broken = a.MechUnit:new{Image="units/player/Nico_juggernautbot_mech_w_broken.png", PosX = -17, PosY = 9}
+        a.Nico_juggernautbot_mech_ns = a.MechIcon:new{Image="units/player/Nico_juggernautbot_mech_ns.png"}
+    --Cryo-Hulk
+        a.Nico_hulkbot_mech =a.MechUnit:new{Image="units/player/Nico_hulkbot_mech.png", PosX = -20, PosY = -10 }
+        a.Nico_hulkbot_mecha = a.MechUnit:new{Image="units/player/Nico_hulkbot_mech_a.png",  PosX = -20, PosY = -10, NumFrames = 4 }
+        a.Nico_hulkbot_mechw = a.MechUnit:new{Image="units/player/Nico_hulkbot_mech_w.png", PosX = -20, PosY = 0 }
+        a.Nico_hulkbot_mech_broken = a.MechUnit:new{Image="units/player/Nico_hulkbot_mech_broken.png", PosX = -20, PosY = -10 }
+        a.Nico_hulkbot_mechw_broken = a.MechUnit:new{Image="units/player/Nico_hulkbot_mech_w_broken.png", PosX = -20, PosY = 0 }
+        a.Nico_hulkbot_mech_ns = a.MechIcon:new{Image="units/player/Nico_hulkbot_mech_ns.png"}
     --Boom-Artillery
         a.Nico_artilleryboom_mech =a.MechUnit:new{Image="units/player/Nico_artilleryboom_mech.png", PosX = -18, PosY = -9}
         a.Nico_artilleryboom_mecha = a.MechUnit:new{Image="units/player/Nico_artilleryboom_mech_a.png",  PosX = -18, PosY = -9, NumFrames = 4 }
@@ -153,20 +176,21 @@ local a=ANIMS
         a.Nico_cannonboom_mech_broken = a.MechUnit:new{Image="units/player/Nico_cannonboom_mech_broken.png", PosX = -20, PosY = -4 }
         a.Nico_cannonboom_mechw_broken = a.MechUnit:new{Image="units/player/Nico_cannonboom_mech_w_broken.png", PosX = -20, PosY = 2 }
         a.Nico_cannonboom_mech_ns = a.MechIcon:new{Image="units/player/Nico_cannonboom_mech_ns.png"}
-    --Juggernaut-Bot
-        a.Nico_juggernautbot_mech =a.MechUnit:new{Image="units/player/Nico_juggernautbot_mech.png", PosX = -24, PosY = -9}
-        a.Nico_juggernautbot_mecha = a.MechUnit:new{Image="units/player/Nico_juggernautbot_mech_a.png",  PosX = -24, PosY = -9, NumFrames = 4 }
-        a.Nico_juggernautbot_mechw = a.MechUnit:new{Image="units/player/Nico_juggernautbot_mech_w.png", PosX = -17, PosY = 9}
-        a.Nico_juggernautbot_mech_broken = a.MechUnit:new{Image="units/player/Nico_juggernautbot_mech_broken.png", PosX = -23, PosY = -8 }
-        a.Nico_juggernautbot_mechw_broken = a.MechUnit:new{Image="units/player/Nico_juggernautbot_mech_w_broken.png", PosX = -17, PosY = 9}
-        a.Nico_juggernautbot_mech_ns = a.MechIcon:new{Image="units/player/Nico_juggernautbot_mech_ns.png"}
-    --Cryo-Hulk
-        a.Nico_hulkbot_mech =a.MechUnit:new{Image="units/player/Nico_hulkbot_mech.png", PosX = -20, PosY = -10 }
-        a.Nico_hulkbot_mecha = a.MechUnit:new{Image="units/player/Nico_hulkbot_mech_a.png",  PosX = -20, PosY = -10, NumFrames = 4 }
-        a.Nico_hulkbot_mechw = a.MechUnit:new{Image="units/player/Nico_hulkbot_mech_w.png", PosX = -20, PosY = 0 }
-        a.Nico_hulkbot_mech_broken = a.MechUnit:new{Image="units/player/Nico_hulkbot_mech_broken.png", PosX = -20, PosY = -10 }
-        a.Nico_hulkbot_mechw_broken = a.MechUnit:new{Image="units/player/Nico_hulkbot_mech_w_broken.png", PosX = -20, PosY = 0 }
-        a.Nico_hulkbot_mech_ns = a.MechIcon:new{Image="units/player/Nico_hulkbot_mech_ns.png"}
+    --Bloom Laser
+        a.Nico_Laser_Bloom=a.MechUnit:new{Image="units/player/Nico_Laser_Bloom.png", PosX = -13, PosY = 3}
+        a.Nico_Laser_Bloom_ns=a.MechIcon:new{Image="units/player/Nico_Laser_Bloom_ns.png"}
+        a.Nico_Laser_Bloomd=a.MechUnit:new{Image="units/player/Nico_Bloomd.png",  PosX = -16, PosY = 11, NumFrames = 10, Time = .14, Loop = false  }
+        a.Nico_Laser_Blooma= a.MechUnit:new{Image="units/player/Nico_Laser_Bloom_a.png",  PosX = -13, PosY = 3, NumFrames = 8 }
+    --Bloom Cannon
+        a.Nico_Cannon_Bloom=a.MechUnit:new{Image="units/player/Nico_Cannon_Bloom.png", PosX = -13, PosY = 3}
+        a.Nico_Cannon_Bloom_ns=a.MechIcon:new{Image="units/player/Nico_Cannon_Bloom_ns.png"}
+        a.Nico_Cannon_Bloomd=a.MechUnit:new{Image="units/player/Nico_Bloomd.png",  PosX = -16, PosY = 11, NumFrames = 10, Time = .14, Loop = false  }
+        a.Nico_Cannon_Blooma= a.MechUnit:new{Image="units/player/Nico_Cannon_Bloom_a.png",  PosX = -13, PosY = 3, NumFrames = 4 }
+    --Bloom Artillery
+        a.Nico_Artillery_Bloom=a.MechUnit:new{Image="units/player/Nico_Artillery_Bloom.png", PosX = -13, PosY = 3}
+        a.Nico_Artillery_Bloom_ns=a.MechIcon:new{Image="units/player/Nico_Artillery_Bloom_ns.png"}
+        a.Nico_Artillery_Bloomd=a.MechUnit:new{Image="units/player/Nico_Bloomd.png",  PosX = -16, PosY = 11, NumFrames = 10, Time = .14, Loop = false  }
+        a.Nico_Artillery_Blooma= a.MechUnit:new{Image="units/player/Nico_Artillery_Bloom_a.png",  PosX = -13, PosY = 3, NumFrames = 4 }
 --weapon icons
 
     local files = {
@@ -181,6 +205,8 @@ local a=ANIMS
 	Location["effects/Nico_icon_ice_glow.png"] = Point(-10,8)
     modApi:appendAsset("img/weapons/Nico_shield_explode_glow.png", path.."img/weapons/Nico_shield_explode_glow.png")
     Location["weapons/Nico_shield_explode_glow.png"] = Point(-16,8)
+    modApi:appendAsset("img/effects/Nico_icon_shield+1.png", path.."img/weapons/Nico_icon_shield+1.png")
+    Location["effects/Nico_icon_shield+1.png"] = Point(-18,5)
 --mech weapons
     modApi:appendAsset("img/weapons/Nico_laserbot.png", path .."img/weapons/Nico_laserbot.png")
     modApi:appendAsset("img/weapons/Nico_knightbot.png", path .."img/weapons/Nico_knightbot.png")
@@ -204,6 +230,7 @@ local a=ANIMS
     modApi:appendAsset("img/icon_Nico_shield_heal.png", path.."img/icon_Nico_shield_heal.png")--image of the trait
 --Effects
     modApi:appendAsset("img/effects/shotup_deploymine.png", path.. "img/effects/shotup_deploymine.png")
+    modApi:appendAsset("img/effects/Bloom_Bot's_petal.png", path.. "img/effects/Bloom_Bot's_petal.png")
     modApi:appendAsset("img/effects/shield_bot_pulse.png", path.. "img/effects/shield_bot_pulse.png")
 --portraits
     modApi:appendAsset("img/portraits/pilots/Pilot_Nico_artillerybot_mech.png", path .."img/portraits/Pilot_Nico_artillerybot_mech.png")

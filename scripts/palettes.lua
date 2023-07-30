@@ -88,7 +88,7 @@ if modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SWBB") then
     modApi:addPalette{--Bloom Bot Laser
         ID = "Nico_bloom_1",
         Name = "Bloom Bot Laser",
-        image="units/player/BloomBotPrototype.png",
+        image="units/player/Nico_Laser_Bloom_ns.png",
         PlateHighlight = {255,0,0},--lights
         PlateLight     = {177,221,108},--main highlight
         PlateMid       = {76,130,79},--main light
@@ -101,7 +101,7 @@ if modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SWBB") then
     modApi:addPalette{--Bloom Bot Cannon
         ID = "Nico_bloom_2",
         Name = "Bloom Bot Cannon",
-        image="units/player/BloomBotPrototype.png",
+        image="units/player/Nico_Cannon_Bloom_ns.png",
         PlateHighlight = {255,0,0},--lights
         PlateLight     = {177,221,108},--main highlight
         PlateMid       = {76,130,79},--main light
@@ -113,8 +113,9 @@ if modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SWBB") then
     }
     modApi:addPalette{--Bloom Bot Artillery
         ID = "Nico_bloom_3",
+        image="units/player/Laser_Bloom_ns.png",
         Name = "Bloom Bot Artillery",
-        image="units/player/BloomBotPrototype.png",
+        image="units/player/Nico_Artillery_Bloom_ns.png",
         PlateHighlight = {255,0,0},--lights
         PlateLight     = {177,221,108},--main highlight
         PlateMid       = {76,130,79},--main light
