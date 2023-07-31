@@ -233,15 +233,20 @@ local a=ANIMS
     modApi:appendAsset("img/effects/Bloom_Bot's_petal.png", path.. "img/effects/Bloom_Bot's_petal.png")
     modApi:appendAsset("img/effects/shield_bot_pulse.png", path.. "img/effects/shield_bot_pulse.png")
 --portraits
-    modApi:appendAsset("img/portraits/pilots/Pilot_Nico_artillerybot_mech.png", path .."img/portraits/Pilot_Nico_artillerybot_mech.png")
-    modApi:appendAsset("img/portraits/pilots/Pilot_Nico_laserbot_mech.png", path .."img/portraits/Pilot_Nico_laserbot_mech.png")
-    modApi:appendAsset("img/portraits/pilots/Pilot_Nico_cannonbot_mech.png", path .."img/portraits/Pilot_Nico_cannonbot_mech.png")
-    modApi:appendAsset("img/portraits/pilots/Pilot_Nico_knightbot_mech.png", path .."img/portraits/Pilot_Nico_knightbot_mech.png")
-    modApi:appendAsset("img/portraits/pilots/Pilot_Nico_shieldbot_mech.png", path .."img/portraits/Pilot_Nico_shieldbot_mech.png")
-    modApi:appendAsset("img/portraits/pilots/Pilot_Nico_minerbot_mech.png", path .."img/portraits/Pilot_Nico_minerbot_mech.png")
-    modApi:appendAsset("img/portraits/pilots/Pilot_Nico_artilleryboom_mech.png", path .."img/portraits/Pilot_Nico_artilleryboom_mech.png")
-    modApi:appendAsset("img/portraits/pilots/Pilot_Nico_laserboom_mech.png", path .."img/portraits/Pilot_Nico_laserboom_mech.png")
-    modApi:appendAsset("img/portraits/pilots/Pilot_Nico_cannonboom_mech.png", path .."img/portraits/Pilot_Nico_cannonboom_mech.png")
-    modApi:appendAsset("img/portraits/pilots/Pilot_Nico_juggernautbot_mech.png", path .."img/portraits/Pilot_Nico_juggernautbot_mech.png")
-    modApi:appendAsset("img/portraits/pilots/Pilot_Nico_botleader_mech.png", path .."img/portraits/Pilot_Nico_botleader_mech.png")
-    modApi:appendAsset("img/portraits/pilots/Pilot_Nico_hulkbot_mech.png", path .."img/portraits/Pilot_Nico_hulkbot_mech.png")
+local files = {
+    "Pilot_Nico_artillerybot_mech.png",
+    "Pilot_Nico_laserbot_mech.png",
+    "Pilot_Nico_cannonbot_mech.png",
+    "Pilot_Nico_knightbot_mech.png",
+    "Pilot_Nico_shieldbot_mech.png",
+    "Pilot_Nico_minerbot_mech.png",
+    "Pilot_Nico_laserboom_mech.png",
+    "Pilot_Nico_cannonboom_mech.png",
+    "Pilot_Nico_artilleryboom_mech.png",
+    "Pilot_Nico_juggernautbot_mech.png",
+    "Pilot_Nico_hulkbot_mech.png",
+    "Pilot_Nico_botleader_mech.png",
+}
+for _, file in ipairs(files) do
+     modApi:appendAsset("img/portraits/pilots/".. file, path.."img/portraits/pilots/".. file)
+end
