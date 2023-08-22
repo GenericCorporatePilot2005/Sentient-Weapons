@@ -26,6 +26,7 @@ Nico_laserheal = Nico_laserbot:new{
     Description="Sacrifice self to fire a piercing beam that repairs all targets and shields the adjacent friendly target.",
 	Explosion = "",
 	Sound = "",
+	Icon="weapons/Nico_bloom_laser.png",
 	Damage = -1,
 	Fire = -1,
     SelfDamage=DAMAGE_DEATH,
@@ -77,7 +78,7 @@ function Nico_laserheal:AddLaser(ret,point,direction)
 		dam.sScript = "Board:SetFire("..point:GetString()..",false)"
 		if (start:Manhattan(point) == 1 and Board:IsPawnTeam(point, TEAM_PLAYER)) then
             local shield=SpaceDamage(dam.loc,0)
-            shield.sImageMark= "effects/Nico_icon_shield+1.png"
+            shield.sImageMark= "combat/icons/Nico_icon_shield+1.png"
 			dam.iShield = 1
             dam.bHide=true
 			dam.sScript = "Board:SetFire("..point:GetString()..",false) modApi:runLater(function() Board:AddShield("..point:GetString()..") end)"
@@ -130,7 +131,7 @@ Nico_cannonheal = TankDefault:new{
 	Range = RANGE_PROJECTILE,
 	PathSize = INT_MAX,
 	Description="Sacrifice self to fire a projectile that repairs and shields the target.",
-	Icon = "advanced/weapons/SnowtankAtk1_Player.png",
+	Icon="weapons/Nico_bloom_cannon.png",
 	SelfDamage = DAMAGE_DEATH,
 	Damage = -1,
     Fire = -1,
@@ -164,9 +165,9 @@ function Nico_cannonheal:GetSkillEffect(p1,p2)
 	dam.bHide=true
 	dam.sScript = "Board:SetFire("..target:GetString()..",false) modApi:runLater(function() Board:AddShield("..target:GetString()..") end)"
 	local shield=SpaceDamage(target,0)
-	shield.sImageMark= "effects/Nico_icon_shield+1.png"
+	shield.sImageMark= "combat/icons/Nico_icon_shield+1.png"
 	ret:AddDamage(dam)
-	ret:AddProjectile(shield, self.ProjectileArt, NO_DELAY)
+	ret:AddProjectile(shield, self.ProjectileArt, FULL_DELAY)
 	return ret
 end
 
@@ -198,10 +199,10 @@ Nico_artilleryheal = SnowartAtk1:new{
 	SelfDamage = DAMAGE_DEATH,
 	Class = "TechnoVek",
 	Description="Sacrifice self to fire three rockets that repair the targets.",
-	Icon = "weapons/ranged_tribomb.png",
+	Icon="weapons/Nico_bloom_artillery.png",
 	LaunchSound = "/enemy/snowart_1/attack",
 	ImpactSound = "/impact/generic/explosion",
-	Projectile = "effects/shot_artimech.png",
+	Projectile = "effects/shotup_bloom_artillery.png",
 	TipImage = {
 		Unit = Point(2,3),
 		Friendly_Damaged1 = Point(1,1),
@@ -220,13 +221,13 @@ function Nico_artilleryheal:GetSkillEffect(p1,p2)
 	local dam = SpaceDamage(p2, self.Damage)
 	dam.iFire = -1
 	dam.sScript = "Board:SetFire("..p2:GetString()..",false)"
-	ret:AddArtillery(dam,self.Projectile)
+	ret:AddArtillery(dam,self.Projectile, NO_DELAY)
 	dam.loc = p2 + DIR_VECTORS[(dir + 1)% 4]
 	dam.sScript = "Board:SetFire("..(p2 + DIR_VECTORS[(dir + 1)% 4]):GetString()..",false)"
-	ret:AddDamage(dam)
+	ret:AddArtillery(dam,self.Projectile, NO_DELAY)
 	dam.loc = p2 + DIR_VECTORS[(dir - 1)% 4]
 	dam.sScript = "Board:SetFire("..(p2 + DIR_VECTORS[(dir - 1)% 4]):GetString()..",false)"
-	ret:AddDamage(dam)
+	ret:AddArtillery(dam,self.Projectile, NO_DELAY)
 	
 	return ret
 end

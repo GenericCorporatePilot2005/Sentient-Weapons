@@ -93,7 +93,7 @@ Nico_hulkbot=ArtilleryDefault:new{
 		if self.Cancel then
 			local iconfire = SpaceDamage(p3,0)
 			if Board:IsPawnSpace(p3) and Board:GetPawn(p3):GetTeam() == TEAM_ENEMY then
-				iconfire.sImageMark = "weapons/Nico_fire_cancel.png"
+				iconfire.sImageMark = "combat/icons/Nico_fire_cancel.png"
 				ret:AddScript("Board:GetPawn("..p3:GetString().."):ClearQueued()")
 				if Board:GetPawn(p3):IsQueued() and Board:IsPawnTeam(p3, TEAM_ENEMY) then
 					ret:AddScript("Board:AddAlert("..p3:GetString()..",\"ATTACK CANCELED\")")
@@ -106,7 +106,7 @@ Nico_hulkbot=ArtilleryDefault:new{
 				ret:AddDamage(damage)
 				ret:AddScript("Board:GetPawn("..web_id.."):SetSpace("..p3:GetString()..")")--Move the pawn back
 			else
-				iconfire.sImageMark = "weapons/Nico_fire_cancel_off.png"
+				iconfire.sImageMark = "combat/icons/Nico_fire_cancel_off.png"
 				damage = SpaceDamage(p3,0)
 				damage.bHide=true
 				damage.iFire = 1

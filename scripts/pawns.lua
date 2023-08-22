@@ -222,7 +222,7 @@ require(path .."palettes")
     for i = 1,8 do
     	trait:add{
 		    pawnType=Nico_Pawn_List[i],--who will get the trait
-		    icon = "img/icon_Nico_zenith_shield.png",--the icon itself
+		    icon = "img/combat/icons/icon_Nico_zenith_shield.png",--the icon itself
 		    icon_offset = Point(0,9),--it's location
 		    desc_title = "Zenith\'s Guard",--title
 		    desc_text = "Gains a shield when moving, leaping, charging, or teleporting to a destination next to another Mech. Bots can repair other adjacent Bots.",--description
@@ -231,7 +231,7 @@ require(path .."palettes")
 
     trait:add{
 	    pawnType="Nico_botleader_mech",--who will get the trait
-	    icon = "img/icon_Nico_shield_heal.png",--the icon itself
+	    icon = "img/combat/icons/icon_Nico_shield_heal.png",--the icon itself
 	    icon_offset = Point(0,9),--it's location
 	    desc_title = "Bot Leader",--title
 	    desc_text = "After taking any damage, the next action is a forced repair.\nAt mission start, can deploy a number of Cannon Mechs equal to pilot level.\nRevives when dead at the end of a battle.",--description

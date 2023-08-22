@@ -41,7 +41,7 @@ local path = mod_loader.mods[modApi.currentMod].resourcePath
 		local blastFlag = (Board:IsPawnSpace(p2) and Board:GetPawn(p2):IsShield()) or Board:IsShield(p2)
 		local damage = SpaceDamage(p2, 0)
 		damage.iShield = (blastFlag and 0) or 1
-		damage.sImageMark = (blastFlag and "weapons/Nico_shield_explode_glow.png") or damage.sImageMark
+		damage.sImageMark = (blastFlag and "combat/icons/Nico_shield_explode_glow.png") or damage.sImageMark
 	
 		damage.sAnimation = (blastFlag and ((p1==p2 and "ExploAir2") or (p1~=p2 and "ExploArt2"))) or "shieldbotpulse"
 		if p1 == p2 then ret:AddDamage(damage) 
@@ -101,7 +101,7 @@ local path = mod_loader.mods[modApi.currentMod].resourcePath
 				elseif #_G[Board:GetPawn(p2 + DIR_VECTORS[i]):GetType()].ExtraSpaces>0 then
 					damage.iPush = DIR_NONE
 					damage.sAnimation = ""
-					damage.sImageMark = "weapons/Nico_shield_explode_glow.png"
+					damage.sImageMark = "combat/icons/Nico_shield_explode_glow.png"
 					otherPawnSpace = p2 + DIR_VECTORS[i]
 					ret:AddDamage(damage)
 				end

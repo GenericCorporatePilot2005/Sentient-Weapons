@@ -157,7 +157,7 @@ end
             damage.bHide=true
             local shield= SpaceDamage(p2,0)
             damage.iShield = 1
-            shield.sImageMark= "effects/Nico_icon_shield+10.png"
+            shield.sImageMark= "combat/icons/Nico_icon_shield+10.png"
             
             local mechs = extract_table(Board:GetPawns(TEAM_MECH))
             for i,id in pairs(mechs) do

@@ -196,17 +196,18 @@ local a=ANIMS
     local files = {
         "Nico_fire_cancel.png",
         "Nico_fire_cancel_off.png",
+        "Nico_fire_cancel_off_B.png",
     }
     for _, file in ipairs(files) do
-        modApi:appendAsset("img/weapons/".. file, path.. "img/weapons/" .. file)
-        Location["img/weapons/"..file] = Point(-12,8)
+        modApi:appendAsset("img/combat/icons/".. file, path.. "img/combat/icons/" .. file)
+        Location["combat/icons/"..file] = Point(-12,8)
     end
-    modApi:appendAsset("img/effects/Nico_icon_ice_glow.png", path.."img/weapons/Nico_icon_ice_glow.png")
-	Location["effects/Nico_icon_ice_glow.png"] = Point(-10,8)
-    modApi:appendAsset("img/weapons/Nico_shield_explode_glow.png", path.."img/weapons/Nico_shield_explode_glow.png")
-    Location["weapons/Nico_shield_explode_glow.png"] = Point(-16,8)
-    modApi:appendAsset("img/effects/Nico_icon_shield+1.png", path.."img/weapons/Nico_icon_shield+1.png")
-    Location["effects/Nico_icon_shield+1.png"] = Point(-18,5)
+    modApi:appendAsset("img/combat/icons/Nico_icon_ice_glow.png", path.."img/combat/icons/Nico_icon_ice_glow.png")
+	Location["combat/icons/Nico_icon_ice_glow.png"] = Point(-10,8)
+    modApi:appendAsset("img/combat/icons/Nico_shield_explode_glow.png", path.."img/combat/icons/Nico_shield_explode_glow.png")
+    Location["combat/icons/Nico_shield_explode_glow.png"] = Point(-16,8)
+    modApi:appendAsset("img/combat/icons/Nico_icon_shield+1.png", path.."img/combat/icons/Nico_icon_shield+1.png")
+    Location["combat/icons/Nico_icon_shield+1.png"] = Point(-18,5)
 --mech weapons
     modApi:appendAsset("img/weapons/Nico_laserbot.png", path .."img/weapons/Nico_laserbot.png")
     modApi:appendAsset("img/weapons/Nico_knightbot.png", path .."img/weapons/Nico_knightbot.png")
@@ -218,18 +219,22 @@ local a=ANIMS
     modApi:appendAsset("img/weapons/Nico_cannondeploy.png", path .."img/weapons/Nico_cannondeploy.png")
     modApi:appendAsset("img/weapons/Nico_cannonboom.png", path .."img/weapons/Nico_cannonboom.png")
     modApi:appendAsset("img/weapons/Nico_laserboom.png", path .."img/weapons/Nico_laserboom.png")
+    modApi:appendAsset("img/weapons/Nico_bloom_laser.png", path .."img/weapons/Nico_bloom_laser.png")
+    modApi:appendAsset("img/weapons/Nico_bloom_cannon.png", path .."img/weapons/Nico_bloom_cannon.png")
+    modApi:appendAsset("img/weapons/Nico_bloom_artillery.png", path .."img/weapons/Nico_bloom_artillery.png")
     
 --Bot Leader's skill replacement
     modApi:appendAsset("img/weapons/Nico_Bot_Repair.png", path.."img/weapons/Nico_Bot_Repair.png")
     modApi:appendAsset("img/weapons/Nico_Bot_Repair_frozen.png", path.."img/weapons/Nico_Bot_Repair_frozen.png")
 
-    modApi:appendAsset("img/effects/Nico_icon_shield+10.png", path.."img/weapons/Nico_icon_shield+10.png")
-    Location["effects/Nico_icon_shield+10.png"] = Point(-16,8)
+    modApi:appendAsset("img/combat/icons/Nico_icon_shield+10.png", path.."img/combat/icons/Nico_icon_shield+10.png")
+    Location["combat/icons/Nico_icon_shield+10.png"] = Point(-16,8)
 --Traits
-    modApi:appendAsset("img/icon_Nico_zenith_shield.png", path.."img/icon_Nico_zenith_shield.png")--image of the trait
-    modApi:appendAsset("img/icon_Nico_shield_heal.png", path.."img/icon_Nico_shield_heal.png")--image of the trait
+    modApi:appendAsset("img/combat/icons/icon_Nico_zenith_shield.png", path.."img/combat/icons/icon_Nico_zenith_shield.png")--image of the trait
+    modApi:appendAsset("img/combat/icons/icon_Nico_shield_heal.png", path.."img/combat/icons/icon_Nico_shield_heal.png")--image of the trait
 --Effects
     modApi:appendAsset("img/effects/shotup_deploymine.png", path.. "img/effects/shotup_deploymine.png")
+    modApi:appendAsset("img/effects/shotup_bloom_artillery.png", path.. "img/effects/shotup_bloom_artillery.png")
     modApi:appendAsset("img/effects/Bloom_Bot's_petal.png", path.. "img/effects/Bloom_Bot's_petal.png")
     modApi:appendAsset("img/effects/shield_bot_pulse.png", path.. "img/effects/shield_bot_pulse.png")
 --portraits

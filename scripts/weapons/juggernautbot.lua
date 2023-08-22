@@ -97,16 +97,16 @@ Nico_juggernaut = Skill:new{
 			if dodamage == true then
 				local damage = SpaceDamage(midpoint,self.Damage)
 				ret:AddDamage(damage)
-				ret:AddBurst(midpoint,"Emitter_Crack_Start", DIR_NONE)
-				ret:AddBounce(midpoint,1)
 			end
+			ret:AddBurst(midpoint,"Emitter_Crack_Start", DIR_NONE)
+			ret:AddBounce(midpoint,1)
 		end
 		if Board:IsTerrain(endcharge,TERRAIN_WATER) then
 			local ice = SpaceDamage(endcharge,0)
 			local del = SpaceDamage(0)
 			del.fDelay = -1
 			ice.iTerrain = TERRAIN_ICE
-			ice.sImageMark = "effects/Nico_icon_ice_glow.png"
+			ice.sImageMark = "combat/icons/Nico_icon_ice_glow.png"
 			if Board:IsAcid(endcharge) then
 				ice.sAnimation="Splash_acid"
 			elseif Board:IsTerrain(endcharge,TERRAIN_LAVA) then
@@ -205,16 +205,16 @@ Nico_juggernaut = Skill:new{
 			if dodamage == true then
 				local damage = SpaceDamage(midpoint,self.Damage)
 				ret:AddDamage(damage)
-				ret:AddBurst(midpoint,"Emitter_Crack_Start2", DIR_NONE)
-				ret:AddBounce(midpoint,1)
 			end
+			ret:AddBurst(midpoint,"Emitter_Crack_Start2", DIR_NONE)
+			ret:AddBounce(midpoint,1)
 		end
 		if Board:IsTerrain(endcharge,TERRAIN_WATER) then
 			local ice = SpaceDamage(endcharge,0)
 			local del = SpaceDamage(0)
 			del.fDelay = -1
 			ice.iTerrain = TERRAIN_ICE
-			ice.sImageMark = "effects/Nico_icon_ice_glow.png"
+			ice.sImageMark = "combat/icons/Nico_icon_ice_glow.png"
 			if Board:IsAcid(endcharge) then
 				ice.sAnimation="Splash_acid"
 			elseif Board:IsTerrain(endcharge,TERRAIN_LAVA) then
