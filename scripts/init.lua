@@ -24,6 +24,7 @@ function mod:init()
 	require(self.scriptPath .."achievements1")
 	require(self.scriptPath .."achievements2")
 	require(self.scriptPath .."achievements3")
+	require(self.scriptPath .."deathPetals")
 	
 	--[[commented out for the moment, just in case we need it
 	-- add extra mech to selection screen
