@@ -216,6 +216,7 @@ local a=ANIMS
     modApi:appendAsset("img/weapons/Nico_shieldbot.png", path .."img/weapons/Nico_shieldbot.png")
     modApi:appendAsset("img/weapons/Nico_leaderbot.png", path .."img/weapons/Nico_leaderbot.png")
     modApi:appendAsset("img/weapons/Nico_hulkbot.png", path .."img/weapons/Nico_hulkbot.png")
+    modApi:appendAsset("img/weapons/Nico_juggernautbot.png", path .."img/weapons/Nico_juggernautbot.png")
     modApi:appendAsset("img/weapons/Nico_cannondeploy.png", path .."img/weapons/Nico_cannondeploy.png")
     modApi:appendAsset("img/weapons/Nico_cannonboom.png", path .."img/weapons/Nico_cannonboom.png")
     modApi:appendAsset("img/weapons/Nico_laserboom.png", path .."img/weapons/Nico_laserboom.png")

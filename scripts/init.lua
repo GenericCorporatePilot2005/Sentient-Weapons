@@ -4,13 +4,13 @@
 local mod = {
 	id = "Nico_Sent_weap",
 	name = "Sentient Weapons",
-	version = "Beta",
+	version = "2.9",
 	requirements = {},
 	dependencies = { --This requests modApiExt from the mod loader
 		modApiExt = "1.18", --We can get this by using the variable `modapiext`
 	},
 	modApiVersion = "2.9.1",
-	icon = "img/squad1_icon.png"
+	icon = "img/icons/squad1_icon.png"
 }
 
 function mod:init()
@@ -54,7 +54,7 @@ function mod:load( options, version)
 		},
 		"Sentient Weapons",
 		"After destroying the Vek Hive, Zenith sent these improved Sentient Weapons across time to fight the Vek and their hijacked brethren.",
-		self.resourcePath .."img/squad1_icon.png"
+		self.resourcePath .."img/icons/squad1_icon.png"
 	)
 	if modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SW2") then
 		modApi:addSquad(
@@ -67,7 +67,7 @@ function mod:load( options, version)
 			},
 			"Sentient Weapons 2",
 			"After destroying the Vek Hive, Zenith sent these improved Sentient Weapons across time to fight the Vek and their hijacked brethren.",
-			self.resourcePath .."img/squad2_icon.png"
+			self.resourcePath .."img/icons/squad2_icon.png"
 		)
 	end
 	if modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SW3") then
@@ -81,7 +81,7 @@ function mod:load( options, version)
 			},
 			"Sentient Weapons 3",
 			"After destroying the Vek Hive, Zenith sent these improved Sentient Weapons across time to fight the Vek and their hijacked brethren.",
-			self.resourcePath .."img/squad3_icon.png"
+			self.resourcePath .."img/icons/squad3_icon.png"
 		)
 	end
 	if modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SWBB") then
@@ -95,7 +95,7 @@ function mod:load( options, version)
 			},
 			"Boom Bots",
 			"After destroying the Vek Hive, Zenith sent these improved Volatile Sentient Weapons across time to fight the Vek and their hijacked brethren.",
-			self.resourcePath .."img/squadboom_icon.png"
+			self.resourcePath .."img/icons/squadboom_icon.png"
 		)
 	end
 	modApi:addMissionEndHook(function()
@@ -123,21 +123,21 @@ function mod:load( options, version)
     end)
 
 	if modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SW2") and modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SW3") and modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SWBB") then
-		mod.icon = self.resourcePath .."img/mod_icon.png"
+		mod.icon = self.resourcePath .."img/icons/mod_icon.png"
 	elseif modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SW2") and not modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SW3") and not modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SWBB") then
-		mod.icon = self.resourcePath .."img/squad2_icon.png"
+		mod.icon = self.resourcePath .."img/icons/squad2_icon.png"
 	elseif modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SW2") and modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SW3") and not modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SWBB") then
-		mod.icon = self.resourcePath .."img/squad2x3_icon.png"
+		mod.icon = self.resourcePath .."img/icons/squad2x3_icon.png"
 	elseif modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SW2") and not modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SW3") and modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SWBB") then
-		mod.icon = self.resourcePath .."img/squad2xboom_icon.png"
+		mod.icon = self.resourcePath .."img/icons/squad2xboom_icon.png"
 	elseif not modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SW2") and modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SW3") and modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SWBB") then
-		mod.icon = self.resourcePath .."img/squad3xboom_icon.png"
+		mod.icon = self.resourcePath .."img/icons/squad3xboom_icon.png"
 	elseif not modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SW2") and modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SW3") and not modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SWBB") then
-		mod.icon = self.resourcePath .."img/squad3_icon.png"
+		mod.icon = self.resourcePath .."img/icons/squad3_icon.png"
 	elseif not modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SW2") and not modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SW3") and modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SWBB") then
-		mod.icon = self.resourcePath .."img/squadboom_icon.png"
+		mod.icon = self.resourcePath .."img/icons/squadboom_icon.png"
 	else
-		mod.icon = self.resourcePath .."img/squad1_icon.png"
+		mod.icon = self.resourcePath .."img/icons/squad1_icon.png"
 	end
 end
 
