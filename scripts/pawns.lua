@@ -19,7 +19,6 @@ require(path .."palettes")
 	    SoundLocation = "/enemy/snowlaser_1/",
         DefaultTeam = TEAM_PLAYER,
 	    ImpactMaterial = IMPACT_METAL,
-        AddPawn("Nico_laserbot_mech")
     }
     Nico_artillerybot_mech = Pawn:new{
         Name = "Artillery-Bot",
@@ -35,7 +34,6 @@ require(path .."palettes")
         SoundLocation = "/enemy/snowart_1/",
         DefaultTeam = TEAM_PLAYER,
 	    ImpactMaterial = IMPACT_METAL,
-        AddPawn("Nico_artillerybot_mech")
     }
     Nico_cannonbot_mech = Pawn:new{
         Name = "Cannon-Bot",
@@ -51,7 +49,6 @@ require(path .."palettes")
 	    SoundLocation = "/enemy/snowtank_1/",
         DefaultTeam = TEAM_PLAYER,
 	    ImpactMaterial = IMPACT_METAL,
-        AddPawn("Nico_cannonbot_mech")
     }
 --Sentient Weapons 2
     if modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SW2") then
@@ -70,7 +67,6 @@ require(path .."palettes")
             SoundLocation = "/enemy/snowlaser_1/",
             DefaultTeam = TEAM_PLAYER,
             ImpactMaterial = IMPACT_METAL,
-            AddPawn("Nico_knightbot_mech")
         }
         Nico_shieldbot_mech = Pawn:new{
             Name = "Shield-Bot",
@@ -87,7 +83,6 @@ require(path .."palettes")
             SoundLocation = "/enemy/snowlaser_1/",
             DefaultTeam = TEAM_PLAYER,
             ImpactMaterial = IMPACT_METAL,
-            AddPawn("Nico_shieldbot_mech")
         }
         Nico_minerbot_mech = Pawn:new{
             Name = "Mine-Bot",
@@ -103,7 +98,6 @@ require(path .."palettes")
             SoundLocation = "/enemy/snowmine_1/",
             DefaultTeam = TEAM_PLAYER,
             ImpactMaterial = IMPACT_METAL,
-            AddPawn("Nico_minerbot_mech")
         }
     end
 
@@ -124,7 +118,6 @@ require(path .."palettes")
             SoundLocation = "/enemy/snowart_2/",
             DefaultTeam = TEAM_PLAYER,
             ImpactMaterial = IMPACT_METAL,
-            AddPawn("Nico_juggernautbot_mech")
         }
         Nico_botleader_mech = Pawn:new{
             Name = "Bot Leader",
@@ -140,7 +133,6 @@ require(path .."palettes")
             SoundLocation = "/enemy/snowart_1/",
             DefaultTeam = TEAM_PLAYER,
             ImpactMaterial = IMPACT_METAL,
-            AddPawn("Nico_botleader_mech")
         }
         Nico_hulkbot_mech = Pawn:new{
             Name = "Cryo Hulk",
@@ -157,7 +149,6 @@ require(path .."palettes")
             SoundLocation = "/enemy/snowart_1/",
             DefaultTeam = TEAM_PLAYER,
             ImpactMaterial = IMPACT_METAL,
-            AddPawn("Nico_hulkbot_mech")
         }
     end
 --Boom Bots
@@ -177,7 +168,6 @@ require(path .."palettes")
             DefaultTeam = TEAM_PLAYER,
             ImpactMaterial = IMPACT_METAL,
             --Explodes=true,
-            AddPawn("Nico_laserboom_mech")
         }
         Nico_artilleryboom_mech = Pawn:new{
             Name = "Boom Artillery",
@@ -194,7 +184,6 @@ require(path .."palettes")
             DefaultTeam = TEAM_PLAYER,
             ImpactMaterial = IMPACT_METAL,
             --Explodes=true,
-            AddPawn("Nico_artillerybot_mech")
         }
         Nico_cannonboom_mech = Pawn:new{
             Name = "Boom Cannon",
@@ -211,7 +200,6 @@ require(path .."palettes")
             DefaultTeam = TEAM_PLAYER,
             ImpactMaterial = IMPACT_METAL,
             --Explodes=true,
-            AddPawn("Nico_cannonboom_mech")
         }
     end
 --Traits
