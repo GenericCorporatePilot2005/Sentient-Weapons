@@ -92,13 +92,13 @@ Nico_Freeze_Mine = { Image = "combat/freeze_mine.png", Damage = SpaceDamage(0), 
         return Board:GetReachable(point, _G[Pawn:GetType()].MoveAtk or 4, Pawn:GetPathProf())
     end
     function Nico_minibot2:GetSecondTargetArea(p1,p2)
-		if ((not Pawn:IsShield()) and (Board:GetItem(p2) == "Freeze_Mine" or Board:GetItem(p2) == "Nico_Freeze_Mine" or Board:GetItem(p2) == "lmn_Minelayer_Item_Mine" or Board:GetItem(p2) == "Djinn_Spike_Mine" or Board:GetItem(p2) == "Djinn_Spike_Mine2" or Board:GetItem(p2) == "Nautilus_Spike_Mine" or Board:GetItem(p2) == "Nautilus_Spike_Mine2")) or Board:GetItem(p2) == "Item_Mine" then return PointList() end
+		if ((not Pawn:IsShield()) and (Board:GetItem(p2) == "Freeze_Mine" or Board:GetItem(p2) == "Nico_Freeze_Mine" or Board:GetItem(p2) == "lmn_Minelayer_Item_Mine" or Board:GetItem(p2) == "Djinn_Spike_Mine" or Board:GetItem(p2) == "Djinn_Spike_Mine2" or Board:GetItem(p2) == "Nautilus_Spike_Mine" or Board:GetItem(p2) == "Nautilus_Spike_Mine2")) or Board:GetItem(p2) == "Item_Mine" or Board:GetItem(p2) == "tatu_Cookie_Ice" or (Board:GetCustomTile(p2):find("^tatu_gum") ~= nil and Board:IsTerrain(p2,TERRAIN_ROAD)) then return PointList() end
         local ret = Board:GetReachable(p2, _G[Pawn:GetType()].MoveAtk or 4, Pawn:GetPathProf())
         ret:push_back(p1)
         return ret
     end
     function Nico_minibot2:IsTwoClickException(p1,p2)
-        return ((not Pawn:IsShield()) and (Board:GetItem(p2) == "Freeze_Mine" or Board:GetItem(p2) == "Nico_Freeze_Mine" or Board:GetItem(p2) == "lmn_Minelayer_Item_Mine" or Board:GetItem(p2) == "Djinn_Spike_Mine" or Board:GetItem(p2) == "Djinn_Spike_Mine2" or Board:GetItem(p2) == "Nautilus_Spike_Mine" or Board:GetItem(p2) == "Nautilus_Spike_Mine2")) or Board:GetItem(p2) == "Item_Mine"
+        return ((not Pawn:IsShield()) and (Board:GetItem(p2) == "Freeze_Mine" or Board:GetItem(p2) == "Nico_Freeze_Mine" or Board:GetItem(p2) == "lmn_Minelayer_Item_Mine" or Board:GetItem(p2) == "Djinn_Spike_Mine" or Board:GetItem(p2) == "Djinn_Spike_Mine2" or Board:GetItem(p2) == "Nautilus_Spike_Mine" or Board:GetItem(p2) == "Nautilus_Spike_Mine2")) or Board:GetItem(p2) == "Item_Mine" or Board:GetItem(p2) == "tatu_Cookie_Ice" or (Board:GetCustomTile(p2):find("^tatu_gum") ~= nil and Board:IsTerrain(p2,TERRAIN_ROAD))
     end
     function Nico_minibot2:GetSkillEffect(p1,p2)
         local ret = SkillEffect()
