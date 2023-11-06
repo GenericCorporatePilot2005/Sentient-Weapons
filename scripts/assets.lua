@@ -25,6 +25,11 @@ local files = {
     "Nico_cannonbot_mech_ns.png",
     "Nico_cannonbot_mech_h.png",
     "Nico_cannonbot_mech_death.png",
+}
+for _, file in ipairs(files) do
+    modApi:appendAsset("img/units/player/".. file, mechPath.. "SW1/" .. file)
+end
+local files = {
     "Nico_knightbot_mech.png",
     "Nico_knightbot_mech_a.png",
     "Nico_knightbot_mech_w.png",
@@ -34,7 +39,6 @@ local files = {
     "Nico_knightbot_mech_h.png",
     "Nico_shieldbot_mech.png",
     "Nico_shieldbot_mech_a.png",
-    "Nico_shieldbot_mech_w.png",
     "Nico_shieldbot_mech_w_broken.png",
     "Nico_shieldbot_mech_broken.png",
     "Nico_shieldbot_mech_ns.png",
@@ -47,6 +51,11 @@ local files = {
     "Nico_minerbot_mech_ns.png",
     "Nico_minerbot_mech_h.png",
     "Nico_minerbot_mech_death.png",
+}
+for _, file in ipairs(files) do
+    modApi:appendAsset("img/units/player/".. file, mechPath.. "SW2/" .. file)
+end
+local files = {
     "Nico_juggernautbot_mech.png",
     "Nico_juggernautbot_mech_a.png",
     "Nico_juggernautbot_mech_w.png",
@@ -61,6 +70,11 @@ local files = {
     "Nico_hulkbot_mech_broken.png",
     "Nico_hulkbot_mech_ns.png",
     "Nico_hulkbot_mech_h.png",
+}
+for _, file in ipairs(files) do
+    modApi:appendAsset("img/units/player/".. file, mechPath.. "SW3/" .. file)
+end
+local files = {
     "Nico_artilleryboom_mech.png",
     "Nico_artilleryboom_mech_a.png",
     "Nico_artilleryboom_mech_w.png",
@@ -82,6 +96,11 @@ local files = {
     "Nico_cannonboom_mech_broken.png",
     "Nico_cannonboom_mech_ns.png",
     "Nico_cannonboom_mech_h.png",
+}
+for _, file in ipairs(files) do
+    modApi:appendAsset("img/units/player/".. file, mechPath.. "SWBB/" .. file)
+end
+local files = {
     "Nico_Laser_Bloom.png",
     "Nico_Laser_Bloom_ns.png",
     "Nico_Laser_Bloom_a.png",
@@ -94,7 +113,7 @@ local files = {
     "Nico_Bloomd.png",
 }
 for _, file in ipairs(files) do
-    modApi:appendAsset("img/units/player/".. file, mechPath .. file)
+    modApi:appendAsset("img/units/player/".. file, mechPath.. "SWBloom/" .. file)
 end
 local a=ANIMS
     --Artillery-Bot
@@ -202,7 +221,7 @@ local a=ANIMS
         modApi:appendAsset("img/combat/icons/".. file, path.. "img/combat/icons/" .. file)
         Location["combat/icons/"..file] = Point(-12,8)
     end
-    modApi:appendAsset("img/combat/icons/Nico_icon_ice_glow.png", path.."img/combat/icons/Nico_icon_ice_glow.png")
+    modApi:copyAsset("img/combat/icons/icon_ice_glow.png","img/combat/icons/Nico_icon_ice_glow.png")
 	Location["combat/icons/Nico_icon_ice_glow.png"] = Point(-10,8)
     modApi:appendAsset("img/combat/icons/Nico_shield_explode_glow.png", path.."img/combat/icons/Nico_shield_explode_glow.png")
     Location["combat/icons/Nico_shield_explode_glow.png"] = Point(-16,8)
@@ -232,7 +251,7 @@ local a=ANIMS
     Location["combat/icons/Nico_icon_shield+10.png"] = Point(-16,8)
 --Traits
     modApi:appendAsset("img/combat/icons/icon_Nico_zenith_shield.png", path.."img/combat/icons/icon_Nico_zenith_shield.png")--image of the trait
-    modApi:appendAsset("img/combat/icons/icon_Nico_shield_heal.png", path.."img/combat/icons/icon_Nico_shield_heal.png")--image of the trait
+    modApi:copyAsset("img/combat/icons/icon_shield_heal.png","img/combat/icons/icon_Nico_shield_heal.png")--image of the trait
 --Effects
     modApi:appendAsset("img/effects/shotup_deploymine.png", path.. "img/effects/shotup_deploymine.png")
     modApi:appendAsset("img/effects/shotup_bloom_artillery.png", path.. "img/effects/shotup_bloom_artillery.png")

@@ -121,6 +121,7 @@ Nico_juggernaut = Skill:new{
 		end
 		return ret
 	end
+
 	Nico_juggernaut_A=Nico_juggernaut:new{
 		Phasing=1,
 		UpgradeDescription="Can charge through buildings and mountains, won't destroy buildings.",
@@ -135,6 +136,7 @@ Nico_juggernaut = Skill:new{
 			CustomPawn = "Nico_juggernautbot_mech",
 		}
 	}
+
 	Nico_juggernaut_B=Nico_juggernaut:new{
 		TwoClick=true,
 		UpgradeDescription="Can drift, cracking a tile and then charging through a second line of tiles.",
@@ -151,11 +153,39 @@ Nico_juggernaut = Skill:new{
 			Length = 5,
 		}
 	}
+
 	local mod = modApi:getCurrentMod()
 	local path = mod.scriptPath
 	local customAnim = require(path.."libs/customAnim")
+	function TCcheck(p2)
+		local isNotShielded = not Pawn:IsShield()
+		local item = Board:GetItem(p2)
+		local hasRainbow1 = ANIMS["rainbow1"] and (customAnim:get(p2, "rainbow1") ~= nil)
+		local hasRainbow2 = ANIMS["rainbow2"] and (customAnim:get(p2, "rainbow2") ~= nil)
+		local isGumTile = Board:GetCustomTile(p2):find("^tatu_gum") ~= nil
+		local isOnRoad = Board:IsTerrain(p2, TERRAIN_ROAD)
+		local specialMines = {
+			"Freeze_Mine",
+			"Nico_Freeze_Mine",
+			"lmn_Minelayer_Item_Mine",
+			"Djinn_Spike_Mine",
+			"Djinn_Spike_Mine2",
+			"Nautilus_Spike_Mine",
+			"Nautilus_Spike_Mine2",
+			"tatu_Cookie_Ice",
+		}
+
+		local isComplexCondition =
+			(isNotShielded and list_contains(specialMines, item))
+			or item == "Item_Mine"
+			or hasRainbow1
+			or hasRainbow2
+			or (isGumTile and isOnRoad)
+		return isComplexCondition
+	end
+
 	function Nico_juggernaut_B:GetSecondTargetArea(p1,p2)
-		if Board:IsBuilding(p2) or Board:IsTerrain(p2,TERRAIN_MOUNTAIN) or Board:IsBlocked(p2, Pawn:GetPathProf()) or ((not Pawn:IsShield()) and (Board:GetItem(p2) == "Freeze_Mine" or Board:GetItem(p2) == "Nico_Freeze_Mine" or Board:GetItem(p2) == "lmn_Minelayer_Item_Mine" or Board:GetItem(p2) == "Djinn_Spike_Mine" or Board:GetItem(p2) == "Djinn_Spike_Mine2" or Board:GetItem(p2) == "Nautilus_Spike_Mine" or Board:GetItem(p2) == "Nautilus_Spike_Mine2" or Board:GetItem(p2) == "tatu_Cookie_Ice")) or Board:GetItem(p2) == "Item_Mine" or customAnim:get(p2,"rainbow1") ~= nil or customAnim:get(p2,"rainbow2") ~= nil or (Board:GetCustomTile(p2):find("^tatu_gum") ~= nil and Board:IsTerrain(p2,TERRAIN_ROAD)) then return PointList() end
+		if Board:IsBuilding(p2) or Board:IsTerrain(p2,TERRAIN_MOUNTAIN) or Board:IsBlocked(p2, Pawn:GetPathProf()) or TCcheck(p2) then return PointList() end
 		local ret = self:GetTargetArea(p2)
 		self:RemoveBackwards(ret,p1,p2)
 		self:RemoveForwards(ret,p1,p2) -- also remove forwards
@@ -163,7 +193,7 @@ Nico_juggernaut = Skill:new{
 		return ret
 	end
 	function Nico_juggernaut_B:IsTwoClickException(p1,p2)
-		return Board:IsBuilding(p2) or Board:IsTerrain(p2,TERRAIN_MOUNTAIN) or Board:IsBlocked(p2, Pawn:GetPathProf()) or ((not Pawn:IsShield()) and (Board:GetItem(p2) == "Freeze_Mine" or Board:GetItem(p2) == "Nico_Freeze_Mine" or Board:GetItem(p2) == "lmn_Minelayer_Item_Mine" or Board:GetItem(p2) == "Djinn_Spike_Mine" or Board:GetItem(p2) == "Djinn_Spike_Mine2" or Board:GetItem(p2) == "Nautilus_Spike_Mine" or Board:GetItem(p2) == "Nautilus_Spike_Mine2" or Board:GetItem(p2) == "tatu_Cookie_Ice")) or Board:GetItem(p2) == "Item_Mine" or customAnim:get(p2,"rainbow1") ~= nil or customAnim:get(p2,"rainbow2") ~= nil or (Board:GetCustomTile(p2):find("^tatu_gum") ~= nil and Board:IsTerrain(p2,TERRAIN_ROAD))
+		return Board:IsBuilding(p2) or Board:IsTerrain(p2,TERRAIN_MOUNTAIN) or Board:IsBlocked(p2, Pawn:GetPathProf()) or TCcheck(p2)
 	end
     function Nico_juggernaut_B:GetFinalEffect(p1,p2,p3)
         local ret = self:GetSkillEffect(p1,p2)
