@@ -61,43 +61,12 @@ local function Nico_TeamRepair(mission, pawn, weaponId, p1, targetArea)
 	end
 end
 
-local function Nico_BoomTest(mission)
-	if mission == Mission_Test then
-		local pawnList = extract_table(Board:GetPawns(TEAM_PLAYER))
-		for i = 1, #pawnList do
-			if _G[Board:GetPawn(pawnList[i]):GetType()].NicoIsBoom and not Board:GetPawn(pawnList[i]):IsShield() then
-				Board:GetPawn(pawnList[i]):SetShield(true)
-			end
-		end
-	end
-end
-
-local function Nico_BoomRepair(mission, pawn)
-	if _G[pawn:GetType()].NicoIsBoom then
-		for i = 0,3 do
-			local curr = pawn:GetSpace()+DIR_VECTORS[i]
-			if Board:IsBuilding(curr) or (Board:IsPawnSpace(curr) and Board:GetPawn(curr):GetTeam() == TEAM_PLAYER) then Board:AddShield(curr) end
-		end
-		modApi:conditionalHook(
-			function()
-				return (Board and not Board:IsBusy())
-			end,
-			function()
-				if Board then
-					pawn:ModifyHealth(1,true,0)
-				end
-			end
-		)
-	end
-end
 
 local function EVENT_onModsLoaded()
 	modapiext:addSkillStartHook(Nico_MoveShield)
 	modapiext:addSkillBuildHook(Nico_MoveShieldWeap)
 	modapiext:addFinalEffectBuildHook(Nico_MoveShieldWeapon)
 	modapiext:addTargetAreaBuildHook(Nico_TeamRepair)
-	--modApi:addMissionUpdateHook(Nico_BoomTest)
-	--modapiext:addPawnKilledHook(Nico_BoomRepair)
 end
 
 modApi.events.onModsLoaded:subscribe(EVENT_onModsLoaded)

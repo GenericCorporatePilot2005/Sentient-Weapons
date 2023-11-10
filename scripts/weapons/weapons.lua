@@ -2,7 +2,7 @@ local mod = modApi:getCurrentMod()
 local path = mod.scriptPath
 local this = {}
 
-require(path .."achievements1")
+require(path .."Achievements/achievements1")
 require(path .."weapons/SW1/artillerybot")
 require(path .."weapons/SW1/cannonbot")
 require(path .."weapons/SW1/laserbot")

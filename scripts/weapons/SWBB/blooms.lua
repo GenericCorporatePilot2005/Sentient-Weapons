@@ -1,13 +1,13 @@
 local mod = modApi:getCurrentMod()
 local path = mod.scriptPath
-require(path .."achievements1")
+require(path .."Achievements/achievements1")
 require(path .."palettes")
 
 --laser bloom
 Nico_laserbloom = Pawn:new{
 	Name = "Bloom-Laser",
 	Health = 1,
-	Nico_onDeath="BloomDeath",
+	Nico_onDeath = "BloomDeath",
 	Class = "TechnoVek",
 	ImageOffset = modApi:getPaletteImageOffset("Nico_bloom_1"),
 	DefaultTeam = TEAM_PLAYER,

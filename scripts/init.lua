@@ -21,9 +21,9 @@ function mod:init()
 	local pilot = require(self.scriptPath .."pilots")
 	pilot:init(mod)
 	require(self.scriptPath .."assets")
-	require(self.scriptPath .."achievements1")
-	require(self.scriptPath .."achievements2")
-	require(self.scriptPath .."achievements3")
+	require(self.scriptPath .."Achievements/achievements1")
+	require(self.scriptPath .."Achievements/achievements2")
+	require(self.scriptPath .."Achievements/achievements3")
 	require(self.scriptPath .."deathPetals")
 	
 	--[[commented out for the moment, just in case we need it

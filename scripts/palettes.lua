@@ -1,6 +1,6 @@
 local mod = modApi:getCurrentMod()
 local path = mod.scriptPath
-require(path .."achievements1")
+require(path .."Achievements/achievements1")
 --palettes--
 modApi:addPalette{--base sentient weapons
     id = "nico_snow",

@@ -199,7 +199,7 @@ local a=ANIMS
         a.Nico_Laser_Bloom=a.MechUnit:new{Image="units/player/Nico_Laser_Bloom.png", PosX = -13, PosY = 3}
         a.Nico_Laser_Bloom_ns=a.MechIcon:new{Image="units/player/Nico_Laser_Bloom_ns.png"}
         a.Nico_Laser_Bloomd=a.MechUnit:new{Image="units/player/Nico_Bloomd.png",  PosX = -16, PosY = 11, NumFrames = 10, Time = .14, Loop = false  }
-        a.Nico_Laser_Blooma= a.MechUnit:new{Image="units/player/Nico_Laser_Bloom_a.png",  PosX = -13, PosY = 3, NumFrames = 8 }
+        a.Nico_Laser_Blooma= a.MechUnit:new{Image="units/player/Nico_Laser_Bloom_a.png",  PosX = -13, PosY = 3, NumFrames = 20 }
     --Bloom Cannon
         a.Nico_Cannon_Bloom=a.MechUnit:new{Image="units/player/Nico_Cannon_Bloom.png", PosX = -13, PosY = 3}
         a.Nico_Cannon_Bloom_ns=a.MechIcon:new{Image="units/player/Nico_Cannon_Bloom_ns.png"}
