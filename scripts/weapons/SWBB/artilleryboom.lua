@@ -68,8 +68,15 @@ function Nico_artilleryboom:GetSkillEffect(p1,p2)
 	if self.SelfDamage==1 then
 		for i = 1,ret.effect:size() do
 			ret.effect:index(i).bKO_Effect = Board:IsDeadly(ret.effect:index(i),Pawn)
-			if ret.effect:index(i).bKO_Effect then
-				ret.effect:index(i).sPawn = "Nico_artillerybloom"
+			if ret.effect:index(i).bKO_Effect and ret.effect:index(i).loc ~= p1 then
+				ret:AddSound("/weapons/arachnoid_ko")
+				ret:AddDelay(1.1)
+				local damage = SpaceDamage(ret.effect:index(i).loc)
+				damage.sPawn = "Nico_artillerybloom"
+				damage.bKO_Effect = true
+				ret:AddDamage(damage)
+			elseif ret.effect:index(i).bKO_Effect and ret.effect:index(i).loc == p1 then
+				ret.effect:index(i).bKO_Effect = false
 			end
 		end
 	end
@@ -114,8 +121,15 @@ function Nico_artilleryboom:GetFinalEffect(p1,p2,p3)
 	if self.SelfDamage==1 then
 		for i = 1,ret.effect:size() do
 			ret.effect:index(i).bKO_Effect = Board:IsDeadly(ret.effect:index(i),Pawn)
-			if ret.effect:index(i).bKO_Effect then
-				ret.effect:index(i).sPawn = "Nico_artillerybloom"
+			if ret.effect:index(i).bKO_Effect and ret.effect:index(i).loc ~= p1 then
+				ret:AddSound("/weapons/arachnoid_ko")
+				ret:AddDelay(1.1)
+				local damage = SpaceDamage(ret.effect:index(i).loc)
+				damage.sPawn = "Nico_artillerybloom"
+				damage.bKO_Effect = true
+				ret:AddDamage(damage)
+			elseif ret.effect:index(i).bKO_Effect and ret.effect:index(i).loc == p1 then
+				ret.effect:index(i).bKO_Effect = false
 			end
 		end
 	end
