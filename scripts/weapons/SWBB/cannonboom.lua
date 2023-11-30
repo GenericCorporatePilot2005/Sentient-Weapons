@@ -1,23 +1,23 @@
 local mod = modApi:getCurrentMod()
 ------Boom Cannon------
-Nico_cannonboom=Nico_cannonbot:new{
-	Name="Cannon Explo Mark I",
-	Class="TechnoVek",
+Nico_cannonboom = Nico_cannonbot:new{
+	Name = "Cannon Explo Mark I",
+	Class = "TechnoVek",
 	Range = RANGE_PROJECTILE,
 	PathSize = INT_MAX,
-	Description="Fire a shot from Guided Janus Cannon, AP Cannon, Ricochet Rocket, or Quick-Fire Rockets. Has knockback.",
+	Description = "Fire a shot from Guided Janus Cannon, AP Cannon, Ricochet Rocket, or Quick-Fire Rockets. Has knockback.",
 	Icon = "weapons/Nico_cannonboom.png",
-	Damage=1,
-	SelfDamage=0,
+	Damage = 1,
+	SelfDamage = 0,
     Fire = 1,
-    Push=1,
-	PowerCost=0,
-	Upgrades=2,
+    Push = 1,
+	PowerCost = 0,
+	Upgrades = 2,
 	ProjectileArt = "effects/shot_mechtank",
 	Explo = "explopush1_",
 	Exploart = "explopush1_",
 	TwoClick = true,
-	UpgradeCost={1,3},
+	UpgradeCost = {1,3},
 	UpgradeList = { "+1 Damage Each", "+1 Damage"},
 	Projectile = "effects/shot_mechtank",
 	UpShot = "effects/shotup_ignite_fireball.png",
@@ -236,7 +236,11 @@ function Nico_cannonboom:GetFinalEffect(p1,p2,p3)
 				ret:AddSound("/weapons/arachnoid_ko")
 				ret:AddDelay(1.1)
 				local damage = SpaceDamage(ret.effect:index(i).loc)
-				damage.sPawn = "Nico_cannonbloom"
+				if Board:IsTerrain(ret.effect:index(i).loc,TERRAIN_WATER) or Board:IsTerrain(ret.effect:index(i).loc,TERRAIN_LAVA) or Board:IsTerrain(ret.effect:index(i).loc,TERRAIN_HOLE) or Board:IsCracked(ret.effect:index(i).loc) or (Board:IsTerrain(ret.effect:index(i).loc,TERRAIN_ICE) and Board:IsCracked(ret.effect:index(i).loc)) then
+					damage.sPawn = "Copter_Bloom_Bot"
+				else
+					damage.sPawn = "Nico_cannonbloom"
+				end
 				damage.bKO_Effect = true
 				ret:AddDamage(damage)
 			elseif ret.effect:index(i).bKO_Effect and ret.effect:index(i).loc == p1 then

@@ -1,11 +1,11 @@
 local mod = modApi:getCurrentMod()
 --the actual weapon
 ------Artillery Bot------
-Nico_artilleryboom=Nico_artillerybot:new{
-	Name="Bang Rockets Mark I",
+Nico_artilleryboom = Nico_artillerybot:new{
+	Name = "Bang Rockets Mark I",
 	Class = "TechnoVek",
 	Icon = "weapons/support_missiles.png",
-	Description="Launch Rockets at 3 tiles.",
+	Description = "Launch Rockets at 3 tiles.",
 	BounceAmount = 2,
 	Damage = 1,
 	SelfDamage = 0,
@@ -125,7 +125,11 @@ function Nico_artilleryboom:GetFinalEffect(p1,p2,p3)
 				ret:AddSound("/weapons/arachnoid_ko")
 				ret:AddDelay(1.1)
 				local damage = SpaceDamage(ret.effect:index(i).loc)
-				damage.sPawn = "Nico_artillerybloom"
+				if Board:IsTerrain(ret.effect:index(i).loc,TERRAIN_WATER) or Board:IsTerrain(ret.effect:index(i).loc,TERRAIN_LAVA) or Board:IsTerrain(ret.effect:index(i).loc,TERRAIN_HOLE) or Board:IsCracked(ret.effect:index(i).loc) or (Board:IsTerrain(ret.effect:index(i).loc,TERRAIN_ICE) and Board:IsCracked(ret.effect:index(i).loc)) then
+					damage.sPawn = "Copter_Bloom_Bot"
+				else
+					damage.sPawn = "Nico_artillerybloom"
+				end
 				damage.bKO_Effect = true
 				ret:AddDamage(damage)
 			elseif ret.effect:index(i).bKO_Effect and ret.effect:index(i).loc == p1 then

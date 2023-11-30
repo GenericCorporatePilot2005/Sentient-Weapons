@@ -125,4 +125,18 @@ if modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SWBB") then
         BodyColor      = {146,94,53},--metal mid
         PlateShadow    = {86,66,48},--metal dark
     }
+    modApi:addPalette{--Bloom Bot Artillery
+        ID = "Nico_bloom_4",
+        image="units/player/Laser_Bloom_ns.png",
+        Name = "Bloom Bot Copter",
+        image="units/player/Nico_Copter_Bloom_ns.png",
+        PlateHighlight = {255,255,255},--lights
+        PlateLight     = {177,221,108},--main highlight
+        PlateMid       = {76,130,79},--main light
+        PlateDark      = {49,74,54},--main mid
+        PlateOutline   = {27,35,25},--main dark
+        BodyHighlight  = {215,61,70},--metal light
+        BodyColor      = {118,52,79},--metal mid
+        PlateShadow    = {51,14,29},--metal dark
+    }
 end

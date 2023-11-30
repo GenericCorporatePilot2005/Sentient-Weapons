@@ -1,14 +1,12 @@
 local mod = modApi:getCurrentMod()
 --the actual weapon
-Nico_laserboom=Nico_laserbot:new{
-    Name="K-b00m Beam Mark I",
-	Class="TechnoVek",
+Nico_laserboom = Nico_laserbot:new{
+    Name = "K-b00m Beam Mark I",
+	Class = "TechnoVek",
 	Icon = "weapons/Nico_laserboom.png",
-    Description="Fire a phasing beam that decreases in damage the further it goes, doesn't damage buildings.",
-	Explosion = "",
-	Sound = "",
+    Description = "Fire a phasing beam that decreases in damage the further it goes, doesn't damage buildings.",
 	Damage = 3,
-    SelfDamage=0,
+    SelfDamage = 0,
 	PowerCost = 0,
     Phaser=true,
 	MinDamage = 1,
@@ -67,15 +65,10 @@ function Nico_laserboom:AddLaser(ret,point,direction)
 	local minDamage = self.MinDamage or 1
 	local damage = self.Damage
 	local start = point - DIR_VECTORS[direction]
-	--if forced_end ~= nil then
-	--	LOG("Forced end = "..forced_end:GetString())
-	--else
-	--	LOG("No forced end!")
-	--end
 	if self.SelfDamage == 1 then ret:AddDamage(SpaceDamage(start, 1)) end
 	while Board:IsValid(point) do
 	
-		local temp_damage = damage  --This is so that if damage is set to 0 because of an ally, it doesn't affect the damage calculation of the laser.
+		local temp_damage = damage
 		
 		if (not self.FriendlyDamage and Board:IsPawnTeam(point, TEAM_PLAYER)) or (not self.BuildingDamage and Board:IsBuilding(point)) then
 			temp_damage = DAMAGE_ZERO
@@ -97,11 +90,7 @@ function Nico_laserboom:AddLaser(ret,point,direction)
 			end
 			break
 		else
-			if queued then
-				ret:AddQueuedDamage(dam)  
-			else
-				ret:AddDamage(dam)   --JUSTIN TEST
-			end
+			ret:AddDamage(dam)
 		end
 		
 		damage = damage - 1
@@ -116,7 +105,11 @@ function Nico_laserboom:AddLaser(ret,point,direction)
 				ret:AddSound("/weapons/arachnoid_ko")
 				ret:AddDelay(1.1)
 				local damage = SpaceDamage(ret.effect:index(i).loc)
-				damage.sPawn = "Nico_laserbloom"
+				if Board:IsTerrain(ret.effect:index(i).loc,TERRAIN_WATER) or Board:IsTerrain(ret.effect:index(i).loc,TERRAIN_LAVA) or Board:IsTerrain(ret.effect:index(i).loc,TERRAIN_HOLE) or Board:IsCracked(ret.effect:index(i).loc) or (Board:IsTerrain(ret.effect:index(i).loc,TERRAIN_ICE) and Board:IsCracked(ret.effect:index(i).loc)) then
+					damage.sPawn = "Copter_Bloom_Bot"
+				else
+					damage.sPawn = "Nico_laserbloom"
+				end
 				damage.bKO_Effect = true
 				ret:AddDamage(damage)
 			elseif ret.effect:index(i).bKO_Effect and ret.effect:index(i).loc == p1 then

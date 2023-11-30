@@ -233,6 +233,24 @@ function Nico_artilleryheal:GetSkillEffect(p1,p2)
 	return ret
 end
 
+--bloom copter
+Copter_Bloom_Bot = Pawn:new{
+	Name = "Bloom-Copter",
+	Health = 1,
+	MoveSpeed = 4,
+	Nico_onDeath = "CopterBloomDeath",
+	Class = "TechnoVek",
+	ImageOffset = modApi:getPaletteImageOffset("Nico_bloom_4"),
+	DefaultTeam = TEAM_PLAYER,
+	Image = "Nico_Copter_Bloom",
+	SkillList = { "Nico_laserheal" },
+	DefaultTeam = TEAM_PLAYER,
+	ImpactMaterial = IMPACT_FLESH,
+	Corpse = false,
+	Explodes = true,
+	Flying = true,
+}
+
 BloomDeath = Emitter:new{
 	image = "effects/Bloom_Bot's_petal.png",
 	image_count = 1,
@@ -245,5 +263,27 @@ BloomDeath = Emitter:new{
 	burst_count = 1, speed = 1.00, lifespan = 1.0, birth_rate = 0,
 	max_particles = 16,
 	gravity = true,
+	layer = LAYER_FRONT
+}
+
+CopterBloomDeath = Emitter:new{
+	image = "effects/Copter_Bloom_Bot's_petal.png",
+	image_count = 1,
+	max_alpha = 1.0,
+	min_alpha = 0.0,
+	rot_speed = 5347,
+	x = -1,
+	y = -2,
+	variance_x = 0,
+	variance_y = 0,
+	angle = 20,
+	angle_variance = 220,
+	timer = 0,
+	burst_count = 1,
+	speed = 1.00,
+	lifespan = 2.0,
+	birth_rate = 0,
+	max_particles = 16,
+	gravity = false,
 	layer = LAYER_FRONT
 }
