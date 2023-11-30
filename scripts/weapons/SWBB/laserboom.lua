@@ -87,12 +87,6 @@ function Nico_laserboom:AddLaser(ret,point,direction)
 		dam.iAcid = self.Acid
 		dam.iFire = self.Fire
 		dam.iFrozen = self.Freeze
-		if self.SelfDamage == 1 then
-			dam.bKO_Effect = Board:IsDeadly(dam,Pawn)
-			if dam.bKO_Effect then
-				dam.sPawn = "Nico_laserbloom"
-			end
-		end
 		
 		-- if it's the end of the line (ha), add the laser art -- not pretty
 		if forced_end == point or not Board:IsValid(point + DIR_VECTORS[direction]) then
@@ -114,6 +108,21 @@ function Nico_laserboom:AddLaser(ret,point,direction)
 		if damage < minDamage then damage = minDamage end
 					
 		point = point + DIR_VECTORS[direction]	
+	end
+	if self.SelfDamage==1 then
+		for i = 1,ret.effect:size() do
+			ret.effect:index(i).bKO_Effect = Board:IsDeadly(ret.effect:index(i),Pawn)
+			if ret.effect:index(i).bKO_Effect and ret.effect:index(i).loc ~= p1 then
+				ret:AddSound("/weapons/arachnoid_ko")
+				ret:AddDelay(1.1)
+				local damage = SpaceDamage(ret.effect:index(i).loc)
+				damage.sPawn = "Nico_laserbloom"
+				damage.bKO_Effect = true
+				ret:AddDamage(damage)
+			elseif ret.effect:index(i).bKO_Effect and ret.effect:index(i).loc == p1 then
+				ret.effect:index(i).bKO_Effect = false
+			end
+		end
 	end
 end
 Nico_laserboom_B = Nico_laserboom:new{
