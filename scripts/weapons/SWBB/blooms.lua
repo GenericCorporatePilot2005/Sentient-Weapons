@@ -243,7 +243,7 @@ Copter_Bloom_Bot = Pawn:new{
 	ImageOffset = modApi:getPaletteImageOffset("Nico_bloom_4"),
 	DefaultTeam = TEAM_PLAYER,
 	Image = "Nico_Copter_Bloom",
-	SkillList = { "Nico_laserheal" },
+	SkillList = { "Nico_copter" },
 	DefaultTeam = TEAM_PLAYER,
 	ImpactMaterial = IMPACT_FLESH,
 	Corpse = false,
@@ -265,6 +265,44 @@ BloomDeath = Emitter:new{
 	gravity = true,
 	layer = LAYER_FRONT
 }
+
+Nico_copter = Skill:new{
+	Name="Turnip Tsunami",
+	Explosion = "ExploRepulse2",
+	Damage = 0,
+	Queued = false,
+	SelfDamage = DAMAGE_DEATH,
+	Upgrades=0,
+	Class = "TechnoVek",
+	Description="Sacrifice self to flood its own tile.",
+	Icon="weapons/Nico_bloom_copter.png",
+	--LaunchSound = "/weapons/fireball",
+	ImpactSound = "/impact/generic/flood_drill_attack",
+	Projectile = "effects/shotup_bloom_artillery.png",
+	TipImage = {
+		Unit = Point(2,2),
+		Target = Point(2,2),
+		CustomPawn = "Copter_Bloom_Bot",
+	}
+}
+
+function Nico_copter:GetTargetArea(point)
+	local ret = PointList()
+	ret:push_back(point)
+	return ret
+end
+
+function Nico_copter:GetSkillEffect(p1,p2)
+	local ret = SkillEffect()
+	local dir = GetDirection(p2-p1)
+
+	ret:AddDamage(SpaceDamage(p1,self.SelfDamage))
+	local dam = SpaceDamage(p2, self.Damage)
+	dam.iTerrain = TERRAIN_WATER
+	ret:AddDamage(dam)
+
+	return ret
+end
 
 CopterBloomDeath = Emitter:new{
 	image = "effects/Copter_Bloom_Bot's_petal.png",
