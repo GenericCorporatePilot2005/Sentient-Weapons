@@ -70,7 +70,7 @@ function Nico_artilleryboom:GetSkillEffect(p1,p2)
 			ret.effect:index(i).bKO_Effect = Board:IsDeadly(ret.effect:index(i),Pawn)
 			if ret.effect:index(i).bKO_Effect and ret.effect:index(i).loc ~= p1 then
 				ret:AddSound("/weapons/arachnoid_ko")
-				ret:AddDelay(1.1)
+				ret:AddDelay(1.4)
 				local damage = SpaceDamage(ret.effect:index(i).loc)
 				damage.sPawn = "Nico_artillerybloom"
 				damage.bKO_Effect = true
@@ -121,17 +121,32 @@ function Nico_artilleryboom:GetFinalEffect(p1,p2,p3)
 	if self.SelfDamage==1 then
 		for i = 1,ret.effect:size() do
 			ret.effect:index(i).bKO_Effect = Board:IsDeadly(ret.effect:index(i),Pawn)
-			if ret.effect:index(i).bKO_Effect and ret.effect:index(i).loc ~= p1 then
+			if ret.effect:index(i).bKO_Effect and (ret.effect:index(i).loc ~= p1 or (ret.effect:index(i).loc == p1 and Board:IsCracked(ret.effect:index(i).loc))) then
 				ret:AddSound("/weapons/arachnoid_ko")
-				ret:AddDelay(1.1)
 				local damage = SpaceDamage(ret.effect:index(i).loc)
 				if Board:IsTerrain(ret.effect:index(i).loc,TERRAIN_WATER) or Board:IsTerrain(ret.effect:index(i).loc,TERRAIN_LAVA) or Board:IsTerrain(ret.effect:index(i).loc,TERRAIN_HOLE) or Board:IsCracked(ret.effect:index(i).loc) or (Board:IsTerrain(ret.effect:index(i).loc,TERRAIN_ICE) and Board:IsCracked(ret.effect:index(i).loc)) then
+					ret:AddAnimation(damage.loc,"Nico_Copter_Bloome", ANIM_NO_DELAY)
+					ret:AddDelay(1.03)
+					ret:AddBounce(damage.loc,1)
 					damage.sPawn = "Copter_Bloom_Bot"
 				else
+					ret:AddAnimation(damage.loc,"Nico_Artillery_Bloome", ANIM_NO_DELAY)
+					ret:AddDelay(1.45)
+					ret:AddBounce(damage.loc,1)
 					damage.sPawn = "Nico_artillerybloom"
 				end
 				damage.bKO_Effect = true
 				ret:AddDamage(damage)
+				if Board:IsTerrain(ret.effect:index(i).loc,TERRAIN_LAVA) then--this checks that the tile the copter spawns is a lava tile
+					local minifire = SpaceDamage(ret.effect:index(i).loc)
+					minifire.iFire = 1
+					ret:AddDamage(minifire)
+				end
+				if Board:IsAcid(ret.effect:index(i).loc) and Board:IsTerrain(ret.effect:index(i).loc,TERRAIN_WATER) then --this does the same but for acid water
+					local miniacid = SpaceDamage(ret.effect:index(i).loc)
+					miniacid.iAcid = 1
+					ret:AddDamage(miniacid)
+				end
 			elseif ret.effect:index(i).bKO_Effect and ret.effect:index(i).loc == p1 then
 				ret.effect:index(i).bKO_Effect = false
 			end

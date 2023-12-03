@@ -104,16 +104,20 @@ local files = {
     "Nico_Laser_Bloom.png",
     "Nico_Laser_Bloom_ns.png",
     "Nico_Laser_Bloom_a.png",
+    "Nico_Laser_Bloom_e.png",
     "Nico_Artillery_Bloom.png",
     "Nico_Artillery_Bloom_ns.png",
     "Nico_Artillery_Bloom_a.png",
+    "Nico_Artillery_Bloom_e.png",
     "Nico_Cannon_Bloom.png",
     "Nico_Cannon_Bloom_ns.png",
     "Nico_Cannon_Bloom_a.png",
+    "Nico_Cannon_Bloom_e.png",
     "Nico_Bloomd.png",
     "Nico_Copter_Bloom.png",
     "Nico_Copter_Bloom_ns.png",
     "Nico_Copter_Bloom_a.png",
+    "Nico_Copter_Bloom_e.png",
     "Nico_Copter_Bloom_d.png",
 }
 for _, file in ipairs(files) do
@@ -207,23 +211,27 @@ local a=ANIMS
         --Bloom Laser
             a.Nico_Laser_Bloom=a.MechUnit:new{Image="units/player/Nico_Laser_Bloom.png", PosX = -13, PosY = 3}
             a.Nico_Laser_Bloom_ns=a.MechIcon:new{Image="units/player/Nico_Laser_Bloom_ns.png"}
-            a.Nico_Laser_Bloomd=a.MechUnit:new{Image="units/player/Nico_Bloomd.png",  PosX = -16, PosY = 11, NumFrames = 10, Time = .14, Loop = false  }
             a.Nico_Laser_Blooma= a.MechUnit:new{Image="units/player/Nico_Laser_Bloom_a.png",  PosX = -13, PosY = 3, NumFrames = 20 }
+            a.Nico_Laser_Bloomd=a.MechUnit:new{Image="units/player/Nico_Bloomd.png",  PosX = -16, PosY = 11, NumFrames = 10, Time = .14, Loop = false  }
+            a.Nico_Laser_Bloome=a.BaseEmerge:new{Image="units/player/Nico_Laser_Bloom_e.png",  PosX = -13, PosY = 10, NumFrames = 10, Time = .14, Loop = false  }
         --Bloom Cannon
             a.Nico_Cannon_Bloom=a.MechUnit:new{Image="units/player/Nico_Cannon_Bloom.png", PosX = -13, PosY = 3}
             a.Nico_Cannon_Bloom_ns=a.MechIcon:new{Image="units/player/Nico_Cannon_Bloom_ns.png"}
-            a.Nico_Cannon_Bloomd=a.MechUnit:new{Image="units/player/Nico_Bloomd.png",  PosX = -16, PosY = 11, NumFrames = 10, Time = .14, Loop = false  }
             a.Nico_Cannon_Blooma= a.MechUnit:new{Image="units/player/Nico_Cannon_Bloom_a.png",  PosX = -13, PosY = 3, NumFrames = 4 }
+            a.Nico_Cannon_Bloomd=a.MechUnit:new{Image="units/player/Nico_Bloomd.png",  PosX = -16, PosY = 11, NumFrames = 10, Time = .14, Loop = false  }
+            a.Nico_Cannon_Bloome=a.BaseEmerge:new{Image="units/player/Nico_Cannon_Bloom_e.png",  PosX = -13, PosY = 10, NumFrames = 10, Time = .14, Loop = false  }
         --Bloom Artillery
             a.Nico_Artillery_Bloom=a.MechUnit:new{Image="units/player/Nico_Artillery_Bloom.png", PosX = -13, PosY = 3}
             a.Nico_Artillery_Bloom_ns=a.MechIcon:new{Image="units/player/Nico_Artillery_Bloom_ns.png"}
-            a.Nico_Artillery_Bloomd=a.MechUnit:new{Image="units/player/Nico_Bloomd.png",  PosX = -16, PosY = 11, NumFrames = 10, Time = .14, Loop = false  }
             a.Nico_Artillery_Blooma= a.MechUnit:new{Image="units/player/Nico_Artillery_Bloom_a.png",  PosX = -13, PosY = 3, NumFrames = 4 }
+            a.Nico_Artillery_Bloomd=a.MechUnit:new{Image="units/player/Nico_Bloomd.png",  PosX = -16, PosY = 11, NumFrames = 10, Time = .14, Loop = false  }
+            a.Nico_Artillery_Bloome=a.BaseEmerge:new{Image="units/player/Nico_Artillery_Bloom_e.png",  PosX = -13, PosY = 10, NumFrames = 10, Time = .14, Loop = false  }
         --Bloom Copter
             a.Nico_Copter_Bloom=a.MechUnit:new{Image="units/player/Nico_Copter_Bloom.png", PosX = -15, PosY = -15}
             a.Nico_Copter_Bloom_ns=a.MechIcon:new{Image="units/player/Nico_Copter_Bloom_ns.png"}
-            a.Nico_Copter_Bloomd=a.Nico_Copter_Bloom:new{Image="units/player/Nico_Copter_Bloom_d.png",  NumFrames = 10, Time = .14, Loop = false}
             a.Nico_Copter_Blooma= a.Nico_Copter_Bloom:new{Image="units/player/Nico_Copter_Bloom_a.png", NumFrames = 4 }
+            a.Nico_Copter_Bloomd=a.Nico_Copter_Bloom:new{Image="units/player/Nico_Copter_Bloom_d.png",  NumFrames = 10, Time = .14, Loop = false}
+            a.Nico_Copter_Bloome=a.BaseEmerge:new{Image="units/player/Nico_Copter_Bloom_e.png", PosX = -15, PosY = -15, NumFrames = 7, Time = .14, Loop = false}
 --weapon icons
 
     local files = {
@@ -241,6 +249,10 @@ local a=ANIMS
     Location["combat/icons/Nico_shield_explode_glow.png"] = Point(-16,8)
     modApi:appendAsset("img/combat/icons/Nico_icon_shield+1.png", path.."img/combat/icons/Nico_icon_shield+1.png")
     Location["combat/icons/Nico_icon_shield+1.png"] = Point(-18,5)
+    modApi:appendAsset("img/combat/icons/Nico_icon_water_kill.png", path.."img/combat/icons/Nico_icon_water_kill.png")
+    Location["combat/icons/Nico_icon_water_kill.png"] = Point(-16,9)
+    modApi:appendAsset("img/combat/icons/Nico_icon_acid_kill.png", path.."img/combat/icons/Nico_icon_acid_kill.png")
+    Location["combat/icons/Nico_icon_acid_kill.png"] = Point(-16,9)
 --mech weapons
     modApi:appendAsset("img/weapons/Nico_laserbot.png", path .."img/weapons/Nico_laserbot.png")
     modApi:appendAsset("img/weapons/Nico_knightbot.png", path .."img/weapons/Nico_knightbot.png")

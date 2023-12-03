@@ -162,13 +162,13 @@ function Nico_cannonheal:GetSkillEffect(p1,p2)
 	ret:AddDamage(SpaceDamage(p1,self.SelfDamage))
 	local dam = SpaceDamage(target,self.Damage)
 	dam.iFire = -1
-	dam.sImageMark= "combat/icons/Nico_icon_shield+1.png"
+	dam.bHide = true
+	dam.iShield = 1
 	dam.sScript = "Board:SetFire("..target:GetString()..",false)"-- modApi:runLater(function() Board:AddShield("..target:GetString()..") end)"
-	ret:AddProjectile(dam, self.ProjectileArt, FULL_DELAY)
-	local shield=SpaceDamage(target,0)
-	shield.bHide=true
-	shield.iShield = 1
-	ret:AddDamage(shield)
+	local shield = SpaceDamage(target,0)
+	shield.sImageMark = "combat/icons/Nico_icon_shield+1.png"
+	ret:AddDamage(dam)
+	ret:AddProjectile(shield, self.ProjectileArt, FULL_DELAY)
 	return ret
 end
 
@@ -191,7 +191,7 @@ Nico_artillerybloom = Pawn:new{
 }
 
 Nico_artilleryheal = SnowartAtk1:new{
-	Name="Vk8 Repair Rockets Mark I",
+	Name = "Vk8 Repair Rockets Mark I",
 	ArtillerySize = 8,
 	Explosion = "ExploRepulse2",
 	Damage = -1,
@@ -199,8 +199,8 @@ Nico_artilleryheal = SnowartAtk1:new{
 	Queued = false,
 	SelfDamage = DAMAGE_DEATH,
 	Class = "TechnoVek",
-	Description="Sacrifice self to fire three rockets that repair the targets.",
-	Icon="weapons/Nico_bloom_artillery.png",
+	Description = "Sacrifice self to fire three rockets that repair the targets.",
+	Icon = "weapons/Nico_bloom_artillery.png",
 	LaunchSound = "/enemy/snowart_1/attack",
 	ImpactSound = "/impact/generic/explosion",
 	Projectile = "effects/shotup_bloom_artillery.png",
@@ -245,37 +245,23 @@ Copter_Bloom_Bot = Pawn:new{
 	Image = "Nico_Copter_Bloom",
 	SkillList = { "Nico_copter" },
 	DefaultTeam = TEAM_PLAYER,
+	SoundLocation = "/enemy/hornet_1/",
 	ImpactMaterial = IMPACT_FLESH,
 	Corpse = false,
 	Explodes = true,
 	Flying = true,
 }
 
-BloomDeath = Emitter:new{
-	image = "effects/Bloom_Bot's_petal.png",
-	image_count = 1,
-	max_alpha = 1.0,
-	min_alpha = 0.0,
-	rot_speed = 100,
-	x = 0, y = 10, variance_x = 0, variance_y = 0,
-	angle = 20, angle_variance = 220,
-	timer = 0,
-	burst_count = 1, speed = 1.00, lifespan = 1.0, birth_rate = 0,
-	max_particles = 16,
-	gravity = true,
-	layer = LAYER_FRONT
-}
-
 Nico_copter = Skill:new{
-	Name="Turnip Tsunami",
+	Name = "Turnip Tsunami",
 	Explosion = "ExploRepulse2",
-	Damage = 0,
+	Damage = DAMAGE_DEATH,
 	Queued = false,
-	SelfDamage = DAMAGE_DEATH,
-	Upgrades=0,
+	SelfDamage = 0,
+	Upgrades = 0,
 	Class = "TechnoVek",
-	Description="Sacrifice self to flood its own tile.",
-	Icon="weapons/Nico_bloom_copter.png",
+	Description = "Sacrifice self to flood its own tile.",
+	Icon = "weapons/Nico_bloom_copter.png",
 	--LaunchSound = "/weapons/fireball",
 	ImpactSound = "/impact/generic/flood_drill_attack",
 	Projectile = "effects/shotup_bloom_artillery.png",
@@ -292,17 +278,37 @@ function Nico_copter:GetTargetArea(point)
 	return ret
 end
 
-function Nico_copter:GetSkillEffect(p1,p2)
+function Nico_copter:GetSkillEffect(p1)
 	local ret = SkillEffect()
-	local dir = GetDirection(p2-p1)
 
 	ret:AddDamage(SpaceDamage(p1,self.SelfDamage))
-	local dam = SpaceDamage(p2, self.Damage)
+	local dam = SpaceDamage(p1, self.Damage)
+	dam.sAnimation = "Splash"
+	if Board:GetPawn(p1):IsAcid() then
+		dam.sImageMark = "combat/icons/Nico_icon_acid_kill.png"
+	else
+		dam.sImageMark = "combat/icons/Nico_icon_water_kill.png"
+	end
 	dam.iTerrain = TERRAIN_WATER
 	ret:AddDamage(dam)
 
 	return ret
 end
+
+BloomDeath = Emitter:new{
+	image = "effects/Bloom_Bot's_petal.png",
+	image_count = 1,
+	max_alpha = 1.0,
+	min_alpha = 0.0,
+	rot_speed = 100,
+	x = 0, y = 10, variance_x = 0, variance_y = 0,
+	angle = 20, angle_variance = 220,
+	timer = 0,
+	burst_count = 1, speed = 1.00, lifespan = 1.0, birth_rate = 0,
+	max_particles = 16,
+	gravity = true,
+	layer = LAYER_FRONT
+}
 
 CopterBloomDeath = Emitter:new{
 	image = "effects/Copter_Bloom_Bot's_petal.png",
