@@ -17,6 +17,7 @@ Nico_artilleryboom = Nico_artillerybot:new{
 	UpgradeCost = {1,3},
 	LaunchSound = "/enemy/snowart_1/attack",
 	ImpactSound = "/impact/generic/explosion",
+	KOSound = "/weapons/arachnoid_ko",
 	TipImage = {
 		Unit = Point(3,3),
 		Target = Point(3,2),
@@ -136,6 +137,7 @@ function Nico_artilleryboom:GetFinalEffect(p1,p2,p3)
 					damage.sPawn = "Nico_artillerybloom"
 				end
 				damage.bKO_Effect = true
+				ret:AddSound(self.KOSound)
 				ret:AddDamage(damage)
 				if Board:IsTerrain(ret.effect:index(i).loc,TERRAIN_LAVA) then--this checks that the tile the copter spawns is a lava tile
 					local minifire = SpaceDamage(ret.effect:index(i).loc)

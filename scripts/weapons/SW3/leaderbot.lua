@@ -163,6 +163,7 @@ Nico_cannonbot_deploy = Pawn:new{
 	SoundLocation = "/enemy/snowtank_1/",
 	DefaultTeam = TEAM_PLAYER,
 	ImpactMaterial = IMPACT_METAL,
+	Portrait = "npcs/Pilot_Nico_cannondeploy",
 }
 
 ------Deployable Cannon Bot------
@@ -212,7 +213,7 @@ local function Nico_DeployBots(mission)
 				math.randomseed(os.time())
 				local i = math.random(#targets)
 				i = math.random(#targets)
-				while (Board:IsBlocked(targets[i], PATH_PROJECTILE) or Board:IsTerrain(targets[i],TERRAIN_LAVA) or (Board:IsTerrain(targets[i],TERRAIN_WATER) and avoid_water) or Board:IsTerrain(targets[i],TERRAIN_HOLE) or Board:IsPawnSpace(targets[i]) or list_contains(mission.Nico_BotDeploySpaces,targets[i]) or list_contains(death,targets[i]) or Board:IsEdge(targets[i]) or Board:IsDangerousItem(targets[i])) do
+				while (Board:IsBlocked(targets[i], PATH_PROJECTILE) or Board:IsTerrain(targets[i],TERRAIN_LAVA) or (Board:IsTerrain(targets[i],TERRAIN_WATER) and avoid_water) or Board:IsTerrain(targets[i],TERRAIN_HOLE) or Board:IsPawnSpace(targets[i]) or list_contains(mission.Nico_BotDeploySpaces,targets[i]) or list_contains(death,targets[i]) or Board:IsEdge(targets[i]) or Board:IsDangerousItem(targets[i]) or Board:GetCustomTile(targets[i]) == "ground_rail.png" or Board:GetCustomTile(targets[i]) == "ground_rail2.png" or Board:GetCustomTile(targets[i]) == "ground_rail3.png") do
 					if not list_contains(seen,targets[i]) then seen[#seen + 1] = targets[i] end
 					if #seen == #targets then avoid_water = false end
 					i = math.random(#targets)

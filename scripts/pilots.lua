@@ -154,7 +154,7 @@ end
             local damage = SpaceDamage(p2,self.Amount)
             damage.iFire = EFFECT_REMOVE
             damage.iAcid = EFFECT_REMOVE
-            damage.bHide=true
+            damage.bHide = true
             local shield= SpaceDamage(p2,0)
             damage.iShield = 1
             shield.sImageMark= "combat/icons/Nico_icon_shield+10.png"

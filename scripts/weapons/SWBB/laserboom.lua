@@ -16,6 +16,7 @@ Nico_laserboom = Nico_laserbot:new{
 	Upgrades = 2,
 	UpgradeList = { "+1 Damage Each", "Static Damage, Ally Immune" },
 	UpgradeCost = { 1,2 },
+	KOSound = "/weapons/arachnoid_ko",
 	TipImage = {
 		Unit = Point(2,4),
 		Enemy = Point(2,3),
@@ -116,6 +117,7 @@ function Nico_laserboom:AddLaser(ret,point,direction)
 					damage.sPawn = "Nico_laserbloom"
 				end
 				damage.bKO_Effect = true
+				ret:AddSound(self.KOSound)
 				ret:AddDamage(damage)
 				if Board:IsTerrain(ret.effect:index(i).loc,TERRAIN_LAVA) then--this checks that the tile the copter spawns is a lava tile
 					local minifire = SpaceDamage(ret.effect:index(i).loc)

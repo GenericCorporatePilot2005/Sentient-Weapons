@@ -24,6 +24,7 @@ Nico_Snowmine = Pawn:new{
     DefaultTeam = TEAM_PLAYER,
     ImpactMaterial = IMPACT_METAL,
     Corpse = false,
+	Portrait = "npcs/Pilot_Nico_minerbot_mech_MK1",
 }
 
 Nico_SnowmineA = Nico_Snowmine:new{
@@ -75,6 +76,7 @@ Nico_Snowmine2 = Pawn:new{
     DefaultTeam = TEAM_PLAYER,
     ImpactMaterial = IMPACT_METAL,
     Corpse = false,
+	Portrait = "npcs/Pilot_Nico_minerbot_mech_MK2",
 }
 
 Nico_Snowmine2A = Nico_Snowmine2:new{
@@ -197,32 +199,44 @@ Nico_minerbot=ArtilleryDefault:new{
 function Nico_minerbot:GetSkillEffect(p1,p2)
     local ret = SkillEffect()
     local dir = GetDirection(p2 - p1)
-    local damage = SpaceDamage(p2, self.Damage)
-
+    local damage = SpaceDamage(p2)
+    
+    ret:AddBounce(p1, 1)
+    ret:AddArtillery(damage,"effects/shotup_deploymine.png")
     if Board:IsValid(p2) and not Board:IsBlocked(p2,PATH_PROJECTILE) then
         damage.sPawn = self.SpawnBot
         damage.sAnimation = ""
         damage.iDamage = 0
+        ret:AddBounce(p2, self.BounceAmount)
+        ret:AddBoardShake(0.15)
+        ret:AddSound(self.KOSound)
+        ret:AddAnimation(damage.loc,"Nico_minerbot_meche1", ANIM_NO_DELAY)
+        ret:AddDelay(0.6)
     else
+        damage.iDamage = self.Damage
         damage.sAnimation = "ExploArt0"
         damage.bKO_Effect = Board:IsDeadly(damage,Pawn)
-        if damage.bKO_Effect then damage.sPawn = self.SpawnBot2 
-        end
+        ret:AddBounce(p2, self.BounceAmount)
+        ret:AddBoardShake(0.15)
+        ret:AddSound(self.KOSound)
     end
-
-    ret:AddBounce(p1, 1)
-    ret:AddArtillery(damage,"effects/shotup_deploymine.png")
-
-    ret:AddBounce(p2, self.BounceAmount)
-    ret:AddBoardShake(0.15)
-    ret:AddSound(self.KOSound)
-
+    
+    ret:AddDamage(damage)
     local damagepush = SpaceDamage(p2 + DIR_VECTORS[(dir+1)%4], 0, (dir+1)%4)
     damagepush.sAnimation = "airpush_"..((dir+1)%4)
     ret:AddDamage(damagepush) 
     damagepush = SpaceDamage(p2 + DIR_VECTORS[(dir-1)%4], 0, (dir-1)%4)
     damagepush.sAnimation = "airpush_"..((dir-1)%4)
     ret:AddDamage(damagepush)
+    
+    if damage.bKO_Effect then
+        damage.sPawn = self.SpawnBot2
+        damage.sAnimation = ""
+        ret:AddAnimation(damage.loc,"Nico_minerbot_meche2", ANIM_NO_DELAY)
+        ret:AddDelay(1.2)
+        ret:AddDamage(damage)
+    end
+
     return ret
 end
 Nico_minerbot_A=Nico_minerbot:new{

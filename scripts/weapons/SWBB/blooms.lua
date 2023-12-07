@@ -19,6 +19,7 @@ Nico_laserbloom = Pawn:new{
 	ImpactMaterial = IMPACT_METAL,
 	Corpse = false,
 	Explodes = true,
+	Portrait = "npcs/Pilot_Nico_laserbloom",
 }
 Nico_laserheal = Nico_laserbot:new{
     Name="K-bL00m Beam Mark I",
@@ -124,6 +125,7 @@ Nico_cannonbloom = Pawn:new{
 	ImpactMaterial = IMPACT_METAL,
 	Corpse = false,
 	Explodes = true,
+	Portrait = "npcs/Pilot_Nico_cannonbloom",
 }
 Nico_cannonheal = TankDefault:new{
     Name="Cannon Grow Mark I",
@@ -188,6 +190,7 @@ Nico_artillerybloom = Pawn:new{
 	ImpactMaterial = IMPACT_METAL,
 	Corpse = false,
 	Explodes = true,
+	Portrait = "npcs/Pilot_Nico_artillerybloom",
 }
 
 Nico_artilleryheal = SnowartAtk1:new{
@@ -249,6 +252,7 @@ Copter_Bloom_Bot = Pawn:new{
 	ImpactMaterial = IMPACT_FLESH,
 	Corpse = false,
 	Explodes = true,
+	Portrait = "npcs/Pilot_Nico_copterbloom",
 	Flying = true,
 }
 

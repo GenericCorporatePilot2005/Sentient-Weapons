@@ -50,6 +50,8 @@ local files = {
     "Nico_minerbot_mech_broken.png",
     "Nico_minerbot_mech_ns.png",
     "Nico_minerbot_mech_h.png",
+    "Nico_minerbot_mech_e1.png",
+    "Nico_minerbot_mech_e2.png",
     "Nico_minerbot_mech_death.png",
 }
 for _, file in ipairs(files) do
@@ -148,7 +150,7 @@ local a=ANIMS
             a.Nico_cannonbot_mechw_broken = a.MechUnit:new{Image="units/player/Nico_cannonbot_mech_w_broken.png", PosX = -20, PosY = 2 }
             a.Nico_cannonbot_mech_ns = a.MechIcon:new{Image="units/player/Nico_cannonbot_mech_ns.png"}
     --Sentient Weapons 2
-            --Knight-Bot
+        --Knight-Bot
             a.Nico_knightbot_mech =a.MechUnit:new{Image="units/player/Nico_knightbot_mech.png", PosX = -19, PosY = -4}
             a.Nico_knightbot_mecha = a.MechUnit:new{Image="units/player/Nico_knightbot_mech_a.png",  PosX = -19, PosY = -4, NumFrames = 4 }
             a.Nico_knightbot_mechw = a.MechUnit:new{Image="units/player/Nico_knightbot_mech_w.png", PosX = -24, PosY = 0}
@@ -165,7 +167,9 @@ local a=ANIMS
         --Mine-Bot
             a.Nico_minerbot_mech =a.MechUnit:new{Image="units/player/Nico_minerbot_mech.png", PosX = -20, PosY = 4}
             a.Nico_minerbot_mecha = a.MechUnit:new{Image="units/player/Nico_minerbot_mech_a.png",  PosX = -20, PosY = 4, NumFrames = 4 }
-            a.Nico_minerbot_mechd = a.MechUnit:new{Image="units/player/Nico_minerbot_mech_death.png",  PosX = -24, PosY = -3, NumFrames = 11, Time = 0.1, Loop = false  }
+            a.Nico_minerbot_meche1 = a.Nico_minerbot_mecha:new{Image="units/player/Nico_minerbot_mech_e1.png", NumFrames = 6, Time = 0.1, Loop = false }
+            a.Nico_minerbot_meche2 = a.Nico_minerbot_mecha:new{Image="units/player/Nico_minerbot_mech_e2.png", NumFrames = 6, Time = 0.2, Loop = false }
+            a.Nico_minerbot_mechd = a.MechUnit:new{Image="units/player/Nico_minerbot_mech_death.png",  PosX = -24, PosY = -3, NumFrames = 11, Time = 0.1, Loop = false }
             a.Nico_minerbot_mechw = a.MechUnit:new{Image="units/player/Nico_minerbot_mech_w.png", PosX = -20, PosY = 10}
             a.Nico_minerbot_mech_broken = a.MechUnit:new{Image="units/player/Nico_minerbot_mech_broken.png", PosX = -12, PosY = 0 }
             a.Nico_minerbot_mechw_broken = a.MechUnit:new{Image="units/player/Nico_minerbot_mech_w_broken.png", PosX = -20, PosY = 10}
@@ -301,5 +305,18 @@ local files = {
     "Pilot_Nico_botleader_mech.png",
 }
 for _, file in ipairs(files) do
-     modApi:appendAsset("img/portraits/pilots/".. file, path.."img/portraits/pilots/".. file)
+    modApi:appendAsset("img/portraits/pilots/".. file, path.."img/portraits/pilots/".. file)
+end
+--portraits
+local files = {
+    "Pilot_Nico_minerbot_mech_MK1.png",
+    "Pilot_Nico_minerbot_mech_MK2.png",
+    "Pilot_Nico_cannondeploy.png",
+    "Pilot_Nico_laserbloom.png",
+    "Pilot_Nico_cannonbloom.png",
+    "Pilot_Nico_artillerybloom.png",
+    "Pilot_Nico_copterbloom.png",
+}
+for _, file in ipairs(files) do
+    modApi:appendAsset("img/portraits/npcs/".. file, path.."img/portraits/npcs/".. file)
 end

@@ -23,6 +23,7 @@ Nico_cannonboom = Nico_cannonbot:new{
 	UpShot = "effects/shotup_ignite_fireball.png",
 	LaunchSound = "",
 	ImpactSound = "/impact/generic/explosion",
+	KOSound = "/weapons/arachnoid_ko",
 	CustomTipImage = "Nico_cannonboom_Tip",
 }
 
@@ -247,6 +248,7 @@ function Nico_cannonboom:GetFinalEffect(p1,p2,p3)
 					damage.sPawn = "Nico_cannonbloom"
 				end
 				damage.bKO_Effect = true
+				ret:AddSound(self.KOSound)
 				ret:AddDamage(damage)
 				if Board:IsTerrain(ret.effect:index(i).loc,TERRAIN_LAVA) then--this checks that the tile the copter spawns is a lava tile
 					local minifire = SpaceDamage(ret.effect:index(i).loc)
