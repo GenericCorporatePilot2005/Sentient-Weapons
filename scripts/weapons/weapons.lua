@@ -17,9 +17,10 @@ if modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SW3") then
     require(path .."weapons/SW3/hulkbot")
 end
 if modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SWBB") then
-    require(path .."weapons/SWBB/blooms")
     require(path .."weapons/SWBB/laserboom")
     require(path .."weapons/SWBB/cannonboom")
     require(path .."weapons/SWBB/artilleryboom")
+    require(path .."weapons/SWBB/blooms")
+	require(path .."weapons/SWBB/deathPetals")
 end
 require(path .."weapons/otherweapons")

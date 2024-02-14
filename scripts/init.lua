@@ -17,14 +17,28 @@ function mod:init()
 	-- look in template/mech to see how to code mechs.
 	local replaceRepair = require(self.scriptPath.."replaceRepair/replaceRepair")
 	require(self.scriptPath .."weapons/weapons")
+	--replacement for the skill's name and description
+	local oldGetSkillInfo = GetSkillInfo
+	function GetSkillInfo(skill)
+		if NicoIsRobot then
+			NicoIsRobot = nil
+			if skill == "Survive_Death" then
+				return PilotSkill("Robot", "Normal Pilots cannot be equipped. Loses 25 XP when the unit is disabled.")
+			end
+		end
+		return oldGetSkillInfo(skill)
+	end
 	require(self.scriptPath .."pawns")
 	local pilot = require(self.scriptPath .."pilots")
 	pilot:init(mod)
 	require(self.scriptPath .."assets")
 	require(self.scriptPath .."Achievements/achievements1")
-	require(self.scriptPath .."Achievements/achievements2")
-	require(self.scriptPath .."Achievements/achievements3")
-	require(self.scriptPath .."deathPetals")
+	if modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SW2") then
+		require(self.scriptPath .."Achievements/achievements2")
+	end
+	if modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SW3") then
+		require(self.scriptPath .."Achievements/achievements3")
+	end
 	
 	--[[commented out for the moment, just in case we need it
 	-- add extra mech to selection screen

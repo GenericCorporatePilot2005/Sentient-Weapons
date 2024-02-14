@@ -1,13 +1,13 @@
 ------Artillery Bot------
-Nico_artillerybot=ArtilleryDefault:new{
-	Name="Vk8 Rockets Mark II",
+Nico_artillerybot = ArtilleryDefault:new{
+	Name = "Vk8 Rockets Mark II",
 	Class = "TechnoVek",
 	Icon = "weapons/ranged_tribomb.png",
-	Description="Launch Rockets at 3 tiles.",
+	Description = "Launch Rockets at 3 tiles.",
 	Damage = 1,
 	PowerCost = 0,
 	BuildingDamage = true,
-	shield=false,
+	shield = false,
 	TwoClick = true,
 	Upgrades = 2,
 	UpgradeList = { "Shield Buildings",  "+1 Damage"  },
@@ -21,7 +21,7 @@ Nico_artillerybot=ArtilleryDefault:new{
 		Enemy2 = Point(3,1),
 		Building = Point(1,1),
 		Second_Click = Point(2,2),
-        CustomPawn="Nico_artillerybot_mech",
+        CustomPawn = "Nico_artillerybot_mech",
 	},
 	}
 	function Nico_artillerybot:FireFlyBossFlip(point)

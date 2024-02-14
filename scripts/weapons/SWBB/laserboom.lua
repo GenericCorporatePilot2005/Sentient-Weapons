@@ -24,7 +24,7 @@ Nico_laserboom = Nico_laserbot:new{
 		Target = Point(2,3),
 		Mountain = Point(2,1),
 		Building = Point(2,0),
-        CustomPawn="Nico_laserboom_mech",
+        CustomPawn = "Nico_laserboom_mech",
 	}
 }
 
@@ -106,19 +106,20 @@ function Nico_laserboom:AddLaser(ret,point,direction)
 				ret:AddSound("/weapons/arachnoid_ko")
 				local damage = SpaceDamage(ret.effect:index(i).loc)
 				if Board:IsTerrain(ret.effect:index(i).loc,TERRAIN_WATER) or Board:IsTerrain(ret.effect:index(i).loc,TERRAIN_LAVA) or Board:IsTerrain(ret.effect:index(i).loc,TERRAIN_HOLE) or Board:IsCracked(ret.effect:index(i).loc) or (Board:IsTerrain(ret.effect:index(i).loc,TERRAIN_ICE) and Board:IsCracked(ret.effect:index(i).loc)) then
-					ret:AddAnimation(damage.loc,"Nico_Copter_Bloome", ANIM_NO_DELAY)
-					ret:AddDelay(1.03)
 					ret:AddBounce(damage.loc,1)
 					damage.sPawn = "Copter_Bloom_Bot"
+					damage.bKO_Effect = true
+					ret:AddSound(self.KOSound)
+					ret:AddArtillery(damage,"effects/shotup_Nico_Copter_Bloom.png", FULL_DELAY)
 				else
 					ret:AddAnimation(damage.loc,"Nico_Laser_Bloome", ANIM_NO_DELAY)
 					ret:AddDelay(1.45)
 					ret:AddBounce(damage.loc,1)
 					damage.sPawn = "Nico_laserbloom"
+					damage.bKO_Effect = true
+					ret:AddSound(self.KOSound)
+					ret:AddDamage(damage)
 				end
-				damage.bKO_Effect = true
-				ret:AddSound(self.KOSound)
-				ret:AddDamage(damage)
 				if Board:IsTerrain(ret.effect:index(i).loc,TERRAIN_LAVA) then--this checks that the tile the copter spawns is a lava tile
 					local minifire = SpaceDamage(ret.effect:index(i).loc)
 					minifire.iFire = 1

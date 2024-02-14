@@ -119,7 +119,6 @@ local files = {
     "Nico_Copter_Bloom.png",
     "Nico_Copter_Bloom_ns.png",
     "Nico_Copter_Bloom_a.png",
-    "Nico_Copter_Bloom_e.png",
     "Nico_Copter_Bloom_d.png",
 }
 for _, file in ipairs(files) do
@@ -235,7 +234,6 @@ local a=ANIMS
             a.Nico_Copter_Bloom_ns=a.MechIcon:new{Image="units/player/Nico_Copter_Bloom_ns.png"}
             a.Nico_Copter_Blooma= a.Nico_Copter_Bloom:new{Image="units/player/Nico_Copter_Bloom_a.png", NumFrames = 4 }
             a.Nico_Copter_Bloomd=a.Nico_Copter_Bloom:new{Image="units/player/Nico_Copter_Bloom_d.png",  NumFrames = 10, Time = .14, Loop = false}
-            a.Nico_Copter_Bloome=a.BaseEmerge:new{Image="units/player/Nico_Copter_Bloom_e.png", PosX = -15, PosY = -15, NumFrames = 7, Time = .14, Loop = false}
 --weapon icons
 
     local files = {
@@ -288,6 +286,7 @@ local a=ANIMS
     modApi:appendAsset("img/effects/shotup_bloom_artillery.png", path.. "img/effects/shotup_bloom_artillery.png")
     modApi:appendAsset("img/effects/Bloom_Bot's_petal.png", path.. "img/effects/Bloom_Bot's_petal.png")
     modApi:appendAsset("img/effects/Copter_Bloom_Bot's_petal.png", path.. "img/effects/Copter_Bloom_Bot's_petal.png")
+    modApi:appendAsset("img/effects/shotup_Nico_Copter_Bloom.png", path.. "img/effects/shotup_Nico_Copter_Bloom.png")
     modApi:appendAsset("img/effects/shield_bot_pulse.png", path.. "img/effects/shield_bot_pulse.png")
 --portraits
 local files = {

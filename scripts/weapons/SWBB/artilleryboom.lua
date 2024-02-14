@@ -66,21 +66,6 @@ function Nico_artilleryboom:GetSkillEffect(p1,p2)
 	local direction = GetDirection(p1-p2)
 	ret:AddDamage(SpaceDamage(p1,self.SelfDamage))
 	if p1:Manhattan(p2) > 1 then ret:AddArtillery(SpaceDamage(p2,self.Damage,direction), "effects/shotup_missileswarm.png", NO_DELAY) end
-	if self.SelfDamage==1 then
-		for i = 1,ret.effect:size() do
-			ret.effect:index(i).bKO_Effect = Board:IsDeadly(ret.effect:index(i),Pawn)
-			if ret.effect:index(i).bKO_Effect and ret.effect:index(i).loc ~= p1 then
-				ret:AddSound("/weapons/arachnoid_ko")
-				ret:AddDelay(1.4)
-				local damage = SpaceDamage(ret.effect:index(i).loc)
-				damage.sPawn = "Nico_artillerybloom"
-				damage.bKO_Effect = true
-				ret:AddDamage(damage)
-			elseif ret.effect:index(i).bKO_Effect and ret.effect:index(i).loc == p1 then
-				ret.effect:index(i).bKO_Effect = false
-			end
-		end
-	end
 	return ret
 end
 function Nico_artilleryboom:GetFinalEffect(p1,p2,p3)
@@ -119,38 +104,36 @@ function Nico_artilleryboom:GetFinalEffect(p1,p2,p3)
 		ret:AddBounce(p3, self.BounceAmount)
 		ret:AddBounce(p3+DIR_VECTORS[dir]*distance*2, self.BounceAmount)
 	end
-	if self.SelfDamage==1 then
-		for i = 1,ret.effect:size() do
-			ret.effect:index(i).bKO_Effect = Board:IsDeadly(ret.effect:index(i),Pawn)
-			if ret.effect:index(i).bKO_Effect and (ret.effect:index(i).loc ~= p1 or (ret.effect:index(i).loc == p1 and Board:IsCracked(ret.effect:index(i).loc))) then
-				ret:AddSound("/weapons/arachnoid_ko")
-				local damage = SpaceDamage(ret.effect:index(i).loc)
-				if Board:IsTerrain(ret.effect:index(i).loc,TERRAIN_WATER) or Board:IsTerrain(ret.effect:index(i).loc,TERRAIN_LAVA) or Board:IsTerrain(ret.effect:index(i).loc,TERRAIN_HOLE) or Board:IsCracked(ret.effect:index(i).loc) or (Board:IsTerrain(ret.effect:index(i).loc,TERRAIN_ICE) and Board:IsCracked(ret.effect:index(i).loc)) then
-					ret:AddAnimation(damage.loc,"Nico_Copter_Bloome", ANIM_NO_DELAY)
-					ret:AddDelay(1.03)
-					ret:AddBounce(damage.loc,1)
-					damage.sPawn = "Copter_Bloom_Bot"
-				else
-					ret:AddAnimation(damage.loc,"Nico_Artillery_Bloome", ANIM_NO_DELAY)
-					ret:AddDelay(1.45)
-					ret:AddBounce(damage.loc,1)
-					damage.sPawn = "Nico_artillerybloom"
-				end
-				damage.bKO_Effect = true
-				ret:AddSound(self.KOSound)
+	local KillLoc = p1 + DIR_VECTORS[GetDirection(p1 - p2)]
+	if self.SelfDamage==1 and Board:IsPawnSpace(KillLoc) then
+		local damage = SpaceDamage(KillLoc,self.Damage)
+		damage.bKO_Effect = Board:IsDeadly(damage, Pawn)
+		if damage.bKO_Effect then
+			damage.bKO_Effect = true
+			damage.sAnimation = "explopush"..((self.Damage < 2 and 1) or 2).."_"..(direction+2)%4
+			ret:AddDamage(damage)
+			ret:AddSound(self.KOSound)
+			local damage = SpaceDamage(damage.loc,0)
+			if Board:IsTerrain(damage.loc,TERRAIN_WATER) or Board:IsTerrain(damage.loc,TERRAIN_LAVA) or Board:IsTerrain(damage.loc,TERRAIN_HOLE) or Board:IsCracked(damage.loc) or (Board:IsTerrain(damage.loc,TERRAIN_ICE) and Board:IsCracked(damage.loc)) then
+				ret:AddBounce(damage.loc,1)
+				damage.sPawn = "Copter_Bloom_Bot"
+				ret:AddArtillery(damage,"effects/shotup_Nico_Copter_Bloom.png", FULL_DELAY)
+			else
+				ret:AddAnimation(damage.loc,"Nico_Artillery_Bloome", ANIM_NO_DELAY)
+				ret:AddDelay(1.45)
+				ret:AddBounce(damage.loc,1)
+				damage.sPawn = "Nico_artillerybloom"
 				ret:AddDamage(damage)
-				if Board:IsTerrain(ret.effect:index(i).loc,TERRAIN_LAVA) then--this checks that the tile the copter spawns is a lava tile
-					local minifire = SpaceDamage(ret.effect:index(i).loc)
-					minifire.iFire = 1
-					ret:AddDamage(minifire)
-				end
-				if Board:IsAcid(ret.effect:index(i).loc) and Board:IsTerrain(ret.effect:index(i).loc,TERRAIN_WATER) then --this does the same but for acid water
-					local miniacid = SpaceDamage(ret.effect:index(i).loc)
-					miniacid.iAcid = 1
-					ret:AddDamage(miniacid)
-				end
-			elseif ret.effect:index(i).bKO_Effect and ret.effect:index(i).loc == p1 then
-				ret.effect:index(i).bKO_Effect = false
+			end
+			if Board:IsTerrain(damage.loc,TERRAIN_LAVA) then--this checks that the tile the copter spawns is a lava tile
+				local minifire = SpaceDamage(damage.loc)
+				minifire.iFire = 1
+				ret:AddDamage(minifire)
+			end
+			if Board:IsAcid(damage.loc) and Board:IsTerrain(damage.loc,TERRAIN_WATER) then --this does the same but for acid water
+				local miniacid = SpaceDamage(damage.loc)
+				miniacid.iAcid = 1
+				ret:AddDamage(miniacid)
 			end
 		end
 	end
@@ -158,31 +141,32 @@ function Nico_artilleryboom:GetFinalEffect(p1,p2,p3)
 end
 	Nico_artilleryboom_A=Nico_artilleryboom:new{
 		BounceAmount = 3,
-		Damage=2,
+		Damage = 2,
 		SelfDamage = 1,
-		UpgradeDescription = "Deals 1 additional damage to all targets and damages self. On kill, create a Bloom-Artillery.",
+		UpgradeDescription = "Deals 1 additional damage to all targets and damages self.\nIf the tile behind it has a unit, attacks it, if the attack kills, create a Bloom-Artillery.",
 		TipImage = {
 			Unit = Point(3,3),
 			Target = Point(3,2),
 			Enemy1 = Point(1,1),
 			Enemy2 = Point(3,1),
+			Enemy3 = Point(3,4),
 			Mountain1 = Point(1,0),
 			Mountain2 = Point(3,0),
 			Second_Click = Point(1,1),
 			Second_Origin = Point(3,3),
 			Second_Target = Point(3,1),
-			CustomPawn="Nico_artilleryboom_mech",
-			CustomEnemy="Scorpion2",
+			CustomPawn = "Nico_artilleryboom_mech",
+			CustomEnemy = "Mosquito1",
 		},
 	}
 	Nico_artilleryboom_B=Nico_artilleryboom:new{
 		BounceAmount = 3,
-		Damage=2,
+		Damage = 2,
 		UpgradeDescription = "Deals 1 additional damage to all targets.",
 	}
 	Nico_artilleryboom_AB=Nico_artilleryboom_A:new{
 		BounceAmount = 3,
-		Damage=3,
+		Damage = 3,
 		SelfDamage = 1,
 	}
 	modApi:addWeaponDrop("Nico_artilleryboom")

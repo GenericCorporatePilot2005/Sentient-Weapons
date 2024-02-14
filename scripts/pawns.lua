@@ -209,7 +209,7 @@ require(path .."palettes")
 
     for i = 1,8 do
     	trait:add{
-		    pawnType=Nico_Pawn_List[i],--who will get the trait
+		    pawnType = Nico_Pawn_List[i],--who will get the trait
 		    icon = "img/combat/icons/icon_Nico_zenith_shield.png",--the icon itself
 		    icon_offset = Point(0,9),--it's location
 		    desc_title = "Zenith\'s Guard",--title

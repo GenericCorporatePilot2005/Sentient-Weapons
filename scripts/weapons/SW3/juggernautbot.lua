@@ -3,13 +3,13 @@
 Nico_juggernaut = Skill:new{  
 	Name = "Juggernaut Engines V2",
 	Description = "Charge through units, destroying them.\nFreezes any water it terminates on.",
-	Class="TechnoVek",
+	Class = "TechnoVek",
 	Icon = "weapons/Nico_juggernautbot.png",
 	LaunchSound = "/weapons/charge",
 	Damage = DAMAGE_DEATH,
-	Upgrades=2,
-	UpgradeCost={1,2},
-	UpgradeList={"Terraforming","Drift"},
+	Upgrades = 2,
+	UpgradeCost = {1,2},
+	UpgradeList = {"Terraforming","Drift"},
 	Phasing = 0,
 	Range = 7,
 	TipImage = {
@@ -122,9 +122,9 @@ Nico_juggernaut = Skill:new{
 		return ret
 	end
 
-	Nico_juggernaut_A=Nico_juggernaut:new{
-		Phasing=1,
-		UpgradeDescription="Can charge through buildings and mountains, won't destroy buildings.",
+	Nico_juggernaut_A = Nico_juggernaut:new{
+		Phasing = 1,
+		UpgradeDescription = "Can charge through buildings and mountains, won't destroy buildings.",
 		TipImage = {
 			Unit = Point(0,2),
 			Enemy = Point(1,2),
@@ -137,9 +137,9 @@ Nico_juggernaut = Skill:new{
 		}
 	}
 
-	Nico_juggernaut_B=Nico_juggernaut:new{
-		TwoClick=true,
-		UpgradeDescription="Can drift, cracking a tile and then charging through a second line of tiles.",
+	Nico_juggernaut_B = Nico_juggernaut:new{
+		TwoClick = true,
+		UpgradeDescription = "Can drift, cracking a tile and then charging through a second line of tiles.",
 		TipImage = {
 			Unit = Point(0,2),
 			Enemy = Point(2,1),
@@ -188,7 +188,9 @@ Nico_juggernaut = Skill:new{
 		if Board:IsBuilding(p2) or Board:IsTerrain(p2,TERRAIN_MOUNTAIN) or Board:IsBlocked(p2, Pawn:GetPathProf()) or TCcheck(p2) then return PointList() end
 		local ret = self:GetTargetArea(p2)
 		self:RemoveBackwards(ret,p1,p2)
-		self:RemoveForwards(ret,p1,p2) -- also remove forwards
+		if not Board:IsPod(p2) then
+			self:RemoveForwards(ret,p1,p2) -- also remove forwards
+		end
 		ret:push_back(p1)
 		return ret
 	end
@@ -197,7 +199,7 @@ Nico_juggernaut = Skill:new{
 	end
     function Nico_juggernaut_B:GetFinalEffect(p1,p2,p3)
         local ret = self:GetSkillEffect(p1,p2)
-        if p1 == p3 then return ret end    
+        if p1 == p3 then return ret end
 		local endcharge = p3
 		local direction = GetDirection(p3 - p2)
 		local crushing = false
@@ -250,11 +252,11 @@ Nico_juggernaut = Skill:new{
 			ice.iTerrain = TERRAIN_ICE
 			ice.sImageMark = "combat/icons/Nico_icon_ice_glow.png"
 			if Board:IsAcid(endcharge) then
-				ice.sAnimation="Splash_acid"
+				ice.sAnimation = "Splash_acid"
 			elseif Board:IsTerrain(endcharge,TERRAIN_LAVA) then
-				ice.sAnimation="Splash_lava"
+				ice.sAnimation = "Splash_lava"
 			else
-				ice.sAnimation="Splash"
+				ice.sAnimation = "Splash"
 			end
 			ret:AddDamage(del)
 			ret:AddDamage(ice)

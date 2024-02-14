@@ -1,6 +1,8 @@
 local mod = modApi:getCurrentMod()
 local scriptPath = modApi:getCurrentMod().scriptPath
 local replaceRepair = require(scriptPath.."replaceRepair/replaceRepair")
+require(scriptPath .."Achievements/achievements1")
+local this={}
 
 --pilots
     CreatePilot{
@@ -30,103 +32,97 @@ local replaceRepair = require(scriptPath.."replaceRepair/replaceRepair")
         Rarity = 0,
         Blacklist = {"Invulnerable","Thick","Popular","Health","Skilled","Regen","Pain"},
     }
-    CreatePilot{
-        Id = "Pilot_Nico_knightbot_mech",
-        Personality = "Artificial",
-        Sex = SEX_VEK,
-        Name = "Knight-Bot",
-        GetSkill = function() NicoIsRobot = true; return "Survive_Death" end,
-        Rarity = 0,
-        Blacklist = {"Invulnerable","Thick","Popular","Health","Skilled","Regen","Pain"},
-    }
-    CreatePilot{
-        Id = "Pilot_Nico_shieldbot_mech",
-        Personality = "Artificial",
-        Sex = SEX_VEK,
-        Name = "Shield-Bot",
-        GetSkill = function() NicoIsRobot = true; return "Survive_Death" end,
-        Rarity = 0,
-        Blacklist = {"Invulnerable","Thick","Popular","Health","Skilled","Regen","Pain"},
-    }
-    CreatePilot{
-        Id = "Pilot_Nico_minerbot_mech",
-        Personality = "Artificial",
-        Sex = SEX_VEK,
-        Name = "Mine-Bot",
-        GetSkill = function() NicoIsRobot = true; return "Survive_Death" end,
-        Rarity = 0,
-        Blacklist = {"Invulnerable","Thick","Popular","Health","Skilled","Regen","Pain"},
-    }
-    CreatePilot{
-        Id = "Pilot_Nico_laserboom_mech",
-        Personality = "Artificial",
-        Sex = SEX_VEK,
-        Name = "Boom Laser",
-        GetSkill = function() NicoIsRobot = true; return "Survive_Death" end,
-        Rarity = 0,
-        Blacklist = {"Invulnerable","Thick","Popular","Health","Skilled","Regen","Pain"},
-    }
-    CreatePilot{
-        Id = "Pilot_Nico_cannonboom_mech",
-        Personality = "Artificial",
-        Sex = SEX_VEK,
-        Name = "Boom Cannon",
-        GetSkill = function() NicoIsRobot = true; return "Survive_Death" end,
-        Rarity = 0,
-        Blacklist = {"Invulnerable","Thick","Popular","Health","Skilled","Regen","Pain"},
-    }
-    CreatePilot{
-        Id = "Pilot_Nico_artilleryboom_mech",
-        Personality = "Artificial",
-        Sex = SEX_VEK,
-        Name = "Boom Artillery",
-        GetSkill = function() NicoIsRobot = true; return "Survive_Death" end,
-        Rarity = 0,
-        Blacklist = {"Invulnerable","Thick","Popular","Health","Skilled","Regen","Pain"},
-    }
-    CreatePilot{
-        Id = "Pilot_Nico_juggernautbot_mech",
-        Personality = "Artificial",
-        Sex = SEX_VEK,
-        Name = "Juggernaut-Bot",
-        GetSkill = function() NicoIsRobot = true; return "Survive_Death" end,
-        Rarity = 0,
-        Blacklist = {"Invulnerable","Popular","Health","Skilled","Regen","Pain"},
-    }
-    CreatePilot{
-        Id = "Pilot_Nico_botleader_mech",
-        Name = "Bot Leader",
-        Personality = "Artificial",
-        Sex = SEX_VEK,
-        Skill = "Nico_BotRepair",
-        Rarity = 0,
-        Blacklist = {"Invulnerable","Popular","Pain","Health"},
-    }
-    CreatePilot{
-        Id = "Pilot_Nico_hulkbot_mech",
-        Personality = "Artificial",
-        Sex = SEX_VEK,
-        Name = "Cryo-Hulk",
-        GetSkill = function() NicoIsRobot = true; return "Survive_Death" end,
-        Rarity = 0,
-        Blacklist = {"Invulnerable","Popular"},
-    }
---replacement for the skill's name and description
-local oldGetSkillInfo = GetSkillInfo
-function GetSkillInfo(skill)
-
-if NicoIsRobot then
-    NicoIsRobot = nil
-    if skill == "Survive_Death"    then
-        return PilotSkill("Robot", "Normal Pilots cannot be equipped. Loses 25 XP when the unit is disabled.")
+    if modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SW2") then
+        CreatePilot{
+            Id = "Pilot_Nico_knightbot_mech",
+            Personality = "Artificial",
+            Sex = SEX_VEK,
+            Name = "Knight-Bot",
+            GetSkill = function() NicoIsRobot = true; return "Survive_Death" end,
+            Rarity = 0,
+            Blacklist = {"Invulnerable","Thick","Popular","Health","Skilled","Regen","Pain"},
+        }
+        CreatePilot{
+            Id = "Pilot_Nico_shieldbot_mech",
+            Personality = "Artificial",
+            Sex = SEX_VEK,
+            Name = "Shield-Bot",
+            GetSkill = function() NicoIsRobot = true; return "Survive_Death" end,
+            Rarity = 0,
+            Blacklist = {"Invulnerable","Thick","Popular","Health","Skilled","Regen","Pain"},
+        }
+        CreatePilot{
+            Id = "Pilot_Nico_minerbot_mech",
+            Personality = "Artificial",
+            Sex = SEX_VEK,
+            Name = "Mine-Bot",
+            GetSkill = function() NicoIsRobot = true; return "Survive_Death" end,
+            Rarity = 0,
+            Blacklist = {"Invulnerable","Thick","Popular","Health","Skilled","Regen","Pain"},
+        }
     end
-end
-return oldGetSkillInfo(skill)
-end
---Bot Leader's skill replacement
+    if modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SW3") then
+        CreatePilot{
+            Id = "Pilot_Nico_juggernautbot_mech",
+            Personality = "Artificial",
+            Sex = SEX_VEK,
+            Name = "Juggernaut-Bot",
+            GetSkill = function() NicoIsRobot = true; return "Survive_Death" end,
+            Rarity = 0,
+            Blacklist = {"Invulnerable","Popular","Health","Skilled","Regen","Pain"},
+        }
+        CreatePilot{
+            Id = "Pilot_Nico_botleader_mech",
+            Name = "Bot Leader",
+            Personality = "Artificial",
+            Sex = SEX_VEK,
+            Skill = "Nico_BotRepair",
+            Rarity = 0,
+            Blacklist = {"Invulnerable","Popular","Pain","Health","Skilled"},
+        }
+        CreatePilot{
+            Id = "Pilot_Nico_hulkbot_mech",
+            Personality = "Artificial",
+            Sex = SEX_VEK,
+            Name = "Cryo-Hulk",
+            GetSkill = function() NicoIsRobot = true; return "Survive_Death" end,
+            Rarity = 0,
+            Blacklist = {"Invulnerable","Popular"},
+        }
+    end
+    if modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SWBB") then
+        CreatePilot{
+            Id = "Pilot_Nico_laserboom_mech",
+            Personality = "Artificial",
+            Sex = SEX_VEK,
+            Name = "Boom Laser",
+            GetSkill = function() NicoIsRobot = true; return "Survive_Death" end,
+            Rarity = 0,
+            Blacklist = {"Invulnerable","Thick","Popular","Health","Skilled","Regen","Pain"},
+        }
+        CreatePilot{
+            Id = "Pilot_Nico_cannonboom_mech",
+            Personality = "Artificial",
+            Sex = SEX_VEK,
+            Name = "Boom Cannon",
+            GetSkill = function() NicoIsRobot = true; return "Survive_Death" end,
+            Rarity = 0,
+            Blacklist = {"Invulnerable","Thick","Popular","Health","Skilled","Regen","Pain"},
+        }
+        CreatePilot{
+            Id = "Pilot_Nico_artilleryboom_mech",
+            Personality = "Artificial",
+            Sex = SEX_VEK,
+            Name = "Boom Artillery",
+            GetSkill = function() NicoIsRobot = true; return "Survive_Death" end,
+            Rarity = 0,
+            Blacklist = {"Invulnerable","Thick","Popular","Health","Skilled","Regen","Pain"},
+        }
+    end
 
-    local this={}
-    function this:init(mod)
+--Bot Leader's skill replacement
+function this:init(mod)
+    if modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SW3") then
         replaceRepair:addSkill{
             Name = "Pinnacle Technologies",
             Description = "Repairing fully heals the Bot Leader, and Shields it.\nAt mission start, deploy a number of Cannon Bots equal to pilot level.\nRevives when dead at the end of a battle.",
@@ -181,4 +177,5 @@ end
             return ret       
         end
     end
-    return this
+end
+return this
