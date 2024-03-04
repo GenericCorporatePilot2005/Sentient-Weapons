@@ -232,6 +232,7 @@ function Nico_minerbot:GetSkillEffect(p1,p2)
     if damage.bKO_Effect then
         damage.sPawn = self.SpawnBot2
         damage.sAnimation = ""
+        damage.iDamage = 0
         ret:AddAnimation(damage.loc,"Nico_minerbot_meche2", ANIM_NO_DELAY)
         ret:AddDelay(1.2)
         ret:AddDamage(damage)
