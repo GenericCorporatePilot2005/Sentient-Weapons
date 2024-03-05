@@ -2,6 +2,8 @@
 local BoardEvents = require(modApi:getCurrentMod().scriptPath .."libs/boardEvents")
 
 Nico_Freeze_Mine = { Image = "combat/freeze_mine.png", Damage = SpaceDamage(0), Tooltip = "freeze_mine", Icon = "combat/icons/icon_frozenmine_glow.png", UsedImage = ""}--needs to be global not local
+Nico_Freeze_Mine2 = { Image = "combat/Nico_freeze_mine.png", Damage = SpaceDamage(0), Tooltip = "freeze_mine2", Icon = "combat/icons/icon_frozenmine_glow.png", UsedImage = ""}--needs to be global not local
+TILE_TOOLTIPS[Nico_Freeze_Mine2.Tooltip] = {"Inactive Freeze Mine", "Any unit that is damaged on this space will be Frozen."}
 ------Miner Bot------
 	--The deployable's palettes
     local mod = modApi:getCurrentMod()
@@ -168,11 +170,11 @@ function Nico_minibot2:GetFinalEffect(p1,p2,p3)
     return ret
 end
 --The mech's weapon
-Nico_minerbot=ArtilleryDefault:new{
+Nico_minerbot = ArtilleryDefault:new{
     Icon = "weapons/Nico_minebot.png",
     Name="Mine-Bot Deployer",
-    Description="Launch a Mine-Bot at a tile, pushing tiles to the left and right, creating an improved Mine-Bot on kill.",
-    Class="TechnoVek",
+    Description = "Launch a Mine-Bot at a tile, pushing tiles to the left and right, creating an improved Mine-Bot on kill.",
+    Class = "TechnoVek",
     ArtilleryStart = 2,
     ArtillerySize = 8,
     SpawnBot = "Nico_Snowmine",
@@ -182,15 +184,15 @@ Nico_minerbot=ArtilleryDefault:new{
     Damage = 1,
     Upgrades = 2,
     KOSound = "/impact/generic/mech",
-    UpgradeList={"+1 Move","+2 Damage"},
+    UpgradeList = {"+1 Move","+2 Damage"},
     UpgradeCost = { 1,3 },
     TipImage = {
         Unit = Point(2,4),
-        Second_Origin=Point(2,4),
+        Second_Origin = Point(2,4),
         Enemy = Point(2,1),
         Enemy2 = Point(3,1),
         Target = Point(2,1),
-        Second_Target=Point(2,2),
+        Second_Target = Point(2,2),
         CustomEnemy = "Leaper1",
         CustomPawn = "Nico_minerbot_mech",
     }
@@ -240,27 +242,27 @@ function Nico_minerbot:GetSkillEffect(p1,p2)
 
     return ret
 end
-Nico_minerbot_A=Nico_minerbot:new{
+Nico_minerbot_A = Nico_minerbot:new{
     SpawnBot = "Nico_SnowmineA",
     SpawnBot2 = "Nico_Snowmine2A",
     UpgradeDescription = "Increases the Mine-Bot's move distance to 4.",
 }
 
-Nico_minerbot_B=Nico_minerbot:new{
+Nico_minerbot_B = Nico_minerbot:new{
     Damage = 3,
     UpgradeDescription = "Increases the artillery attack damage by 2.",
     TipImage = {
         Unit = Point(2,4),
-        Second_Origin=Point(2,4),
+        Second_Origin = Point(2,4),
         Enemy = Point(2,1),
         Enemy2 = Point(3,1),
         Target = Point(2,1),
-        Second_Target=Point(2,2),
+        Second_Target = Point(2,2),
         CustomEnemy = "Firefly1",
         CustomPawn = "Nico_minerbot_mech",
     }
 }
-Nico_minerbot_AB=Nico_minerbot_B:new{
+Nico_minerbot_AB = Nico_minerbot_B:new{
     SpawnBot = "Nico_SnowmineA",
     SpawnBot2 = "Nico_Snowmine2A",
 }
@@ -269,7 +271,13 @@ modApi:addWeaponDrop("Nico_minerbot")
 local function Nico_MoveMine(mission, pawn, weaponId, p1, p2)
 	if pawn and pawn:GetType() == "Nico_minerbot_mech" and weaponId == "Move" then
 		mission.Nico_FireSpace = {p1,Board:IsFire(p1)}
-		if Board:IsFire(p1) then Board:SetItem(p1,"Freeze_Mine") else Board:SetItem(p1,"Nico_Freeze_Mine") end
+        if Board:IsTerrain(p1,TERRAIN_WATER) or Board:IsTerrain(p1,TERRAIN_LAVA) or Board:IsTerrain(p1,TERRAIN_HOLE) then
+            Board:SetItem(p1,"Nico_Freeze_Mine2")
+        elseif Board:IsFire(p1) then
+            Board:SetItem(p1,"Freeze_Mine")
+        else
+            Board:SetItem(p1,"Nico_Freeze_Mine")
+        end
 	end
 end
 
@@ -298,7 +306,7 @@ modapiext.events.onPawnUndoMove:subscribe(function(mission, pawn)
 end)
 
 BoardEvents.onItemRemoved:subscribe(function(loc, removed_item)
-	if removed_item == "Nico_Freeze_Mine" then
+	if removed_item == "Nico_Freeze_Mine" or removed_item == "Nico_Freeze_Mine2" then
 		local pawn = Board:GetPawn(loc)
 		if pawn and pawn:GetId() == undoPawnId_thisFrame then
 			-- do nothing
@@ -318,8 +326,15 @@ BoardEvents.onItemRemoved:subscribe(function(loc, removed_item)
 	end
 end)
 
---[[modApi.events.onModsInitialized:subscribe(function()
-	modApi.events.onMissionUpdate:subscribe(function(mission)
-		undoPawnId_thisFrame = nil
-	end)
-end)]]
+BoardEvents.onTerrainChanged:subscribe(function(p, terrain, terrain_prev)
+	local item = Board:GetItem(p)
+	if item == "Nico_Freeze_Mine" or item == "Freeze_Mine" then
+		if terrain == TERRAIN_HOLE or terrain == TERRAIN_WATER then
+            Board:SetItem(p,"Nico_Freeze_Mine2")
+		end
+    elseif item == "Nico_Freeze_Mine2" then
+        if terrain == TERRAIN_ROAD or terrain == TERRAIN_GROUND then
+            Board:SetItem(p,"Freeze_Mine")
+        end
+	end
+end)

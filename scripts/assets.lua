@@ -288,6 +288,9 @@ local a=ANIMS
     modApi:appendAsset("img/effects/Copter_Bloom_Bot's_petal.png", path.. "img/effects/Copter_Bloom_Bot's_petal.png")
     modApi:appendAsset("img/effects/shotup_Nico_Copter_Bloom.png", path.. "img/effects/shotup_Nico_Copter_Bloom.png")
     modApi:appendAsset("img/effects/shield_bot_pulse.png", path.. "img/effects/shield_bot_pulse.png")
+--Mines
+    modApi:appendAsset("img/combat/Nico_freeze_mine.png", path.."img/combat/Nico_freeze_mine.png")
+    Location["combat/Nico_freeze_mine.png"] = Point(-14,2)
 --portraits
 local files = {
     "Pilot_Nico_artillerybot_mech.png",
