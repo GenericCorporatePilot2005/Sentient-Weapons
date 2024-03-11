@@ -49,12 +49,11 @@ Nico_juggernaut = Skill:new{
 
 	function Nico_juggernaut:GetSkillEffect(p1,p2)
 		if Board:IsTipImage() then
-			local x = math.random(2)
-			if Board:IsTerrain(Point(2,2),3) then
-				if x==1 then
-					Board:SetTerrain(Point(2,2),0)
-				else
-					Board:SetTerrain(Point(2,2),3)
+			if tosx_mission_IceHulk then
+				Board:RemovePawn(self.TipImage.Enemy)
+				Board:AddPawn("tosx_mission_IceHulk", self.TipImage.Enemy)
+				if self.TipImage.Enemy2 then
+					Board:AddPawn("tosx_mission_IceHulk", self.TipImage.Enemy2)
 				end
 			end
 		end
@@ -90,6 +89,15 @@ Nico_juggernaut = Skill:new{
 			ret:AddDelay(0.1)
 			local midpoint = p1 + DIR_VECTORS[direction]*i
 		
+			if Board:IsPawnSpace(midpoint) and Board:GetPawn(midpoint):GetType() == "tosx_mission_IceHulk" then
+				local chance = math.random()
+				if chance > 0.15 then
+					ret:AddVoice("Mission_tosx_Juggernaut_Ram",-1)
+				end
+				
+				crushing = true
+			end
+
 			local dodamage = true		
 			if Board:IsBuilding(midpoint) or Board:IsPod(midpoint) then
 				dodamage = false
@@ -119,6 +127,7 @@ Nico_juggernaut = Skill:new{
 			ret:AddDamage(ice)
 			ret:AddSound("/impact/generic/ice")
 		end
+		if Board:GetItem(endcharge) == "Poke_Puddle" then ret:AddDamage(SpaceDamage(endcharge,0,direction)) end
 		return ret
 	end
 
@@ -136,7 +145,6 @@ Nico_juggernaut = Skill:new{
 			CustomPawn = "Nico_juggernautbot_mech",
 		}
 	}
-
 	Nico_juggernaut_B = Nico_juggernaut:new{
 		TwoClick = true,
 		UpgradeDescription = "Can drift, cracking a tile and then charging through a second line of tiles.",
@@ -153,7 +161,21 @@ Nico_juggernaut = Skill:new{
 			Length = 5,
 		}
 	}
-
+	Nico_juggernaut_AB=Nico_juggernaut_B:new{
+		Phasing=1,
+		TipImage = {
+			Unit = Point(0,2),
+			Enemy = Point(2,1),
+			Mountain = Point(1,2),
+			Water = Point(2,2),
+			Water2 = Point(2,0),
+			Target = Point(2,2),
+			Second_Click=Point(2,0),
+			CustomEnemy = "Snowtank2",
+			CustomPawn = "Nico_juggernautbot_mech",
+			Length = 5,
+		}
+	}
 	local mod = modApi:getCurrentMod()
 	local path = mod.scriptPath
 	local customAnim = require(path.."libs/customAnim")
@@ -173,11 +195,16 @@ Nico_juggernaut = Skill:new{
 			"Nautilus_Spike_Mine",
 			"Nautilus_Spike_Mine2",
 			"tatu_Cookie_Ice",
+			"Poke_StealthRock",
+			"Poke_SeedFlareItem",
 		}
 
 		local isComplexCondition =
 			(isNotShielded and list_contains(specialMines, item))
 			or item == "Item_Mine"
+			or item == "CyborgWeapons_WebItem"
+			or item == "Meta_BlobGunk"
+			or item == "Poke_Puddle"
 			or hasRainbow1
 			or hasRainbow2
 			or (isGumTile and isOnRoad)
@@ -233,6 +260,15 @@ Nico_juggernaut = Skill:new{
 			ret:AddDelay(0.1)
 			local midpoint = p2 + DIR_VECTORS[direction]*i
 		
+			if Board:IsPawnSpace(midpoint) and Board:GetPawn(midpoint):GetType() == "tosx_mission_IceHulk" then
+				local chance = math.random()
+				if chance > 0.15 then
+					ret:AddVoice("Mission_tosx_Juggernaut_Ram",-1)
+				end
+				
+				crushing = true
+			end
+
 			local dodamage = true		
 			if Board:IsBuilding(midpoint) or Board:IsPod(midpoint) then
 				dodamage = false
@@ -262,22 +298,8 @@ Nico_juggernaut = Skill:new{
 			ret:AddDamage(ice)
 			ret:AddSound("/impact/generic/ice")
 		end
+		if Board:GetItem(endcharge) == "Poke_Puddle" then ret:AddDamage(SpaceDamage(endcharge,0,direction)) end
 		return ret
 	end
-	Nico_juggernaut_AB=Nico_juggernaut_B:new{
-		Phasing=1,
-		TipImage = {
-			Unit = Point(0,2),
-			Enemy = Point(2,1),
-			Mountain = Point(1,2),
-			Water = Point(2,2),
-			Water2 = Point(2,0),
-			Target = Point(2,2),
-			Second_Click=Point(2,0),
-			CustomEnemy = "Snowtank2",
-			CustomPawn = "Nico_juggernautbot_mech",
-			Length = 5,
-		}
-	}
 	modApi:addWeaponDrop("Nico_juggernaut")
 

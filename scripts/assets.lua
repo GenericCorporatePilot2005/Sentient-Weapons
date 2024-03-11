@@ -256,21 +256,25 @@ local a=ANIMS
     modApi:appendAsset("img/combat/icons/Nico_icon_acid_kill.png", path.."img/combat/icons/Nico_icon_acid_kill.png")
     Location["combat/icons/Nico_icon_acid_kill.png"] = Point(-16,9)
 --mech weapons
-    modApi:appendAsset("img/weapons/Nico_laserbot.png", path .."img/weapons/Nico_laserbot.png")
-    modApi:appendAsset("img/weapons/Nico_knightbot.png", path .."img/weapons/Nico_knightbot.png")
-    modApi:appendAsset("img/weapons/Nico_minerbot.png", path .."img/weapons/Nico_minerbot.png")
-    modApi:appendAsset("img/weapons/Nico_minebot.png", path .."img/weapons/Nico_minebot.png")
-    modApi:appendAsset("img/weapons/Nico_shieldbot.png", path .."img/weapons/Nico_shieldbot.png")
-    modApi:appendAsset("img/weapons/Nico_leaderbot.png", path .."img/weapons/Nico_leaderbot.png")
-    modApi:appendAsset("img/weapons/Nico_hulkbot.png", path .."img/weapons/Nico_hulkbot.png")
-    modApi:appendAsset("img/weapons/Nico_juggernautbot.png", path .."img/weapons/Nico_juggernautbot.png")
-    modApi:appendAsset("img/weapons/Nico_cannondeploy.png", path .."img/weapons/Nico_cannondeploy.png")
-    modApi:appendAsset("img/weapons/Nico_cannonboom.png", path .."img/weapons/Nico_cannonboom.png")
-    modApi:appendAsset("img/weapons/Nico_laserboom.png", path .."img/weapons/Nico_laserboom.png")
-    modApi:appendAsset("img/weapons/Nico_bloom_laser.png", path .."img/weapons/Nico_bloom_laser.png")
-    modApi:appendAsset("img/weapons/Nico_bloom_cannon.png", path .."img/weapons/Nico_bloom_cannon.png")
-    modApi:appendAsset("img/weapons/Nico_bloom_artillery.png", path .."img/weapons/Nico_bloom_artillery.png")
-    modApi:appendAsset("img/weapons/Nico_bloom_copter.png", path .."img/weapons/Nico_bloom_copter.png")
+    local files = {
+        "Nico_laserbot.png",
+        "Nico_knightbot.png",
+        "Nico_minerbot.png",
+        "Nico_minebot.png",
+        "Nico_shieldbot.png",
+        "Nico_leaderbot.png",
+        "Nico_hulkbot.png",
+        "Nico_juggernautbot.png",
+        "Nico_cannondeploy.png",
+        "Nico_cannonboom.png",
+        "Nico_laserboom.png",
+        "Nico_bloom_laser.png",
+        "Nico_bloom_cannon.png",
+        "Nico_bloom_copter.png",
+    }
+    for _, file in ipairs(files) do
+        modApi:appendAsset("img/weapons/"..file,path.."img/weapons/"..file)
+    end
     
 --Bot Leader's skill replacement
     modApi:appendAsset("img/weapons/Nico_Bot_Repair.png", path.."img/weapons/Nico_Bot_Repair.png")
@@ -293,32 +297,26 @@ local a=ANIMS
     Location["combat/Nico_freeze_mine.png"] = Point(-14,2)
 --portraits
 local files = {
-    "Pilot_Nico_artillerybot_mech.png",
-    "Pilot_Nico_laserbot_mech.png",
-    "Pilot_Nico_cannonbot_mech.png",
-    "Pilot_Nico_knightbot_mech.png",
-    "Pilot_Nico_shieldbot_mech.png",
-    "Pilot_Nico_minerbot_mech.png",
-    "Pilot_Nico_laserboom_mech.png",
-    "Pilot_Nico_cannonboom_mech.png",
-    "Pilot_Nico_artilleryboom_mech.png",
-    "Pilot_Nico_juggernautbot_mech.png",
-    "Pilot_Nico_hulkbot_mech.png",
-    "Pilot_Nico_botleader_mech.png",
+    "pilots/Pilot_Nico_artillerybot_mech.png",
+    "pilots/Pilot_Nico_laserbot_mech.png",
+    "pilots/Pilot_Nico_cannonbot_mech.png",
+    "pilots/Pilot_Nico_knightbot_mech.png",
+    "pilots/Pilot_Nico_shieldbot_mech.png",
+    "pilots/Pilot_Nico_minerbot_mech.png",
+    "pilots/Pilot_Nico_laserboom_mech.png",
+    "pilots/Pilot_Nico_cannonboom_mech.png",
+    "pilots/Pilot_Nico_artilleryboom_mech.png",
+    "pilots/Pilot_Nico_juggernautbot_mech.png",
+    "pilots/Pilot_Nico_hulkbot_mech.png",
+    "pilots/Pilot_Nico_botleader_mech.png",
+    "npcs/Pilot_Nico_minerbot_mech_MK1.png",
+    "npcs/Pilot_Nico_minerbot_mech_MK2.png",
+    "npcs/Pilot_Nico_cannondeploy.png",
+    "npcs/Pilot_Nico_laserbloom.png",
+    "npcs/Pilot_Nico_cannonbloom.png",
+    "npcs/Pilot_Nico_artillerybloom.png",
+    "npcs/Pilot_Nico_copterbloom.png",
 }
 for _, file in ipairs(files) do
-    modApi:appendAsset("img/portraits/pilots/".. file, path.."img/portraits/pilots/".. file)
-end
---portraits
-local files = {
-    "Pilot_Nico_minerbot_mech_MK1.png",
-    "Pilot_Nico_minerbot_mech_MK2.png",
-    "Pilot_Nico_cannondeploy.png",
-    "Pilot_Nico_laserbloom.png",
-    "Pilot_Nico_cannonbloom.png",
-    "Pilot_Nico_artillerybloom.png",
-    "Pilot_Nico_copterbloom.png",
-}
-for _, file in ipairs(files) do
-    modApi:appendAsset("img/portraits/npcs/".. file, path.."img/portraits/npcs/".. file)
+    modApi:appendAsset("img/portraits/".. file, path.."img/portraits/".. file)
 end

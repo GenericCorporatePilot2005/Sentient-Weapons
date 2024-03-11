@@ -36,9 +36,9 @@ Nico_SnowmineA = Nico_Snowmine:new{
 
 Nico_minibot = Skill:new{
     Name = "Minelayer",
-    Class="TechnoVek",
-    Icon="weapons/Nico_minerbot.png",
-    Description="Deploy a single Freeze mine.",
+    Class = "TechnoVek",
+    Icon = "weapons/Nico_minerbot.png",
+    Description = "Deploy a single Freeze mine.",
     TipImage = {
         Unit = Point(2,3),
         Target = Point(2,1),
@@ -68,7 +68,7 @@ Nico_Snowmine2 = Pawn:new{
     Health = 1,
     Class = "TechnoVek",
     DefaultTeam = TEAM_PLAYER,
-    MoveSpeed = 0,
+    MoveSpeed = 3,
     MoveAtk = 3,
     IgnoreSmoke = true,
     Image = "Nico_minerbot_mech",
@@ -84,18 +84,19 @@ Nico_Snowmine2 = Pawn:new{
 Nico_Snowmine2A = Nico_Snowmine2:new{
     Name = "Mine-Bot Mark IV",
     MoveAtk = 4,
+    MoveSpeed = 4,
 }
 
 Nico_minibot2 = Skill:new{
-    Name = "Double Minelayer",
-    Class="TechnoVek",
-    Icon="weapons/Nico_minerbot.png",
-    Description="Deploy two Freeze mines.",
-    TwoClick = true,
+    Name = "Minelayer MK2",
+    Class = "TechnoVek",
+    Icon = "weapons/Nico_minerbot.png",
+    Description = "Deploy a single Freeze mines, allows Unit to move again.",
     TipImage = {
         Unit = Point(2,3),
         Target = Point(2,1),
-        Second_Click = Point(2,3),
+        Second_Origin = Point(2,1),
+        Second_Target = Point(1,2),
         CustomPawn = "Nico_Snowmine2",
     }
 }
@@ -103,47 +104,8 @@ Nico_minibot2 = Skill:new{
 local mod = modApi:getCurrentMod()
 local path = mod.scriptPath
 local customAnim = require(path.."libs/customAnim")
-
-function TCcheck(p2)
-	local isNotShielded = not Pawn:IsShield()
-	local item = Board:GetItem(p2)
-	local hasRainbow1 = ANIMS["rainbow1"] and (customAnim:get(p2, "rainbow1") ~= nil)
-	local hasRainbow2 = ANIMS["rainbow2"] and (customAnim:get(p2, "rainbow2") ~= nil)
-	local isGumTile = Board:GetCustomTile(p2):find("^tatu_gum") ~= nil
-	local isOnRoad = Board:IsTerrain(p2, TERRAIN_ROAD)
-	local specialMines = {
-		"Freeze_Mine",
-		"Nico_Freeze_Mine",
-		"lmn_Minelayer_Item_Mine",
-		"Djinn_Spike_Mine",
-		"Djinn_Spike_Mine2",
-		"Nautilus_Spike_Mine",
-		"Nautilus_Spike_Mine2",
-		"tatu_Cookie_Ice",
-	}
-
-	local isComplexCondition =
-		(isNotShielded and list_contains(specialMines, item))
-		or item == "Item_Mine"
-		or hasRainbow1
-		or hasRainbow2
-		or (isGumTile and isOnRoad)
-	return isComplexCondition
-end
-
 function Nico_minibot2:GetTargetArea(point)
     return Board:GetReachable(point, _G[Pawn:GetType()].MoveAtk or 4, Pawn:GetPathProf())
-end
-
-function Nico_minibot2:GetSecondTargetArea(p1,p2)
-	if TCcheck(p2) then return PointList() end
-    local ret = Board:GetReachable(p2, _G[Pawn:GetType()].MoveAtk or 4, Pawn:GetPathProf())
-    ret:push_back(p1)
-    return ret
-end
-
-function Nico_minibot2:IsTwoClickException(p1,p2)
-    return TCcheck(p2)
 end
 
 function Nico_minibot2:GetSkillEffect(p1,p2)
@@ -153,26 +115,18 @@ function Nico_minibot2:GetSkillEffect(p1,p2)
         local damage = SpaceDamage(p1)
         damage.sItem = "Freeze_Mine"
         ret:AddDamage(damage)
+        local mechId = Board:GetPawn(p1):GetId()
         ret:AddMove(Board:GetPath(p1, p2, Pawn:GetPathProf()), FULL_DELAY)
+        ret:AddScript("Board:GetPawn("..mechId.."):SetActive(true)")
+        ret:AddScript("Board:GetPawn("..mechId.."):SetBonusMove("..(_G[Pawn:GetType()].MoveAtk or 4)..")")
     end
     return ret
 end
 
-function Nico_minibot2:GetFinalEffect(p1,p2,p3)
-    local ret = self:GetSkillEffect(p1,p2)
-    ret:AddDelay(0.2)--so it can pick up time pods
-    if p2 ~= p3 then
-        local damage = SpaceDamage(p2)
-        damage.sItem = "Freeze_Mine"
-        ret:AddDamage(damage)
-        ret:AddMove(Board:GetPath(p2, p3, Pawn:GetPathProf()), FULL_DELAY)
-    end
-    return ret
-end
 --The mech's weapon
 Nico_minerbot = ArtilleryDefault:new{
     Icon = "weapons/Nico_minebot.png",
-    Name="Mine-Bot Deployer",
+    Name = "Mine-Bot Deployer",
     Description = "Launch a Mine-Bot at a tile, pushing tiles to the left and right, creating an improved Mine-Bot on kill.",
     Class = "TechnoVek",
     ArtilleryStart = 2,
@@ -269,7 +223,7 @@ Nico_minerbot_AB = Nico_minerbot_B:new{
 modApi:addWeaponDrop("Nico_minerbot")
 
 local function Nico_MoveMine(mission, pawn, weaponId, p1, p2)
-	if pawn and pawn:GetType() == "Nico_minerbot_mech" and weaponId == "Move" then
+	if pawn and (pawn:GetType() == "Nico_minerbot_mech" or pawn:GetType() == "Nico_Snowmine2" or pawn:GetType() == "Nico_Snowmine2A") and weaponId == "Move" then
 		mission.Nico_FireSpace = {p1,Board:IsFire(p1)}
         if Board:IsTerrain(p1,TERRAIN_WATER) or Board:IsTerrain(p1,TERRAIN_LAVA) or Board:IsTerrain(p1,TERRAIN_HOLE) then
             Board:SetItem(p1,"Nico_Freeze_Mine2")
@@ -282,7 +236,7 @@ local function Nico_MoveMine(mission, pawn, weaponId, p1, p2)
 end
 
 local function Nico_UnMine(mission, pawn, undonePosition)
-	if pawn:GetType() == "Nico_minerbot_mech" then
+	if (pawn:GetType() == "Nico_minerbot_mech" or pawn:GetType() == "Nico_Snowmine2" or pawn:GetType() == "Nico_Snowmine2A") then
 		if mission.Nico_FireSpace[2] then Board:SetFire(mission.Nico_FireSpace[1],true) end
 		if Board:IsTerrain(pawn:GetSpace(),TERRAIN_WATER) then Board:RemoveItem(pawn:GetSpace()) end
 	end
