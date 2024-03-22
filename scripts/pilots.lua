@@ -174,8 +174,18 @@ function this:init(mod)
             
             ret:AddDamage(shield)
             ret:AddDamage(damage)
-            return ret       
+            return ret
         end
+        local HOOK_pawnTracked = function(mission, pawn)--Funny hehehaha Easter Egg
+            if pawn:IsAbility("Nico_BotRepair") and mission.ID == "Mission_Repair" then
+                local TotalHP = pawn:GetMaxHealth()
+                pawn:SetHealth(TotalHP)
+            end
+        end
+        local function EVENT_onModsLoaded()
+            modapiext:addPawnTrackedHook(HOOK_pawnTracked)
+        end
+        modApi.events.onModsLoaded:subscribe(EVENT_onModsLoaded)
     end
 end
 return this
