@@ -268,6 +268,7 @@ local a=ANIMS
         "Nico_cannondeploy.png",
         "Nico_cannonboom.png",
         "Nico_laserboom.png",
+        "Nico_bloom_artillery.png",
         "Nico_bloom_laser.png",
         "Nico_bloom_cannon.png",
         "Nico_bloom_copter.png",

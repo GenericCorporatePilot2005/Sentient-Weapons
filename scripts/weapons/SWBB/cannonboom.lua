@@ -61,6 +61,9 @@ function Nico_cannonboom:GetSecondTargetArea(p1,p2)
 	for i = 1,ret2:size() do
 		if not list_contains(ignore,ret2:index(i)) then ret:push_back(ret2:index(i)) end
 	end
+	if self.SelfDamage == 1 then
+		ret:push_back(p1)
+	end
 
 	return ret
 end
@@ -68,7 +71,6 @@ end
 function Nico_cannonboom:GetSkillEffect(p1,p2)
 	local ret = SkillEffect()
 	local direction = GetDirection(p2-p1)
-	ret:AddDamage(SpaceDamage(p1,self.SelfDamage))
 	ret:AddProjectile(SpaceDamage(p2,0,direction), self.ProjectileArt, NO_DELAY)
 	return ret
 end
@@ -76,6 +78,7 @@ end
 function Nico_cannonboom:GetFinalEffect(p1,p2,p3)
 	local ret = SkillEffect()
 	local dir = GetDirection(p2-p1)
+	local backdir = DIR_NONE
 	local target = GetProjectileEnd(p1,p2)
 	local janus_flag = false
 	if not Board:IsBlocked(p2,PATH_PROJECTILE) then
@@ -85,10 +88,42 @@ function Nico_cannonboom:GetFinalEffect(p1,p2,p3)
 			if p2.x == p3.x then janus_flag = true end
 		end
 	end
-	
-	if janus_flag then
+	if self.SelfDamage == 1 and p3 == p1 then
+		backdir = GetDirection(p1-p2)
+		ret:AddDamage(SpaceDamage(p1,self.SelfDamage,backdir))
+		local damage = SpaceDamage(p2,self.Damage+1)
+		damage.bKO_Effect = Board:IsDeadly(damage, Pawn)
+		if damage.bKO_Effect then
+			damage.bKO_Effect = true
+			ret:AddProjectile(damage, "effects/shot_mechtank", FULL_DELAY)
+			damage.iDamage = 0
+			if Board:IsTerrain(damage.loc,TERRAIN_WATER) or Board:IsTerrain(damage.loc,TERRAIN_LAVA) or Board:IsTerrain(damage.loc,TERRAIN_HOLE) or Board:IsCracked(damage.loc) or (Board:IsTerrain(damage.loc,TERRAIN_ICE) and Board:IsCracked(damage.loc)) then
+				ret:AddBounce(damage.loc,1)
+				damage.sPawn = "Copter_Bloom_Bot"
+				ret:AddArtillery(damage,"effects/shotup_Nico_Copter_Bloom.png", FULL_DELAY)
+			else
+				ret:AddAnimation(damage.loc,"Nico_Artillery_Bloome", ANIM_NO_DELAY)
+				ret:AddDelay(1.45)
+				ret:AddBounce(damage.loc,1)
+				damage.sPawn = "Nico_artillerybloom"
+				ret:AddDamage(damage)
+			end
+				if Board:IsTerrain(damage.loc,TERRAIN_LAVA) then--this checks that the tile the copter spawns is a lava tile
+					local minifire = SpaceDamage(damage.loc)
+					minifire.iFire = 1
+					ret:AddDamage(minifire)
+				end
+				if Board:IsAcid(damage.loc) and Board:IsTerrain(damage.loc,TERRAIN_WATER) then --this does the same but for acid water
+					local miniacid = SpaceDamage(damage.loc)
+					miniacid.iAcid = 1
+					ret:AddDamage(miniacid)
+				end
+		else
+			ret:AddProjectile(damage, "effects/shot_mechtank", NO_DELAY)
+		end
+	elseif janus_flag then
 	--Janus Cannon
-		local backdir = GetDirection(p1 - p2)
+		backdir = GetDirection(p1 - p2)
 		local backtarget = GetProjectileEnd(p1,p1 + DIR_VECTORS[backdir])
 		local distance = p1:Manhattan(p2)
 		local opposite = p1 + DIR_VECTORS[backdir]*distance
@@ -152,7 +187,7 @@ function Nico_cannonboom:GetFinalEffect(p1,p2,p3)
 		local target1 = GetProjectileEnd(p1,p2,pathing)
 		
 		local knockback = GetDirection(p1-p3)
-		if GetDirection(p2-p1) == GetDirection(p1-p3) then knockback = DIR_NONE end
+		if GetDirection(p2-p1) == GetDirection(p1-p3) or p1 == p3 then knockback = DIR_NONE end
 		--knockback
 		ret:AddDamage(SpaceDamage(p1,self.SelfDamage,knockback))
 		ret:AddBounce(p1,3)
@@ -192,7 +227,7 @@ function Nico_cannonboom:GetFinalEffect(p1,p2,p3)
 		first_damage.sAnimation = "airpush_"..dir
 		ret:AddDamage(first_damage)
 		ret:AddSound("/impact/generic/explosion")
-	else
+	elseif p1 ~= p3 then
 	--Ricochet Rocket
 		ret:AddSound("/weapons/modified_cannons")
 		local first_dir = GetDirection(p2 - p1)
@@ -229,42 +264,6 @@ function Nico_cannonboom:GetFinalEffect(p1,p2,p3)
 		end 
 		--if not self.BuildingDamage and Board:IsBuilding(first_tar) then	damage.iDamage = DAMAGE_ZERO 	end 
 		ret:AddDamage(damage)
-	end
-	if self.SelfDamage==1 then
-		for i = 1,ret.effect:size() do
-			ret.effect:index(i).bKO_Effect = Board:IsDeadly(ret.effect:index(i),Pawn) and (ret.effect:index(i).loc ~= start or (ret.effect:index(i).loc == start and Board:IsCracked(ret.effect:index(i).loc)))
-			if ret.effect:index(i).bKO_Effect and ret.effect:index(i).loc ~= p1 then
-				ret:AddSound("/weapons/arachnoid_ko")
-				local damage = SpaceDamage(ret.effect:index(i).loc)
-				if Board:IsTerrain(ret.effect:index(i).loc,TERRAIN_WATER) or Board:IsTerrain(ret.effect:index(i).loc,TERRAIN_LAVA) or Board:IsTerrain(ret.effect:index(i).loc,TERRAIN_HOLE) or Board:IsCracked(ret.effect:index(i).loc) or (Board:IsTerrain(ret.effect:index(i).loc,TERRAIN_ICE) and Board:IsCracked(ret.effect:index(i).loc)) then
-					ret:AddBounce(damage.loc,1)
-					damage.sPawn = "Copter_Bloom_Bot"
-					damage.bKO_Effect = true
-					ret:AddSound(self.KOSound)
-					ret:AddArtillery(damage,"effects/shotup_Nico_Copter_Bloom.png", FULL_DELAY)
-				else
-					ret:AddAnimation(damage.loc,"Nico_Cannon_Bloome", ANIM_NO_DELAY)
-					ret:AddDelay(1.45)
-					ret:AddBounce(damage.loc,1)
-					damage.sPawn = "Nico_cannonbloom"
-					damage.bKO_Effect = true
-					ret:AddSound(self.KOSound)
-					ret:AddDamage(damage)
-				end
-				if Board:IsTerrain(ret.effect:index(i).loc,TERRAIN_LAVA) then--this checks that the tile the copter spawns is a lava tile
-					local minifire = SpaceDamage(ret.effect:index(i).loc)
-					minifire.iFire = 1
-					ret:AddDamage(minifire)
-				end
-				if Board:IsAcid(ret.effect:index(i).loc) and Board:IsTerrain(ret.effect:index(i).loc,TERRAIN_WATER) then --this does the same but for acid water
-					local miniacid = SpaceDamage(ret.effect:index(i).loc)
-					miniacid.iAcid = 1
-					ret:AddDamage(miniacid)
-				end
-			elseif ret.effect:index(i).bKO_Effect and ret.effect:index(i).loc == p1 then
-				ret.effect:index(i).bKO_Effect = false
-			end
-		end
 	end
 	return ret
 end
@@ -314,7 +313,7 @@ Nico_cannonboom_Tip_AB = Nico_cannonboom_Tip_A:new{ Damage = 3, }
 
 function Nico_cannonboom_Tip:GetFinalEffect(p1,p2,p3)
 	local ret = SkillEffect()
-	local x = math.random(4)
+	local x = math.random(4+self.SelfDamage)
 	if self.SelfDamage == 0 and self.Damage == 1 then
 		if x == 1 then
 			ret = Nico_cannonboom:GetFinalEffect(Point(2,3),Point(3,3),Point(3,2))
@@ -332,6 +331,8 @@ function Nico_cannonboom_Tip:GetFinalEffect(p1,p2,p3)
 			ret = Nico_cannonboom_A:GetFinalEffect(Point(2,3),Point(2,2),Point(2,1))
 		elseif x == 3 then
 			ret = Nico_cannonboom_A:GetFinalEffect(Point(2,3),Point(2,2),Point(1,3))
+		elseif x == 4 then
+			ret = Nico_cannonboom_A:GetFinalEffect(Point(2,3),Point(2,2),Point(2,3))
 		else
 			ret = Nico_cannonboom_A:GetFinalEffect(Point(2,3),Point(2,2),Point(3,2))
 		end
@@ -352,6 +353,8 @@ function Nico_cannonboom_Tip:GetFinalEffect(p1,p2,p3)
 			ret = Nico_cannonboom_AB:GetFinalEffect(Point(2,3),Point(2,2),Point(2,1))
 		elseif x == 3 then
 			ret = Nico_cannonboom_AB:GetFinalEffect(Point(2,3),Point(2,2),Point(1,3))
+		elseif x == 4 then
+			ret = Nico_cannonboom_AB:GetFinalEffect(Point(2,3),Point(2,2),Point(2,3))
 		else
 			ret = Nico_cannonboom_AB:GetFinalEffect(Point(2,3),Point(2,2),Point(3,2))
 		end
