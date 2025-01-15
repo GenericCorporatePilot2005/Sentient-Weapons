@@ -215,20 +215,17 @@ local a=ANIMS
             a.Nico_Laser_Bloom=a.MechUnit:new{Image="units/player/Nico_Laser_Bloom.png", PosX = -13, PosY = 3}
             a.Nico_Laser_Bloom_ns=a.MechIcon:new{Image="units/player/Nico_Laser_Bloom_ns.png"}
             a.Nico_Laser_Blooma= a.MechUnit:new{Image="units/player/Nico_Laser_Bloom_a.png",  PosX = -13, PosY = 3, NumFrames = 20 }
-            a.Nico_Laser_Bloomd=a.MechUnit:new{Image="units/player/Nico_Bloomd.png",  PosX = -16, PosY = 11, NumFrames = 10, Time = .14, Loop = false  }
-            a.Nico_Laser_Bloome=a.BaseEmerge:new{Image="units/player/Nico_Laser_Bloom_e.png",  PosX = -13, PosY = 10, NumFrames = 10, Time = .14, Loop = false  }
+            a.Nico_Laser_Bloome=a.BaseEmerge:new{Image="units/player/Nico_Laser_Bloom_e.png",  PosX = -13, PosY = 4, NumFrames = 10, Time = .14, Loop = false  }
         --Bloom Cannon
             a.Nico_Cannon_Bloom=a.MechUnit:new{Image="units/player/Nico_Cannon_Bloom.png", PosX = -13, PosY = 3}
             a.Nico_Cannon_Bloom_ns=a.MechIcon:new{Image="units/player/Nico_Cannon_Bloom_ns.png"}
             a.Nico_Cannon_Blooma= a.MechUnit:new{Image="units/player/Nico_Cannon_Bloom_a.png",  PosX = -13, PosY = 3, NumFrames = 4 }
-            a.Nico_Cannon_Bloomd=a.MechUnit:new{Image="units/player/Nico_Bloomd.png",  PosX = -16, PosY = 11, NumFrames = 10, Time = .14, Loop = false  }
-            a.Nico_Cannon_Bloome=a.BaseEmerge:new{Image="units/player/Nico_Cannon_Bloom_e.png",  PosX = -13, PosY = 10, NumFrames = 10, Time = .14, Loop = false  }
+            a.Nico_Cannon_Bloome=a.BaseEmerge:new{Image="units/player/Nico_Cannon_Bloom_e.png",  PosX = -13, PosY = 4, NumFrames = 10, Time = .14, Loop = false  }
         --Bloom Artillery
             a.Nico_Artillery_Bloom=a.MechUnit:new{Image="units/player/Nico_Artillery_Bloom.png", PosX = -13, PosY = 3}
             a.Nico_Artillery_Bloom_ns=a.MechIcon:new{Image="units/player/Nico_Artillery_Bloom_ns.png"}
             a.Nico_Artillery_Blooma= a.MechUnit:new{Image="units/player/Nico_Artillery_Bloom_a.png",  PosX = -13, PosY = 3, NumFrames = 4 }
-            a.Nico_Artillery_Bloomd=a.MechUnit:new{Image="units/player/Nico_Bloomd.png",  PosX = -16, PosY = 11, NumFrames = 10, Time = .14, Loop = false  }
-            a.Nico_Artillery_Bloome=a.BaseEmerge:new{Image="units/player/Nico_Artillery_Bloom_e.png",  PosX = -13, PosY = 10, NumFrames = 10, Time = .14, Loop = false  }
+            a.Nico_Artillery_Bloome=a.BaseEmerge:new{Image="units/player/Nico_Artillery_Bloom_e.png",  PosX = -13, PosY = 4, NumFrames = 10, Time = .14, Loop = false  }
         --Bloom Copter
             a.Nico_Copter_Bloom=a.MechUnit:new{Image="units/player/Nico_Copter_Bloom.png", PosX = -15, PosY = -15}
             a.Nico_Copter_Bloom_ns=a.MechIcon:new{Image="units/player/Nico_Copter_Bloom_ns.png"}
@@ -314,6 +311,7 @@ local files = {
     "npcs/Pilot_Nico_minerbot_mech_MK2.png",
     "npcs/Pilot_Nico_cannondeploy.png",
     "npcs/Pilot_Nico_laserbloom.png",
+    "npcs/Pilot_Nico_laserbloom_blink.png",
     "npcs/Pilot_Nico_cannonbloom.png",
     "npcs/Pilot_Nico_artillerybloom.png",
     "npcs/Pilot_Nico_copterbloom.png",

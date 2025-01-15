@@ -1,7 +1,6 @@
 local mod = modApi:getCurrentMod()
 local path = mod.scriptPath
 require(path .."Achievements/achievements1")
-require(path .."palettes")
 
 --laser bloom
 Nico_laserbloom = Pawn:new{
@@ -9,7 +8,6 @@ Nico_laserbloom = Pawn:new{
 	Health = 1,
 	Nico_onDeath = "BloomDeath",
 	Class = "TechnoVek",
-	ImageOffset = modApi:getPaletteImageOffset("Nico_bloom_1"),
 	DefaultTeam = TEAM_PLAYER,
 	MoveSpeed = 3,
 	Image = "Nico_Laser_Bloom",
@@ -115,7 +113,6 @@ Nico_cannonbloom = Pawn:new{
 	Health = 1,
 	Nico_onDeath="BloomDeath",
 	Class = "TechnoVek",
-	ImageOffset = modApi:getPaletteImageOffset("Nico_bloom_2"),
 	DefaultTeam = TEAM_PLAYER,
 	MoveSpeed = 3,
 	Image = "Nico_Cannon_Bloom",
@@ -168,9 +165,10 @@ function Nico_cannonheal:GetSkillEffect(p1,p2)
 	dam.iShield = 1
 	dam.sScript = "Board:SetFire("..target:GetString()..",false)"-- modApi:runLater(function() Board:AddShield("..target:GetString()..") end)"
 	local shield = SpaceDamage(target,0)
+	shield.iShield = 1
 	shield.sImageMark = "combat/icons/Nico_icon_shield+1.png"
 	ret:AddDamage(dam)
-	ret:AddProjectile(shield, self.ProjectileArt, FULL_DELAY)
+	ret:AddProjectile(shield, self.ProjectileArt)
 	return ret
 end
 
@@ -180,7 +178,6 @@ Nico_artillerybloom = Pawn:new{
 	Health = 1,
 	Class = "TechnoVek",
 	Nico_onDeath="BloomDeath",
-	ImageOffset = modApi:getPaletteImageOffset("Nico_bloom_3"),
 	DefaultTeam = TEAM_PLAYER,
 	MoveSpeed = 3,
 	Image = "Nico_Artillery_Bloom",
@@ -243,7 +240,6 @@ Copter_Bloom_Bot = Pawn:new{
 	MoveSpeed = 4,
 	Nico_onDeath = "CopterBloomDeath",
 	Class = "TechnoVek",
-	ImageOffset = modApi:getPaletteImageOffset("Nico_bloom_4"),
 	DefaultTeam = TEAM_PLAYER,
 	Image = "Nico_Copter_Bloom",
 	SkillList = { "Nico_copter" },

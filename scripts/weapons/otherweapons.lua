@@ -61,12 +61,18 @@ local function Nico_TeamRepair(mission, pawn, weaponId, p1, targetArea)
 	end
 end
 
+local function PawnKilled(mission, pawn)
+	if pawn:GetType() == "Nico_laserbloom" and pawn:GetType() == "Nico_cannonbloom" and pawn:GetType() == "Nico_artillerybloom" then
+		Board:AddAnimation(pawn:GetSpace(),"ExploAir2",ANIM_DELAY)
+	end
+end
 
 local function EVENT_onModsLoaded()
 	modapiext:addSkillStartHook(Nico_MoveShield)
 	modapiext:addSkillBuildHook(Nico_MoveShieldWeap)
 	modapiext:addFinalEffectBuildHook(Nico_MoveShieldWeapon)
 	modapiext:addTargetAreaBuildHook(Nico_TeamRepair)
+	modapiext:addPawnKilledHook(PawnKilled)
 end
 
 modApi.events.onModsLoaded:subscribe(EVENT_onModsLoaded)

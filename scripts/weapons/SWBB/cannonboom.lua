@@ -102,10 +102,9 @@ function Nico_cannonboom:GetFinalEffect(p1,p2,p3)
 				damage.sPawn = "Copter_Bloom_Bot"
 				ret:AddArtillery(damage,"effects/shotup_Nico_Copter_Bloom.png", FULL_DELAY)
 			else
-				ret:AddAnimation(damage.loc,"Nico_Artillery_Bloome", ANIM_NO_DELAY)
-				ret:AddDelay(1.45)
+				ret:AddAnimation(damage.loc,"Nico_Cannon_Bloome", ANIM_DELAY)
 				ret:AddBounce(damage.loc,1)
-				damage.sPawn = "Nico_artillerybloom"
+				damage.sPawn = "Nico_cannonbloom"
 				ret:AddDamage(damage)
 			end
 				if Board:IsTerrain(damage.loc,TERRAIN_LAVA) then--this checks that the tile the copter spawns is a lava tile

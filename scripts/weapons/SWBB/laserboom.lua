@@ -112,9 +112,8 @@ function Nico_laserboom:AddLaser(ret,point,direction)
 					ret:AddSound(self.KOSound)
 					ret:AddArtillery(damage,"effects/shotup_Nico_Copter_Bloom.png", FULL_DELAY)
 				else
-					ret:AddAnimation(damage.loc,"Nico_Laser_Bloome", ANIM_NO_DELAY)
+					ret:AddAnimation(damage.loc,"Nico_Laser_Bloome", ANIM_DELAY)
 					ret:AddDelay(1.45)
-					ret:AddBounce(damage.loc,1)
 					damage.sPawn = "Nico_laserbloom"
 					damage.bKO_Effect = true
 					ret:AddSound(self.KOSound)
