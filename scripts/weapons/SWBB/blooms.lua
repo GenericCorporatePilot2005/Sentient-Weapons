@@ -1,6 +1,17 @@
 local mod = modApi:getCurrentMod()
 local path = mod.scriptPath
-require(path .."Achievements/achievements1")
+require(path .."Achievements/achievements4")
+
+--Lemon's Real Mission Checker
+local function isRealMission()
+	local mission = GetCurrentMission()
+	
+	return true
+		and mission ~= nil
+		and mission ~= Mission_Test
+		and Board
+		and Board:IsMissionBoard()
+	end
 
 --laser bloom
 Nico_laserbloom = Pawn:new{
@@ -54,11 +65,16 @@ function Nico_laserheal:AddLaser(ret,point,direction)
 	local minDamage = self.MinDamage or 1
 	local damage = self.Damage
 	local start = point - DIR_VECTORS[direction]
-	--if forced_end ~= nil then
-	--	LOG("Forced end = "..forced_end:GetString())
-	--else
-	--	LOG("No forced end!")
-	--end
+	local kill = 0
+	for dir = DIR_START, DIR_END do
+		local curr = point - DIR_VECTORS[direction] + DIR_VECTORS[dir]
+		pawn = Board:GetPawn(curr)
+		if Board:IsPawnSpace(curr) then
+			if pawn:GetTeam() == TEAM_ENEMY and (pawn:GetHealth() == 1 and not pawn:IsShield()) then
+				kill = kill+1
+			end
+		end
+	end
 	ret:AddDamage(SpaceDamage(start, self.SelfDamage))
 	while Board:IsValid(point) do
 	
@@ -84,8 +100,14 @@ function Nico_laserheal:AddLaser(ret,point,direction)
             ret:AddDamage(shield)
 		end
 		
+		if Board:IsPawnSpace(point) then
+			pawn = Board:GetPawn(point)
+			if pawn:IsDead() and isRealMission() and kill > 1 and GAME.additionalSquadData.squad == "Nico_Sent_weap4" and not modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_Cannon_B") then
+				ret:AddScript("Nico_Sent_weap4squad_Chievo('Nico_Bot_Cannon_B')")
+			end
+		end
 		-- if it's the end of the line (ha), add the laser art -- not pretty
-		if forced_end == point or not Board:IsValid(point + DIR_VECTORS[direction]) then
+		if forced_end == point or Board:IsBuilding(point) or Board:GetTerrain(point) == TERRAIN_MOUNTAIN or not Board:IsValid(point + DIR_VECTORS[direction]) then
 			if queued then 
 				ret:AddQueuedProjectile(dam,self.LaserArt)
 			else
@@ -106,7 +128,15 @@ function Nico_laserheal:AddLaser(ret,point,direction)
 		point = point + DIR_VECTORS[direction]	
 	end
 end
+function Nico_laserheal:GetSkillEffect(p1,p2)
+	local ret = SkillEffect()
+	local direction = GetDirection(p2 - p1)
+	local target = p1 + DIR_VECTORS[direction]
+	
+	self:AddLaser(ret, target, direction)
 
+	return ret
+end
 --cannon bloom
 Nico_cannonbloom = Pawn:new{
 	Name = "Bloom-Cannon",
@@ -158,6 +188,25 @@ function Nico_cannonheal:GetSkillEffect(p1,p2)
 	local direction = GetDirection(p2 - p1)
 	local target = GetProjectileEnd(p1,p2,PATH_PROJECTILE)
 	
+	local kill = 0
+	for dir = DIR_START, DIR_END do
+		local curr = p1 + DIR_VECTORS[dir]
+		pawn = Board:GetPawn(curr)
+		if Board:IsPawnSpace(curr) then
+			if pawn:GetTeam() == TEAM_ENEMY and (pawn:GetHealth() == 1 and not pawn:IsShield()) then
+				kill = kill+1
+			end
+		end
+	end
+	local function achCheck(point)
+		if Board:IsPawnSpace(point) then
+			pawn = Board:GetPawn(point)
+			if pawn:IsDead() and isRealMission() and kill > 1 and GAME.additionalSquadData.squad == "Nico_Sent_weap4" and not modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_Cannon_B") then
+				ret:AddScript("Nico_Sent_weap4squad_Chievo('Nico_Bot_Cannon_B')")
+			end
+		end
+	end
+
 	ret:AddDamage(SpaceDamage(p1,self.SelfDamage))
 	local dam = SpaceDamage(target,self.Damage)
 	dam.iFire = -1
@@ -168,6 +217,7 @@ function Nico_cannonheal:GetSkillEffect(p1,p2)
 	shield.iShield = 1
 	shield.sImageMark = "combat/icons/Nico_icon_shield+1.png"
 	ret:AddDamage(dam)
+	achCheck(dam.loc)
 	ret:AddProjectile(shield, self.ProjectileArt)
 	return ret
 end
@@ -218,16 +268,38 @@ function Nico_artilleryheal:GetSkillEffect(p1,p2)
 	local ret = SkillEffect()
 	local dir = GetDirection(p2-p1)
 	
+	local function achCheck(point)
+		if Board:IsPawnSpace(point) then
+			pawn = Board:GetPawn(point)
+			if pawn:IsDead() and isRealMission() and kill > 1 and GAME.additionalSquadData.squad == "Nico_Sent_weap4" and not modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_Cannon_B") then
+				ret:AddScript("Nico_Sent_weap4squad_Chievo('Nico_Bot_Cannon_B')")
+			end
+		end
+	end
+	local kill = 0
+	for dir = DIR_START, DIR_END do
+		local curr = p1 + DIR_VECTORS[dir]
+		pawn = Board:GetPawn(curr)
+		if Board:IsPawnSpace(curr) then
+			if pawn:GetTeam() == TEAM_ENEMY and (pawn:GetHealth() == 1 and not pawn:IsShield()) then
+				kill = kill+1
+			end
+		end
+	end
+
 	ret:AddDamage(SpaceDamage(p1,self.SelfDamage))
 	local dam = SpaceDamage(p2, self.Damage)
 	dam.iFire = -1
 	dam.sScript = "Board:SetFire("..p2:GetString()..",false)"
+	achCheck(dam.loc)
 	ret:AddArtillery(dam,self.Projectile, NO_DELAY)
 	dam.loc = p2 + DIR_VECTORS[(dir + 1)% 4]
 	dam.sScript = "Board:SetFire("..(p2 + DIR_VECTORS[(dir + 1)% 4]):GetString()..",false)"
+	achCheck(dam.loc)
 	ret:AddArtillery(dam,self.Projectile, NO_DELAY)
 	dam.loc = p2 + DIR_VECTORS[(dir - 1)% 4]
 	dam.sScript = "Board:SetFire("..(p2 + DIR_VECTORS[(dir - 1)% 4]):GetString()..",false)"
+	achCheck(dam.loc)
 	ret:AddArtillery(dam,self.Projectile, NO_DELAY)
 	
 	return ret

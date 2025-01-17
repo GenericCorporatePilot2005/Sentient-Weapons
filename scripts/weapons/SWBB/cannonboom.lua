@@ -272,7 +272,7 @@ Nico_cannonboom_A=Nico_cannonboom:new{
 	SelfDamage=1,
 	Explo = "explopush2_",
 	Exploart = "explopush2_",
-	UpgradeDescription = "Increases damage by 1 and damages self. On kill, create a Bloom-Cannon.",
+	UpgradeDescription = "Increases damage by 1 and damages self. Adds a new mode, click target then self, if it kills, create a Bloom-Cannon.",
 	CustomTipImage = "Nico_cannonboom_Tip_A",
 }
 

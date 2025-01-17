@@ -39,6 +39,9 @@ function mod:init()
 	if modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SW3") then
 		require(self.scriptPath .."Achievements/achievements3")
 	end
+	if modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SWBB") then
+		require(self.scriptPath .."Achievements/achievements4")
+	end
 	
 	--[[commented out for the moment, just in case we need it
 	-- add extra mech to selection screen
@@ -105,7 +108,7 @@ function mod:load( options, version)
 				"Nico_cannonboom_mech",-- mech #2
 				"Nico_laserboom_mech",-- mech #1
 				"Nico_artilleryboom_mech",-- mech #3
-				id="Nico_Boom_bots"
+				id="Nico_Sent_weap4"
 			},
 			"Boom Bots",
 			"After destroying the Vek Hive, Zenith sent these improved Volatile Sentient Weapons across time to fight the Vek and their hijacked brethren.",

@@ -34,7 +34,7 @@ if modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SW3") then
 
 	modApi.achievements:add{
 		id = "Nico_Bot_Leader",
-		name = "Bulletproof",
+		name = "Spotless",
 		tip = "Finish a Corporate Island without the Bot Leader taking Mech Damage.",
 		image = "img/achievements/Nico_Bot_Leader.png",
 		squad = "Nico_Sent_weap3",
@@ -43,7 +43,7 @@ if modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SW3") then
 
 	modApi.achievements:add{
 		id = "Nico_Bot_Hulk",
-		name = "Hulking Out",
+		name = "Unfrozen Hulk",
 		tip = "Shoot the Artillery Mark III 4 times in a single mission.",
 		image = "img/achievements/Nico_Bot_Hulk.png",
 		squad = "Nico_Sent_weap3",

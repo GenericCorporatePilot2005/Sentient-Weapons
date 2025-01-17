@@ -147,7 +147,7 @@ end
 		BounceAmount = 3,
 		Damage = 2,
 		SelfDamage = 1,
-		UpgradeDescription = "Deals 1 additional damage to all targets and damages self.\nIf the tile behind it has a unit, attacks it, if the attack kills, create a Bloom-Artillery.",
+		UpgradeDescription = "Deals 1 additional damage to all targets and damages self.\nAttacks the tile behind, if it has a unit, and the attack kills, create a Bloom-Artillery.",
 		TipImage = {
 			Unit = Point(3,3),
 			Target = Point(3,2),

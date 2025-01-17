@@ -114,7 +114,11 @@ Nico_juggernaut = Skill:new{
 			local ice = SpaceDamage(endcharge,0)
 			local del = SpaceDamage(0)
 			del.fDelay = -1
-			ice.iTerrain = TERRAIN_ICE
+			if not Board:IsTerrain(ice.loc,TERRAIN_LAVA) then
+				ice.iTerrain = TERRAIN_ICE
+			elseif Board:IsTerrain(ice.loc,TERRAIN_LAVA)
+				ice.iTerrain = TERRAIN_ROAD
+			end
 			ice.sImageMark = "combat/icons/Nico_icon_ice_glow.png"
 			if Board:IsAcid(endcharge) then
 				ice.sAnimation="Splash_acid"
@@ -197,6 +201,9 @@ Nico_juggernaut = Skill:new{
 			"tatu_Cookie_Ice",
 			"Poke_StealthRock",
 			"Poke_SeedFlareItem",
+			"tosx_Trap_Mine0",
+			"tosx_Trap_Mine1",
+			"Nico_Freeze_Mine"
 		}
 
 		local isComplexCondition =
@@ -285,7 +292,11 @@ Nico_juggernaut = Skill:new{
 			local ice = SpaceDamage(endcharge,0)
 			local del = SpaceDamage(0)
 			del.fDelay = -1
-			ice.iTerrain = TERRAIN_ICE
+			if not Board:IsTerrain(ice.loc,TERRAIN_LAVA) then
+				ice.iTerrain = TERRAIN_ICE
+			elseif Board:IsTerrain(ice.loc,TERRAIN_LAVA)
+				ice.iTerrain = TERRAIN_ROAD
+			end
 			ice.sImageMark = "combat/icons/Nico_icon_ice_glow.png"
 			if Board:IsAcid(endcharge) then
 				ice.sAnimation = "Splash_acid"

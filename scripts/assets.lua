@@ -115,7 +115,6 @@ local files = {
     "Nico_Cannon_Bloom_ns.png",
     "Nico_Cannon_Bloom_a.png",
     "Nico_Cannon_Bloom_e.png",
-    "Nico_Bloomd.png",
     "Nico_Copter_Bloom.png",
     "Nico_Copter_Bloom_ns.png",
     "Nico_Copter_Bloom_a.png",
