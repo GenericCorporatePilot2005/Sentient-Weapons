@@ -116,7 +116,7 @@ Nico_juggernaut = Skill:new{
 			del.fDelay = -1
 			if not Board:IsTerrain(ice.loc,TERRAIN_LAVA) then
 				ice.iTerrain = TERRAIN_ICE
-			elseif Board:IsTerrain(ice.loc,TERRAIN_LAVA)
+			elseif Board:IsTerrain(ice.loc,TERRAIN_LAVA) then
 				ice.iTerrain = TERRAIN_ROAD
 			end
 			ice.sImageMark = "combat/icons/Nico_icon_ice_glow.png"
@@ -294,7 +294,7 @@ Nico_juggernaut = Skill:new{
 			del.fDelay = -1
 			if not Board:IsTerrain(ice.loc,TERRAIN_LAVA) then
 				ice.iTerrain = TERRAIN_ICE
-			elseif Board:IsTerrain(ice.loc,TERRAIN_LAVA)
+			elseif Board:IsTerrain(ice.loc,TERRAIN_LAVA) then
 				ice.iTerrain = TERRAIN_ROAD
 			end
 			ice.sImageMark = "combat/icons/Nico_icon_ice_glow.png"
