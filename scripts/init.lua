@@ -4,7 +4,7 @@
 local mod = {
 	id = "Nico_Sent_weap",
 	name = "Sentient Weapons",
-	version = "2.9",
+	version = "3.0: Released",
 	requirements = {},
 	dependencies = { --This requests modApiExt from the mod loader
 		modApiExt = "1.18", --We can get this by using the variable `modapiext`
