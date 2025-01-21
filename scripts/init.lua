@@ -10,11 +10,11 @@ local mod = {
 		modApiExt = "1.18", --We can get this by using the variable `modapiext`
 	},
 	modApiVersion = "2.9.1",
-	icon = "img/icons/squad1_icon.png"
+	icon = "img/icons/squad1_icon.png",
+	description = "The pinnacle in technology is here! show the Vek a taste of their own medicine for trying to hijack Pinnacle's Bots!\nAll Mech weapons in this mod can be unlocked by completing the respective achievements.\n(Additional squads hidden behind achievements)",
 }
 
 function mod:init()
-	-- look in template/mech to see how to code mechs.
 	local replaceRepair = require(self.scriptPath.."replaceRepair/replaceRepair")
 	require(self.scriptPath .."weapons/weapons")
 	--replacement for the skill's name and description
@@ -24,6 +24,12 @@ function mod:init()
 			NicoIsRobot = nil
 			if skill == "Survive_Death" then
 				return PilotSkill("Robot", "Normal Pilots cannot be equipped. Loses 25 XP when the unit is disabled.")
+			end
+		end
+		if NicoIsMine then
+			NicoIsMine = nil
+			if skill == "Survive_Death" then
+				return PilotSkill("Mine Layer", "Lays Freeze Mines when moving.\n\nNormal Pilots cannot be equipped. Loses 25 XP when the unit is disabled.")
 			end
 		end
 		return oldGetSkillInfo(skill)

@@ -5,22 +5,16 @@ Nico_Freeze_Mine = { Image = "combat/freeze_mine.png", Damage = SpaceDamage(0), 
 Nico_Freeze_Mine2 = { Image = "combat/Nico_freeze_mine.png", Damage = SpaceDamage(0), Tooltip = "freeze_mine2", Icon = "combat/icons/icon_frozenmine_glow.png", UsedImage = ""}--needs to be global not local
 TILE_TOOLTIPS[Nico_Freeze_Mine2.Tooltip] = {"Inactive Freeze Mine", "Any unit that is damaged on this space will be Frozen."}
 ------Miner Bot------
-	--The deployable's palettes
-    local mod = modApi:getCurrentMod()
-    local path2 = mod.scriptPath
-    require(path2 .."palettes")
-    
 --The deployable units
 Nico_Snowmine = Pawn:new{
     Name = "Mine-Bot Mark I",
     Health = 1,
     Class = "TechnoVek",
-    ImageOffset = modApi:getPaletteImageOffset("Nico_mine_iceflower"),
     DefaultTeam = TEAM_PLAYER,
     MoveSpeed = 0,
     MoveAtk = 3,
     IgnoreSmoke = true,
-    Image = "Nico_minerbot_mech",
+    Image = "Nico_minerbot_mech1",
     SkillList = { "Nico_minibot" },
     SoundLocation = "/enemy/snowmine_1/",
     DefaultTeam = TEAM_PLAYER,
@@ -28,28 +22,24 @@ Nico_Snowmine = Pawn:new{
     Corpse = false,
 	Portrait = "npcs/Pilot_Nico_minerbot_mech_MK1",
 }
-
 Nico_SnowmineA = Nico_Snowmine:new{
     Name = "Mine-Bot Mark II",
     MoveAtk = 4,
 }
-
 Nico_minibot = Skill:new{
     Name = "Minelayer",
     Class = "TechnoVek",
     Icon = "weapons/Nico_minerbot.png",
     Description = "Deploy a single Freeze mine.",
     TipImage = {
-        Unit = Point(2,3),
+        Unit = Point(2,4),
         Target = Point(2,1),
         CustomPawn = "Nico_Snowmine",
     }
 }
-
 function Nico_minibot:GetTargetArea(point)
     return Board:GetReachable(point, _G[Pawn:GetType()].MoveAtk or 4, Pawn:GetPathProf())
 end
-
 function Nico_minibot:GetSkillEffect(p1,p2)
     local ret = SkillEffect()
     
@@ -62,7 +52,6 @@ function Nico_minibot:GetSkillEffect(p1,p2)
 
     return ret
 end
-
 Nico_Snowmine2 = Pawn:new{
     Name = "Mine-Bot Mark III",
     Health = 1,
@@ -71,8 +60,7 @@ Nico_Snowmine2 = Pawn:new{
     MoveSpeed = 3,
     MoveAtk = 3,
     IgnoreSmoke = true,
-    Image = "Nico_minerbot_mech",
-    ImageOffset = modApi:getPaletteImageOffset("Nico_mine_winter"),
+    Image = "Nico_minerbot_mech2",
     SkillList = { "Nico_minibot2" },
     SoundLocation = "/enemy/snowmine_1/",
     DefaultTeam = TEAM_PLAYER,
@@ -80,34 +68,30 @@ Nico_Snowmine2 = Pawn:new{
     Corpse = false,
 	Portrait = "npcs/Pilot_Nico_minerbot_mech_MK2",
 }
-
 Nico_Snowmine2A = Nico_Snowmine2:new{
     Name = "Mine-Bot Mark IV",
     MoveAtk = 4,
     MoveSpeed = 4,
 }
-
 Nico_minibot2 = Skill:new{
     Name = "Minelayer MK2",
     Class = "TechnoVek",
     Icon = "weapons/Nico_minerbot.png",
-    Description = "Deploy a single Freeze mines, allows Unit to move again.",
+    Description = "Deploy a single Freeze mine, allows Unit to move again.",
     TipImage = {
-        Unit = Point(2,3),
+        Unit = Point(2,4),
         Target = Point(2,1),
         Second_Origin = Point(2,1),
         Second_Target = Point(1,2),
         CustomPawn = "Nico_Snowmine2",
     }
 }
-
 local mod = modApi:getCurrentMod()
 local path = mod.scriptPath
 local customAnim = require(path.."libs/customAnim")
 function Nico_minibot2:GetTargetArea(point)
     return Board:GetReachable(point, _G[Pawn:GetType()].MoveAtk or 4, Pawn:GetPathProf())
 end
-
 function Nico_minibot2:GetSkillEffect(p1,p2)
     local ret = SkillEffect()
 
@@ -149,6 +133,7 @@ Nico_minerbot = ArtilleryDefault:new{
         Second_Target = Point(2,2),
         CustomEnemy = "Leaper1",
         CustomPawn = "Nico_minerbot_mech",
+        Length = 6,
     }
 }
 
@@ -166,8 +151,8 @@ function Nico_minerbot:GetSkillEffect(p1,p2)
         ret:AddBounce(p2, self.BounceAmount)
         ret:AddBoardShake(0.15)
         ret:AddSound(self.KOSound)
-        ret:AddAnimation(damage.loc,"Nico_minerbot_meche1", ANIM_NO_DELAY)
-        ret:AddDelay(0.6)
+        ret:AddAnimation(damage.loc,"Nico_minerbot_mech1e", ANIM_DELAY)
+        ret:AddDelay(0.1)
     else
         damage.iDamage = self.Damage
         damage.sAnimation = "ExploArt0"
@@ -189,11 +174,28 @@ function Nico_minerbot:GetSkillEffect(p1,p2)
         damage.sPawn = self.SpawnBot2
         damage.sAnimation = ""
         damage.iDamage = 0
-        ret:AddAnimation(damage.loc,"Nico_minerbot_meche2", ANIM_NO_DELAY)
-        ret:AddDelay(1.2)
+        ret:AddAnimation(damage.loc,"Nico_minerbot_mech2e", ANIM_DELAY)
+        ret:AddDelay(0.6)
         ret:AddDamage(damage)
     end
 
+	-- for the tip
+	if Board:GetSize() == Point(6,6) then
+		ret:AddScript(string.format(
+			"Board:GetPawn(%s):FireWeapon(%s, 1)",
+			self.TipImage.Target:GetString(),Point(0,1):GetString()
+		))
+		ret:AddDelay(-1)
+		ret:AddScript(string.format(
+			"Board:GetPawn(%s):FireWeapon(%s, 1)",
+			Point(0,1):GetString(),Point(0,3):GetString()
+		))
+		ret:AddDelay(1.0)
+		ret:AddScript(string.format(
+			"Board:GetPawn(%s):FireWeapon(%s, 1)",
+			self.TipImage.Second_Target:GetString(),Point(4,2):GetString()
+		))
+	end
     return ret
 end
 Nico_minerbot_A = Nico_minerbot:new{
@@ -220,7 +222,6 @@ Nico_minerbot_AB = Nico_minerbot_B:new{
     SpawnBot = "Nico_SnowmineA",
     SpawnBot2 = "Nico_Snowmine2A",
 }
-modApi:addWeaponDrop("Nico_minerbot")
 
 local function Nico_MoveMine(mission, pawn, weaponId, p1, p2)
 	if pawn and (pawn:GetType() == "Nico_minerbot_mech" or pawn:GetType() == "Nico_Snowmine2" or pawn:GetType() == "Nico_Snowmine2A") and weaponId == "Move" then

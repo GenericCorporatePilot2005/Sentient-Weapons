@@ -139,7 +139,6 @@ Nico_hulkbot=ArtilleryDefault:new{
 	Nico_hulkbot_AB=Nico_hulkbot_A:new{
 		Damage=2,
 	}
-	modApi:addWeaponDrop("Nico_hulkbot")
 	
 	--local function EVENT_onModsLoaded() --This function will run when the mod is loaded
 	--hulkbot_counter = false

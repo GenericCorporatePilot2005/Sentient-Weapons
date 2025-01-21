@@ -93,7 +93,11 @@ function Nico_laserheal:AddLaser(ret,point,direction)
 		dam.sScript = "Board:SetFire("..point:GetString()..",false)"
 		if (start:Manhattan(point) == 1 and Board:IsPawnTeam(point, TEAM_PLAYER)) then
             local shield=SpaceDamage(dam.loc,0)
-            shield.sImageMark= "combat/icons/Nico_icon_shield+1.png"
+			if Board:GetPawn(start):IsBoosted() then
+            	shield.sImageMark= "combat/icons/Nico_icon_shield+2.png"
+			else
+            	shield.sImageMark= "combat/icons/Nico_icon_shield+1.png"
+			end
 			dam.iShield = 1
             dam.bHide=true
 			dam.sScript = "Board:SetFire("..point:GetString()..",false) modApi:runLater(function() Board:AddShield("..point:GetString()..") end)"
@@ -215,7 +219,11 @@ function Nico_cannonheal:GetSkillEffect(p1,p2)
 	dam.sScript = "Board:SetFire("..target:GetString()..",false)"-- modApi:runLater(function() Board:AddShield("..target:GetString()..") end)"
 	local shield = SpaceDamage(target,0)
 	shield.iShield = 1
-	shield.sImageMark = "combat/icons/Nico_icon_shield+1.png"
+	if Board:GetPawn(p1):IsBoosted() then
+		shield.sImageMark= "combat/icons/Nico_icon_shield+2.png"
+	else
+		shield.sImageMark= "combat/icons/Nico_icon_shield+1.png"
+	end
 	ret:AddDamage(dam)
 	achCheck(dam.loc)
 	ret:AddProjectile(shield, self.ProjectileArt)

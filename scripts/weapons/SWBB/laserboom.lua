@@ -147,4 +147,3 @@ Nico_laserboom_AB = Nico_laserboom_A:new{
 	FriendlyDamage = false,
 }
 
-modApi:addWeaponDrop("Nico_laserboom")

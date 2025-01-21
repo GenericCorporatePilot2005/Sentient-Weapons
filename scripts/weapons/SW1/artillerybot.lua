@@ -14,15 +14,7 @@ Nico_artillerybot = ArtilleryDefault:new{
 	UpgradeCost = {2,3},
 	LaunchSound = "/enemy/snowart_1/attack",
 	ImpactSound = "",
-	TipImage = {
-		Unit = Point(2,3),
-		Target = Point(2,1),
-		Enemy = Point(2,1),
-		Enemy2 = Point(3,1),
-		Building = Point(1,1),
-		Second_Click = Point(2,2),
-        CustomPawn = "Nico_artillerybot_mech",
-	},
+	CustomTipImage = "Nico_artillerybot_Tip",
 	}
 	function Nico_artillerybot:FireFlyBossFlip(point)
 		local Mirror = false
@@ -122,14 +114,69 @@ Nico_artillerybot = ArtilleryDefault:new{
 		BuildingDamage = false,
 		shield=true,
 		UpgradeDescription = "This attack will shield Grid Buildings.",
+		CustomTipImage = "Nico_artillerybot_Tip_A",
 	}
 	Nico_artillerybot_B=Nico_artillerybot:new{
 		Damage=2,
 		UpgradeDescription = "Deals 1 additional damage to all targets.",
+		CustomTipImage = "Nico_artillerybot_Tip_B",
 	}
 	Nico_artillerybot_AB=Nico_artillerybot_A:new{
 		BuildingDamage = false,
 		shield=true,
 		Damage=2,
+		CustomTipImage = "Nico_artillerybot_Tip_AB",
 	}
-	modApi:addWeaponDrop("Nico_artillerybot")
+	
+	Nico_artillerybot_Tip = Nico_artillerybot:new{
+		TipImage = {
+			Unit = Point(2,3),
+			Target = Point(2,1),
+			Enemy1 = Point(2,1),
+			Queued1 = Point(1,1),
+			Enemy2 = Point(3,1),
+			Building = Point(1,1),
+			Second_Click = Point(2,2),
+			CustomPawn = "Nico_artillerybot_mech",
+		},}
+	Nico_artillerybot_Tip_A = Nico_artillerybot_Tip:new{BuildingDamage = false,shield=true,}
+	Nico_artillerybot_Tip_B = Nico_artillerybot_Tip:new{Damage=2,}
+	Nico_artillerybot_Tip_AB = Nico_artillerybot_Tip_A:new{Damage=2,}
+	function Nico_artillerybot_Tip:GetFinalEffect(p1,p2,p3)
+		local ret = SkillEffect()
+		local x = math.random(3)
+		if self.BuildingDamage then
+			if x == 1 then
+				ret = Nico_artillerybot:GetFinalEffect(Point(2,3),Point(2,1),Point(2,0))
+			elseif x == 2 then
+				ret = Nico_artillerybot:GetFinalEffect(Point(2,3),Point(2,1),Point(2,3))
+			else
+				ret = Nico_artillerybot:GetFinalEffect(Point(2,3),Point(2,1),Point(2,2))
+			end
+		elseif self.shield and not self.BuildingDamage then
+			if x == 1 then
+				ret = Nico_artillerybot_A:GetFinalEffect(Point(2,3),Point(2,1),Point(2,0))
+			elseif x == 2 then
+				ret = Nico_artillerybot_A:GetFinalEffect(Point(2,3),Point(2,1),Point(2,3))
+			else
+				ret = Nico_artillerybot_A:GetFinalEffect(Point(2,3),Point(2,1),Point(2,2))
+			end
+		elseif self.Damage == 2 then
+			if x == 1 then
+				ret = Nico_artillerybot_B:GetFinalEffect(Point(2,3),Point(2,1),Point(2,0))
+			elseif x == 2 then
+				ret = Nico_artillerybot_B:GetFinalEffect(Point(2,3),Point(2,1),Point(2,3))
+			else
+				ret = Nico_artillerybot_B:GetFinalEffect(Point(2,3),Point(2,1),Point(2,2))
+			end
+		else
+			if x == 1 then
+				ret = Nico_artillerybot_AB:GetFinalEffect(Point(2,3),Point(2,1),Point(2,0))
+			elseif x == 2 then
+				ret = Nico_artillerybot_AB:GetFinalEffect(Point(2,3),Point(2,1),Point(2,3))
+			else
+				ret = Nico_artillerybot_AB:GetFinalEffect(Point(2,3),Point(2,1),Point(2,2))
+			end
+		end
+		return ret
+	end

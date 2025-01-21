@@ -47,7 +47,6 @@ Nico_laserbot = LaserDefault:new{
 		Damage = 4,
 	}
 
-	modApi:addWeaponDrop("Nico_laserbot")
 	
 local function Nico_FatalFreeze(mission, pawn, weaponId, p1, p2, skillEffect)
 	if (weaponId == "Nico_laserbot_A") or (weaponId == "Nico_laserbot_AB") then	

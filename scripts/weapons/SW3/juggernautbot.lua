@@ -116,10 +116,11 @@ Nico_juggernaut = Skill:new{
 			del.fDelay = -1
 			if not Board:IsTerrain(ice.loc,TERRAIN_LAVA) then
 				ice.iTerrain = TERRAIN_ICE
+				ice.sImageMark = "combat/icons/Nico_icon_ice_glow.png"
 			elseif Board:IsTerrain(ice.loc,TERRAIN_LAVA) then
 				ice.iTerrain = TERRAIN_ROAD
+				ice.sImageMark = "combat/icons/Nico_icon_ground.png"
 			end
-			ice.sImageMark = "combat/icons/Nico_icon_ice_glow.png"
 			if Board:IsAcid(endcharge) then
 				ice.sAnimation="Splash_acid"
 			elseif Board:IsTerrain(endcharge,TERRAIN_LAVA) then
@@ -294,8 +295,10 @@ Nico_juggernaut = Skill:new{
 			del.fDelay = -1
 			if not Board:IsTerrain(ice.loc,TERRAIN_LAVA) then
 				ice.iTerrain = TERRAIN_ICE
+				ice.sImageMark = "combat/icons/Nico_icon_ice_glow.png"
 			elseif Board:IsTerrain(ice.loc,TERRAIN_LAVA) then
 				ice.iTerrain = TERRAIN_ROAD
+				ice.sImageMark = "combat/icons/Nico_icon_ground.png"
 			end
 			ice.sImageMark = "combat/icons/Nico_icon_ice_glow.png"
 			if Board:IsAcid(endcharge) then
@@ -312,5 +315,4 @@ Nico_juggernaut = Skill:new{
 		if Board:GetItem(endcharge) == "Poke_Puddle" then ret:AddDamage(SpaceDamage(endcharge,0,direction)) end
 		return ret
 	end
-	modApi:addWeaponDrop("Nico_juggernaut")
 

@@ -166,4 +166,3 @@ Nico_knightbot = Punch:new{
 	Nico_knightbot_AB=Nico_knightbot_A:new{
 		Damage=3,
 	}
-	modApi:addWeaponDrop("Nico_knightbot")

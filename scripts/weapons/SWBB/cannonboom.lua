@@ -361,4 +361,3 @@ function Nico_cannonboom_Tip:GetFinalEffect(p1,p2,p3)
 	return ret
 end
 
-modApi:addWeaponDrop("Nico_cannonboom")

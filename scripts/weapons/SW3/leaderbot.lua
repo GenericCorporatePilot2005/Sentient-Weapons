@@ -32,9 +32,6 @@ Nico_leaderbot=ArtilleryDefault:new{
         CustomPawn="Nico_botleader_mech",
 	},
 }
-local mod = modApi:getCurrentMod()
-local path = mod.scriptPath
-require(path .."palettes")
 
 function Nico_leaderbot:GetTargetArea(point)
 	local ret = PointList()
@@ -124,14 +121,10 @@ Nico_leaderbot_A=Nico_leaderbot:new{
 	Damage=4,
 	UpgradeDescription = "Deals 1 additional damage to all targets.",
 }
-Nico_leaderbot_B=Nico_leaderbot:new{
-	Damage=4,
-	UpgradeDescription = "Deals 1 additional damage to all targets.",
-}
+Nico_leaderbot_B=Nico_leaderbot_A:new{}
 Nico_leaderbot_AB=Nico_leaderbot_A:new{
 	Damage=5,
 }
-modApi:addWeaponDrop("Nico_leaderbot")
 
 --this section detects the event that triggers when End Turn is pressed
 EXCL = {"GetAmbience", "GetBonusStatus", "BaseUpdate", "UpdateMission", "GetCustomTile", "GetDamage", "GetTurnLimit", "BaseObjectives", "UpdateObjectives",} 
@@ -157,8 +150,7 @@ Nico_cannonbot_deploy = Pawn:new{
 	Health = 1,
 	MoveSpeed = 3,
 	Corpse = false,
-	Image = "Nico_cannonbot_mech",
-	ImageOffset = modApi:getPaletteImageOffset("nico_boss_snow"),
+	Image = "Nico_cannonbot_deploy",
 	SkillList = {"Nico_cannondeploy"},
 	SoundLocation = "/enemy/snowtank_1/",
 	DefaultTeam = TEAM_PLAYER,

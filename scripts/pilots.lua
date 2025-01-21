@@ -56,7 +56,7 @@ local this={}
             Personality = "Artificial",
             Sex = SEX_VEK,
             Name = "Mine-Bot",
-            GetSkill = function() NicoIsRobot = true; return "Survive_Death" end,
+            GetSkill = function() NicoIsMine = true; return "Survive_Death" end,
             Rarity = 0,
             Blacklist = {"Invulnerable","Thick","Popular","Health","Skilled","Regen","Pain"},
         }

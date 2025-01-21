@@ -155,7 +155,6 @@ require(path .."palettes")
     if modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SWBB") then
         Nico_laserboom_mech = Pawn:new{
             Name = "Boom Laser",
-            NicoIsBoom = true,
             Class = "TechnoVek",
             Health = 1,
             MoveSpeed = 4,
@@ -171,7 +170,6 @@ require(path .."palettes")
         }
         Nico_artilleryboom_mech = Pawn:new{
             Name = "Boom Artillery",
-            NicoIsBoom = true,
             Class = "TechnoVek",
             Health = 1,
             MoveSpeed = 3,
@@ -187,7 +185,6 @@ require(path .."palettes")
         }
         Nico_cannonboom_mech = Pawn:new{
             Name = "Boom Cannon",
-            NicoIsBoom = true,
             Class = "TechnoVek",
             Health = 1,
             MoveSpeed = 4,
@@ -205,18 +202,23 @@ require(path .."palettes")
 --Traits
     local trait = require(mod.scriptPath .."libs/trait")--where does it get the code for the rest of this to work
 
-    Nico_Pawn_List = {"Nico_laserbot_mech", "Nico_cannonbot_mech", "Nico_artillerybot_mech", "Nico_knightbot_mech", "Nico_shieldbot_mech","Nico_minerbot_mech","Nico_juggernautbot_mech","Nico_hulkbot_mech"}
+    Nico_Pawn_List = {"Nico_laserbot_mech", "Nico_cannonbot_mech", "Nico_artillerybot_mech", "Nico_knightbot_mech", "Nico_shieldbot_mech","Nico_juggernautbot_mech","Nico_hulkbot_mech"}
 
-    for i = 1,8 do
+    for i = 1,7 do
     	trait:add{
 		    pawnType = Nico_Pawn_List[i],--who will get the trait
 		    icon = "img/combat/icons/icon_Nico_zenith_shield.png",--the icon itself
-		    icon_offset = Point(0,9),--it's location
 		    desc_title = "Zenith\'s Guard",--title
 		    desc_text = "Gains a shield when moving, leaping, charging, or teleporting to a destination next to another Mech. Bots can repair other adjacent Bots.",--description
 	    }
     end
 
+    trait:add{
+        pawnType = "Nico_minerbot_mech",--who will get the trait
+        icon = "img/combat/icons/icon_Nico_zenith_mine.png",--the icon itself
+        desc_title = "Zenith\'s Guard\nMine Layer",--title
+        desc_text = "Lays a Freeze Mine when moving.\nGains a shield when moving, leaping, charging, or teleporting to a destination next to another Mech. Bots can repair other adjacent Bots.",--description
+    }
     trait:add{
 	    pawnType = "Nico_botleader_mech",--who will get the trait
 	    icon = "img/combat/icons/icon_Nico_shield_heal.png",--the icon itself

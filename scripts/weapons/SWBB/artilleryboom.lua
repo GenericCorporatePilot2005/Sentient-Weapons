@@ -173,4 +173,3 @@ end
 		Damage = 3,
 		SelfDamage = 1,
 	}
-	modApi:addWeaponDrop("Nico_artilleryboom")

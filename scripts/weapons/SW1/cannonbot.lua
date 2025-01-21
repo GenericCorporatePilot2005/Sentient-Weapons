@@ -144,4 +144,3 @@ Nico_cannonbot = Skill:new{
 			CustomPawn = "Nico_cannonbot_mech",
 		},
 	}
-	modApi:addWeaponDrop("Nico_cannonbot")

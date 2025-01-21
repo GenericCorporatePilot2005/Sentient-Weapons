@@ -183,4 +183,3 @@ local path = mod_loader.mods[modApi.currentMod].resourcePath
 		PosX = -33,
 		PosY = -14,
 	}
-	modApi:addWeaponDrop("Nico_shieldbot")
