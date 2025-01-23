@@ -22,34 +22,32 @@ for _, img in ipairs(imgs) do
 	modApi:appendAsset("img/achievements/".. achname..img ..".png", path .."img/achievements/".. img ..".png")
 end
 
-if modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SWBB") then
-	modApi.achievements:add{
-		id = "Nico_Bot_Laser_B",
-		name = "Meridia at Home",
-		tip = "Have 4 different Bloom Bots in the board at the same time. This includes 1 Laser-Bloom, 1 Cannon-Bloom, 1 Artillery-Bloom, & 1 Bloom-Copter.\nHint: Bloom-Copters are deployed if the tile is not or is going to not be suitable for grounded Bloom-Bots, example: water, or cracked tiles.",
-		image = "img/achievements/Nico_Bot_Laser_B.png",
-		squad = "Nico_Sent_weap4",
-		objective=1,
-	}
+modApi.achievements:add{
+	id = "Nico_Bot_Laser_B",
+	name = "Meridia at Home",
+	tip = "Have 4 different Bloom Bots in the board at the same time. This includes 1 Laser-Bloom, 1 Cannon-Bloom, 1 Artillery-Bloom, & 1 Bloom-Copter.\nHint: Bloom-Copters are deployed if the tile is not or is going to not be suitable for grounded Bloom-Bots, example: water, or cracked tiles.",
+	image = "img/achievements/Nico_Bot_Laser_B.png",
+	squad = "Nico_Sent_weap4",
+	objective=1,
+}
 
-	modApi.achievements:add{
-		id = "Nico_Bot_Cannon_B",
-		name = "Bloom and Doom",
-		tip = "Revive a Mech and kill two enemies with a single attack of a grounded Bloom Bot's weapon.",
-		image = "img/achievements/Nico_Bot_Cannon_B.png",
-		squad = "Nico_Sent_weap4",
-		objective=1,
-	}
+modApi.achievements:add{
+	id = "Nico_Bot_Cannon_B",
+	name = "Bloom and Doom",
+	tip = "Revive a Mech and kill two enemies with a single attack of a grounded Bloom Bot's weapon.",
+	image = "img/achievements/Nico_Bot_Cannon_B.png",
+	squad = "Nico_Sent_weap4",
+	objective=1,
+}
 
-	modApi.achievements:add{
-		id = "Nico_Bot_Arti_B",
-		name = "Dancing with Danger",
-		tip = "End a mission with all 3 Mechs alive, having 1 max HP, with the first upgrade of their weapons, and no other weapons or passives.",
-		image = "img/achievements/Nico_Bot_Arti_B.png",
-		squad = "Nico_Sent_weap4",
-		objective = 1,
-	}
-end
+modApi.achievements:add{
+	id = "Nico_Bot_Arti_B",
+	name = "Dancing with Danger",
+	tip = "End a mission with all 3 Mechs alive, having 1 max HP, with the first upgrade of their weapons, and no other weapons or passives.",
+	image = "img/achievements/Nico_Bot_Arti_B.png",
+	squad = "Nico_Sent_weap4",
+	objective = 1,
+}
 
 --Lemon's Real Mission Checker
 local function isRealMission()

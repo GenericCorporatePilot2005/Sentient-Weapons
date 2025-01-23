@@ -40,14 +40,11 @@ function mod:init()
 	require(self.scriptPath .."assets")
 	require(self.scriptPath .."Achievements/achievements1")
 	if modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SW2") then
-		require(self.scriptPath .."Achievements/achievements2")
-	end
+		require(self.scriptPath .."Achievements/achievements2") end
 	if modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SW3") then
-		require(self.scriptPath .."Achievements/achievements3")
-	end
+		require(self.scriptPath .."Achievements/achievements3") end
 	if modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SWBB") then
-		require(self.scriptPath .."Achievements/achievements4")
-	end
+		require(self.scriptPath .."Achievements/achievements4") end
 	
 	--[[commented out for the moment, just in case we need it
 	-- add extra mech to selection screen

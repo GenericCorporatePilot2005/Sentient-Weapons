@@ -204,7 +204,6 @@ Nico_juggernaut = Skill:new{
 			"Poke_SeedFlareItem",
 			"tosx_Trap_Mine0",
 			"tosx_Trap_Mine1",
-			"Nico_Freeze_Mine"
 		}
 
 		local isComplexCondition =

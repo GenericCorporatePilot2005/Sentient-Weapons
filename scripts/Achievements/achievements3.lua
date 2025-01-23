@@ -22,34 +22,33 @@ for _, img in ipairs(imgs) do
 	modApi:appendAsset("img/achievements/".. achname..img ..".png", path .."img/achievements/".. img ..".png")
 end
 
-if modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SW3") then
-	modApi.achievements:add{
-		id = "Nico_Bot_Jugger",
-		name = "Decimation",
-		tip = "Kill 10 enemies in one mission on the first Corporate Island.",
-		image = "img/achievements/Nico_Bot_Jugger.png",
-		squad = "Nico_Sent_weap3",
-		objective=1,
-	}
+modApi.achievements:add{
+	id = "Nico_Bot_Jugger",
+	name = "Decimation",
+	tip = "Kill 10 enemies in one mission on the first Corporate Island.",
+	image = "img/achievements/Nico_Bot_Jugger.png",
+	squad = "Nico_Sent_weap3",
+	objective=1,
+}
 
-	modApi.achievements:add{
-		id = "Nico_Bot_Leader",
-		name = "Spotless",
-		tip = "Finish a Corporate Island without the Bot Leader taking Mech Damage.",
-		image = "img/achievements/Nico_Bot_Leader.png",
-		squad = "Nico_Sent_weap3",
-		objective=1,
-	}
+modApi.achievements:add{
+	id = "Nico_Bot_Leader",
+	name = "Spotless",
+	tip = "Finish a Corporate Island without the Bot Leader taking Mech Damage.",
+	image = "img/achievements/Nico_Bot_Leader.png",
+	squad = "Nico_Sent_weap3",
+	objective=1,
+}
 
-	modApi.achievements:add{
-		id = "Nico_Bot_Hulk",
-		name = "Unfrozen Hulk",
-		tip = "Shoot the Artillery Mark III 4 times in a single mission.",
-		image = "img/achievements/Nico_Bot_Hulk.png",
-		squad = "Nico_Sent_weap3",
-		objective = 1,
-	}
-end
+modApi.achievements:add{
+	id = "Nico_Bot_Hulk",
+	name = "Unfrozen Hulk",
+	tip = "Shoot the Artillery Mark III 4 times in a single mission.",
+	image = "img/achievements/Nico_Bot_Hulk.png",
+	squad = "Nico_Sent_weap3",
+	objective = 1,
+}
+
 --Lemon's Real Mission Checker
 local function isRealMission()
 local mission = GetCurrentMission()

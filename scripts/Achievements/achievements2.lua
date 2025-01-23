@@ -22,34 +22,32 @@ for _, img in ipairs(imgs) do
 	modApi:appendAsset("img/achievements/".. achname..img ..".png", path .."img/achievements/".. img ..".png")
 end
 
-if modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SW2") then
-	modApi.achievements:add{
-		id = "Nico_Bot_Knight",
-		name = "Mons Quixote",
-		tip = "Shield at least 3 Mountains with a single dash of the 0th KPR Sword Mark II",
-		image = "img/achievements/Nico_Bot_Knight.png",
-		squad = "Nico_Sent_weap2",
-		objective=1,
-	}
+modApi.achievements:add{
+	id = "Nico_Bot_Knight",
+	name = "Mons Quixote",
+	tip = "Shield at least 3 Mountains with a single dash of the 0th KPR Sword Mark II",
+	image = "img/achievements/Nico_Bot_Knight.png",
+	squad = "Nico_Sent_weap2",
+	objective=1,
+}
 
-	modApi.achievements:add{
-		id = "Nico_Bot_Mine",
-		name = "Me, Myself, And Mine",
-		tip = "End a mission with 4 improved Mine-Bots.",
-		image = "img/achievements/Nico_Bot_Mine.png",
-		squad = "Nico_Sent_weap2",
-		objective=1,
-	}
+modApi.achievements:add{
+	id = "Nico_Bot_Mine",
+	name = "Me, Myself, And Mine",
+	tip = "End a mission with 4 improved Mine-Bots.",
+	image = "img/achievements/Nico_Bot_Mine.png",
+	squad = "Nico_Sent_weap2",
+	objective=1,
+}
 
-	modApi.achievements:add{
-		id = "Nico_Bot_Shield",
-		name = "Treading Mine-Shields",
-		tip = "End a mission with all Mechs and 4 Mine-Bots Shielded.",
-		image = "img/achievements/Nico_Bot_Shield.png",
-		squad = "Nico_Sent_weap2",
-		objective = 1,
-	}
-end
+modApi.achievements:add{
+	id = "Nico_Bot_Shield",
+	name = "Treading Mine-Shields",
+	tip = "End a mission with all Mechs and 4 Mine-Bots Shielded.",
+	image = "img/achievements/Nico_Bot_Shield.png",
+	squad = "Nico_Sent_weap2",
+	objective = 1,
+}
 
 --Lemon's Real Mission Checker
 local function isRealMission()

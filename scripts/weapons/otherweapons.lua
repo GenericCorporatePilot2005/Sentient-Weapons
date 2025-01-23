@@ -62,10 +62,10 @@ local function Nico_TeamRepair(mission, pawn, weaponId, p1, targetArea)
 end
 
 local function PawnKilled(mission, pawn)
-	if pawn:GetType() == "Nico_Snowmine" and pawn:GetType() == "Nico_Snowmine2"
-	and pawn:GetType() == "Nico_SnowmineA" and pawn:GetType() == "Nico_Snowmine2A"
-	and pawn:GetType() == "Nico_laserbloom" and pawn:GetType() == "Nico_cannonbloom" and pawn:GetType() == "Nico_artillerybloom"
-	and pawn:GetType() == "Nico_cannonbot_deploy" then
+	if pawn:GetType() == "Nico_Snowmine" or pawn:GetType() == "Nico_Snowmine2"
+	or pawn:GetType() == "Nico_SnowmineA" or pawn:GetType() == "Nico_Snowmine2A"
+	or pawn:GetType() == "Nico_laserbloom" or pawn:GetType() == "Nico_cannonbloom" or pawn:GetType() == "Nico_artillerybloom"
+	or pawn:GetType() == "Nico_cannonbot_deploy" then
 		Board:AddAnimation(pawn:GetSpace(),"ExploAir2",ANIM_DELAY)
 	end
 end
