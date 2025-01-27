@@ -101,7 +101,6 @@ local function onPawnTracked(mission, pawn)
 end
 
 local function DancingWithDanger(name)--name is used for both weapon and mech IDs, it concatenates it when needed
-	local dancers = 0
 	for _, id in ipairs(extract_table(Board:GetPawns(TEAM_PLAYER))) do       
 		local pawn = Board:GetPawn(id) --evaluated pawn       
 		--Step 1: check if the evaluated pawn is one of the bloom bots
@@ -112,15 +111,17 @@ local function DancingWithDanger(name)--name is used for both weapon and mech ID
 		and weapon2 == nil--makes sure there's no second weapon
 		and pawn:GetType() == name.."_mech"--concatenates for example, Nico_laserboom with _mech, with Nico_laserboom_mech being mech id
 		and pawn:GetHealth() == 1 and pawn:GetMaxHealth() == 1 then--check max an current hp both being 1
-			dancers = dancers+1
+			return true
 		end
 	end
-	return dancers
 end
 local function Nico_MissionEnd(mission)
-		if (DancingWithDanger("Nico_laserboom") + DancingWithDanger("Nico_cannonboom") + DancingWithDanger("Nico_artilleryboom")) == 3
+		if (DancingWithDanger("Nico_laserboom") and DancingWithDanger("Nico_cannonboom") and DancingWithDanger("Nico_artilleryboom"))
 		and GAME.additionalSquadData.squad == modid.."4" and not modApi.achievements:isComplete(modid,"Nico_Bot_Arti_B") then
 			modApi.achievements:trigger(modid,"Nico_Bot_Arti_B")
+		end
+		if not modApi.achievements:isComplete(modid,"Nico_Bot_Laser_B") then--this should reset progress if the mission ends
+			modApi.achievements:reset(modid,"Nico_Bot_Laser_B")
 		end
 end
 local function EVENT_onModsLoaded() --This function will run when the mod is loaded

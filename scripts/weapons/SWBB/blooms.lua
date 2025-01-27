@@ -1,7 +1,7 @@
 local mod = modApi:getCurrentMod()
 local path = mod.scriptPath
 require(path .."Achievements/achievements4")
-
+require(path .."weapons/SWBB/deathPetals")
 --Lemon's Real Mission Checker
 local function isRealMission()
 	local mission = GetCurrentMission()
@@ -275,7 +275,7 @@ Nico_artilleryheal = SnowartAtk1:new{
 function Nico_artilleryheal:GetSkillEffect(p1,p2)
 	local ret = SkillEffect()
 	local dir = GetDirection(p2-p1)
-	
+	local kill = 0
 	local function achCheck(point)
 		if Board:IsPawnSpace(point) then
 			pawn = Board:GetPawn(point)
@@ -284,7 +284,7 @@ function Nico_artilleryheal:GetSkillEffect(p1,p2)
 			end
 		end
 	end
-	local kill = 0
+
 	for dir = DIR_START, DIR_END do
 		local curr = p1 + DIR_VECTORS[dir]
 		pawn = Board:GetPawn(curr)
