@@ -13,7 +13,7 @@ end
 if modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SW2") then
     require(path .."Achievements/achievements2")
     require(path .."weapons/SW2/knightbot") require(path .."weapons/SW2/minerbot") require(path .."weapons/SW2/shieldbot")
-    local weapons = {"Nico_knightbot","Nico_shieldbot","Nico_minerbot_mech"}
+    local weapons = {"Nico_knightbot","Nico_shieldbot","Nico_minerbot"}
     local achievements = {"Nico_Bot_Knight","Nico_Bot_Mine","Nico_Bot_Shield"}
     for i = 1, 3 do
         if modApi.achievements:get("Nico_Sent_weap",achievements[i]) ~= nil and modApi.achievements:isComplete("Nico_Sent_weap",achievements[i]) then
