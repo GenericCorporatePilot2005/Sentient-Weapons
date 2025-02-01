@@ -18,6 +18,7 @@ Nico_artilleryboom = Nico_artillerybot:new{
 	LaunchSound = "/enemy/snowart_1/attack",
 	ImpactSound = "/impact/generic/explosion",
 	KOSound = "/weapons/arachnoid_ko",
+	CustomTipImage = "",
 	TipImage = {
 		Unit = Point(3,3),
 		Target = Point(3,2),
@@ -148,6 +149,7 @@ end
 		Damage = 2,
 		SelfDamage = 1,
 		UpgradeDescription = "Deals 1 additional damage to all targets and damages self.\nAttacks the tile behind, if it has a unit, and the attack kills, create a Bloom-Artillery.",
+		CustomTipImage = "",
 		TipImage = {
 			Unit = Point(3,3),
 			Target = Point(3,2),
@@ -167,9 +169,11 @@ end
 		BounceAmount = 3,
 		Damage = 2,
 		UpgradeDescription = "Deals 1 additional damage to all targets.",
+		CustomTipImage = "",
 	}
 	Nico_artilleryboom_AB=Nico_artilleryboom_A:new{
 		BounceAmount = 3,
 		Damage = 3,
 		SelfDamage = 1,
+		CustomTipImage = "",
 	}
