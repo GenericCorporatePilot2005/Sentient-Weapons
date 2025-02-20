@@ -116,17 +116,17 @@ local a=ANIMS
     --Sentient Weapons 3
         --Juggernaut-Bot
             a.Nico_juggernautbot_mech =a.MechUnit:new{Image="units/player/Nico_juggernautbot_mech.png", PosX = -24, PosY = -9}
-            a.Nico_juggernautbot_mecha = a.MechUnit:new{Image="units/player/Nico_juggernautbot_mech_a.png",  PosX = -24, PosY = -9, NumFrames = 4 }
+            a.Nico_juggernautbot_mecha = a.Nico_juggernautbot_mech:new{Image="units/player/Nico_juggernautbot_mech_a.png",NumFrames = 4 }
             a.Nico_juggernautbot_mechw = a.MechUnit:new{Image="units/player/Nico_juggernautbot_mech_w.png", PosX = -17, PosY = 9}
             a.Nico_juggernautbot_mech_broken = a.MechUnit:new{Image="units/player/Nico_juggernautbot_mech_broken.png", PosX = -23, PosY = -8 }
-            a.Nico_juggernautbot_mechw_broken = a.MechUnit:new{Image="units/player/Nico_juggernautbot_mech_w_broken.png", PosX = -17, PosY = 9}
+            a.Nico_juggernautbot_mechw_broken = a.Nico_juggernautbot_mechw:new{Image="units/player/Nico_juggernautbot_mech_w_broken.png"}
             a.Nico_juggernautbot_mech_ns = a.MechIcon:new{Image="units/player/Nico_juggernautbot_mech_ns.png"}
         --Cryo-Hulk
             a.Nico_hulkbot_mech =a.MechUnit:new{Image="units/player/Nico_hulkbot_mech.png", PosX = -20, PosY = -10 }
             a.Nico_hulkbot_mecha = a.Nico_hulkbot_mech:new{Image="units/player/Nico_hulkbot_mech_a.png",NumFrames = 4 }
             a.Nico_hulkbot_mechw = a.MechUnit:new{Image="units/player/Nico_hulkbot_mech_w.png", PosX = -20, PosY = 0 }
             a.Nico_hulkbot_mech_broken = a.Nico_hulkbot_mech:new{Image="units/player/Nico_hulkbot_mech_broken.png"}
-            a.Nico_hulkbot_mechw_broken = a.Nico_hulkbot_mechw:new{Image="units/player/Nico_hulkbot_mech_w_broken.png", PosX = -20, PosY = 0 }
+            a.Nico_hulkbot_mechw_broken = a.Nico_hulkbot_mechw:new{Image="units/player/Nico_hulkbot_mech_w_broken.png"}
             a.Nico_hulkbot_mech_ns = a.MechIcon:new{Image="units/player/Nico_hulkbot_mech_ns.png"}
         --Cannon-Bot-Deploy
             a.Nico_cannonbot_deploy =a.Nico_cannonbot_mech:new{Image="units/player/Nico_cannonbot_deploy.png"}
@@ -148,11 +148,11 @@ local a=ANIMS
             a.Nico_laserboom_mechw_broken = a.Nico_laserbot_mechw_broken:new{Image="units/player/Nico_laserboom_mech_w_broken.png"}
             a.Nico_laserboom_mech_ns = a.MechIcon:new{Image="units/player/Nico_laserboom_mech_ns.png"}
         --Boom-Cannon
-            a.Nico_cannonboom_mech =a.MechUnit:new{Image="units/player/Nico_cannonboom_mech.png", PosX = -20, PosY = -4}
-            a.Nico_cannonboom_mecha = a.MechUnit:new{Image="units/player/Nico_cannonboom_mech_a.png",  PosX = -20, PosY = -4, NumFrames = 3 }
-            a.Nico_cannonboom_mechw = a.MechUnit:new{Image="units/player/Nico_cannonboom_mech_w.png", PosX = -17, PosY = 2}
-            a.Nico_cannonboom_mech_broken = a.MechUnit:new{Image="units/player/Nico_cannonboom_mech_broken.png", PosX = -20, PosY = -4 }
-            a.Nico_cannonboom_mechw_broken = a.MechUnit:new{Image="units/player/Nico_cannonboom_mech_w_broken.png", PosX = -20, PosY = 2 }
+            a.Nico_cannonboom_mech =a.Nico_cannonbot_mech:new{Image="units/player/Nico_cannonboom_mech.png"}
+            a.Nico_cannonboom_mecha = a.Nico_cannonbot_mecha:new{Image="units/player/Nico_cannonboom_mech_a.png"}
+            a.Nico_cannonboom_mechw = a.Nico_cannonbot_mechw:new{Image="units/player/Nico_cannonboom_mech_w.png"}
+            a.Nico_cannonboom_mech_broken = a.Nico_cannonbot_mech_broken:new{Image="units/player/Nico_cannonboom_mech_broken.png"}
+            a.Nico_cannonboom_mechw_broken = a.Nico_cannonbot_mechw_broken:new{Image="units/player/Nico_cannonboom_mech_w_broken.png"}
             a.Nico_cannonboom_mech_ns = a.MechIcon:new{Image="units/player/Nico_cannonboom_mech_ns.png"}
     --Bloom Bots
         local blooms = {"Laser", "Cannon", "Artillery",}
