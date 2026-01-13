@@ -11,6 +11,22 @@ function Nico_Sent_weap3squad_Chievo(id)
 	-- exit if current one is unlocked
 	modApi.achievements:trigger(modid,id)
 end
+function Nico_AchTrigger3()
+    -- exit if not our squad
+	if Board:GetSize() == Point(6,6) then return end -- TipImage
+	if GAME.additionalSquadData.squad ~= modid.."3" then return end
+	if modApi.achievements:isComplete(modid, "Nico_Bot_Jugger")
+	and modApi.achievements:isComplete(modid, "Nico_Bot_Leader") and modApi.achievements:isComplete(modid, "Nico_Bot_Hulk") then
+		modApi.toasts:add({
+			id = "SW3_T",
+			title = "Challenge Completed",
+			name = "Unstoppable Force.",
+			tooltip = "New Palette Unlocked for the Sentient Weapons 3, based on Armored Horace.",
+			image = "img/achievements/toasts/Nico_Bot_SW3.png",
+		})
+		return true
+	end
+end
 local imgs = {
 	"Jugger",
 	"Leader",
@@ -20,6 +36,7 @@ local imgs = {
 local achname = "Nico_Bot_"
 for _, img in ipairs(imgs) do
 	modApi:appendAsset("img/achievements/".. achname..img ..".png", path .."img/achievements/".. img ..".png")
+	modApi:appendAsset("img/achievements/toasts/".. achname..img ..".png", path .."img/achievements/toasts/".. img ..".png")
 end
 
 modApi.achievements:add{
@@ -47,6 +64,22 @@ modApi.achievements:add{
 	image = "img/achievements/Nico_Bot_Hulk.png",
 	squad = "Nico_Sent_weap3",
 	objective = 1,
+}
+
+--Toasts
+local Knight_T = {
+	id = "Jugger_T",
+	title = "Challenge Completed",
+	name = "JuggerRigs",
+	tooltip = "New Palettes Unlocked for Juggernaut-Bot, based on Watchtower's race rigs.",
+	image = "img/achievements/toasts/Nico_Bot_Jugger.png",
+}
+local Leader_T = {
+	id = "Leader_T",
+	title = "Challenge Completed",
+	name = "BotZilla: Leader of Leaders",
+	tooltip = "New Palette Unlocked for Leader Bot, show who's the leader here!",
+	image = "img/achievements/toasts/Nico_Bot_Leader.png",
 }
 
 --Lemon's Real Mission Checker
@@ -89,7 +122,12 @@ end
 local function Nico_JuggerKill(mission, pawn)
 	if not modApi.achievements:isComplete(modid, "Nico_Bot_Jugger") and GAME.additionalSquadData.squad == modid.."3" and modApi.achievements:getProgress(modid,"Nico_Bot_Jugger")>-1 and pawn:GetTeam() == TEAM_ENEMY and not _G[pawn:GetType()].Minor then
 		mission.Nico_JuggerKills = mission.Nico_JuggerKills + 1--track all kills
-		if mission.Nico_JuggerKills > 9 then modApi.achievements:trigger(modid,"Nico_Bot_Jugger") end
+		if mission.Nico_JuggerKills > 9 then
+			modApi.achievements:trigger(modid,"Nico_Bot_Jugger")
+			modApi.toasts:add(Jugger_T)
+			Nico_AchTrigger3()
+			Nico_AchTrigger5()
+		end
 	end
 end
 
@@ -101,6 +139,9 @@ local function Nico_onIslandLeft(island)
 	if not modApi.achievements:isComplete(modid, "Nico_Bot_Leader") and GAME.additionalSquadData.squad == modid.."3" then
 		if modApi.achievements:getProgress(modid,"Nico_Bot_Leader")>-1 then
 			modApi.achievements:trigger(modid,"Nico_Bot_Leader")--trigger if eligible
+			modApi.toasts:add(Leader_T)
+			Nico_AchTrigger3()
+			Nico_AchTrigger5()
 		else
 			modApi.achievements:reset(modid, "Nico_Bot_Leader")--reset if failed
 		end

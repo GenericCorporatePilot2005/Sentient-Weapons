@@ -44,23 +44,21 @@ function mod:init()
 		require(self.scriptPath .."Achievements/achievements2") end
 	if modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SW3") then
 		require(self.scriptPath .."Achievements/achievements3") end
-	if modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SWBB") then
+	if modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SW4") then
 		require(self.scriptPath .."Achievements/achievements4") end
-	
-	--[[commented out for the moment, just in case we need it
-	-- add extra mech to selection screen
-	modApi.events.onModsInitialized:subscribe(function()
 
-		local oldGetStartingSquad = getStartingSquad
-		function getStartingSquad(choice, ...)
-		local result = oldGetStartingSquad(choice, ...)
+end
 
-		if choice == 0 then
-			return add_arrays(result, {})
-		end
-		return result
-		end
-	end)]]
+function mod:metadata()
+	Nico_snow_Laser = modApi:addGenerationOption(
+		"Nico_snow_Laser", "Laser's Snow Skin.",
+		"REQUIRES COMPLETING LASER-BOT'S ACHIEVEMENT.\nChanges the Sprites of Laser-Bot to an alternate skin with a beanie and a new palette.\nREQUIRES A RESTART TO APPLY, PALETTE DOESN'T UPDATE MID-RUN.",
+		{
+			strings = { "Enable", "Default"},
+			values = {"unlocks/", ""},
+			value = "",
+			tooltips = {"Changes the default skin and palette.", "Default appearance."},
+		})
 end
 
 function mod:load( options, version)
@@ -105,7 +103,7 @@ function mod:load( options, version)
 			self.resourcePath .."img/icons/squad3_icon.png"
 		)
 	end
-	if modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SWBB") then
+	if modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SW4") then
 		modApi:addSquad(
 			{
 				"Boom Bots",-- title
@@ -143,19 +141,19 @@ function mod:load( options, version)
         end
     end)
 
-	if modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SW2") and modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SW3") and modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SWBB") then
+	if modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SW2") and modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SW3") and modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SW4") then
 		mod.icon = self.resourcePath .."img/icons/mod_icon.png"
-	elseif modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SW2") and not modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SW3") and not modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SWBB") then
+	elseif modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SW2") and not modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SW3") and not modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SW4") then
 		mod.icon = self.resourcePath .."img/icons/squad2_icon.png"
-	elseif modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SW2") and modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SW3") and not modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SWBB") then
+	elseif modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SW2") and modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SW3") and not modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SW4") then
 		mod.icon = self.resourcePath .."img/icons/squad2x3_icon.png"
-	elseif modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SW2") and not modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SW3") and modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SWBB") then
+	elseif modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SW2") and not modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SW3") and modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SW4") then
 		mod.icon = self.resourcePath .."img/icons/squad2xboom_icon.png"
-	elseif not modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SW2") and modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SW3") and modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SWBB") then
+	elseif not modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SW2") and modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SW3") and modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SW4") then
 		mod.icon = self.resourcePath .."img/icons/squad3xboom_icon.png"
-	elseif not modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SW2") and modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SW3") and not modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SWBB") then
+	elseif not modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SW2") and modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SW3") and not modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SW4") then
 		mod.icon = self.resourcePath .."img/icons/squad3_icon.png"
-	elseif not modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SW2") and not modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SW3") and modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SWBB") then
+	elseif not modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SW2") and not modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SW3") and modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SW4") then
 		mod.icon = self.resourcePath .."img/icons/squadboom_icon.png"
 	else
 		mod.icon = self.resourcePath .."img/icons/squad1_icon.png"

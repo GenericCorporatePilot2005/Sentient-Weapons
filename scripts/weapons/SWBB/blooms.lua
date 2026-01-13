@@ -2,6 +2,13 @@ local mod = modApi:getCurrentMod()
 local path = mod.scriptPath
 require(path .."Achievements/achievements4")
 require(path .."weapons/SWBB/deathPetals")
+Nico_Cannon_B_T = {
+	id = "Nico_Cannon_B_T",
+	title = "Challenge Completed",
+	name = "Cannon Bloomed",
+	tooltip = "New Palettes Unlocked for Cannon Boom, based on the Cannon Bloom.",
+	image = "img/achievements/toasts/Nico_Bot_Cannon_B.png",
+}
 --Lemon's Real Mission Checker
 local function isRealMission()
 	local mission = GetCurrentMission()
@@ -108,6 +115,9 @@ function Nico_laserheal:AddLaser(ret,point,direction)
 			pawn = Board:GetPawn(point)
 			if pawn:IsDead() and isRealMission() and kill > 1 and GAME.additionalSquadData.squad == "Nico_Sent_weap4" and not modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_Cannon_B") then
 				ret:AddScript("Nico_Sent_weap4squad_Chievo('Nico_Bot_Cannon_B')")
+				ret:AddScript("Nico_Sent_weapToasto(Nico_Cannon_B_T)")
+				ret:AddScript("Nico_AchTrigger4()")
+				ret:AddScript("Nico_AchTrigger5()")
 			end
 		end
 		-- if it's the end of the line (ha), add the laser art -- not pretty
@@ -207,6 +217,9 @@ function Nico_cannonheal:GetSkillEffect(p1,p2)
 			pawn = Board:GetPawn(point)
 			if pawn:IsDead() and isRealMission() and kill > 1 and GAME.additionalSquadData.squad == "Nico_Sent_weap4" and not modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_Cannon_B") then
 				ret:AddScript("Nico_Sent_weap4squad_Chievo('Nico_Bot_Cannon_B')")
+				ret:AddScript("Nico_Sent_weapToasto(Nico_Cannon_B_T)")
+				ret:AddScript("Nico_AchTrigger4()")
+				ret:AddScript("Nico_AchTrigger5()")
 			end
 		end
 	end
@@ -281,6 +294,9 @@ function Nico_artilleryheal:GetSkillEffect(p1,p2)
 			pawn = Board:GetPawn(point)
 			if pawn:IsDead() and isRealMission() and kill > 1 and GAME.additionalSquadData.squad == "Nico_Sent_weap4" and not modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_Cannon_B") then
 				ret:AddScript("Nico_Sent_weap4squad_Chievo('Nico_Bot_Cannon_B')")
+				ret:AddScript("Nico_Sent_weapToasto(Nico_Cannon_B_T)")
+				ret:AddScript("Nico_AchTrigger4()")
+				ret:AddScript("Nico_AchTrigger5()")
 			end
 		end
 	end

@@ -11,6 +11,22 @@ function Nico_Sent_weap2squad_Chievo(id)
 	-- exit if current one is unlocked
 	modApi.achievements:trigger(modid,id)
 end
+function Nico_AchTrigger2()
+    -- exit if not our squad
+	if Board:GetSize() == Point(6,6) then return end -- TipImage
+	if GAME.additionalSquadData.squad ~= modid.."2" then return end
+	if modApi.achievements:isComplete(modid, "Nico_Bot_Knight") and
+	modApi.achievements:isComplete(modid, "Nico_Bot_Shield") and modApi.achievements:isComplete(modid, "Nico_Bot_Mine") then
+		modApi.toasts:add({
+			id = "SW2_T",
+			title = "Challenge Completed",
+			name = "Your palettes? No, Mine.",
+			tooltip = "New Palette Unlocked for SW2, based on Mine-Bot's deployables.",
+			image = "img/achievements/toasts/Nico_Bot_SW2.png",
+		})
+		return true
+	end
+end
 local imgs = {
 	"Knight",
 	"Mine",
@@ -20,6 +36,7 @@ local imgs = {
 local achname = "Nico_Bot_"
 for _, img in ipairs(imgs) do
 	modApi:appendAsset("img/achievements/".. achname..img ..".png", path .."img/achievements/".. img ..".png")
+	modApi:appendAsset("img/achievements/toasts/".. achname..img ..".png", path .."img/achievements/toasts/".. img ..".png")
 end
 
 modApi.achievements:add{
@@ -30,7 +47,6 @@ modApi.achievements:add{
 	squad = "Nico_Sent_weap2",
 	objective=1,
 }
-
 modApi.achievements:add{
 	id = "Nico_Bot_Mine",
 	name = "Me, Myself, And Mine",
@@ -39,7 +55,6 @@ modApi.achievements:add{
 	squad = "Nico_Sent_weap2",
 	objective=1,
 }
-
 modApi.achievements:add{
 	id = "Nico_Bot_Shield",
 	name = "Treading Mine-Shields",
@@ -47,6 +62,21 @@ modApi.achievements:add{
 	image = "img/achievements/Nico_Bot_Shield.png",
 	squad = "Nico_Sent_weap2",
 	objective = 1,
+}
+--Toasts
+local Shield_T = {
+	id = "Shield_T",
+	title = "Challenge Completed",
+	name = "Pinnacle's Contraption",
+	tooltip = "New Palette Unlocked for Shield-Bot, this one won't rain missles on your own mechs!",
+	image = "img/achievements/toasts/Nico_Bot_Shield.png",
+}
+local Mine_T = {
+	id = "Mine_T",
+	title = "Challenge Completed",
+	name = "To Freeze Like a Mine...",
+	tooltip = "...You Gotta Think like a Mine!\nNew Palette Unlocked for Mine-Bot.",
+	image = "img/achievements/toasts/Nico_Bot_Mines.png",
 }
 
 --Lemon's Real Mission Checker
@@ -71,7 +101,12 @@ local function Nico_MissionEnd(mission)
 			count = count + 1
 		end
 	end
-	if count > 3 and GAME.additionalSquadData.squad == modid.."2" and not modApi.achievements:isComplete(modid,"Nico_Bot_Mine") then modApi.achievements:trigger(modid,"Nico_Bot_Mine") end
+	if count > 3 and GAME.additionalSquadData.squad == modid.."2" and not modApi.achievements:isComplete(modid,"Nico_Bot_Mine") then
+		modApi.achievements:trigger(modid,"Nico_Bot_Mine")
+		modApi.toasts:add(Mine_T)
+		ret:AddScript("Nico_AchTrigger2()")
+		ret:AddScript("Nico_AchTrigger5()")
+	end
 	local bubble = true
 	for j = 0,2 do
 		if not Board:GetPawn(j):IsShield() then
@@ -89,7 +124,11 @@ local function Nico_MissionEnd(mission)
 			mine_shield = mine_shield +1
 		end
 	end
-	if bubble and mine_shield > 3 and GAME.additionalSquadData.squad == modid.."2" and not modApi.achievements:isComplete(modid,"Nico_Bot_Shield") then modApi.achievements:trigger(modid,"Nico_Bot_Shield") end
+	if bubble and mine_shield > 3 and GAME.additionalSquadData.squad == modid.."2" and not modApi.achievements:isComplete(modid,"Nico_Bot_Shield") then
+		modApi.achievements:trigger(modid,"Nico_Bot_Shield") end
+		modApi.toasts:add(Shield_T)
+		ret:AddScript("Nico_AchTrigger2()")
+		ret:AddScript("Nico_AchTrigger5()")
 end
 
 local function EVENT_onModsLoaded() --This function will run when the mod is loaded

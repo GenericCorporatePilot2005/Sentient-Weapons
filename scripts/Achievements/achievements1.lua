@@ -1,7 +1,7 @@
 local this={}
-
 local path = mod_loader.mods[modApi.currentMod].resourcePath
 local modid = "Nico_Sent_weap" -- also Squad id
+Nico_weap_ach = {"Nico_Bot_Laser","Nico_Bot_Cannon","Nico_Bot_Arti"}
 
 function Nico_Sent_weapsquad_Chievo(id)
     -- exit if not our squad
@@ -11,20 +11,58 @@ function Nico_Sent_weapsquad_Chievo(id)
 	-- exit if current one is unlocked
 	modApi.achievements:trigger(modid,id)
 end
+function Nico_AchTrigger1()
+    -- exit if not our squad
+	if Board:GetSize() == Point(6,6) then return end -- TipImage
+	if GAME.additionalSquadData.squad ~= modid then return end
+	local check = 0
+	for i=1,3 do
+		if modApi.achievements:isComplete(modid, Nico_weap_ach[i]) then
+			check = check + 1
+			if check == 3 then
+				modApi.toasts:add({
+					id = "SW1_T", title = "Challenge Completed",
+					name = "Factory Reset", tooltip = "New Palette for the Sentient Weapons 1, based on the bot factories.",
+					image = "img/achievements/toasts/Nico_Bot_SW1.png",})
+					return true
+			end
+		end
+	end
+end
+function Nico_AchTrigger5()
+	if modApi.achievements:isComplete(modid, "Nico_Bot_Laser") and modApi.achievements:isComplete(modid, "Nico_Bot_Cannon")
+	and modApi.achievements:isComplete(modid, "Nico_Bot_Arti") and modApi.achievements:isComplete(modid, "Nico_Bot_Knight")
+	and modApi.achievements:isComplete(modid, "Nico_Bot_Shield") and modApi.achievements:isComplete(modid, "Nico_Bot_Mine")
+	and modApi.achievements:isComplete(modid, "Nico_Bot_Jugger") and modApi.achievements:isComplete(modid, "Nico_Bot_Leader")
+	and modApi.achievements:isComplete(modid, "Nico_Bot_Hulk") and modApi.achievements:isComplete(modid, "Nico_Bot_Laser_B")
+	and modApi.achievements:isComplete(modid, "Nico_Bot_Cannon_B") and modApi.achievements:isComplete(modid, "Nico_Bot_Arti_B")
+	then
+		modApi.toasts:add({
+			id = "SWMod_T", title = "Challenge Completed",
+			name = "Pallette Swapped", tooltip = "New Palettes for the Sentient Weapon Squads, With their colors swapped around.\nThank you for playing this mod!",
+			image = "img/achievements/toasts/Nico_Bot_SWMod.png",})
+	end
+end
+
+function Nico_Sent_weapToasto(id)
+	modApi.toasts:add(id)
+end
 local imgs = {
 	"Laser",
 	"Cannon",
 	"Arti",
 	"SW2",
 	"SW3",
-	"SWBB",
+	"SW4",
 }
 
 local achname = "Nico_Bot_"
 for _, img in ipairs(imgs) do
 	modApi:appendAsset("img/achievements/".. achname..img ..".png", path .."img/achievements/".. img ..".png")
+	modApi:appendAsset("img/achievements/toasts/".. achname..img ..".png", path .."img/achievements/toasts/".. img ..".png")
 end
-
+modApi:appendAsset("img/achievements/toasts/".. achname.."SW1.png", path .."img/achievements/toasts/SW1.png")
+modApi:appendAsset("img/achievements/toasts/".. achname.."SWMod.png", path .."img/achievements/toasts/SWMod.png")
 modApi.achievements:add{
 	id = "Nico_Bot_Laser",
 	name = "Septacular Snowstorm",
@@ -33,7 +71,6 @@ modApi.achievements:add{
 	squad = "Nico_Sent_weap",
 	objective=1,
 }
-
 modApi.achievements:add{
 	id = "Nico_Bot_Cannon",
 	name = "One Hit Wonder",
@@ -42,7 +79,6 @@ modApi.achievements:add{
 	squad = "Nico_Sent_weap",
 	objective=1,
 }
-
 modApi.achievements:add{
 	id = "Nico_Bot_Arti",
 	name = "Bubble Blaster",
@@ -51,34 +87,73 @@ modApi.achievements:add{
 	squad = "Nico_Sent_weap",
 	objective = 1,
 }
-
-modApi.achievements:add{
-	id = "Nico_Bot_SW2",
-	global = "Secret Rewards",
-	secret=true,
-	name = "The Sentient Weapons 2!",
-	image = "img/achievements/Nico_Bot_SW2.png",
-	tip = "New squad unlocked on the squad selection screen, NEEDS A RESTART TO APPLY",
-	squad = "Nico_Sent_weap",
+local function nicoNameChange(id,n,b)
+    if modApi.achievements:get(modid,id) ~= nil and (modApi.achievements:isComplete(modid,id) or b) then
+		local idSub = id:sub(-1)
+		if idSub ~= "4" then
+        	name = "The Sentient Weapons "..idSub.."!"
+		else
+			name = "The Boom Bots!"
+		end
+        tip = "New squad unlocked on the squad selection screen, NEEDS A RESTART TO APPLY"
+	else
+		name = "Locked."
+        tip = "Try getting the other Achievements to see what this entails!"
+    end
+    ret = {name,tip}
+    return ret[n]
+end 
+--Squad Achievements
+Nico_Bot_SW2 = modApi.achievements:add{
+    id = "Nico_Bot_SW2",
+    global = "Secret Rewards",
+    secret=true,
+    name = "Locked.",
+    tip = "Try Getting the other Achievements to see what this entails!",
+    image = "img/achievements/Nico_Bot_SW2.png",
+    squad = "Nico_Sent_weap",
 }
-modApi.achievements:add{
+Nico_Bot_SW3 = modApi.achievements:add{
 	id = "Nico_Bot_SW3",
 	global = "Secret Rewards",
 	secret=true,
-	name = "The Sentient Weapons 3!",
+    name = "Locked.",
+    tip = "Try Getting the other Achievements to see what this entails!",
 	image = "img/achievements/Nico_Bot_SW3.png",
-	tip = "New squad unlocked on the squad selection screen, NEEDS A RESTART TO APPLY",
 	squad = "Nico_Sent_weap",
 }
-modApi.achievements:add{
-	id = "Nico_Bot_SWBB",
+Nico_Bot_SW4 = modApi.achievements:add{
+	id = "Nico_Bot_SW4",
 	global = "Secret Rewards",
 	secret=true,
-	name = "The Boom Bots!",
-	image = "img/achievements/Nico_Bot_SWBB.png",
-	tip = "New squad unlocked on the squad selection screen, NEEDS A RESTART TO APPLY",
+    name = "Locked.",
+    tip = "Try Getting the other Achievements to see what this entails!",
+	image = "img/achievements/Nico_Bot_SW4.png",
 	squad = "Nico_Sent_weap",
 }
+local function nicoNameUpdate(b)
+	for k = 2, 4 do
+		local varName = "Nico_Bot_SW" .. k
+		local achObj = _G[varName] -- This gets the variable Nico_Bot_SW2, etc.
+		
+		achObj.name = nicoNameChange(achObj.id, 1,b)
+		achObj.tooltip = nicoNameChange(achObj.id, 2,b)
+	end
+end
+
+--Toasts
+local Laser_T = {
+	id = "Laser_T",	title = "Challenge Completed",
+	name = "Chilling Around",	tooltip = "New Palette and Mech Sprites Unlocked for Laser-Bot, for the winter season.",
+	image = "img/achievements/toasts/Nico_Bot_Laser.png",}
+local Cannon_T = {
+	id = "Cannon_T", title = "Challenge Completed",
+	name = "H4CK3D",tooltip = "New Palette Unlocked for Cannon-Bot, T0 SH0W WH0'S TH3 R34L H4CK3ERM4N!",
+	image = "img/achievements/toasts/Nico_Bot_Cannon.png",}
+local Arti_T = {
+	id = "Arti_T",title = "Challenge Completed",
+	name = "Self Promotion",tooltip = "New Palette and Mech Sprites Unlocked for Artillery-Bot, based on Nicolas 'Generic' from Pilot Potluck.",
+	image = "img/achievements/toasts/Nico_Bot_Arti.png",}
 --Lemon's Real Mission Checker
 local function isRealMission()
 local mission = GetCurrentMission()
@@ -102,8 +177,12 @@ local function Nico_MissionEnd(mission)
 		end
 	end
 	if count > 6 and GAME.additionalSquadData.squad == modid and not modApi.achievements:isComplete(modid,"Nico_Bot_Laser") then
+		nicoNameUpdate(true)
 		modApi.achievements:trigger(modid,"Nico_Bot_Laser") 
+		modApi.toasts:add(Laser_T)
 		modApi.achievements:trigger(modid,"Nico_Bot_SW2")
+		Nico_AchTrigger1()
+		Nico_AchTrigger5()
 	end
 	local bubble = true
 	for j = 0,2 do
@@ -119,9 +198,12 @@ local function Nico_MissionEnd(mission)
 		end
 	end
 	if bubble and GAME.additionalSquadData.squad == modid and not modApi.achievements:isComplete(modid,"Nico_Bot_Arti") then
+		nicoNameUpdate(true)
 		modApi.achievements:trigger(modid,"Nico_Bot_Arti")
-		modApi.achievements:trigger(modid,"Nico_Bot_SWBB")
-		ret:AddScript("('')")
+		modApi.toasts:add(Arti_T)
+		modApi.achievements:trigger(modid,"Nico_Bot_SW4")
+		Nico_AchTrigger1()
+		Nico_AchTrigger5()
 	end
 end
 
@@ -158,12 +240,17 @@ end
 local function postKillCheck(mission, pawn)
 	local ret = SkillEffect()
 	if isRealMission() and nico_cannon_flag and pawn:GetId() == nico_cannon_enemy and GAME.additionalSquadData.squad == modid and not modApi.achievements:isComplete(modid,"Nico_Bot_Cannon") then
+		nicoNameUpdate(true)
 		modApi.achievements:trigger(modid,"Nico_Bot_Cannon")
+		modApi.toasts:add(Cannon_T)
 		modApi.achievements:trigger(modid,"Nico_Bot_SW3")
+		Nico_AchTrigger1()
+		Nico_AchTrigger5()
 	end
 end
 
 local function EVENT_onModsLoaded() --This function will run when the mod is loaded
+	nicoNameUpdate(false)
 	--modapiext is requested in the init.lua
 	modApi:addMissionEndHook(Nico_MissionEnd)
 	--This line tells us that we want to run the above function every time a mission is over

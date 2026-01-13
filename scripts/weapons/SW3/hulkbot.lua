@@ -10,7 +10,13 @@ return true
 	and Board
 	and Board:IsMissionBoard()
 end
-
+Nico_Hulk_T = {
+	id = "Nico_Hulk_T",
+	title = "Challenge Completed",
+	name = "Frozen Hulk.",
+	tooltip = "New Palette Unlocked for Cryo Hulk, this one looks familiar...",
+	image = "img/achievements/toasts/Nico_Bot_Hulk.png",
+}
 Nico_hulkbot=ArtilleryDefault:new{
 	Name="Artillery Mark III",
 	Class = "TechnoVek",
@@ -122,6 +128,9 @@ Nico_hulkbot=ArtilleryDefault:new{
 		if isRealMission() and GAME.additionalSquadData.squad == "Nico_Sent_weap3" and not modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_Hulk") then
 			if GetCurrentMission().Nico_HulkUses == 3 then
 				ret:AddScript("Nico_Sent_weap3squad_Chievo('Nico_Bot_Hulk')")
+				ret:AddScript("Nico_Sent_weapToasto(Nico_Hulk_T)")
+				ret:AddScript("Nico_AchTrigger3()")
+				ret:AddScript("Nico_AchTrigger5()")
 			else
 				ret:AddScript('GetCurrentMission().Nico_HulkUses = GetCurrentMission().Nico_HulkUses + 1')
 			end

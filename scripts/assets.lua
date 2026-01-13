@@ -25,13 +25,20 @@ local files2 = {
 	"_h.png",
 }
 local squadPath = "SW1/"
+local options = mod_loader.currentModContent[mod.id].options
+local snow = ""
 for _, file1 in ipairs(files1) do
+    if modApi.achievements:isComplete("Nico_Sent_weap", "Nico_Bot_Laser") and options["Nico_snow_Laser"].value and file1 == "Nico_laserbot_mech" then
+        snow = options["Nico_snow_Laser"].value
+    else
+        snow = ""
+    end
     if file1 == "Nico_knightbot_mech" then squadPath = "SW2/" end
     if file1 == "Nico_juggernautbot_mech" then squadPath = "SW3/" end
     if file1 == "Nico_artilleryboom_mech" then squadPath = "SWBB/" end
 	for _, file2 in ipairs(files2) do
 		if not (file1 == "Nico_shieldbot_mech" and file2 == "_w.png") then
-			modApi:appendAsset(mechPath.. file1..file2,path .. mechPath..squadPath .. file1..file2)
+			modApi:appendAsset(mechPath.. file1..file2,path .. mechPath..squadPath ..snow.. file1..file2)
 		end
 	end
 end
@@ -193,9 +200,14 @@ local a=ANIMS
     Location["combat/icons/Nico_icon_water_kill.png"] = Point(-16,9)
     modApi:appendAsset("img/combat/icons/Nico_icon_acid_kill.png", path.."img/combat/icons/Nico_icon_acid_kill.png")
     Location["combat/icons/Nico_icon_acid_kill.png"] = Point(-16,9)
+    if modApi.achievements:isComplete("Nico_Sent_weap", "Nico_Bot_Laser") and options["Nico_snow_Laser"].value and options["Nico_snow_Laser"].value~="" then
+        snow = "snow_"
+    else
+        snow = ""
+    end
 --mech weapons
     local files = {
-        "Nico_laserbot.png","Nico_cannonboom.png",
+        "Nico_"..snow.."laserbot.png","Nico_cannonboom.png",
         "Nico_knightbot.png","Nico_minerbot.png","Nico_minebot.png","Nico_shieldbot.png",
         "Nico_leaderbot.png","Nico_hulkbot.png","Nico_juggernautbot.png","Nico_cannondeploy.png","Nico_Bot_Repair.png","Nico_Bot_Repair_frozen.png",
         "Nico_laserboom.png","Nico_bloom_artillery.png","Nico_bloom_laser.png","Nico_bloom_cannon.png","Nico_bloom_copter.png",
@@ -222,7 +234,7 @@ local a=ANIMS
 --portraits
     local files = {
         "pilots/Pilot_Nico_artillerybot_mech.png",
-        "pilots/Pilot_Nico_laserbot_mech.png",
+        "pilots/Pilot_Nico_"..snow.."laserbot_mech.png",
         "pilots/Pilot_Nico_cannonbot_mech.png",
         "pilots/Pilot_Nico_knightbot_mech.png",
         "pilots/Pilot_Nico_shieldbot_mech.png",

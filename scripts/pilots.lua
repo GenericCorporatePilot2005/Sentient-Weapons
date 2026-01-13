@@ -90,7 +90,7 @@ local this={}
             Blacklist = {"Invulnerable","Popular"},
         }
     end
-    if modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SWBB") then
+    if modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SW4") then
         CreatePilot{
             Id = "Pilot_Nico_laserboom_mech",
             Personality = "Artificial",

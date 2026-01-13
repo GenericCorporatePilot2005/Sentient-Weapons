@@ -29,6 +29,13 @@ Nico_knightbot = Punch:new{
 		CustomPawn = "Nico_knightbot_mech",
 	}
 }
+Nico_Knight_T = {
+	id = "Nico_Knight_T",
+	title = "Challenge Completed",
+	name = "Just Jousting",
+	tooltip = "New Palettes Unlocked for Knight-Bot, the CEO's White and Black Knight.",
+	image = "img/achievements/toasts/Nico_Bot_Knight.png",
+}
 	function Nico_knightbot:GetTargetArea(point)
 		local ret = PointList()
 		local curr = point
@@ -151,6 +158,9 @@ Nico_knightbot = Punch:new{
 		
 			if mons > 2 then
 				ret:AddScript("Nico_Sent_weap2squad_Chievo('Nico_Bot_Knight')")
+				ret:AddScript("Nico_Sent_weapToasto(Nico_Knight_T)")
+				ret:AddScript("Nico_AchTrigger2()")
+				ret:AddScript("Nico_AchTrigger5()")
 			end
 		end
 		return ret

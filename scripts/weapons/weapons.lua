@@ -32,7 +32,7 @@ if modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SW3") then
         end
     end
 end
-if modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SWBB") then
+if modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SW4") then
     require(path .."Achievements/achievements4")
     require(path .."weapons/SWBB/laserboom") require(path .."weapons/SWBB/cannonboom") require(path .."weapons/SWBB/artilleryboom")
     require(path .."weapons/SWBB/blooms")

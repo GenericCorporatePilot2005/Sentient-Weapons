@@ -1,8 +1,16 @@
+local mod = modApi:getCurrentMod()
+local options = mod_loader.currentModContent[mod.id].options
+local snow = ""
+if modApi.achievements:isComplete("Nico_Sent_weap", "Nico_Bot_Laser") and options["Nico_snow_Laser"].value and options["Nico_snow_Laser"].value~="" then
+    snow = "snow_"
+else
+    snow = ""
+end
 ------Laser Bot------
 Nico_laserbot = LaserDefault:new{
     Name="BKR Beam Mark II",
 	Class="TechnoVek",
-	Icon = "weapons/Nico_laserbot.png",
+	Icon = "weapons/Nico_"..snow.."laserbot.png",
     Description="Fire a piercing beam that decreases in damage the further it goes, doesn't damage allies.",
 	Explosion = "",
 	Sound = "",
@@ -26,9 +34,10 @@ Nico_laserbot = LaserDefault:new{
 
 	Nico_laserbot_A = Nico_laserbot:new{
 	    LaserArt = "effects/laser_freeze",
-	    UpgradeDescription = "If the target would die, freeze it instead. Freezes Buildings and allies.",
+	    UpgradeDescription = "If the target would die, freeze it instead. Freezes Buildings, allies, and water tiles.",
 		TipImage = {
-			Unit = Point(2,4),
+			Unit = Point(2,5),
+			Water = Point(2,4),
 			Friendly = Point(2,3),
 			Enemy1 = Point(2,2),
 			Target = Point(2,2),
@@ -55,7 +64,7 @@ local function Nico_FatalFreeze(mission, pawn, weaponId, p1, p2, skillEffect)
 			local spaceDamage = skillEffect.effect:index(i)
 			spaceDamage.bKO_Effect = Board:IsDeadly(spaceDamage,Pawn)
 			local dpawn = Board:GetPawn(spaceDamage.loc)
-			local friendly = Board:IsPawnSpace(spaceDamage.loc) and dpawn:GetTeam() == TEAM_PLAYER
+			local friendly = Board:IsPawnSpace(spaceDamage.loc) and dpawn:GetTeam() == TEAM_PLAYER or (not Board:IsPawnSpace(spaceDamage.loc) and Board:GetTerrain(spaceDamage.loc) == TERRAIN_WATER)
 			if spaceDamage.bKO_Effect or Board:IsBuilding(spaceDamage.loc) or friendly then
 				spaceDamage.iDamage = 0
 				--invert the KO flag afterwards because it overwrites the spaceDamage image mark for some reason

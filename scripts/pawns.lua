@@ -1,6 +1,7 @@
 local mod = modApi:getCurrentMod()
 -- this line just gets the file path for your mod, so you can find all your files easily.
 
+local options = mod_loader.currentModContent[mod.id].options
 local path = mod.scriptPath
 require(path .."palettes")
 --mechs
@@ -20,6 +21,9 @@ require(path .."palettes")
         DefaultTeam = TEAM_PLAYER,
 	    ImpactMaterial = IMPACT_METAL,
     }
+    if modApi.achievements:isComplete("Nico_Sent_weap", "Nico_Bot_Laser") and options["Nico_snow_Laser"].value and options["Nico_snow_Laser"].value~="" then
+        Nico_laserbot_mech.ImageOffset = modApi:getPaletteImageOffset("nico_ach_laser")
+    end
     Nico_artillerybot_mech = Pawn:new{
         Name = "Artillery-Bot",
         NicoIsRobot = true,
@@ -152,7 +156,7 @@ require(path .."palettes")
         }
     end
 --Boom Bots
-    if modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SWBB") then
+    if modApi.achievements:isComplete("Nico_Sent_weap","Nico_Bot_SW4") then
         Nico_laserboom_mech = Pawn:new{
             Name = "Boom Laser",
             Class = "TechnoVek",

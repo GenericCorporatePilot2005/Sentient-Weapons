@@ -11,6 +11,23 @@ function Nico_Sent_weap4squad_Chievo(id)
 	-- exit if current one is unlocked
 	modApi.achievements:trigger(modid,id)
 end
+function Nico_AchTrigger4()
+    -- exit if not our squad
+	if Board:GetSize() == Point(6,6) then return end -- TipImage
+	if GAME.additionalSquadData.squad ~= modid.."4" then return end
+	if IsTestMechScenario() then return end
+	if modApi.achievements:isComplete(modid, "Nico_Bot_Laser_B") and
+	modApi.achievements:isComplete(modid, "Nico_Bot_Cannon_B") and modApi.achievements:isComplete(modid, "Nico_Bot_Arti_B") then
+		modApi.toasts:add({
+			id = "SWBB_T",
+			title = "Challenge Completed",
+			name = "Bloomed Copter.",
+			tooltip = "New Palette Unlocked for the Boom Bots, based on the Bloom-Copter.",
+			image = "img/achievements/toasts/Nico_Bot_SW4.png",
+		})
+		return true
+	end
+end
 local imgs = {
 	"Laser_B",
 	"Cannon_B",
@@ -20,6 +37,7 @@ local imgs = {
 local achname = "Nico_Bot_"
 for _, img in ipairs(imgs) do
 	modApi:appendAsset("img/achievements/".. achname..img ..".png", path .."img/achievements/".. img ..".png")
+	modApi:appendAsset("img/achievements/toasts/".. achname..img ..".png", path .."img/achievements/toasts/".. img ..".png")
 end
 
 modApi.achievements:add{
@@ -49,6 +67,21 @@ modApi.achievements:add{
 	objective = 1,
 }
 
+--Toasts
+local Laser_B_T = {
+	id = "Laser_B_T",
+	title = "Challenge Completed",
+	name = "Laser Bloomed",
+	tooltip = "New Palettes Unlocked for Laser Boom, based on the Laser Bloom.",
+	image = "img/achievements/toasts/Nico_Bot_Laser_B.png",
+}
+local Arti_B_T = {
+	id = "Arti_B_T",
+	title = "Challenge Completed",
+	name = "Artillery Bloomed",
+	tooltip = "New Palettes Unlocked for Artillery Boom, based on the Artillery Bloom.",
+	image = "img/achievements/toasts/Nico_Bot_Laser_B.png",
+}
 --Lemon's Real Mission Checker
 local function isRealMission()
 local mission = GetCurrentMission()
@@ -97,6 +130,9 @@ local function onPawnTracked(mission, pawn)
 		and GAME.additionalSquadData.squad == modid.."4"
 		and not modApi.achievements:isComplete(modid,"Nico_Bot_Laser_B") then
 		modApi.achievements:trigger(modid,"Nico_Bot_Laser_B")
+		modApi.toasts:add(Laser_B_T)
+		Nico_AchTrigger4()
+		Nico_AchTrigger5()
 	end
 end
 
@@ -119,6 +155,9 @@ local function Nico_MissionEnd(mission)
 		if (DancingWithDanger("Nico_laserboom") and DancingWithDanger("Nico_cannonboom") and DancingWithDanger("Nico_artilleryboom"))
 		and GAME.additionalSquadData.squad == modid.."4" and not modApi.achievements:isComplete(modid,"Nico_Bot_Arti_B") then
 			modApi.achievements:trigger(modid,"Nico_Bot_Arti_B")
+			modApi.toasts:add(Arti_B_T)
+			Nico_AchTrigger4()
+			Nico_AchTrigger5()
 		end
 		if not modApi.achievements:isComplete(modid,"Nico_Bot_Laser_B") then--this should reset progress if the mission ends
 			modApi.achievements:reset(modid,"Nico_Bot_Laser_B")
