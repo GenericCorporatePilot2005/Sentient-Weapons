@@ -125,10 +125,11 @@ local function Nico_MissionEnd(mission)
 		end
 	end
 	if bubble and mine_shield > 3 and GAME.additionalSquadData.squad == modid.."2" and not modApi.achievements:isComplete(modid,"Nico_Bot_Shield") then
-		modApi.achievements:trigger(modid,"Nico_Bot_Shield") end
+		modApi.achievements:trigger(modid,"Nico_Bot_Shield")
 		modApi.toasts:add(Shield_T)
 		ret:AddScript("Nico_AchTrigger2()")
 		ret:AddScript("Nico_AchTrigger5()")
+	end
 end
 
 local function EVENT_onModsLoaded() --This function will run when the mod is loaded
