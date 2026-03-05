@@ -135,10 +135,9 @@ for i,v in pairs(Mission) do
         Mission[i] = function(...) 
             if not list_contains(_G["EXCL"], i) then 
                 if i == "IsEnvironmentEffect" then
-			--LOG("The fire has started burning!")
-			if Game:GetTurnCount() == 0 then GetCurrentMission().Nico_BotDeployed = false end
-		end 
-            end 
+					if Game:GetTurnCount() == 0 then GetCurrentMission().Nico_BotDeployed = false end
+				end 
+            end
             return oldfn(...) 
         end 
     end 

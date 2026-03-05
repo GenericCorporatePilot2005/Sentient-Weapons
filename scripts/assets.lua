@@ -200,6 +200,10 @@ local a=ANIMS
     Location["combat/icons/Nico_icon_water_kill.png"] = Point(-16,9)
     modApi:appendAsset("img/combat/icons/Nico_icon_acid_kill.png", path.."img/combat/icons/Nico_icon_acid_kill.png")
     Location["combat/icons/Nico_icon_acid_kill.png"] = Point(-16,9)
+    modApi:copyAsset("img/combat/icons/icon_shield_miss.png", "img/combat/icons/Nico_bot_icon_shield_miss.png")
+    Location["combat/icons/Nico_bot_icon_shield_miss.png"] = Point(-9, 8)
+    modApi:copyAsset("img/combat/icons/icon_frozen.png", "img/combat/icons/Nico_icon_frozen.png")
+	Location["combat/icons/Nico_icon_frozen.png"] = Point(-20,12)
     if modApi.achievements:isComplete("Nico_Sent_weap", "Nico_Bot_Laser") and options["Nico_snow_Laser"].value and options["Nico_snow_Laser"].value~="" then
         snow = "snow_"
     else
@@ -222,11 +226,12 @@ local a=ANIMS
 --Traits
     modApi:appendAsset("img/combat/icons/icon_Nico_zenith_shield.png", path.."img/combat/icons/icon_Nico_zenith_shield.png")--image of the trait
     modApi:appendAsset("img/combat/icons/icon_Nico_zenith_mine.png", path.."img/combat/icons/icon_Nico_zenith_mine.png")--image of the trait
+    modApi:appendAsset("img/combat/icons/icon_Nico_hulk_leap.png", path.."img/combat/icons/icon_Nico_hulk_leap.png")--image of the trait
     modApi:copyAsset("img/combat/icons/icon_shield_heal.png","img/combat/icons/icon_Nico_shield_heal.png")--image of the trait
 --Effects
     local files = {"shotup_deploymine","shotup_bloom_artillery","Bloom_Bot's_petal","shotup_Nico_Copter_Bloom","shield_bot_pulse"}
     for _, file in ipairs(files) do
-        modApi:appendAsset("img/effects/".. file, path.. "img/effects/" .. file..".png")
+        modApi:appendAsset("img/effects/".. file..".png", path.. "img/effects/" .. file..".png")
     end
 --Mines
     modApi:appendAsset("img/combat/Nico_freeze_mine.png", path.."img/combat/Nico_freeze_mine.png")

@@ -6,12 +6,13 @@ Nico_shieldbot = Science_Placer:new{
 	Icon = "weapons/Nico_shieldbot.png",
 	LaunchSound = "/weapons/enhanced_tractor",
 	Explosion = "",--shieldbotpulse",
-	Size = 2,
+	Range = 2,
+	ShieldFriendly = false,
 	PathSize = 1,
 	Damage = 1,
 	PowerCost = 0,
 	Upgrades = 2,
-	UpgradeList={"Size & Shield Friendly","Shield Blast"},
+	UpgradeList={"Range & Shield Friendly","Shield Blast/Regen"},
 	UpgradeCost = { 2,2 },
 	TipImage = {
 		Unit = Point(2,2),
@@ -30,7 +31,7 @@ Nico_shieldbot = Science_Placer:new{
 local path = mod_loader.mods[modApi.currentMod].resourcePath
 	function Nico_shieldbot:GetTargetArea(point)
 		local ret = PointList()
-		local list = extract_table(general_DiamondTarget(point, self.Size))
+		local list = extract_table(general_DiamondTarget(point, self.Range))
 		for i = 1, #list do
 			ret:push_back(list[i])
 		end
@@ -53,11 +54,6 @@ local path = mod_loader.mods[modApi.currentMod].resourcePath
 		local multiPawn = -1
 	
 		if blastFlag then
-			if self.Damage == 2 then
-				ret:AddSound("/impact/generic/explosion_large")
-			else
-				ret:AddSound("/impact/generic/explosion")
-			end
 			if Board:IsPawnSpace(p2) and Board:GetPawn(p2):IsShield() then
 				ret:AddScript("Board:GetPawn("..p2:GetString().."):SetShield(false,false)")
 				if _G[Board:GetPawn(p2):GetType()].ExtraSpaces[1] == Point(0,1) then--this is a train or train-like pawn
@@ -69,10 +65,16 @@ local path = mod_loader.mods[modApi.currentMod].resourcePath
 			if Board:IsShield(p2) then
 				ret:AddScript("Board:SetShield("..p2:GetString()..",false,false)")
 			end
+			if self.Damage == 2 then
+				ret:AddSound("/impact/generic/explosion_large")
+				ret:AddScript("Board:SetShield("..p2:GetString()..",true,true)")
+			else
+				ret:AddSound("/impact/generic/explosion")
+			end
 		else
 			ret:AddSound("/weapons/science_repulse")
 		end
-	
+
 		if multiPawn == -1 or not blastFlag then
 			for i = DIR_START, DIR_END do
 				damage = SpaceDamage(p2 + DIR_VECTORS[i], 0, i)
@@ -83,6 +85,9 @@ local path = mod_loader.mods[modApi.currentMod].resourcePath
 					damage.sAnimation = "airpush_"..i
 					if self.ShieldFriendly then damage.iShield = 1 end
 				end
+				damage.sImageMark = (not blastFlag and damage.loc ~= p2 and damage.iShield ~= 1
+				and "combat/icons/Nico_bot_icon_shield_miss.png")
+				or damage.sImageMark
 				ret:AddDamage(damage)
 			end
 		else
@@ -96,6 +101,9 @@ local path = mod_loader.mods[modApi.currentMod].resourcePath
 					damage.sAnimation = "airpush_"..i
 					if self.ShieldFriendly then damage.iShield = 1 end
 				end
+				damage.sImageMark = (not blastFlag and damage.loc ~= p2 and damage.iShield ~= 1
+				and "combat/icons/Nico_bot_icon_shield_miss.png")
+				or damage.sImageMark
 				if not Board:IsPawnSpace(p2 + DIR_VECTORS[i]) or #_G[Board:GetPawn(p2 + DIR_VECTORS[i]):GetType()].ExtraSpaces<1 then
 					ret:AddDamage(damage)
 				elseif #_G[Board:GetPawn(p2 + DIR_VECTORS[i]):GetType()].ExtraSpaces>0 then
@@ -120,12 +128,13 @@ local path = mod_loader.mods[modApi.currentMod].resourcePath
 				end
 			end
 		end
+		ret:AddDelay(-1)
 		return ret
 	end
 	Nico_shieldbot_A=Nico_shieldbot:new{
-		Size = 3,
+		Range = 3,
 		ShieldFriendly = true,
-		UpgradeDescription="Increase the size of the target area by 1, and shield adjacent allied units and buildings.",
+		UpgradeDescription="Increase the Range of the target area by 1, and shield adjacent allied units and buildings.",
 		TipImage = {
 			Unit = Point(2,2),
 			Enemy1 = Point(1,2),
@@ -142,7 +151,7 @@ local path = mod_loader.mods[modApi.currentMod].resourcePath
 	}
 	Nico_shieldbot_B=Nico_shieldbot:new{
 		Damage = 2,
-		UpgradeDescription="Increase explosion damage by 1.",
+		UpgradeDescription="Increase explosion damage by 1.\nShields are regenerated when detonated.",
 		TipImage = {
 			Unit = Point(2,2),
 			Enemy1 = Point(1,2),
@@ -156,7 +165,7 @@ local path = mod_loader.mods[modApi.currentMod].resourcePath
 		},
 	}
 	Nico_shieldbot_AB=Nico_shieldbot_B:new{
-		Size = 3,
+		Range = 3,
 		ShieldFriendly = true,
 		TipImage = {
 			Unit = Point(2,2),

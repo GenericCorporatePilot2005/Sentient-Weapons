@@ -63,7 +63,10 @@ Nico_hulkbot=ArtilleryDefault:new{
 	end
 	function Nico_hulkbot:GetSkillEffect(p1,p2)
 		local ret = SkillEffect()
-		ret:AddDamage(SpaceDamage(p1,1))
+		local ice = SpaceDamage(p1,1)
+		ice.sImageMark = "combat/icons/Nico_icon_frozen.png"
+		ice.iFrozen = 1
+		ret:AddDamage(ice)
 		local temp = Ranged_Defensestrike_A:GetSkillEffect(p1,p2)
 		if self.Damage == 2 then temp = Ranged_Defensestrike_AB:GetSkillEffect(p1,p2) end
 		
@@ -80,7 +83,7 @@ Nico_hulkbot=ArtilleryDefault:new{
 		local ret = self:GetSkillEffect(p1,p2)
 		local ice = SpaceDamage(p1,0)
 		ice.iFrozen = 1
-		ret:AddDamage(ice)
+		if Board:IsFrozen(p1) then ret:AddDamage(ice) end
 		ret:AddSound("/weapons/fireball")
 		ret:AddBounce(p1, 1)
 		
@@ -148,9 +151,67 @@ Nico_hulkbot=ArtilleryDefault:new{
 	Nico_hulkbot_AB=Nico_hulkbot_A:new{
 		Damage=2,
 	}
-	
-	--local function EVENT_onModsLoaded() --This function will run when the mod is loaded
-	--hulkbot_counter = false
-	--end
 
-	--modApi.events.onModsLoaded:subscribe(EVENT_onModsLoaded)
+local original_MoveGetTargetArea = Move.GetTargetArea
+function Move:GetTargetArea(p1, p2)
+	local ret
+
+	if Pawn:GetType() == "Nico_hulkbot_mech" then
+		ret = Nico_hulkbot_mechMove:GetTargetArea(p1, p2)
+	else
+		ret = original_MoveGetTargetArea(self, p1, p2)
+	end
+
+    return ret
+end
+
+local original_MoveGetSkillEffect = Move.GetSkillEffect
+function Move:GetSkillEffect(p1, p2)
+	local ret
+
+	if Pawn:GetType() == "Nico_hulkbot_mech" then
+		ret = Nico_hulkbot_mechMove:GetSkillEffect(p1, p2)
+	else
+		ret = original_MoveGetSkillEffect(self, p1, p2)
+	end
+
+    return ret
+end
+Nico_hulkbot_mechMove = Move:new{}
+
+function Nico_hulkbot_mechMove:GetTargetArea(point)
+    local ret = PointList()
+    ret = Board:GetReachable(point, Pawn:GetMoveSpeed(), Pawn:GetPathProf())
+    local board_size = Board:GetSize()
+    for i = 0, board_size.x - 1 do
+        for j = 0, board_size.y - 1 do
+            local curr = Point(i, j)
+            if Board:IsSpawning(curr) and not list_contains(extract_table(ret), curr) and not Board:IsBlocked(curr,Pawn:GetPathProf()) then
+                ret:push_back(curr)
+            end
+        end
+    end
+    return ret
+end
+
+function Nico_hulkbot_mechMove:GetSkillEffect(p1, p2)
+    local ret = SkillEffect()
+    local move = PointList()
+    move:push_back(p1)
+    move:push_back(p2)
+
+    local reachable_table = extract_table(Board:GetReachable(p1, Pawn:GetMoveSpeed(), Pawn:GetPathProf()))
+
+    if Board:IsSpawning(p2) and not list_contains(reachable_table,p2) then
+        ret:AddSound("/enemy/leaper_1/move")
+        ret:AddBurst(p1,"Emitter_Burst_$tile",DIR_NONE)
+        ret:AddLeap(move, FULL_DELAY)
+        ret:AddBurst(p2,"Emitter_Crack_Start2",DIR_NONE)
+        ret:AddBounce(p2, 1)
+        ret:AddSound("/enemy/leaper_1/land")
+    else
+        ret:AddMove(Board:GetPath(p1, p2, Pawn:GetPathProf()), FULL_DELAY)
+    end
+
+    return ret
+end

@@ -67,7 +67,7 @@ modApi.achievements:add{
 }
 
 --Toasts
-local Knight_T = {
+local Jugger_T = {
 	id = "Jugger_T",
 	title = "Challenge Completed",
 	name = "JuggerRigs",

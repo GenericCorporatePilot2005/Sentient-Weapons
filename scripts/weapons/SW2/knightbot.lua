@@ -1,7 +1,7 @@
 ------Knight Bot------
 Nico_knightbot = Punch:new{
 	Name = "0th KPR Sword Mark II",
-	Description = "Dash through Buildings and Mountains to damage and push the target. If the target was shielded, smoke it and attack again. If the destination is blocked, leap backwards to the nearest empty tile.",
+	Description = "Dash through Buildings and Mountains to damage and push the target. If the target was shielded or frozen, smoke it and attack again. If the destination is blocked, leap backwards to the nearest empty tile.",
 	Icon = "weapons/Nico_knightbot.png",
 	Class = "TechnoVek",
 	Damage = 1,
@@ -109,7 +109,8 @@ Nico_Knight_T = {
 		damage.fDelay = -1
 		if Board:IsValid(target) then damage.sSound = "/weapons/sword" end
 	
-		local double_flag = Board:IsPawnSpace(target) and Board:GetPawn(target):IsShield()
+		local double_flag = Board:IsPawnSpace(target)
+		and (Board:GetPawn(target):IsShield() or Board:GetPawn(target):IsFrozen())
 		local stable = Board:IsPawnSpace(target) and Board:GetPawn(target):IsGuarding()
 		local unstable_pushed = Board:IsPawnSpace(target) and not Board:GetPawn(target):IsGuarding() and not Board:IsBlocked(target + DIR_VECTORS[direction],PATH_PROJECTILE) and Board:IsValid(target + DIR_VECTORS[direction])
 		local unstable_blocked = Board:IsPawnSpace(target) and not Board:GetPawn(target):IsGuarding() and (Board:IsBlocked(target + DIR_VECTORS[direction],PATH_PROJECTILE) or not Board:IsValid(target + DIR_VECTORS[direction]))
@@ -176,3 +177,50 @@ Nico_Knight_T = {
 	Nico_knightbot_AB=Nico_knightbot_A:new{
 		Damage=3,
 	}
+
+	local function FreezeAndShieldEnemies()
+		if not Board then return end
+		local mechs = extract_table(Board:GetPawns(TEAM_PLAYER))
+		local knight = nil
+		for _, id in pairs(mechs) do
+			local pawn = Board:GetPawn(id)
+			if pawn then
+                local weapons = pawn:GetPoweredWeapons()
+                for i = 1, 3 do
+                    local w_id = weapons[i]
+                    if w_id then
+                        if string.find(w_id, "Nico_knightbot") then
+							knight = true
+						end
+					end
+					break
+				end
+			end
+		end
+		if not knight then return end
+		math.randomseed(os.time())
+		local foes = extract_table(Board:GetPawns(TEAM_ENEMY))
+		local affected_count = 0
+		for _, id in pairs(foes) do
+			local pawn = Board:GetPawn(id)
+			if pawn and not pawn:IsFrozen() and not pawn:IsShield() then
+				if math.random(1, 2) == 1 then
+					pawn:SetFrozen(true)
+				else
+					pawn:SetShield(true)
+				end
+				affected_count = affected_count + 1
+				if affected_count >= 3 then break end
+			end
+		end
+	end
+
+	local function Knight_Enter_Test(mission)
+		modApi:scheduleHook(100, function()
+			FreezeAndShieldEnemies()
+		end)
+	end
+	local function EVENT_onModsLoaded()
+		modApi:addTestMechEnteredHook(Knight_Enter_Test)
+	end
+	modApi.events.onModsLoaded:subscribe(EVENT_onModsLoaded)
